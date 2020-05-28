@@ -10,7 +10,7 @@ Before you can build this project, you must install and configure the following 
    Depending on your system, you can install Node either from source or as a pre-packaged bundle.
 
 After installing Node, you should be able to run the following command to install development tools.
-You will only need to run this command when dependencies change in [package.json](package.json).
+You will only need to run this command when dependencies change in [package.json](myskoolin-web/package.json).
 
     npm install
 
@@ -23,7 +23,7 @@ auto-refreshes when files change on your hard drive.
     npm start
 
 Npm is also used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
-specifying a newer version in [package.json](package.json). You can also run `npm update` and `npm install` to manage dependencies.
+specifying a newer version in [package.json](myskoolin-web/package.json). You can also run `npm update` and `npm install` to manage dependencies.
 Add the `help` flag on any command to see how you can use it. For example, `npm help update`.
 
 The `npm run` command will list all of the scripts available to run for this project.
@@ -57,13 +57,13 @@ To benefit from TypeScript type definitions from [DefinitelyTyped][] repository 
     npm install --save-dev --save-exact @types/leaflet
 
 Then you would import the JS and CSS files specified in library's installation instructions so that [Webpack][] knows about them:
-Edit [src/main/webapp/app/vendor.ts](src/main/webapp/app/vendor.ts) file:
+Edit [src/main/webapp/app/vendor.ts](myskoolin-web/src/main/webapp/app/vendor.ts) file:
 
 ```
 import 'leaflet/dist/leaflet.js';
 ```
 
-Edit [src/main/webapp/content/scss/vendor.scss](src/main/webapp/content/scss/vendor.scss) file:
+Edit [src/main/webapp/content/scss/vendor.scss](myskoolin-web/src/main/webapp/content/scss/vendor.scss) file:
 
 ```
 @import '~leaflet/dist/leaflet.css';
@@ -152,7 +152,7 @@ For more information, refer to the [Code quality page][].
 
 ## Using Docker to simplify development (optional)
 
-You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third party services.
+You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](myskoolin-web/src/main/docker) folder to launch required third party services.
 
 For example, to start a mongodb database in a docker container, run:
 

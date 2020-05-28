@@ -10,9 +10,8 @@
     </parent>
 
     <artifactId>myskoolin-web</artifactId>
-
     <packaging>jar</packaging>
-    <name>Myskoolin</name>
+    <name>web</name>
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
