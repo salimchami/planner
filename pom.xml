@@ -15,4 +15,22 @@
         <module>myskoolin-application</module>
         <module>myskoolin-infrastructure</module>
     </modules>
+
+    <properties>
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.optaplanner</groupId>
+                <artifactId>optaplanner-bom</artifactId>
+                <type>pom</type>
+                <version>7.37.0.Final</version>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
