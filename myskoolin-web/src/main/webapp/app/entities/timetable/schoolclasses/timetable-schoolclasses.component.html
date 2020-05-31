@@ -1,0 +1,154 @@
+<div class="col-12">
+    <div class="form-group row" style="margin-top: 20px; margin-bottom: -20px;">
+        <div class="col-sm-6">
+            <div class="col-sm-8">
+                <mat-form-field id="grades" class="input-group">
+                    <mat-select
+                        placeholder="{{'timetable.list.tabs.schoolClasses.select-grades-placeholder'|translate}}"
+                        (selectionChange)="gradeChange($event.value)" matInput [(ngModel)]="grade">
+                        <mat-option *ngFor="let grade of grades" [value]="grade">{{grade.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="col-sm-8">
+                <mat-form-field id="schoolClasses" class="input-group">
+                    <mat-select
+                        placeholder="{{'timetable.list.tabs.schoolClasses.select-schoolClass-placeholder'|translate}}"
+                        (selectionChange)="schoolClassChange($event.value)" matInput [(ngModel)]="schoolClass">
+                        <mat-option *ngFor="let schoolClass of schoolClassesByGrade"
+                                    [value]="schoolClass">{{schoolClass.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-12 col-xl-12" *ngIf="!!schoolClassesStaticTimeSlots.length">
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span *ngIf="timetableIsValid()" jhiTranslate="timetable.list.tabs.schoolClasses.timetable-valid" class="text-success font-weight-bold"></span>
+                            <span *ngIf="!timetableIsValid()" jhiTranslate="timetable.list.tabs.schoolClasses.timetable-not-valid" class="text-danger font-weight-bold"></span>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            <span jhiTranslate="timetable.list.tabs.schoolClasses.click-to-see-validation"></span>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <table class="table table-responsive table-bordered table-columned">
+                        <thead>
+                            <tr>
+                                <th><span jhiTranslate="timetable.list.tabs.schoolClasses.validation-table.subject-name"></span></th>
+                                <th><span jhiTranslate="timetable.list.tabs.schoolClasses.validation-table.timeslots-valid"></span></th>
+                                <th><span jhiTranslate="timetable.list.tabs.schoolClasses.validation-table.minMinutesPerDay"></span></th>
+                                <th><span jhiTranslate="timetable.list.tabs.schoolClasses.validation-table.maxMinutesPerDay"></span></th>
+                                <th><span jhiTranslate="timetable.list.tabs.schoolClasses.validation-table.coursesFrequencyPerWeek"></span></th>
+                                <th><span jhiTranslate="timetable.list.tabs.schoolClasses.validation-table.minutesPerWeek"></span></th>
+                                <th><span jhiTranslate="timetable.list.tabs.schoolClasses.validation-table.addedDurationInMinutes"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let validation of timetableValidations">
+                                <td>{{validation.subject.name}}</td>
+                                <td *ngIf="validation.valid"><i class="mdi mdi-check-bold mdi-24px text-success"></i></td>
+                                <td *ngIf="!validation.valid"><i class="mdi mdi-alert-circle mdi-24px text-danger"></i></td>
+                                <td>{{validation.subject.minMinutesPerDay}}</td>
+                                <td>{{validation.subject.maxMinutesPerDay}}</td>
+                                <td>{{validation.subject.coursesFrequencyPerWeek}}</td>
+                                <td *ngIf="!validation.valid" class="text-danger font-weight-bold">{{validation.subject.minutesPerWeek}}</td>
+                                <td *ngIf="validation.valid" class="text-success font-weight-bold">{{validation.subject.minutesPerWeek}}</td>
+                                <td *ngIf="!validation.valid" class="text-danger font-weight-bold">{{validation.durationInMinutes}}</td>
+                                <td *ngIf="validation.valid" class="text-success font-weight-bold">{{validation.durationInMinutes}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </mat-expansion-panel>
+            </mat-accordion>
+            <h4 class="sub-title" style="margin-top: 20px; margin-bottom: 6px"><span jhiTranslate="timetable.list.tabs.schoolClasses.timetable-title"></span>
+            </h4>
+            <mwl-calendar-week-view
+                precision="minutes"
+                [headerTemplate]="headerTemplate"
+                [viewDate]="viewDate"
+                [events]="schoolClassesStaticTimeSlots"
+                [eventTemplate]="eventTemplate"
+                [hourSegments]="2"
+                [dayStartHour]="+client.timeTableOptions.coursesStartTime.hour - 1"
+                [dayStartMinute]="+client.timeTableOptions.coursesStartTime.minutes"
+                [dayEndHour]="+client.timeTableOptions.coursesEndTime.hour + 1"
+                [dayEndMinute]="+client.timeTableOptions.coursesEndTime.minutes"
+                [weekStartsOn]="+client.timeTableOptions.firstWeekDay.position"
+            >
+            </mwl-calendar-week-view>
+            <ng-template #modalContent let-close="close">
+                <div class="modal-header">
+                    <h5 class="modal-title">Event action occurred</h5>
+                </div>
+            </ng-template>
+            <ng-template #headerTemplate let-days="days" let-locale="locale"
+                         let-dayClicked="dayClicked" let-eventDropped="eventDropped">
+                <div class="cal-day-headers cursor-default">
+                    <div
+                        class="cal-header"
+                        *ngFor="let day of days"
+                        [class.cal-past]="day.isPast"
+                        [class.cal-future]="day.isFuture"
+                        [class.cal-drag-over]="day.dragOver"
+                        (mwlClick)="dayClicked.emit({date: day.date})"
+                        mwlDroppable
+                        (dragEnter)="day.dragOver = true"
+                        (dragLeave)="day.dragOver = false"
+                        (drop)="day.dragOver = false; eventDropped.emit({event: $event.dropData.event, newStart: day.date, fromHeader: true})">
+                        <div class="top" [class.today]="day.isToday">
+                            <div class="day-label text-uppercase">
+                                <strong>{{ day.date | calendarDate:'weekViewColumnHeader':locale }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template
+                #eventTemplate
+                let-weekEvent="weekEvent"
+                let-tooltipPlacement="tooltipPlacement"
+                let-eventClicked="eventClicked"
+                let-tooltipAppendToBody="tooltipAppendToBody"
+                let-tooltipDisabled="tooltipDisabled"
+                let-tooltipDelay="tooltipDelay"
+                let-column="column"
+            >
+                <div class="cal-event"
+                    [ngStyle]="{backgroundColor: weekEvent.event.color?.secondary, borderColor: weekEvent.event.color?.primary}"
+                     [ngbPopover]="popContent" [popoverTitle]="popTitle" [placement]="'top'"
+                     [container]="'body'"
+                >
+                    <ng-template #popTitle class="text-center">
+                        <strong> {{dateTimeHelper.twoDigitTimeFormat(weekEvent?.event?.timeSlot?.startTime.hour, weekEvent?.event?.timeSlot?.startTime.minutes)}} - {{dateTimeHelper.twoDigitTimeFormat(weekEvent?.event?.timeSlot?.endTime.hour, weekEvent?.event?.timeSlot?.endTime.minutes)}}</strong>
+                    </ng-template>
+                    <ng-template #popContent let-event="event">
+                        <div><span jhiTranslate="timetable.list.tabs.schoolClasses.timeslot-subject"></span> : <strong><span class="float-right">{{weekEvent.event.timeSlot.title}}</span></strong></div>
+                        <div><span jhiTranslate="timetable.list.tabs.schoolClasses.timeslot-schoolroom"></span> : <span class="float-right schoolRoom-timeSlot">{{schoolRoomNameFromTimeSlot(weekEvent.event.timeSlot)}}</span></div>
+                        <div><span jhiTranslate="timetable.list.tabs.schoolClasses.timeslot-teacher"></span> : <span class="float-right teacher-timeSlot">{{teacherFullNameFromTimeSlot(weekEvent.event.timeSlot)}}</span></div>
+                    </ng-template>
+                    <mwl-calendar-event-actions [event]="weekEvent.event">
+                    </mwl-calendar-event-actions>
+                    <mwl-calendar-event-title [customTemplate]="eventTitleTemplate"
+                                              [event]="weekEvent.event" view="week">
+                    </mwl-calendar-event-title>
+                </div>
+            </ng-template>
+            <ng-template #eventTitleTemplate let-event="event">
+                <div [style.color]="event['fontColor']">
+                    <strong> {{dateTimeHelper.twoDigitTimeFormat(event.timeSlot?.startTime.hour, event.timeSlot?.startTime.minutes)}} - {{dateTimeHelper.twoDigitTimeFormat(event.timeSlot?.endTime.hour, event.timeSlot?.endTime.minutes)}} <span class="float-right schoolRoom-timeSlot">{{schoolRoomNameFromTimeSlot(event.timeSlot)}}</span></strong>
+                    <br />
+                    <span class="text-center">{{event.timeSlot.title}}</span>
+                    <br />
+                    <span class="float-right teacher-timeSlot">{{teacherFullNameFromTimeSlot(event.timeSlot)}}</span>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

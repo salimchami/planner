@@ -1,0 +1,1653 @@
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-lg-8 center-block text-center" style="font-size: large">
+                        <div [ngSwitch]="routeState">
+                            <h2 *ngSwitchCase="'new'" class="card-header-text">
+                                <span jhiTranslate="student.new.title"></span>
+                                <span *ngIf="studentUserForm.controls.firstName.value ||studentUserForm.controls.lastName.value">"</span>
+                                {{studentUserForm.controls.firstName.value}} {{studentUserForm.controls.lastName.value}}
+                                <span *ngIf="studentUserForm.controls.firstName.value ||studentUserForm.controls.lastName.value">"</span>
+                            </h2>
+                            <h2 *ngSwitchCase="'edit'" class="card-header-text">
+                                <span jhiTranslate="student.edit.title"></span>
+                                <span *ngIf="studentUserForm.controls.firstName.value ||studentUserForm.controls.lastName.value">"</span>
+                                {{studentUserForm.controls.firstName.value}} {{studentUserForm.controls.lastName.value}}
+                                <span *ngIf="studentUserForm.controls.firstName.value ||studentUserForm.controls.lastName.value">"</span>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="float-right">
+                            <button type="button" class="btn btn-secondary btn-mat m-b-0" id="cancel" (click)="goBack()">
+                                <i class="mdi mdi-cancel mdi-18px"></i>
+                                <span jhiTranslate="global.buttons.cancel">Cancel</span>
+                            </button>
+                            <button type="submit" class="btn btn-primary btn-mat m-b-0" id="submit" [disabled]="!areFormsValid()">
+                                    <span [ngSwitch]="routeState">
+                                        <span *ngSwitchCase="'new'">
+                                            <i class="mdi mdi-plus mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.create" (click)="createOrUpdateStudent()">Create</span>
+                                        </span>
+                                        <span *ngSwitchCase="'edit'">
+                                            <i class="mdi mdi-pencil-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.update" (click)="createOrUpdateStudent()">Update</span>
+                                        </span>
+                                    </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <jhi-card [classHeader]="true" [cardOptionBlock]="true">
+                <div class="row">
+                    <wizard class="col-md-12">
+                        <wizard-step (stepEnter)="enterStep(0)" [navigationSymbol]="{ symbol: '2' }">
+                            <ng-template wizardStepTitle>
+                                {{'student.new.form.steps.step-1-user-infos'|translate}}
+                            </ng-template>
+                            <div class="form-group row">
+                                <div class="sub-title col-md-12">
+                                    <div class="float-left">
+                                        <h4 style="margin-top: 15px" jhiTranslate="student.new.form.steps.step-1-user-infos-title"></h4>
+                                    </div>
+                                    <div class="float-right">
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="previousStep-0"
+                                                [disabled]="true" previousStep>
+                                            <i class="mdi mdi-arrow-left-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.previousStep">Previous</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="nextStep-0"
+                                                nextStep>
+                                            <i class="mdi mdi-arrow-right-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.nextStep">Next</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form novalidate [formGroup]="studentUserForm">
+                                        <div class="form-group row">
+                                            <label for="login" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="student.new.form.login">Student login</span> <span style="color: #c75b58;">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input id="login" type="text" class="form-control" formControlName="login"
+                                                       placeholder="{{'student.new.form.login-placeholder'|translate}}"
+                                                       (keypress)="resetMessages()">
+                                                <div class="messages text-danger"
+                                                     *ngIf="studentUserForm.controls.login.invalid && (studentUserForm.controls.login.dirty || studentUserForm.controls.login.touched)">
+                                                    <span jhiTranslate="student.new.form.login-error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="form-group row">
+                                            <label for="firstName" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="student.new.form.firstName">Student firstName</span> <span style="color: #c75b58;">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input id="firstName" type="text" class="form-control" formControlName="firstName"
+                                                       placeholder="{{'student.new.form.firstName-placeholder'|translate}}"
+                                                       (keypress)="resetMessages()">
+                                                <div class="messages text-danger"
+                                                     *ngIf="studentUserForm.controls.firstName.invalid && (studentUserForm.controls.firstName.dirty || studentUserForm.controls.firstName.touched)">
+                                                    <span jhiTranslate="student.new.form.firstName-error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="lastName" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="student.new.form.lastName">Student lastName</span> <span style="color: #c75b58;">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input id="lastName" type="text" class="form-control" formControlName="lastName"
+                                                       placeholder="{{'student.new.form.lastName-placeholder'|translate}}"
+                                                       (keypress)="resetMessages()">
+                                                <div class="messages text-danger"
+                                                     *ngIf="studentUserForm.controls.lastName.invalid && (studentUserForm.controls.lastName.dirty || studentUserForm.controls.lastName.touched)">
+                                                    <span jhiTranslate="student.new.form.lastName-error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label"><span
+                                                jhiTranslate="student.new.form.sex">Gender</span> <span style="color: #c75b58;">*</span></label>
+                                            <div class="col-sm-8">
+                                                <div class="form-radio">
+                                                    <div class="radio radio-inline" *ngFor="let sex of sexes; let i = index">
+                                                        <label id="studentSex-{{i}}">
+                                                            <input (click)="resetMessages()" type="radio" [value]="sex" [checked]="studentUserForm.controls.sex.value === sex" formControlName="sex">
+                                                            <i class="helper"></i>{{sex|translate}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="messages text-danger"
+                                                     *ngIf="studentUserForm.controls.sex.invalid && (studentUserForm.controls.sex.dirty || studentUserForm.controls.sex.touched)">
+                                                    <span jhiTranslate="student.new.form.sex-error"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="nationality" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="student.new.form.nationality">Student nationality</span> <span style="color: #c75b58;">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input id="nationality" type="text" class="form-control" formControlName="nationality"
+                                                       placeholder="{{'student.new.form.nationality-placeholder'|translate}}"
+                                                       (keypress)="resetMessages()">
+                                                <div class="messages text-danger"
+                                                     *ngIf="studentUserForm.controls.nationality.invalid && (studentUserForm.controls.nationality.dirty || studentUserForm.controls.nationality.touched)">
+                                                    <span jhiTranslate="student.new.form.nationality-error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="birthDate" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="student.new.form.birthDate">Student birthDate</span> <span style="color: #c75b58;">*</span>
+                                            </label>
+                                            <div class="col-sm-3">
+                                                <mat-form-field class="input-group">
+                                                    <input id="birthDate" matInput [matDatepicker]="birthDatePicker"
+                                                           placeholder="{{'student.new.form.birthDate-placeholder'|translate}}"
+                                                           formControlName="birthDate" (click)="birthDatePicker.open()" class="form-control">
+                                                    <mat-datepicker-toggle matSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #birthDatePicker></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="form-group row">
+                                            <label for="email" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="student.new.form.email">Student email</span></label>
+                                            <div class="col-sm-8">
+                                                <input id="email" type="text" class="form-control" formControlName="email"
+                                                       placeholder="{{'student.new.form.email-placeholder'|translate}}"
+                                                       (keypress)="resetMessages()">
+                                                <div class="messages text-danger"
+                                                     *ngIf="studentUserForm.controls.email.invalid && (studentUserForm.controls.email.dirty || studentUserForm.controls.email.touched)">
+                                                    <span jhiTranslate="student.new.form.email-error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="cellPhone" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="student.new.form.cellPhone">Student cellPhone</span>
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <input id="cellPhone" type="text" class="form-control" formControlName="cellPhone"
+                                                       placeholder="{{'student.new.form.cellPhone-placeholder'|translate}}"
+                                                       (keypress)="resetMessages()">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="homePhone" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="student.new.form.homePhone">Student homePhone</span>
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <input id="homePhone" type="text" class="form-control" formControlName="homePhone"
+                                                       placeholder="{{'student.new.form.homePhone-placeholder'|translate}}"
+                                                       (keypress)="resetMessages()">
+                                            </div>
+                                        </div>
+
+                                        <hr />
+                                        <div class="form-group row">
+                                            <label for="addressName" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="student.new.form.addressName">Student address name</span> <span style="color: #c75b58;">*</span>
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <input id="addressName" type="text" class="form-control" formControlName="addressName"
+                                                       placeholder="{{'student.new.form.addressName-placeholder'|translate}}"
+                                                       (keypress)="resetMessages()">
+                                                <div class="messages text-danger"
+                                                     *ngIf="studentUserForm.controls.addressName.invalid && (studentUserForm.controls.addressName.dirty || studentUserForm.controls.addressName.touched)">
+                                                    <span jhiTranslate="student.new.form.addressName-error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="postalCode" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="student.new.form.postalCode">Student postal code</span> <span style="color: #c75b58;">*</span>
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <input id="postalCode" type="text" class="form-control" formControlName="postalCode"
+                                                       placeholder="{{'student.new.form.postalCode-placeholder'|translate}}"
+                                                       (keypress)="resetMessages()">
+                                                <div class="messages text-danger"
+                                                     *ngIf="studentUserForm.controls.postalCode.invalid && (studentUserForm.controls.postalCode.dirty || studentUserForm.controls.postalCode.touched)">
+                                                    <span jhiTranslate="student.new.form.postalCode-error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="city" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="student.new.form.city">Student city</span> <span style="color: #c75b58;">*</span>
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <input id="city" type="text" class="form-control" formControlName="city"
+                                                       placeholder="{{'student.new.form.city-placeholder'|translate}}"
+                                                       (keypress)="resetMessages()">
+                                                <div class="messages text-danger"
+                                                     *ngIf="studentUserForm.controls.city.invalid && (studentUserForm.controls.city.dirty || studentUserForm.controls.city.touched)">
+                                                    <span jhiTranslate="student.new.form.city-error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="country" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="student.new.form.country">Student country</span> <span style="color: #c75b58;">*</span>
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <input id="country" type="text" class="form-control" formControlName="country"
+                                                       placeholder="{{'student.new.form.country-placeholder'|translate}}"
+                                                       (keypress)="resetMessages()">
+                                                <div class="messages text-danger"
+                                                     *ngIf="studentUserForm.controls.country.invalid && (studentUserForm.controls.country.dirty || studentUserForm.controls.country.touched)">
+                                                    <span jhiTranslate="student.new.form.country-error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <div class="form-group row">
+                                            <label for="comment" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="student.new.form.comment">Student comment</span>
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <textarea id="comment" rows="4" class="form-control" formControlName="comment"
+                                                          placeholder="{{'student.new.form.comment-placeholder'|translate}}"
+                                                          (keypress)="resetMessages()"></textarea>
+                                                <div class="messages text-danger"
+                                                     *ngIf="studentUserForm.controls.comment.invalid && (studentUserForm.controls.comment.dirty || studentUserForm.controls.comment.touched)">
+                                                    <span jhiTranslate="student.new.form.comment-error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </wizard-step>
+                        <wizard-step (stepEnter)="enterStep(1)" [navigationSymbol]="{ symbol: '2' }">
+                            <ng-template wizardStepTitle>
+                                {{'student.new.form.steps.step-2-scholar-infos'|translate}}
+                            </ng-template>
+                            <div class="form-group row">
+                                <div class="sub-title col-md-12">
+                                    <div class="float-left">
+                                        <h4 style="margin-top: 15px" jhiTranslate="student.new.form.steps.step-2-scholar-infos-title"></h4>
+                                    </div>
+                                    <div class="float-right">
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="previousStep-1"
+                                                previousStep>
+                                            <i class="mdi mdi-arrow-left-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.previousStep">Previous</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="nextStep-1"
+                                                nextStep>
+                                            <i class="mdi mdi-arrow-right-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.nextStep">Next</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <form novalidate [formGroup]="studentScholarInfosForm">
+                                <div class="form-group row">
+                                    <label for="nationalNumber" class="col-sm-4 col-form-label">
+                                        <span
+                                            jhiTranslate="student.new.form.nationalNumber">Student national number</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="nationalNumber" type="text" class="form-control"
+                                               formControlName="nationalNumber"
+                                               placeholder="{{'student.new.form.nationalNumber-placeholder'|translate}}"
+                                               (keypress)="resetMessages()">
+                                        <div class="messages text-danger"
+                                             *ngIf="studentScholarInfosForm.controls.nationalNumber.invalid && (studentScholarInfosForm.controls.nationalNumber.dirty || studentScholarInfosForm.controls.nationalNumber.touched)">
+                                            <span jhiTranslate="student.new.form.nationalNumber-error"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="redoubling" class="col-sm-4 col-form-label">
+                                        <span
+                                            jhiTranslate="student.new.form.redoubling">Student redoubling</span></label>
+                                    <div class="col-sm-8">
+                                        <ui-switch id="redoubling" class="js-danger" color="#9E4747" size="medium"
+                                                   [formControlName]="'redoubling'" ngDefaultControl></ui-switch>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="entryDate" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.entryDate">Student entryDate</span> <span
+                                        style="color: #c75b58;">*</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <mat-form-field class="input-group">
+                                            <input id="entryDate" matInput [matDatepicker]="entryDatePicker"
+                                                   placeholder="{{'student.new.form.entryDate-placeholder'|translate}}"
+                                                   formControlName="entryDate" (click)="entryDatePicker.open()" class="form-control">
+                                            <mat-datepicker-toggle matSuffix [for]="entryDatePicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #entryDatePicker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="originEstablishment" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.originEstablishment">Student origin establishment</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="originEstablishment" type="text" class="form-control"
+                                               formControlName="originEstablishment"
+                                               placeholder="{{'student.new.form.originEstablishment-placeholder'|translate}}"
+                                               (keypress)="resetMessages()">
+                                        <div class="messages text-danger"
+                                             *ngIf="studentScholarInfosForm.controls.originEstablishment.invalid && (studentScholarInfosForm.controls.originEstablishment.dirty || studentScholarInfosForm.controls.originEstablishment.touched)">
+                                            <span jhiTranslate="student.new.form.originEstablishment-error"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="individualizedReceptionPlan" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.individualizedReceptionPlan">Student individualized reception plan</span></label>
+                                    <div class="col-sm-8">
+                                        <ui-switch id="individualizedReceptionPlan" class="js-danger" color="#9E4747"
+                                                   size="medium"
+                                                   [formControlName]="'individualizedReceptionPlan'" ngDefaultControl
+                                                   (change)="onIndividualizedReceptionPlanChange($event)"></ui-switch>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="individualizedReceptionPlanContent" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.individualizedReceptionPlanContent">Student individualized reception plan content</span>
+                                    </label>
+                                    <div class="col-sm-8">
+                                    <textarea id="individualizedReceptionPlanContent" rows="4" class="form-control"
+                                              formControlName="individualizedReceptionPlanContent"
+                                              placeholder="{{'student.new.form.individualizedReceptionPlanContent-placeholder'|translate}}"
+                                              (keypress)="resetMessages()"></textarea>
+                                        <div class="messages text-danger"
+                                             *ngIf="studentScholarInfosForm.controls.individualizedReceptionPlanContent.invalid && (studentScholarInfosForm.controls.individualizedReceptionPlanContent.dirty || studentScholarInfosForm.controls.individualizedReceptionPlanContent.touched)">
+                                            <span jhiTranslate="student.new.form.individualizedReceptionPlanContent-error"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="personalizedSchoolingPlan" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.personalizedSchoolingPlan">Student personalized schooling plan</span></label>
+                                    <div class="col-sm-8">
+                                        <ui-switch id="personalizedSchoolingPlan" class="js-danger" color="#9E4747" size="medium"
+                                                   [formControlName]="'personalizedSchoolingPlan'" ngDefaultControl
+                                                   (change)="onPersonalizedSchoolingPlanChange($event)"></ui-switch>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="personalizedSchoolingPlanContent" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.personalizedSchoolingPlanContent">Student personalized schooling plan content</span>
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <textarea id="personalizedSchoolingPlanContent" rows="4" class="form-control"
+                                                  formControlName="personalizedSchoolingPlanContent"
+                                                  placeholder="{{'student.new.form.personalizedSchoolingPlanContent-placeholder'|translate}}"
+                                                  (keypress)="resetMessages()"></textarea>
+                                        <div class="messages text-danger"
+                                             *ngIf="studentScholarInfosForm.controls.personalizedSchoolingPlanContent.invalid && (studentScholarInfosForm.controls.personalizedSchoolingPlanContent.dirty || studentScholarInfosForm.controls.personalizedSchoolingPlanContent.touched)">
+                                            <span
+                                                jhiTranslate="student.new.form.personalizedSchoolingPlanContent-error"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row" *ngIf="routeState === 'edit'">
+                                    <label for="exitDate" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.exitDate">Student exitDate</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <mat-form-field class="input-group">
+                                            <input id="exitDate" matInput [matDatepicker]="exitDatePicker"
+                                                   placeholder="{{'student.new.form.exitDate-placeholder'|translate}}"
+                                                   formControlName="exitDate" (click)="exitDatePicker.open()" class="form-control">
+                                            <mat-datepicker-toggle matSuffix [for]="exitDatePicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #exitDatePicker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="form-group row" *ngIf="routeState === 'edit'">
+                                    <label for="exitReason" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.exitReason">Student exit reason</span>
+                                    </label>
+                                    <div class="col-sm-8">
+                                    <textarea id="exitReason" rows="4" class="form-control" formControlName="exitReason"
+                                              placeholder="{{'student.new.form.exitReason-placeholder'|translate}}"
+                                              (keypress)="resetMessages()"></textarea>
+                                        <div class="messages text-danger"
+                                             *ngIf="studentScholarInfosForm.controls.exitReason.invalid && (studentScholarInfosForm.controls.exitReason.dirty || studentScholarInfosForm.controls.exitReason.touched)">
+                                            <span jhiTranslate="student.new.form.exitReason-error"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </wizard-step>
+                        <wizard-step (stepEnter)="enterStep(2)" [navigationSymbol]="{ symbol: '2' }">
+                            <ng-template wizardStepTitle>
+                                {{'student.new.form.steps.step-3-responsibles'|translate}}
+                            </ng-template>
+                            <div class="form-group row">
+                                <div class="sub-title col-md-12">
+                                    <div class="float-left">
+                                        <h4 style="margin-top: 15px" jhiTranslate="student.new.form.steps.step-3-responsibles-title"></h4>
+                                    </div>
+                                    <div class="float-right">
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="previousStep-2"
+                                                previousStep>
+                                            <i class="mdi mdi-arrow-left-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.previousStep">Previous</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="nextStep-2"
+                                                nextStep>
+                                            <i class="mdi mdi-arrow-right-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.nextStep">Next</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <form novalidate [formGroup]="studentResponsibleAccountForm">
+                                <div class="form-group row">
+                                    <label for="respLogin" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.respLogin">Student respLogin</span> <span style="color: #c75b58;">*</span>
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <input id="respLogin" type="text" class="form-control" formControlName="respLogin"
+                                               placeholder="{{'student.new.form.respLogin-placeholder'|translate}}"
+                                               (keypress)="resetMessages()">
+                                        <div class="messages text-danger"
+                                             *ngIf="studentResponsibleAccountForm.controls.respLogin.invalid && (studentResponsibleAccountForm.controls.respLogin.dirty || studentResponsibleAccountForm.controls.respLogin.touched)">
+                                            <span jhiTranslate="student.new.form.respLogin-error"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <form novalidate [formGroup]="studentResponsiblesForm">
+                                <div formArrayName="responsibles">
+                                    <div
+                                        *ngFor="let responsibleFormGroup of studentResponsiblesForm.get('responsibles').controls; let i = index"
+                                        [formGroupName]="i">
+                                        <div id="side_bar" class="clearfix">
+                                            <h4 style="float: left;"><span
+                                                jhiTranslate="student.new.form.responsible.title"></span> {{i + 1}}</h4>
+                                            <button *ngIf="i>0" id="remove-responsible-{{i}}" type="button"
+                                                    class="btn btn-danger btn-sm"
+                                                    style="margin-bottom: 20px; float: right; position: relative; right: 10px;"
+                                                    (click)="removeResponsible(i)">
+                                                <i class="mdi mdi-minus"></i> <span
+                                                jhiTranslate="student.new.form.responsible.remove"></span> {{i + 1}}
+                                            </button>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group row">
+                                                    <label for="respAccount-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.respAccount">Responsible respAccount</span></label>
+                                                    <div class="col-sm-8">
+                                                        <ui-switch id="respAccount-{{i}}" class="js-danger" color="#9E4747"
+                                                                   size="medium"
+                                                                   [formControlName]="'respAccount'" ngDefaultControl
+                                                                   (change)="onRespAccountChange(i, $event)"></ui-switch>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="responsibleFirstName-{{i}}"
+                                                           class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.firstName">Responsible firstName</span>
+                                                        <span style="color: #c75b58;">*</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input id="responsibleFirstName-{{i}}" type="text"
+                                                               class="form-control" formControlName="firstName"
+                                                               placeholder="{{'student.new.form.responsible.firstName-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                        <div class="messages text-danger"
+                                                             *ngIf="responsibleFormGroup.controls.firstName.invalid && (responsibleFormGroup.controls.firstName.dirty || responsibleFormGroup.controls.firstName.touched)">
+                                                            <span
+                                                                jhiTranslate="student.new.form.responsible.firstName-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="responsibleLastName-{{i}}"
+                                                           class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.lastName">Responsible lastName</span>
+                                                        <span style="color: #c75b58;">*</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input id="responsibleLastName-{{i}}" type="text"
+                                                               class="form-control" formControlName="lastName"
+                                                               placeholder="{{'student.new.form.responsible.lastName-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                        <div class="messages text-danger"
+                                                             *ngIf="responsibleFormGroup.controls.lastName.invalid && (responsibleFormGroup.controls.lastName.dirty || responsibleFormGroup.controls.lastName.touched)">
+                                                            <span
+                                                                jhiTranslate="student.new.form.responsible.lastName-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label"><span
+                                                        jhiTranslate="student.new.form.responsible.sex">Gender</span>
+                                                        <span style="color: #c75b58;">*</span></label>
+                                                    <div class="col-sm-8">
+                                                        <div class="form-radio">
+                                                            <div class="radio radio-inline" *ngFor="let sex of sexes; let j = index">
+                                                                <label id="responsibleSexOption-{{i}}-{{j}}">
+                                                                    <input (click)="resetMessages()" type="radio"
+                                                                           [value]="sex" [checked]="responsibleFormGroup.controls.sex.value === sex"
+                                                                           formControlName="sex">
+                                                                    <i class="helper"></i>{{sex|translate}}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="messages text-danger"
+                                                             *ngIf="responsibleFormGroup.controls.sex.invalid && (responsibleFormGroup.controls.sex.dirty || responsibleFormGroup.controls.sex.touched)">
+                                                            <span
+                                                                jhiTranslate="student.new.form.responsible.sex-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="responsibleBirthDate-{{i}}"
+                                                           class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.birthDate">Student birthDate</span>
+                                                        <span style="color: #c75b58;">*</span>
+                                                    </label>
+                                                    <div class="col-sm-5">
+                                                        <mat-form-field class="input-group">
+                                                            <input id="responsibleBirthDate-{{i}}" matInput [matDatepicker]="responsibleBirthDatePicker"
+                                                                   placeholder="{{'student.new.form.responsible.birthDate-placeholder'|translate}}"
+                                                                   formControlName="birthDate" (click)="responsibleBirthDatePicker.open()" class="form-control">
+                                                            <mat-datepicker-toggle matSuffix [for]="responsibleBirthDatePicker"></mat-datepicker-toggle>
+                                                            <mat-datepicker #responsibleBirthDatePicker></mat-datepicker>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div class="form-group row">
+                                                    <label for="responsibleNationality-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.nationality">Responsible Nationality</span> <span style="color: #c75b58;">*</span>
+                                                    </label>
+                                                    <div class="col-sm-8">
+                                                        <input id="responsibleNationality-{{i}}" type="text" class="form-control" formControlName="nationality"
+                                                               placeholder="{{'student.new.form.responsible.nationality-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                        <div class="messages text-danger"
+                                                             *ngIf="responsibleFormGroup.controls.nationality.invalid && (responsibleFormGroup.controls.nationality.dirty || responsibleFormGroup.controls.nationality.touched)">
+                                                            <span jhiTranslate="student.new.form.responsible.nationality-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="responsibleAddressName-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.addressName">Responsible address name</span> <span style="color: #c75b58;">*</span>
+                                                    </label>
+                                                    <div class="col-sm-8">
+                                                        <input id="responsibleAddressName-{{i}}" type="text" class="form-control" formControlName="addressName"
+                                                               placeholder="{{'student.new.form.responsible.addressName-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                        <div class="messages text-danger"
+                                                             *ngIf="responsibleFormGroup.controls.addressName.invalid && (responsibleFormGroup.controls.addressName.dirty || responsibleFormGroup.controls.addressName.touched)">
+                                                            <span jhiTranslate="student.new.form.responsible.addressName-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="responsiblePostalCode-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.postalCode">responsible postal code</span> <span style="color: #c75b58;">*</span>
+                                                    </label>
+                                                    <div class="col-sm-8">
+                                                        <input id="responsiblePostalCode-{{i}}" type="text" class="form-control" formControlName="postalCode"
+                                                               placeholder="{{'student.new.form.responsible.postalCode-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                        <div class="messages text-danger"
+                                                             *ngIf="responsibleFormGroup.controls.postalCode.invalid && (responsibleFormGroup.controls.postalCode.dirty || responsibleFormGroup.controls.postalCode.touched)">
+                                                            <span jhiTranslate="student.new.form.responsible.postalCode-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="responsibleCity-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.city">responsible city</span> <span style="color: #c75b58;">*</span>
+                                                    </label>
+                                                    <div class="col-sm-8">
+                                                        <input id="responsibleCity-{{i}}" type="text" class="form-control" formControlName="city"
+                                                               placeholder="{{'student.new.form.responsible.city-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                        <div class="messages text-danger"
+                                                             *ngIf="responsibleFormGroup.controls.city.invalid && (responsibleFormGroup.controls.city.dirty || responsibleFormGroup.controls.city.touched)">
+                                                            <span jhiTranslate="student.new.form.responsible.city-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="responsibleCountry-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.country">responsible country</span> <span style="color: #c75b58;">*</span>
+                                                    </label>
+                                                    <div class="col-sm-8">
+                                                        <input id="responsibleCountry-{{i}}" type="text" class="form-control" formControlName="country"
+                                                               placeholder="{{'student.new.form.responsible.country-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                        <div class="messages text-danger"
+                                                             *ngIf="responsibleFormGroup.controls.country.invalid && (responsibleFormGroup.controls.country.dirty || responsibleFormGroup.controls.country.touched)">
+                                                            <span jhiTranslate="student.new.form.responsible.country-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div class="form-group row">
+                                                    <label for="responsiblePhone-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.phone">responsible phone</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input id="responsiblePhone-{{i}}" type="text"
+                                                               class="form-control" formControlName="phone"
+                                                               placeholder="{{'student.new.form.responsible.phone-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="responsibleCellPhone-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.cellPhone">responsible cellPhone</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input id="responsibleCellPhone-{{i}}" type="text"
+                                                               class="form-control" formControlName="cellPhone"
+                                                               placeholder="{{'student.new.form.responsible.cellPhone-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="responsibleEmail-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.email">responsible email</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input id="responsibleEmail-{{i}}" type="text"
+                                                               class="form-control" formControlName="email"
+                                                               placeholder="{{'student.new.form.responsible.email-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                        <div class="messages text-danger"
+                                                             *ngIf="responsibleFormGroup.controls.email.invalid && (responsibleFormGroup.controls.email.dirty || responsibleFormGroup.controls.email.touched)">
+                                                            <span
+                                                                jhiTranslate="student.new.form.responsible.email-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="ResponsibleSecondaryEmail-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span
+                                                            jhiTranslate="student.new.form.responsible.secondaryEmail">secondaryEmail</span>
+                                                    </label>
+                                                    <div class="col-sm-8">
+                                                        <input id="ResponsibleSecondaryEmail-{{i}}" type="text"
+                                                               class="form-control" formControlName="secondaryEmail"
+                                                               placeholder="{{'student.new.form.responsible.secondaryEmail-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                        <div class="messages text-danger"
+                                                             *ngIf="responsibleFormGroup.controls.secondaryEmail.invalid && (responsibleFormGroup.controls.secondaryEmail.dirty || responsibleFormGroup.controls.secondaryEmail.touched)">
+                                                            <span
+                                                                jhiTranslate="student.new.form.responsible.secondaryEmail-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group row">
+                                                    <label for="familySituation-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span
+                                                            jhiTranslate="student.new.form.responsible.familySituation">familySituation</span>
+                                                        <span style="color: #c75b58;">*</span></label>
+                                                    <div class="col-sm-8">
+                                                        <select (click)="resetMessages()"
+                                                                [compareWith]="compareFamilySituations"
+                                                                [formControlName]="'familySituation'"
+                                                                id="familySituation-{{i}}"
+                                                                class="form-control form-control-inverse">
+                                                            <option
+                                                                *ngFor="let familySituation of familySituations; let j = index"
+                                                                id="familySituationOption-{{i}}-{{j}}"
+                                                                [ngValue]="familySituation">{{familySituation|translate}}</option>
+                                                        </select>
+                                                        <div class="messages text-danger"
+                                                             *ngIf="responsibleFormGroup.controls.familySituation.invalid && (responsibleFormGroup.controls.familySituation.dirty || responsibleFormGroup.controls.familySituation.touched)">
+                                                            <span
+                                                                jhiTranslate="student.new.form.responsible.familySituation-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="studentRelationship-{{i}}"
+                                                           class="col-sm-4 col-form-label">
+                                                        <span
+                                                            jhiTranslate="student.new.form.responsible.studentRelationship">studentRelationship</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input id="studentRelationship-{{i}}" type="text"
+                                                               class="form-control"
+                                                               formControlName="studentRelationship"
+                                                               placeholder="{{'student.new.form.responsible.studentRelationship-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                        <div class="messages text-danger"
+                                                             *ngIf="responsibleFormGroup.controls.studentRelationship.invalid && (responsibleFormGroup.controls.studentRelationship.dirty || responsibleFormGroup.controls.studentRelationship.touched)">
+                                                            <span
+                                                                jhiTranslate="student.new.form.responsible.studentRelationship-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="dependentChildren-{{i}}"
+                                                           class="col-sm-4 col-form-label">
+                                                        <span
+                                                            jhiTranslate="student.new.form.responsible.dependentChildren">dependentChildren</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input id="dependentChildren-{{i}}" type="number"
+                                                               class="form-control" formControlName="dependentChildren"
+                                                               placeholder="{{'student.new.form.responsible.dependentChildren-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                        <div class="messages text-danger"
+                                                             *ngIf="responsibleFormGroup.controls.dependentChildren.invalid && (responsibleFormGroup.controls.dependentChildren.dirty || responsibleFormGroup.controls.dependentChildren.touched)">
+                                                            <span
+                                                                jhiTranslate="student.new.form.responsible.dependentChildren-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div class="form-group row">
+                                                    <label for="profession-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.profession">profession</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input id="profession-{{i}}" type="text" class="form-control"
+                                                               formControlName="profession"
+                                                               placeholder="{{'student.new.form.responsible.profession-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                        <div class="messages text-danger"
+                                                             *ngIf="responsibleFormGroup.controls.profession.invalid && (responsibleFormGroup.controls.profession.dirty || responsibleFormGroup.controls.profession.touched)">
+                                                            <span
+                                                                jhiTranslate="student.new.form.responsible.profession-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="responsibleProEmail-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.proEmail">responsible proEmail</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input id="responsibleProEmail-{{i}}" type="text"
+                                                               class="form-control" formControlName="proEmail"
+                                                               placeholder="{{'student.new.form.responsible.proEmail-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="responsibleWorkPhone-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.workPhone">responsible workPhone</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input id="responsibleWorkPhone-{{i}}" type="text"
+                                                               class="form-control" formControlName="workPhone"
+                                                               placeholder="{{'student.new.form.responsible.workPhone-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="responsibleWorkCellPhone-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.workCellPhone">responsible workCellPhone</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input id="responsibleWorkCellPhone-{{i}}" type="text"
+                                                               class="form-control" formControlName="workCellPhone"
+                                                               placeholder="{{'student.new.form.responsible.workCellPhone-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="responsibleParentsAssociation-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.parentsAssociation">Responsible parentsAssociation</span></label>
+                                                    <div class="col-sm-8">
+                                                        <ui-switch id="responsibleParentsAssociation-{{i}}" class="js-danger" color="#9E4747"
+                                                                   size="medium"
+                                                                   [formControlName]="'parentsAssociation'" ngDefaultControl
+                                                                   (change)="onIndividualizedReceptionPlanChange($event)"></ui-switch>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="parentsAssociationPosition-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.parentsAssociationPosition">responsible parentsAssociationPosition</span></label>
+                                                    <div class="col-sm-8">
+                                                        <input id="parentsAssociationPosition-{{i}}" type="text"
+                                                               class="form-control" formControlName="parentsAssociationPosition"
+                                                               placeholder="{{'student.new.form.responsible.parentsAssociationPosition-placeholder'|translate}}"
+                                                               (keypress)="resetMessages()">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="responsibleComment-{{i}}" class="col-sm-4 col-form-label">
+                                                        <span jhiTranslate="student.new.form.responsible.comment">responsibleComment</span>
+                                                    </label>
+                                                    <div class="col-sm-8">
+                                            <textarea id="responsibleComment-{{i}}" rows="4" class="form-control" formControlName="comment"
+                                                      placeholder="{{'student.new.form.responsible.comment-placeholder'|translate}}"
+                                                      (keypress)="resetMessages()"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <div class="row">
+                                            <div class="col-sm-12 mobile-inputs m-t-20">
+                                                <button id="addResponsible-{{i}}" type="button"
+                                                        class="btn btn-primary btn-sm" style="margin-bottom: 10px;"
+                                                        (click)="addResponsible()">
+                                                    <i class="mdi mdi-plus"></i> <span
+                                                    jhiTranslate="student.new.form.responsible.add"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </wizard-step>
+                        <wizard-step (stepEnter)="enterStep(3)" [navigationSymbol]="{ symbol: '2' }">
+                            <ng-template wizardStepTitle>
+                                {{'student.new.form.steps.step-4-medical-infos'|translate}}
+                            </ng-template>
+                            <div class="form-group row">
+                                <div class="sub-title col-md-12">
+                                    <div class="float-left">
+                                        <h4 style="margin-top: 15px" jhiTranslate="student.new.form.steps.step-4-medical-infos-title"></h4>
+                                    </div>
+                                    <div class="float-right">
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="previousStep-3"
+                                                previousStep>
+                                            <i class="mdi mdi-arrow-left-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.previousStep">Previous</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="nextStep-3" nextStep>
+                                            <i class="mdi mdi-arrow-right-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.nextStep">Next</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <form novalidate [formGroup]="studentMedicalInfosForm">
+                                <div class="form-group row">
+                                    <label for="knownDiseases" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.knownDiseases">Student medical infos known diseases</span>
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <textarea id="knownDiseases" rows="4" class="form-control" formControlName="knownDiseases"
+                                                  placeholder="{{'student.new.form.knownDiseases-placeholder'| translate}}"
+                                                  (keypress)="resetMessages()"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="allergies" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.allergies">Student medical infos allergies</span>
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <textarea id="allergies" rows="4" class="form-control" formControlName="allergies"
+                                                  placeholder="{{'student.new.form.allergies-placeholder'|translate}}"
+                                                  (keypress)="resetMessages()"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="medicalInfosComment" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.medicalInfosComment">Student medicalInfosComment</span>
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <textarea id="medicalInfosComment" rows="4" class="form-control" formControlName="healthComment"
+                                                  placeholder="{{'student.new.form.medicalInfosComment-placeholder'|translate}}"
+                                                  (keypress)="resetMessages()"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="healthInsurance" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.healthInsurance">student healthInsurance</span></label>
+                                    <div class="col-sm-8">
+                                        <ui-switch id="healthInsurance" class="js-danger" color="#9E4747"
+                                                   size="medium"
+                                                   [formControlName]="'healthInsurance'" ngDefaultControl
+                                                   (load)="onHealthInsuranceChange($event)" (change)="onHealthInsuranceChange($event)"></ui-switch>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="healthInsuranceName" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.healthInsuranceName">student healthInsuranceName</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="healthInsuranceName" type="text"
+                                               class="form-control" formControlName="healthInsuranceName"
+                                               placeholder="{{'student.new.form.healthInsuranceName-placeholder'|translate}}"
+                                               (keypress)="resetMessages()">
+                                        <div class="messages text-danger"
+                                             *ngIf="studentMedicalInfosForm.controls.healthInsuranceName.invalid && (studentMedicalInfosForm.controls.healthInsuranceName.dirty || studentMedicalInfosForm.controls.healthInsuranceName.touched)">
+                                            <span jhiTranslate="student.new.form.responsible.healthInsuranceName-error"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="healthInsuranceReference" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.healthInsuranceReference">student healthInsuranceReference</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="healthInsuranceReference" type="text"
+                                               class="form-control" formControlName="healthInsuranceReference"
+                                               placeholder="{{'student.new.form.healthInsuranceReference-placeholder'|translate}}"
+                                               (keypress)="resetMessages()">
+                                        <div class="messages text-danger"
+                                             *ngIf="studentMedicalInfosForm.controls.healthInsuranceReference.invalid && (studentMedicalInfosForm.controls.healthInsuranceReference.dirty || studentMedicalInfosForm.controls.healthInsuranceReference.touched)">
+                                            <span jhiTranslate="student.new.form.responsible.healthInsuranceReference-error"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="healthInsuranceContact" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.healthInsuranceContact">student healthInsuranceContact</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="healthInsuranceContact" type="text"
+                                               class="form-control" formControlName="healthInsuranceContact"
+                                               placeholder="{{'student.new.form.healthInsuranceContact-placeholder'|translate}}"
+                                               (keypress)="resetMessages()">
+                                        <div class="messages text-danger"
+                                             *ngIf="studentMedicalInfosForm.controls.healthInsuranceContact.invalid && (studentMedicalInfosForm.controls.healthInsuranceContact.dirty || studentMedicalInfosForm.controls.healthInsuranceContact.touched)">
+                                            <span jhiTranslate="student.new.form.responsible.healthInsuranceContact-error"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="complementaryHealthInsurance" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.complementaryHealthInsurance">student complementaryHealthInsurance</span></label>
+                                    <div class="col-sm-8">
+                                        <ui-switch id="complementaryHealthInsurance" class="js-danger" color="#9E4747"
+                                                   size="medium"
+                                                   [formControlName]="'complementaryHealthInsurance'" ngDefaultControl
+                                                   (load)="onComplementaryHealthInsuranceChange($event)" (change)="onComplementaryHealthInsuranceChange($event)"></ui-switch>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="complementaryHealthInsuranceName" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.complementaryHealthInsuranceName">student complementaryHealthInsuranceName</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="complementaryHealthInsuranceName" type="text"
+                                               class="form-control" formControlName="complementaryHealthInsuranceName"
+                                               placeholder="{{'student.new.form.complementaryHealthInsuranceName-placeholder'|translate}}"
+                                               (keypress)="resetMessages()">
+                                        <div class="messages text-danger"
+                                             *ngIf="studentMedicalInfosForm.controls.complementaryHealthInsuranceName.invalid && (studentMedicalInfosForm.controls.complementaryHealthInsuranceName.dirty || studentMedicalInfosForm.controls.complementaryHealthInsuranceName.touched)">
+                                            <span jhiTranslate="student.new.form.responsible.complementaryHealthInsuranceName-error"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="complementaryHealthInsuranceReference" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.complementaryHealthInsuranceReference">student complementaryHealthInsuranceReference</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="complementaryHealthInsuranceReference" type="text"
+                                               class="form-control" formControlName="complementaryHealthInsuranceReference"
+                                               placeholder="{{'student.new.form.complementaryHealthInsuranceReference-placeholder'|translate}}"
+                                               (keypress)="resetMessages()">
+                                        <div class="messages text-danger"
+                                             *ngIf="studentMedicalInfosForm.controls.complementaryHealthInsuranceReference.invalid && (studentMedicalInfosForm.controls.complementaryHealthInsuranceReference.dirty || studentMedicalInfosForm.controls.complementaryHealthInsuranceReference.touched)">
+                                            <span jhiTranslate="student.new.form.responsible.complementaryHealthInsuranceReference-error"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="complementaryHealthInsuranceContact" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.complementaryHealthInsuranceContact">student complementaryHealthInsuranceContact</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="complementaryHealthInsuranceContact" type="text"
+                                               class="form-control" formControlName="complementaryHealthInsuranceContact"
+                                               placeholder="{{'student.new.form.complementaryHealthInsuranceContact-placeholder'|translate}}"
+                                               (keypress)="resetMessages()">
+                                        <div class="messages text-danger"
+                                             *ngIf="studentMedicalInfosForm.controls.complementaryHealthInsuranceContact.invalid && (studentMedicalInfosForm.controls.complementaryHealthInsuranceContact.dirty || studentMedicalInfosForm.controls.complementaryHealthInsuranceContact.touched)">
+                                            <span jhiTranslate="student.new.form.responsible.complementaryHealthInsuranceContact-error"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </wizard-step>
+                        <wizard-step (stepEnter)="enterStep(4)" [navigationSymbol]="{ symbol: '2' }">
+                            <ng-template wizardStepTitle>
+                                {{'student.new.form.steps.step-5-canteen-infos'|translate}}
+                            </ng-template>
+                            <div class="form-group row">
+                                <div class="sub-title col-md-12">
+                                    <div class="float-left">
+                                        <h4 style="margin-top: 15px" jhiTranslate="student.new.form.steps.step-5-canteen-infos-title"></h4>
+                                    </div>
+                                    <div class="float-right">
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="previousStep-4"
+                                                previousStep>
+                                            <i class="mdi mdi-arrow-left-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.previousStep">Previous</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="nextStep-4"
+                                                nextStep>
+                                            <i class="mdi mdi-arrow-right-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.nextStep">Next</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <form novalidate [formGroup]="studentCanteenForm">
+                                <div class="form-group row">
+                                    <label for="canteenRecorded" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.canteenRecorded">student canteenRecorded</span></label>
+                                    <div class="col-sm-4">
+                                        <ui-switch id="canteenRecorded" class="js-danger" color="#9E4747"
+                                                   size="medium"
+                                                   formControlName="recorded" ngDefaultControl
+                                                   (load)="onCanteenRecordedChange($event)" (change)="onCanteenRecordedChange($event)"></ui-switch>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="canteenBreakfast" class="col-form-label">
+                                                <span jhiTranslate="student.new.form.canteenBreakfast">student canteenBreakfast</span></label>
+                                            <div class="col-sm-8">
+                                                <ui-switch id="canteenBreakfast" class="js-danger" color="#9E4747"
+                                                           size="medium"
+                                                           [formControlName]="'breakfast'" ngDefaultControl
+                                                           (load)="onCanteenBreakfastChange($event)" (change)="onCanteenBreakfastChange($event)"></ui-switch>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="canteenLunch" class="col-form-label">
+                                                <span jhiTranslate="student.new.form.canteenLunch">student canteenLunch</span></label>
+                                            <div class="col-sm-8">
+                                                <ui-switch id="canteenLunch" class="js-danger" color="#9E4747"
+                                                           size="medium"
+                                                           [formControlName]="'lunch'" ngDefaultControl
+                                                           (load)="onCanteenLunchChange($event)" (change)="onCanteenLunchChange($event)"></ui-switch>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="canteenDinner" class="col-form-label">
+                                                <span jhiTranslate="student.new.form.canteenDinner">student canteenDinner</span></label>
+                                            <div class="col-sm-8">
+                                                <ui-switch id="canteenDinner" class="js-danger" color="#9E4747"
+                                                           size="medium"
+                                                           [formControlName]="'dinner'" ngDefaultControl
+                                                           (load)="onCanteenDinnerChange($event)" (change)="onCanteenDinnerChange($event)"></ui-switch>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="canteenWeekDays" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.canteenWeekDays">canteenWeekDays</span> <span style="color: #c75b58;">*</span>
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <div class="border-checkbox-section" id="canteenWeekDays">
+                                            <div class="border-checkbox-group border-checkbox-group-primary" *ngFor="let day of canteenWeekdaysOption; let i = index;">
+                                                <input id="canteenWeekDays-{{day['code']|translate}}" class="border-checkbox" type="checkbox" [value]="day"
+                                                       (change)="changeCanteenWeekDay(day, $event)" [checked]="isCanteenWeekDayChecked(day)"/>
+                                                <label id="canteenWeekDays-label-{{day['code']|translate}}" class="border-checkbox-label"
+                                                       for="canteenWeekDays-{{day['code']|translate}}">{{day['code']|translate}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="messages text-danger"
+                                             *ngIf="studentCanteenForm.controls.weekDays.invalid && (studentCanteenForm.controls.weekDays.dirty || studentCanteenForm.controls.weekDays.touched)">
+                                                        <span jhiTranslate="student.new.form.weekDays-error"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="canteenSubscriptionPeriodStart" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.subscriptionPeriodStart">Student canteen subscriptionPeriodStart</span> <span style="color: #c75b58;">*</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <mat-form-field class="input-group">
+                                            <input id="canteenSubscriptionPeriodStart" matInput [matDatepicker]="subscriptionPeriodStartPicker"
+                                                   placeholder="{{'student.new.form.responsible.subscription-period-start-placeholder'|translate}}"
+                                                   formControlName="subscriptionPeriodStart" (click)="subscriptionPeriodStartPicker.open()" class="form-control">
+                                            <mat-datepicker-toggle matSuffix [for]="subscriptionPeriodStartPicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #subscriptionPeriodStartPicker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="canteenSubscriptionPeriodEnd" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.subscriptionPeriodEnd">Student canteen subscriptionPeriodEnd</span> <span style="color: #c75b58;">*</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <mat-form-field class="input-group">
+                                            <input id="canteenSubscriptionPeriodEnd" matInput [matDatepicker]="subscriptionPeriodEndPicker"
+                                                   placeholder="{{'student.new.form.responsible.subscription-period-end-placeholder'|translate}}"
+                                                   formControlName="subscriptionPeriodEnd" (click)="subscriptionPeriodEndPicker.open()" class="form-control">
+                                            <mat-datepicker-toggle matSuffix [for]="subscriptionPeriodEndPicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #subscriptionPeriodEndPicker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </form>
+                        </wizard-step>
+                        <wizard-step (stepEnter)="enterStep(5)" [navigationSymbol]="{ symbol: '2' }">
+                            <ng-template wizardStepTitle>
+                                {{'student.new.form.steps.step-6-residential-school'|translate}}
+                            </ng-template>
+                            <div class="form-group row">
+                                <div class="sub-title col-md-12">
+                                    <div class="float-left">
+                                        <h4 style="margin-top: 15px" jhiTranslate="student.new.form.steps.step-6-residential-school-title"></h4>
+                                    </div>
+                                    <div class="float-right">
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="previousStep-5"
+                                                previousStep>
+                                            <i class="mdi mdi-arrow-left-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.previousStep">Previous</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="nextStep-5"
+                                                nextStep>
+                                            <i class="mdi mdi-arrow-right-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.nextStep">Next</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <form novalidate [formGroup]="studentResidentialSchoolForm">
+                                <div class="form-group row">
+                                    <label for="residentialSchoolRegistered" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.residentialSchoolRegistered">student residentialSchoolRegistered</span></label>
+                                    <div class="col-sm-4">
+                                        <ui-switch id="residentialSchoolRegistered" class="js-danger" color="#9E4747"
+                                                   size="medium"
+                                                   [formControlName]="'registered'" ngDefaultControl
+                                                   (load)="onResidentialSchoolRegisteredChange($event)" (change)="onResidentialSchoolRegisteredChange($event)"></ui-switch>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="residentialSchoolName" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.residentialSchoolName">Student residentialSchoolName</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="residentialSchoolName" type="text" class="form-control" formControlName="name"
+                                               placeholder="{{'student.new.form.residentialSchoolName-placeholder'|translate}}"
+                                               (keypress)="resetMessages()">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="residentialSchoolPeriodStart" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.residentialSchoolPeriodStart">Student residentialSchoolPeriodStart</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <mat-form-field class="input-group">
+                                            <input id="residentialSchoolPeriodStart" matInput [matDatepicker]="residentialSchoolPeriodStartPicker"
+                                                   placeholder="{{'student.new.form.responsible.residential-school-period-start-placeholder'|translate}}"
+                                                   formControlName="periodStart" (click)="residentialSchoolPeriodStartPicker.open()" class="form-control">
+                                            <mat-datepicker-toggle matSuffix [for]="residentialSchoolPeriodStartPicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #residentialSchoolPeriodStartPicker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="residentialSchoolPeriodEnd" class="col-sm-4 col-form-label">
+                                        <span jhiTranslate="student.new.form.residentialSchoolPeriodEnd">Student residentialSchoolPeriodEnd</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <mat-form-field class="input-group">
+                                            <input id="residentialSchoolPeriodEnd" matInput [matDatepicker]="residentialSchoolPeriodEndPicker"
+                                                   placeholder="{{'student.new.form.responsible.residential-school-period-end-placeholder'|translate}}"
+                                                   formControlName="periodEnd" (click)="residentialSchoolPeriodEndPicker.open()" class="form-control">
+                                            <mat-datepicker-toggle matSuffix [for]="residentialSchoolPeriodEndPicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #residentialSchoolPeriodEndPicker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </form>
+                        </wizard-step>
+                        <wizard-step
+                            (stepEnter)="enterStep(6)" [navigationSymbol]="{ symbol: '2' }">
+                            <ng-template wizardStepTitle>
+                                {{'student.new.form.steps.step-7-final'|translate}}
+                            </ng-template>
+                            <div class="form-group row">
+                                <div class="sub-title col-md-12">
+                                    <div class="float-left">
+                                        <h4 style="margin-top: 15px" jhiTranslate="student.new.form.steps.step-7-final-title"></h4>
+                                    </div>
+                                    <div class="float-right">
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="previousStep-6"
+                                                previousStep>
+                                            <i class="mdi mdi-arrow-left-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.previousStep">Previous</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="nextStep-6"
+                                                [disabled]="true" nextStep>
+                                            <i class="mdi mdi-arrow-right-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.nextStep">Next</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12 col-xl-6">
+                                    <h4 class="sub-title"><span jhiTranslate="student.new.form.steps.step-1-user-infos-title"></span></h4>
+                                    <ul>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.login"></span> :
+                                            <strong id="finalLogin">{{studentUserForm.controls.login.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.firstName"></span> :
+                                            <strong id="finalFirstName">{{studentUserForm.controls.firstName.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.lastName"></span> :
+                                            <strong id="finalLastName">{{studentUserForm.controls.lastName.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.sex"></span> :
+                                            <strong id="finalSex">{{studentUserForm.controls.sex.value|translate}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.email"></span> :
+                                            <strong id="finalEmail">{{studentUserForm.controls.email.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.birthDate"></span> :
+                                            <strong id="finalBirthDate">{{studentUserForm.controls.birthDate.value|date:dateHelper.dateFormat()}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.nationality"></span> :
+                                            <strong id="finalNationality">{{studentUserForm.controls.nationality.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.addressName"></span> :
+                                            <strong id="finalAddressName">{{studentUserForm.controls.addressName.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.postalCode"></span> :
+                                            <strong id="finalPostalCode">{{studentUserForm.controls.postalCode.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.city"></span> :
+                                            <strong id="finalCity">{{studentUserForm.controls.city.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.country"></span> :
+                                            <strong id="finalCountry">{{studentUserForm.controls.country.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.comment"></span> :
+                                            <strong id="finalComment">{{studentUserForm.controls.comment.value}}</strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-12 col-xl-6">
+                                    <h4 class="sub-title"><span jhiTranslate="student.new.form.steps.step-2-scholar-infos-title"></span></h4>
+                                    <ul>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.nationalNumber"></span> :
+                                            <strong id="finalNationalNumber">{{studentScholarInfosForm.controls.nationalNumber.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.redoubling"></span> :
+                                            <strong>
+                                                <span *ngIf="studentScholarInfosForm.controls.redoubling.value"><span id="finalRedoublingYes" jhiTranslate="global.yes"></span></span>
+                                                <span *ngIf="!studentScholarInfosForm.controls.redoubling.value"><span id="finalRedoublingNo" jhiTranslate="global.no"></span></span>
+                                            </strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.entryDate"></span> :
+                                            <strong id="finalEntryDate">{{studentScholarInfosForm.controls.entryDate.value|date:dateHelper.dateFormat()}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.originEstablishment"></span> :
+                                            <strong id="finalOriginEstablishment">{{studentScholarInfosForm.controls.originEstablishment.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.individualizedReceptionPlan"></span> :
+                                            <strong>
+                                                <span *ngIf="studentScholarInfosForm.controls.individualizedReceptionPlan.value"><span id="finalIndividualizedReceptionPlanYes" jhiTranslate="global.yes"></span></span>
+                                                <span *ngIf="!studentScholarInfosForm.controls.individualizedReceptionPlan.value"><span id="finalIndividualizedReceptionPlanNo" jhiTranslate="global.no"></span></span>
+                                            </strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.individualizedReceptionPlanContent"></span> :
+                                            <strong id="finalIndividualizedReceptionPlan">{{studentScholarInfosForm.controls.individualizedReceptionPlanContent.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.personalizedSchoolingPlan"></span> :
+                                            <strong id="finalPersonalizedSchoolingPlan">
+                                                <span *ngIf="studentScholarInfosForm.controls.personalizedSchoolingPlan.value"><span jhiTranslate="global.yes"></span></span>
+                                                <span *ngIf="!studentScholarInfosForm.controls.personalizedSchoolingPlan.value"><span jhiTranslate="global.no"></span></span>
+                                            </strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.personalizedSchoolingPlanContent"></span> :
+                                            <strong id="finalPersonalizedSchoolingPlanContent">{{studentScholarInfosForm.controls.personalizedSchoolingPlanContent.value}}</strong>
+                                        </li>
+                                        <li *ngIf="routeState === 'edit'">
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.exitDate"></span> :
+                                            <strong id="finalExitDate">{{studentScholarInfosForm.controls.exitDate.value|date:dateHelper.dateFormat()}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.exitReason"></span> :
+                                            <strong id="finalExitReason">{{studentScholarInfosForm.controls.exitReason.value|date:dateHelper.dateFormat()}}</strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12 col-xl-6">
+                                    <h4 class="sub-title"><span jhiTranslate="student.new.form.steps.step-4-medical-infos"></span></h4>
+                                    <ul>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.knownDiseases"></span> :
+                                            <strong id="finalKnownDiseases">{{studentMedicalInfosForm.controls.knownDiseases.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.allergies"></span> :
+                                            <strong id="finalAllergies">{{studentMedicalInfosForm.controls.allergies.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.healthInsurance"></span> :
+                                            <strong id="finalHealthInsurance">{{studentMedicalInfosForm.controls.healthInsurance.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.healthInsuranceName"></span> :
+                                            <strong id="finalHealthInsuranceName">{{studentMedicalInfosForm.controls.healthInsuranceName.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.healthInsuranceReference"></span> :
+                                            <strong id="finalHealthInsuranceReference">{{studentMedicalInfosForm.controls.healthInsuranceReference.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.healthInsuranceContact"></span> :
+                                            <strong id="finalHealthInsuranceContact">{{studentMedicalInfosForm.controls.healthInsuranceContact.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.complementaryHealthInsurance"></span> :
+                                            <strong id="finalComplementaryHealthInsurance">{{studentMedicalInfosForm.controls.complementaryHealthInsurance.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.complementaryHealthInsuranceName"></span> :
+                                            <strong id="finalComplementaryHealthInsuranceName">{{studentMedicalInfosForm.controls.complementaryHealthInsuranceName.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.complementaryHealthInsuranceReference"></span> :
+                                            <strong id="finalComplementaryHealthInsuranceReference">{{studentMedicalInfosForm.controls.complementaryHealthInsuranceReference.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.complementaryHealthInsuranceContact"></span> :
+                                            <strong id="finalComplementaryHealthInsuranceContact">{{studentMedicalInfosForm.controls.complementaryHealthInsuranceContact.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.healthComment"></span> :
+                                            <strong id="finalHealthComment">{{studentMedicalInfosForm.controls.healthComment.value}}</strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group row" style="margin-top: 35px">
+                                <div class="col-sm-12 col-xl-12">
+                                    <h4 class="sub-title"><span jhiTranslate="student.new.form.steps.responsibleAccountLogin"></span></h4>
+                                    <ul>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.responsibleAccountLogin"></span> :
+                                            <strong id="finalResponsibleAccountLogin">{{studentResponsibleAccountForm.controls.respLogin.value}}</strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group row" style="margin-top: 35px">
+                                <div class="col-sm-12 col-xl-12">
+                                    <h4 class="sub-title"><span jhiTranslate="student.new.form.steps.step-3-responsibles-title"></span></h4>
+                                    <div *ngFor="let responsibleFormGroup of studentResponsiblesForm.get('responsibles')['controls']; let i = index">
+                                        <h6> <!--style="float: left;"--><span jhiTranslate="student.new.form.responsible.title"></span> {{i + 1}}</h6>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-xl-6">
+                                                    <ul>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.firstName"></span> :
+                                                            <strong id="finalResponsibleFirstName-{{i}}">{{responsibleFormGroup.controls.firstName.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.lastName"></span> :
+                                                            <strong id="finalResponsibleLastName-{{i}}">{{responsibleFormGroup.controls.lastName.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.sex"></span> :
+                                                            <strong id="finalResponsibleSex-{{i}}">{{responsibleFormGroup.controls.sex.value|translate}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.birthDate"></span> :
+                                                            <strong id="finalResponsibleBirthDate-{{i}}">{{responsibleFormGroup.controls.birthDate.value|date:dateHelper.dateFormat()}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.nationality"></span> :
+                                                            <strong id="finalResponsibleNationality-{{i}}">{{responsibleFormGroup.controls.nationality.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.addressName"></span> :
+                                                            <strong id="finalResponsibleAddressName-{{i}}">{{responsibleFormGroup.controls.addressName.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.postalCode"></span> :
+                                                            <strong id="finalResponsiblePostalCode-{{i}}">{{responsibleFormGroup.controls.postalCode.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.city"></span> :
+                                                            <strong id="finalResponsibleCity-{{i}}">{{responsibleFormGroup.controls.city.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.country"></span> :
+                                                            <strong id="finalResponsibleCountry-{{i}}">{{responsibleFormGroup.controls.country.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.phone"></span> :
+                                                            <strong id="finalResponsiblePhone-{{i}}">{{responsibleFormGroup.controls.phone.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.cellPhone"></span> :
+                                                            <strong id="finalResponsibleCellPhone-{{i}}">{{responsibleFormGroup.controls.cellPhone.value}}</strong>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-sm-12 col-xl-6">
+                                                    <ul>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.email"></span> :
+                                                            <strong id="finalResponsibleEmail-{{i}}">{{responsibleFormGroup.controls.email.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.secondaryEmail"></span> :
+                                                            <strong id="finalResponsibleSecondaryEmail-{{i}}">{{responsibleFormGroup.controls.secondaryEmail.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.familySituation"></span> :
+                                                            <strong id="finalResponsibleFamilySituation-{{i}}">{{responsibleFormGroup.controls.familySituation.value|translate}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.studentRelationship"></span> :
+                                                            <strong id="finalResponsibleStudentRelationship-{{i}}">{{responsibleFormGroup.controls.studentRelationship.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.dependentChildren"></span> :
+                                                            <strong id="finalResponsibleDependentChildren-{{i}}">{{responsibleFormGroup.controls.dependentChildren.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.profession"></span> :
+                                                            <strong id="finalResponsibleProfession-{{i}}">{{responsibleFormGroup.controls.profession.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.proEmail"></span> :
+                                                            <strong id="finalResponsibleProEmail-{{i}}">{{responsibleFormGroup.controls.proEmail.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.workPhone"></span> :
+                                                            <strong id="finalResponsibleWorkPhone-{{i}}">{{responsibleFormGroup.controls.workPhone.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.workCellPhone"></span> :
+                                                            <strong id="finalResponsibleWorkCellPhone-{{i}}">{{responsibleFormGroup.controls.workCellPhone.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.parentsAssociation"></span> :
+                                                            <strong id="finalResponsibleParentsAssociation-{{i}}">{{responsibleFormGroup.controls.parentsAssociation.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.parentsAssociationPosition"></span> :
+                                                            <strong id="finalResponsibleParentsAssociationPosition-{{i}}">{{responsibleFormGroup.controls.parentsAssociationPosition.value}}</strong>
+                                                        </li>
+                                                        <li>
+                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                            <span jhiTranslate="student.new.form.responsible.comment"></span> :
+                                                            <strong id="finalResponsibleComment-{{i}}">{{responsibleFormGroup.controls.comment.value}}</strong>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12 col-xl-6">
+                                    <h4 class="sub-title"><span jhiTranslate="student.new.form.steps.step-5-canteen-infos-title"></span></h4>
+                                    <ul>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.canteenRecorded"></span> :
+                                            <strong>
+                                                <span id="finalCanteenRecordedYes" *ngIf="studentCanteenForm.controls.recorded.value" jhiTranslate="global.yes"></span>
+                                                <span id="finalCanteenRecordedNo" *ngIf="!studentCanteenForm.controls.recorded.value" jhiTranslate="global.no"></span>
+                                            </strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.canteenBreakfast"></span> :
+                                            <strong>
+                                                <span id="finalCanteenBreakfastYes" *ngIf="studentCanteenForm.controls.breakfast.value" jhiTranslate="global.yes"></span>
+                                                <span id="finalCanteenBreakfastNo" *ngIf="!studentCanteenForm.controls.breakfast.value" jhiTranslate="global.no"></span>
+                                            </strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.canteenLunch"></span> :
+                                            <strong>
+                                                <span id="finalCanteenLunchYes" *ngIf="studentCanteenForm.controls.lunch.value" jhiTranslate="global.yes"></span>
+                                                <span id="finalCanteenLunchNo" *ngIf="!studentCanteenForm.controls.lunch.value" jhiTranslate="global.no"></span>
+                                            </strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.canteenDinner"></span> :
+                                            <strong>
+                                                <span id="finalCanteenDinnerYes" *ngIf="studentCanteenForm.controls.dinner.value" jhiTranslate="global.yes"></span>
+                                                <span id="finalCanteenDinnerNo" *ngIf="!studentCanteenForm.controls.dinner.value" jhiTranslate="global.no"></span>
+                                            </strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.canteenWeekDays"></span> :
+                                            <div style="margin-left: 30px;" *ngFor="let weekDay of studentCanteenForm.controls.weekDays.value; let i= index">
+                                                <ul>
+                                                    <li>
+                                                        <i class="icofont icofont-right"></i>
+                                                        <strong id="finalCanteenWeekDays-{{i}}">{{weekDay.code|translate}}</strong>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.subscriptionPeriodStart"></span> :
+                                            <strong id="finalSubscriptionPeriodStart">{{studentCanteenForm.controls.subscriptionPeriodStart.value|date:dateHelper.dateFormat()}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.subscriptionPeriodEnd"></span> :
+                                            <strong id="finalSubscriptionPeriodEnd">{{studentCanteenForm.controls.subscriptionPeriodEnd.value|date:dateHelper.dateFormat()}}</strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-12 col-xl-6">
+                                    <h4 class="sub-title"><span jhiTranslate="student.new.form.steps.step-6-residential-school-title"></span></h4>
+                                    <ul>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.residentialSchoolRegistered"></span> :
+                                            <strong>
+                                                <span id="finalResidentialSchoolRegisteredYes" *ngIf="studentResidentialSchoolForm.controls.registered.value" jhiTranslate="global.yes"></span>
+                                                <span id="finalResidentialSchoolRegisteredNo" *ngIf="!studentResidentialSchoolForm.controls.registered.value" jhiTranslate="global.no"></span>
+                                            </strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.residentialSchoolName"></span> :
+                                            <strong id="finalResidentialSchoolName">{{studentResidentialSchoolForm.controls.name.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.residentialSchoolPeriodStart"></span> :
+                                            <strong id="finalResidentialSchoolPeriodStart">{{studentResidentialSchoolForm.controls.periodStart.value|date:dateHelper.dateFormat()}}</strong>
+                                        </li>
+                                        <li>
+                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                            <span jhiTranslate="student.new.form.residentialSchoolPeriodEnd"></span> :
+                                            <strong id="finalResidentialSchoolPeriodEnd">{{studentResidentialSchoolForm.controls.periodEnd.value|date:dateHelper.dateFormat()}}</strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </wizard-step>
+                    </wizard>
+                </div>
+            </jhi-card>
+        </div>
+    </div>
+</div>

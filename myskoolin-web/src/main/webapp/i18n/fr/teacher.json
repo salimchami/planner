@@ -1,0 +1,158 @@
+{
+    "teacher": {
+        "home": {
+            "title": "Professeurs",
+            "createLabel": "Créer un nouveau professeur",
+            "createOrEditLabel": "Créer ou éditer un nouveau professeur",
+            "search-placeholder": "Nom du professeur",
+            "datatable": {
+                "headers": {
+                    "name": "Nom",
+                    "birthDate": "Date de naissance",
+                    "schoolClasses": "Classes",
+                    "photo": "Photo",
+                    "firstName": "Prénom",
+                    "lastName": "Nom",
+                    "sex": "Sexe",
+                    "imageUrl": "Photo",
+                    "cellPhone": "Mobile",
+                    "proCellPhone": "Mobile pro",
+                    "email": "E-Mail",
+                    "proEmail": "E-Mail pro",
+                    "absentNow": "Absent"
+                }
+            }
+        },
+        "view": {
+            "title": "Professeur",
+            "goback": "Retour",
+            "edit": "Modifier",
+            "delete": "Supprimer",
+            "tab-user-infos-title": "Fiche",
+            "tab-timetable-title": "EDT",
+            "tab-continual-assessment-title": "Contrôle continu",
+            "tab-absences-title": "Absences",
+            "tab-daily-book-title": "Cahier de texte",
+            "infos-title": {
+                "user-infos-title": "Informations basiques",
+                "professional-infos-title": "Informations professionnelles",
+                "medical-infos-title": "Informations médicales"
+            },
+            "knownDiseases": "Maladies déclarées",
+            "allergies": "Allergies",
+            "healthInsurance": "Assurance maladie",
+            "healthInsuranceName": "Nom assurance",
+            "healthInsuranceReference": "Référence assurance",
+            "healthInsuranceContact": "Contact assurance",
+            "complementaryHealthInsurance": "Assurance complémentaire",
+            "complementaryHealthInsuranceName": "Nom assurance complémentaire",
+            "complementaryHealthInsuranceReference": "Référence assurance complémentaire",
+            "complementaryHealthInsuranceContact": "Contact assurance complémentaire",
+            "healthComment": "Commentaire",
+            "substitute": "Professeur(e) remplaçant(e)",
+            "substitutedTeachers": "Professeurs remplacés",
+            "grades": "Niveaux scolaires",
+            "taughtSubjects": "Matières enseignées",
+            "employedDate": "Date d'entrée dans l'établissement",
+            "proCellPhone": "Téléphone mobile professionnel",
+            "proEmail": "Email professionnel",
+            "timetable": {
+                "no-timetable": "Aucun emploi du temps généré."
+            },
+            "daily-book": {
+                "no-daily-book": "Aucun cahier de texte créé."
+            },
+            "continuous-assessment": {
+                "no-continuous-assessment": "No scores have been added yet."
+            },
+            "absences": {
+                "no-absences": "Aucune absence."
+            }
+        },
+        "edit": {
+            "title": "Modification professeur",
+            "form": {
+                "toast-title": "Modification professeur",
+                "update-successfull": "Modification effectuée avec succès"
+            }
+        },
+        "new": {
+            "title": "Création d'un nouveau professeur",
+            "form": {
+                "toast-save": "Le professeur a été créé avec succès",
+                "toast-save-title": "Création professeur",
+                "toast-save-error": "La création du professeur a échoué. Veuillez vérifier les éléments saisis.",
+                "toast-save-error-title": "Erreur création professeur",
+                "login": "Nom d'utilisateur",
+                "login-placeholder": "Nom d'utilisateur du professeur",
+                "login-error": "Le nom d'utilisateur est obligatoire",
+                "familySituation": "Situation familiale",
+                "familySituation-placeholder": "Situation familiale du professeur",
+                "familySituation-error": "La situation familiale du professeur est obligatoire",
+                "firstName": "Prénom",
+                "firstName-placeholder": "Prénom du professeur",
+                "firstName-error": "Le prénom est obligatoire",
+                "lastName": "Nom",
+                "lastName-placeholder": "Nom du professeur",
+                "lastName-error": "Le nom est obligatoire",
+                "sex": "Sexe",
+                "sex-error": "Le sexe du professeur est obligatoire",
+                "nationality": "Nationalité",
+                "nationality-placeholder": "Nationalité du professeur",
+                "nationality-error": "La Nationalité est obligatoire",
+                "birthDate": "Date de naissance",
+                "birthDate-placeholder": "Date de naissance du professeur",
+                "birthDate-error": "La date de naissance est obligatoire",
+                "homePhone": "Téléphone fixe",
+                "homePhone-placeholder": "Numéro de téléphone fixe du professeur",
+                "cellPhone": "Téléphone mobile",
+                "cellPhone-placeholder": "Numéro de téléphone mobile du professeur",
+                "cellPhone-error": "Numéro de téléphone mobile du professeur",
+                "proPhone": "Téléphone fixe professionnel",
+                "proPhone-placeholder": "Numéro de téléphone fixe professionnel du professeur",
+                "proCellPhone": "Téléphone mobile professionnel",
+                "proCellPhone-placeholder": "Numéro de téléphone mobile professionnel du professeur",
+                "email": "Email",
+                "email-placeholder": "Email du professeur",
+                "email-error": "Email du professeur",
+                "proEmail": "Email professionnel",
+                "proEmail-placeholder": "Email professionnel du professeur",
+                "postalCode": "Code postal",
+                "postalCode-placeholder": "Code postal du professeur",
+                "postalCode-error": "Le code postal du professeur est obligatoire.",
+                "addressName": "Adresse",
+                "addressName-placeholder": "Adresse du professeur",
+                "addressName-error": "L'adresse du professeur est obligatoire",
+                "city": "Ville",
+                "city-placeholder": "Ville du professeur",
+                "city-error": "La ville du professeur est obligatoire",
+                "country": "Pays",
+                "country-placeholder": "Pays du professeur",
+                "country-error": "Le pays du professeur est obligatoire.",
+                "substitute": "Professeur remplaçant",
+                "grades": "Niveau(x) scolaire(s)",
+                "grades-placeholder": "Niveau(x) scolaire(s) du professeur",
+                "taughtSubjects": "Matière(s) enseignée(s)",
+                "taughtSubjects-placeholder": "Matière(s) enseignée(s) par le professeur",
+                "employedDate": "Date d'embauche",
+                "employedDate-placeholder": "Date d'embauche du professeur",
+                "employedDate-error": "La date d'embauche du professeur est obligatoire.",
+                "exitDate": "Date de départ",
+                "exitDate-placeholder": "Date de départ du professeur",
+                "exitReason": "Motif de départ",
+                "exitReason-placeholder": "Motif de départ du professeur",
+                "comment": "Commentaire",
+                "comment-placeholder": "Commentaire sur le professeur"
+            }
+        },
+        "delete": {
+            "title": "Confirmation de suppression du niveau scolaire {{name}}",
+            "question": "Etes-vous certain de vouloir supprimer la matière {{ name }} ?",
+            "toast-title": "Suppression du niveau scolaire {{name}}",
+            "delete-successfull": "Le niveau scolaire {{name}} a bien été supprimé"
+        },
+        "created": "Un niveau scolaire a été créé avec l'identifiant {{ param }}",
+        "updated": "Le niveau scolaire avec l'identifiant {{ param }} a été mis à jour",
+        "deleted": "Le niveau scolaire avec l'identifiant {{ param }} a été supprimé"
+    }
+}

@@ -1,22 +1,35 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgJhipsterModule } from 'ng-jhipster';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {CommonModule} from '@angular/common';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgJhipsterModule} from 'ng-jhipster';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import {CookieModule} from 'ngx-cookie';
+import {LANGUAGES} from './language/language.constants';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  exports: [
-    FormsModule,
-    CommonModule,
-    NgbModule,
-    NgJhipsterModule,
-    InfiniteScrollModule,
-    FontAwesomeModule,
-    ReactiveFormsModule,
-    TranslateModule,
-  ],
+    imports: [
+        NgbModule.forRoot(),
+        NgJhipsterModule.forRoot({
+            // set below to true to make alerts look like toast
+            alertAsToast: false,
+            i18nEnabled: true,
+            defaultI18nLang: LANGUAGES.FR
+        }),
+        InfiniteScrollModule,
+        FontAwesomeModule,
+        CookieModule.forRoot(),
+    ],
+    exports: [
+        FormsModule,
+        HttpClientModule,
+        CommonModule,
+        NgbModule,
+        NgJhipsterModule,
+        InfiniteScrollModule
+    ]
 })
-export class MyskoolinSharedLibsModule {}
+export class SchoolmeSharedLibsModule {
+}

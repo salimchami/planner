@@ -1,11 +1,13 @@
 import { Route } from '@angular/router';
 
-import { ConfigurationComponent } from './configuration.component';
+import { JhiConfigurationComponent } from './configuration.component';
+import {Authorities} from '../../shared';
 
 export const configurationRoute: Route = {
-  path: '',
-  component: ConfigurationComponent,
-  data: {
-    pageTitle: 'configuration.title',
-  },
+    path: 'jhi-configuration',
+    component: JhiConfigurationComponent,
+    data: {
+        authorities: [Authorities.ROLE_SCHOOLME_ADMIN],
+        pageTitle: 'configuration.title'
+    }
 };

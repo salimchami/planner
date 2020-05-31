@@ -1,14 +1,39 @@
-import Spy = jasmine.Spy;
-import { JhiLanguageService } from 'ng-jhipster';
-
 import { SpyObject } from './spyobject';
+import { JhiLanguageService } from 'ng-jhipster';
+import { JhiLanguageHelper } from './../../../../main/webapp/app/shared/language/language.helper';
+import Spy = jasmine.Spy;
+import {LANGUAGES} from '../../../../main/webapp/app/shared';
 
 export class MockLanguageService extends SpyObject {
-  getCurrentLanguageSpy: Spy;
 
-  constructor() {
-    super(JhiLanguageService);
+    getCurrentSpy: Spy;
+    fakeResponse: any;
 
-    this.getCurrentLanguageSpy = this.spy('getCurrentLanguage').andReturn('en');
-  }
+    constructor() {
+        super(JhiLanguageService);
+
+        this.fakeResponse = 'en';
+        this.getCurrentSpy = this.spy('getCurrent').andReturn(Promise.resolve(this.fakeResponse));
+    }
+
+    init() {}
+
+    changeLanguage(languageKey: string) {}
+
+    setLocations(locations: string[]) {}
+
+    addLocation(location: string) {}
+
+    reload() {}
+}
+
+export class MockLanguageHelper extends SpyObject {
+
+    getAllSpy: Spy;
+
+    constructor() {
+        super(JhiLanguageHelper);
+
+        this.getAllSpy = this.spy('getAll').andReturn(Promise.resolve([LANGUAGES.EN, LANGUAGES.FR]));
+    }
 }

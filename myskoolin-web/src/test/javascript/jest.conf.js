@@ -1,22 +1,22 @@
 const tsconfig = require('../../../tsconfig.json');
 
 module.exports = {
-    preset: 'jest-preset-angular',
-    setupFiles: ['jest-date-mock'],
-    setupFilesAfterEnv: ['<rootDir>/src/test/javascript/jest.ts'],
     cacheDirectory: '<rootDir>/target/jest-cache',
     coverageDirectory: '<rootDir>/target/test-results/',
     globals: {
         'ts-jest': {
             stringifyContentPathRegex: '\\.html$',
-            tsConfig: '<rootDir>/tsconfig.json',
-            astTransformers: ['jest-preset-angular/build/InlineFilesTransformer', 'jest-preset-angular/build/StripStylesTransformer']
+            tsConfig: '<rootDir>/tsconfig.json'
         }
     },
+    'transform': {
+        "^.+\\.[t|j]sx?$": "babel-jest"
+        // "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    moduleNameMapper: mapTypescriptAliasToJestAlias(),
     coveragePathIgnorePatterns: [
         '<rootDir>/src/test/javascript'
     ],
-    moduleNameMapper: mapTypescriptAliasToJestAlias(),
     reporters: [
         'default',
         [ 'jest-junit', { outputDirectory: './target/test-results/', outputName: 'TESTS-results-jest.xml' } ]
@@ -34,12 +34,10 @@ function mapTypescriptAliasToJestAlias(alias = {}) {
         return jestAliases;
     }
     Object.entries(tsconfig.compilerOptions.paths)
-        .filter(([key, value]) => {
+        .filter(([, value]) => {
             // use Typescript alias in Jest only if this has value
-            if (value.length) {
-                return true;
-            }
-            return false;
+            return !!value.length;
+
         })
         .map(([key, value]) => {
             // if Typescript alias ends with /* then in Jest:
@@ -48,7 +46,12 @@ function mapTypescriptAliasToJestAlias(alias = {}) {
             const regexToReplace = /(.*)\/\*$/;
             const aliasKey = key.replace(regexToReplace, '$1/(.*)');
             const aliasValue = value[0].replace(regexToReplace, '$1/$$1');
-            return [aliasKey, `<rootDir>/${aliasValue}`];
+            if(aliasValue.includes('@')) {
+                return [aliasKey, `<rootDir>/schoolme-app/${aliasValue}`];
+            } else {
+                return [aliasKey, `<rootDir>/${aliasValue}`];
+            }
+
         })
         .reduce((aliases, [key, value]) => {
             aliases[key] = value;

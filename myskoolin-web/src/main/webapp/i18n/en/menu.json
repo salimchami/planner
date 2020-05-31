@@ -1,0 +1,74 @@
+{
+    "menu": {
+        "dashboards": {
+            "title": "Dashboards",
+            "home": "Home"
+        },
+        "schooling": {
+            "title": "Schooling"
+        },
+        "students": {
+            "title": "Students",
+            "title-more": "Students - Schooling",
+            "list": "List",
+            "absences": "Absences",
+            "delays": "Delays",
+            "sanctions": "Sanctions",
+            "timetables": "Timetables",
+            "school-reports": "School reports",
+            "continual-assessment": "Continual assessment",
+            "orientation": "Orientation"
+        },
+        "school-classes": {
+            "title": "School classes",
+            "title-more": "School classes - Schooling",
+            "list": "List",
+            "timetables": "Timetables",
+            "daily-book": "Daily book",
+            "continual-assessment": "Continual assessment",
+            "absences": "Absences",
+            "delays": "Delays",
+            "sanctions": "Sanctions",
+            "school-reports": "School reports"
+        },
+        "parents": {
+            "title": "Responsibles",
+            "list": "List"
+        },
+        "institution": {
+            "title": "Institution",
+            "school-rooms": "School rooms",
+            "infirmary": "Infirmary",
+            "canteen": "Canteen",
+            "staff": "Staff"
+        },
+        "timetables": {
+            "title": "Timetables",
+            "list": "List",
+            "generation": "Automatic generation"
+        },
+        "staff": {
+            "title": "Staff",
+            "other-staff": "Other"
+        },
+        "teachers": {
+            "title": "Teachers"
+        },
+        "subjects": {
+            "title": "Subjects"
+        },
+        "settings": {
+            "title": "Settings",
+            "school-account-settings": "Account settings",
+            "contract": "Contract"
+        },
+        "finance": {
+            "title": "Finance",
+            "tuition-fees": "Tuition fees"
+        },
+        "grades": {
+            "title": "Grades",
+            "list": "List"
+        }
+    }
+}

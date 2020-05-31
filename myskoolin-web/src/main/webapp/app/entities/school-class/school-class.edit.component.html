@@ -1,0 +1,408 @@
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-lg-8 center-block text-center" style="font-size: large">
+                        <div [ngSwitch]="routeState">
+                            <h2 *ngSwitchCase="'new'" class="card-header-text">
+                                <span jhiTranslate="schoolClass.new.title"></span>
+                                <span *ngIf="schoolClassForm.controls.name.value">"{{schoolClassForm.controls.name.value}}"</span>
+                            </h2>
+                            <h2 *ngSwitchCase="'edit'" class="card-header-text">
+                                <span jhiTranslate="schoolClass.edit.title"></span>
+                                <span *ngIf="schoolClassForm.controls.name.value">"{{schoolClassForm.controls.name.value}}"</span>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="float-right">
+                            <button type="button" class="btn btn-secondary btn-mat m-b-0" id="cancel" (click)="goBack()">
+                                <i class="mdi mdi-cancel mdi-18px"></i>
+                                <span jhiTranslate="global.buttons.cancel">Cancel</span>
+                            </button>
+                            <button type="submit" class="btn btn-primary btn-mat m-b-0" id="submit" [disabled]="!schoolClassForm.valid"
+                                    (click)="createOrUpdateSchoolClass()">
+                                    <span [ngSwitch]="routeState">
+                                        <span *ngSwitchCase="'new'">
+                                            <i class="mdi mdi-plus mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.create">Create</span>
+                                        </span>
+                                        <span *ngSwitchCase="'edit'">
+                                            <i class="mdi mdi-pencil-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.update">Update</span>
+                                        </span>
+                                    </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <jhi-card [classHeader]="true" [cardOptionBlock]="true">
+                <div class="row">
+                    <wizard class="col-md-12">
+                        <wizard-step (stepEnter)="enterStep(0)" [navigationSymbol]="{ symbol: '2' }">
+                            <ng-template wizardStepTitle>
+                                {{'schoolClass.new.form.steps.step-1-schoolclass-infos'|translate}}
+                            </ng-template>
+                            <div class="form-group row">
+                                <div class="sub-title col-md-12">
+                                    <div class="float-left">
+                                        <h4 style="margin-top: 15px" jhiTranslate="schoolClass.new.form.steps.step-1-schoolclass-infos-title"></h4>
+                                    </div>
+                                    <div class="float-right">
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="previousStep-0"
+                                                [disabled]="true" previousStep>
+                                            <i class="mdi mdi-arrow-left-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.previousStep">Previous</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="nextStep-0"
+                                                nextStep>
+                                            <i class="mdi mdi-arrow-right-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.nextStep">Next</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form novalidate [formGroup]="schoolClassForm">
+                                        <div class="form-group row">
+                                            <label for="name" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="schoolClass.new.form.name">SchoolClass name</span> <span style="color: #c75b58;">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input id="name" type="text" class="form-control" formControlName="name"
+                                                       placeholder="{{'schoolClass.new.form.name-placeholder'|translate}}"
+                                                       (keypress)="resetMessages()">
+                                                <div class="messages text-danger"
+                                                     *ngIf="schoolClassForm.controls.name.invalid && (schoolClassForm.controls.name.dirty || schoolClassForm.controls.name.touched)">
+                                                    <span jhiTranslate="schoolClass.new.form.name-error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="customName" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="schoolClass.new.form.customName">SchoolClass customName</span></label>
+                                            <div class="col-sm-8">
+                                                <input id="customName" type="text" class="form-control" formControlName="customName"
+                                                       placeholder="{{'schoolClass.new.form.customName-placeholder'|translate}}"
+                                                       (keypress)="resetMessages()">
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="form-group row">
+                                            <label for="grades" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="schoolClass.new.form.grade">SchoolClass grade</span> <span style="color: #c75b58;">*</span>
+                                            </label>
+                                            <div class="col-sm-3">
+                                                <mat-form-field id="grades" class="input-group">
+                                                    <mat-select placeholder="{{'schoolClass.new.form.grade-placeholder'|translate}}"
+                                                                (selectionChange)="onGradesChange($event)" [compareWith]="compareGradesFn"
+                                                                matInput formControlName="grade">
+                                                        <mat-option *ngFor="let grade of grades" [value]="grade">{{grade.name}} ({{grade.diminutive}})</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="gradeSeries" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="schoolClass.new.form.gradeSerie">schoolClass grade serie</span> <span *ngIf="!!gradesSeries.length" style="color: #c75b58;">*</span>
+                                            </label>
+                                            <div class="col-sm-3">
+                                                <mat-form-field id="gradeSeries" class="input-group">
+                                                    <mat-select matInput formControlName="gradeSerie"
+                                                                placeholder="{{'schoolClass.new.form.gradeSerie-placeholder'|translate}}"
+                                                                [disabled]="isGradeSeriesSelectDisabled()" [compareWith]="compareGradeSeriesFn">
+                                                        <mat-option *ngFor="let serie of gradesSeries" [value]="serie">
+                                                            <span><span *ngIf="serie.diminutive">{{serie.diminutive}}-</span>{{serie.name}}</span>
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="notation" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="schoolClass.new.form.notation">SchoolClass notation</span> <span style="color: #c75b58;">*</span>
+                                            </label>
+                                            <div class="col-sm-3">
+                                                <mat-form-field id="notation" class="input-group">
+                                                    <mat-select placeholder="{{'schoolClass.new.form.notation-placeholder'|translate}}"
+                                                                matInput formControlName="notation">
+                                                        <mat-option *ngFor="let notation of notations" [value]="notation.code">{{notation.code|translate}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="coursesStartDate" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="schoolClass.new.form.coursesStartDate">schoolClass coursesStartDate</span> <span style="color: #c75b58;">*</span>
+                                            </label>
+                                            <div class="col-sm-3">
+                                                <mat-form-field class="input-group">
+                                                    <input id="coursesStartDate" matInput [matDatepicker]="coursesStartDatePicker"
+                                                           placeholder="{{'schoolClass.new.form.coursesStartDate-placeholder'|translate}}"
+                                                           formControlName="coursesStartDate" (click)="coursesStartDatePicker.open()" class="form-control">
+                                                    <mat-datepicker-toggle matSuffix [for]="coursesStartDatePicker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #coursesStartDatePicker></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="coursesEndDate" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="schoolClass.new.form.coursesEndDate">schoolClass coursesEndDate</span>
+                                            </label>
+                                            <div class="col-sm-3">
+                                                <mat-form-field class="input-group">
+                                                    <input id="coursesEndDate" matInput [matDatepicker]="coursesEndDatePicker"
+                                                           placeholder="{{'schoolClass.new.form.coursesEndDate-placeholder'|translate}}"
+                                                           formControlName="coursesEndDate" (click)="coursesEndDatePicker.open()" class="form-control">
+                                                    <mat-datepicker-toggle matSuffix [for]="coursesEndDatePicker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #coursesEndDatePicker></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="headTeachers" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="schoolClass.new.form.headTeachers">SchoolClass headTeachers</span>
+                                            </label>
+                                            <div class="col-sm-3">
+                                                <mat-form-field id="headTeachers" class="input-group">
+                                                    <mat-select placeholder="{{'schoolClass.new.form.headTeachers-placeholder'|translate}}"
+                                                                matInput multiple formControlName="headTeachers" [compareWith]="compareHeaderTeachersFn">
+                                                        <mat-option *ngFor="let headTeacher of headTeachers" [value]="headTeacher">
+                                                            {{headTeacher.firstName}} {{headTeacher.lastName}} ({{headTeacher.birthDate|date:dateHelper.dateFormat()}})
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="schoolClass.new.form.councilsDates">schoolClass councilsDates</span><br/>
+                                                <a class="pcoded-badge label label-inverse-primary col-form-label-sm" id="addCouncilDate" style="margin-top: 5px;"
+                                                   (click)="addCouncilDate()">
+                                                    <i class="mdi mdi-plus"></i>
+                                                    <span jhiTranslate="schoolClass.new.form.addCouncilDate">Create</span>
+                                                </a>
+                                            </label>
+                                            <div formArrayName="councilsDates" class="input-group col-sm-8">
+                                                <div *ngFor="let councilDate of schoolClassForm.controls.councilsDates.controls; let i = index" class="row">
+                                                    <div class="col-sm-6 form-group">
+                                                        <div [formGroupName]="i">
+                                                            <mat-form-field class="input-group">
+                                                                <input id="councilDate-{{i}}" matInput [matDatepicker]="councilDatePicker_i"
+                                                                       placeholder="{{'schoolClass.new.form.councilsDates-placeholder'|translate}}"
+                                                                       formControlName="date" (click)="councilDatePicker_i.open()" class="form-control">
+                                                                <mat-datepicker-toggle matSuffix [for]="councilDatePicker_i"></mat-datepicker-toggle>
+                                                                <mat-datepicker #councilDatePicker_i></mat-datepicker>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 form-group">
+                                                        <div [formGroupName]="i">
+                                                            <input id="councilTime-{{i}}" class="input-group" type="time" style="margin-top: 25px;"
+                                                                   placeholder="{{'councilDateTime-placeholder'|translate}}" formControlName="time">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2 form-group">
+                                                        <button class="pcoded-badge label label-inverse-danger" (click)="removeCouncilDate(i)" style="margin-top: 20px;">
+                                                            <span jhiTranslate="schoolClass.new.form.removeCouncilDate"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </wizard-step>
+                        <wizard-step (stepEnter)="enterStep(1)" [navigationSymbol]="{ symbol: '2' }">
+                            <ng-template wizardStepTitle>
+                                {{'schoolClass.new.form.steps.step-2-schoolclass-students'|translate}}
+                            </ng-template>
+                            <div class="form-group row">
+                                <div class="sub-title col-md-12">
+                                    <div class="float-left">
+                                        <h4 style="margin-top: 15px" jhiTranslate="schoolClass.new.form.steps.step-2-schoolclass-students-title"></h4>
+                                    </div>
+                                    <div class="float-right">
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="previousStep-1" previousStep>
+                                            <i class="mdi mdi-arrow-left-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.previousStep">Previous</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="nextStep-1"
+                                                nextStep>
+                                            <i class="mdi mdi-arrow-right-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.nextStep">Next</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form novalidate [formGroup]="schoolClassStudentsForm">
+                                        <div class="form-group row">
+                                            <label for="studentSearch" class="col-sm-4 col-form-label">
+                                                <span jhiTranslate="schoolClass.new.form.studentSearch">Search student</span></label>
+                                            <div class="col-sm-8">
+                                                <input id="studentSearch" type="text" class="form-control" formControlName="search"
+                                                       [matAutocomplete]="auto"
+                                                       placeholder="{{'schoolClass.new.form.studentSearch-placeholder'|translate}}"
+                                                       (focusin)="resetMessages()" (submit)="resetMessages()">
+                                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displaySearchStudentsFn">
+                                                    <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
+                                                    <ng-container *ngIf="!isLoading">
+                                                        <mat-option *ngFor="let student of filteredStudents" [value]="student" (onSelectionChange)="onSearchStudentSelect(student)">
+                                                            <span>{{ student.firstName }} {{ student.lastName }}</span>
+                                                            <small> | {{student.sex|translate}} {{student.birthDate|date: dateHelper.dateFormat()}}</small>
+                                                        </mat-option>
+                                                    </ng-container>
+                                                </mat-autocomplete>
+                                            </div>
+                                        </div>
+                                        <table class="table table-bordered table-striped" *ngIf="searchedStudents && !!searchedStudents.length">
+                                            <caption jhiTranslate="schoolClass.new.form.students-table"></caption>
+                                            <thead>
+                                            <tr class="text-center">
+                                                <th>#</th>
+                                                <th>firstName</th>
+                                                <th>lastName</th>
+                                                <th>sex</th>
+                                                <th>birthdate</th>
+                                                <th>lastSchoolClass</th>
+                                                <th>actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr *ngFor="let student of searchedStudents; let i = index">
+                                                <td>{{i + 1}}</td>
+                                                <td>{{student.firstName}}</td>
+                                                <td>{{student.lastName}}</td>
+                                                <td>{{student.sex|translate}}</td>
+                                                <td>{{student.birthDate|date: dateHelper.dateFormat()}}</td>
+                                                <td>{{student.schoolClass}}</td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-danger btn-mat btn-mini m-b-0" id="removeStudent" (click)="removeStudentFromSchoolClass(student.id)">
+                                                        <i class="mdi mdi-delete mdi-18px"></i>
+                                                        <span jhiTranslate="global.buttons.delete">Delete</span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </wizard-step>
+                        <wizard-step (stepEnter)="enterStep(2)" [navigationSymbol]="{ symbol: '2' }">
+                            <ng-template wizardStepTitle>
+                                {{'schoolClass.new.form.steps.step-3-final'|translate}}
+                            </ng-template>
+                            <div class="form-group row">
+                                <div class="sub-title col-md-12">
+                                    <div class="float-left">
+                                        <h4 style="margin-top: 15px" jhiTranslate="schoolClass.new.form.steps.step-3-final-creation-title"></h4>
+                                    </div>
+                                    <div class="float-right">
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="previousStep-2"
+                                                previousStep>
+                                            <i class="mdi mdi-arrow-left-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.previousStep"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-mat btn-mini m-b-0" id="nextStep-2"
+                                                [disabled]="true">
+                                            <i class="mdi mdi-arrow-right-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.wizard.nextStep"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-xl-6">
+                                    <h4 class="sub-title"><span jhiTranslate="schoolClass.new.form.steps.step-3-final-infos-title"></span></h4>
+                                    <ul>
+                                        <li>
+                                            <em class="icofont icofont-stylish-right text-danger"></em>
+                                            <span jhiTranslate="schoolClass.new.form.name"></span> :
+                                            <strong id="finalName">{{schoolClassForm.controls.name.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <em class="icofont icofont-stylish-right text-danger"></em>
+                                            <span jhiTranslate="schoolClass.new.form.customName"></span> :
+                                            <strong id="finalCustomName">{{schoolClassForm.controls.customName.value}}</strong>
+                                        </li>
+                                        <li>
+                                            <em class="icofont icofont-stylish-right text-danger"></em>
+                                            <span jhiTranslate="schoolClass.new.form.grade"></span> :
+                                            <strong id="finalGrade">{{schoolClassForm.controls.grade.value.name}}</strong>
+                                        </li>
+                                        <li>
+                                            <em class="icofont icofont-stylish-right text-danger"></em>
+                                            <span jhiTranslate="schoolClass.new.form.gradeSerie"></span> :
+                                            <strong id="finalGradeSerie"><span *ngIf="schoolClassForm.controls.gradeSerie.value">{{schoolClassForm.controls.gradeSerie.value.name}}</span></strong>
+                                        </li>
+                                        <li>
+                                            <em class="icofont icofont-stylish-right text-danger"></em>
+                                            <span jhiTranslate="schoolClass.new.form.coursesStartDate"></span> :
+                                            <strong id="finalCoursesStartDate">{{schoolClassForm.controls.coursesStartDate.value | date: dateHelper.dateFormat()}}</strong>
+                                        </li>
+                                        <li>
+                                            <em class="icofont icofont-stylish-right text-danger"></em>
+                                            <span jhiTranslate="schoolClass.new.form.coursesEndDate"></span> :
+                                            <strong id="finalCoursesEndDate">{{schoolClassForm.controls.coursesEndDate.value | date: dateHelper.dateFormat()}}</strong>
+                                        </li>
+                                        <li>
+                                            <em class="icofont icofont-stylish-right text-danger"></em>
+                                            <span jhiTranslate="schoolClass.new.form.headTeachers"></span> :
+                                            <span id="finalHeadTeachers">
+                                                <ul>
+                                                    <li *ngFor="let headTeacher of schoolClassForm.controls.headTeachers.value">
+                                                        <strong>{{headTeacher.firstName}} {{headTeacher.lastName}}</strong>
+                                                    </li>
+                                                </ul>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <em class="icofont icofont-stylish-right text-danger"></em>
+                                            <span jhiTranslate="schoolClass.new.form.councilsDates"></span> :
+                                            <span id="finalCouncilsDates">
+                                                <ul>
+                                                    <li *ngFor="let councilDate of schoolClassForm.controls.councilsDates.value">
+                                                        <strong>{{councilDate.date | date: dateHelper.dateFormat()}} {{councilDate.time}}</strong>
+                                                    </li>
+                                                </ul>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-12 col-xl-6">
+                                    <h4 class="sub-title"><span jhiTranslate="schoolClass.new.form.students-table"></span></h4>
+                                    <table class="table table-bordered table-striped" *ngIf="searchedStudents && !!searchedStudents.length">
+                                        <thead>
+                                        <tr class="text-center">
+                                            <th>#</th>
+                                            <th>firstName</th>
+                                            <th>lastName</th>
+                                            <th>sex</th>
+                                            <th>birthdate</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let student of searchedStudents; let i = index">
+                                            <td>{{i + 1}}</td>
+                                            <td>{{student.firstName}}</td>
+                                            <td>{{student.lastName}}</td>
+                                            <td>{{student.sex|translate}}</td>
+                                            <td>{{student.birthDate|date: dateHelper.dateFormat()}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </wizard-step>
+                    </wizard>
+                </div>
+            </jhi-card>
+        </div>
+    </div>
+</div>

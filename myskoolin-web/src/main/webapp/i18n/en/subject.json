@@ -1,0 +1,118 @@
+{
+    "subject": {
+        "home": {
+            "title": "Subjects",
+            "createLabel": "Create a new subject",
+            "createOrEditLabel": "Create or modify a new subject",
+            "search-placeholder": "Subject name",
+            "datatable": {
+                "headers": {
+                    "name": "Name",
+                    "customName": "Custom name",
+                    "grade-name": "Grade",
+                    "gradeSerie-name": "Serie",
+                    "foreignLanguage": "Foreign language"
+                }
+            }
+        },
+        "view": {
+            "title": "Subject",
+            "name": "Name",
+            "customName": "Custom name",
+            "grade-name": "Grade",
+            "grade-serie-name": "Grade serie",
+            "coefficient": "Coefficient",
+            "color":"Text color",
+            "bgColor":"Background color",
+            "colorExample":"Example",
+            "foreignLanguage": "Foreign Language",
+            "minMinutesPerDay": "Min. minutes per day",
+            "maxMinutesPerDay": "Max. minutes per day",
+            "minutesPerWeek": "Minutes per week",
+            "coursesFrequencyPerWeek": "Courses per week frequence",
+            "preferredPartsOfDaysInTimetables": "Jour préférés dans les EDT",
+            "schoolRoomsType": "Type de salle de cours",
+            "edit": "Modify",
+            "delete": "Delete",
+            "goback": "Back",
+            "series-array": {
+                "title": "Subject series",
+                "name": "Name",
+                "diminutive": "Diminutive",
+                "option": "Option",
+                "empty": "No Serie"
+            }
+        },
+        "edit": {
+            "title": "Subject modification",
+            "form": {
+                "toast-title": "Subject modification",
+                "update-successfull": "Subject modification success."
+            }
+        },
+        "new": {
+            "title": "New subject",
+            "form": {
+                "name": "Name",
+                "customName": "Custom name",
+                "customName-placeholder": "Subject custom name",
+                "name-placeholder": "Subject name",
+                "name-error": "The subject name is required.",
+                "grade": "Grade",
+                "grade-placeholder": "Subject grade",
+                "gradeSerie": "Serie",
+                "coefficient": "Coefficient",
+                "coefficient-placeholder": "Subject coefficient",
+                "foreignLanguage": "Foreign language",
+                "maxMinutesPerDay": "Max minutes per day",
+                "maxMinutesPerDay-placeholder": "Max minutes per day of the subject course",
+                "minutesPerWeek": "Minutes per week",
+                "minutesPerWeek-placeholder": "Minutes per week of the subject course",
+                "coursesFrequencyPerWeek": "Courses frequency per week",
+                "coursesFrequencyPerWeek-placeholder": "Subject courses frequency per week",
+                "example": "Example",
+                "color": "Text color",
+                "bgColor": "Background color",
+                "error-toast-title": "Erreur",
+                "form-name-error": "Le nom de la matière existe déjà",
+                "add-serie": "Ajouter série",
+                "remove-serie": "Supprimer la dernière distance",
+                "search-or-add-grade-name": "Rechercher ou ajouter un nom de salle",
+                "type-distance": "Entrez une distance",
+                "name-already-exists": "Le nom de la salle existe déjà. Veuillez en saisir un différent.",
+                "toast-title": "Création niveau scolaire",
+                "creation-successfull": "La niveau scolaire a été créée avec succès.",
+                "schoolRoomsType": "Type de salle de cours",
+                "minMinutesPerDay": "Min minutes par jour",
+                "minMinutesPerDay-placeholder": "Minimum de minutes de cours par jour"
+            }
+        },
+        "delete": {
+            "title": "Confirmation de suppression du niveau scolaire {{name}}",
+            "question": "Etes-vous certain de vouloir supprimer la matière {{ name }} ?",
+            "toast-title": "Suppression du niveau scolaire {{name}}",
+            "delete-successfull": "Le niveau scolaire {{name}} a bien été supprimé"
+        },
+        "enums": {
+            "types": {
+                "normal": "Standard",
+                "sciences": "Sciences",
+                "music": "Musique",
+                "sport": "Sport",
+                "it": "IT",
+                "multipurpose": "Polyvalente",
+                "stepped": "A gradins",
+                "amphitheater": "Amphithéâtre"
+            }
+        },
+        "created": "Un niveau scolaire a été créé avec l'identifiant {{ param }}",
+        "updated": "Le niveau scolaire avec l'identifiant {{ param }} a été mis à jour",
+        "deleted": "Le niveau scolaire avec l'identifiant {{ param }} a été supprimé",
+        "detail": {
+            "title": "Sa",
+            "search-placeholder": "Search name"
+        },
+        "clientId": "Client Id",
+        "name": "Name"
+    }
+}

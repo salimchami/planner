@@ -1,0 +1,16 @@
+{
+    "pricing": {
+        "basic": {
+            "titleCode": "Formule Basique"
+        },
+        "standard": {
+            "titleCode": "Formule Standard"
+        },
+        "premium": {
+            "titleCode": "Formule Premium"
+        },
+        "ultimate": {
+            "titleCode": "Formule Utlimate"
+        }
+    }
+}

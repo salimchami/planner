@@ -1,144 +1,129 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse, HttpHeaders } from '@angular/common/http';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { JhiEventManager } from 'ng-jhipster';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
+import {ActivatedRoute, Router} from '@angular/router';
+import {JhiEventManager, JhiParseLinks, JhiAlertService} from 'ng-jhipster';
 
-import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/user/account.model';
-import { UserService } from 'app/core/user/user.service';
-import { User } from 'app/core/user/user.model';
-import { UserManagementDeleteDialogComponent } from './user-management-delete-dialog.component';
+import {ITEMS_PER_PAGE, Principal, UserService} from '../../shared';
+import {User} from '../../shared/model/user.model';
 
 @Component({
-  selector: 'jhi-user-mgmt',
-  templateUrl: './user-management.component.html',
+    selector: 'jhi-user-mgmt',
+    templateUrl: './user-management.component.html'
 })
-export class UserManagementComponent implements OnInit, OnDestroy {
-  currentAccount: Account | null = null;
-  users: User[] | null = null;
-  userListSubscription?: Subscription;
-  firstCall = true;
-  totalItems = 0;
-  itemsPerPage = ITEMS_PER_PAGE;
-  page!: number;
-  predicate!: string;
-  previousPage!: number;
-  ascending!: boolean;
+export class UserMgmtComponent implements OnInit, OnDestroy {
 
-  constructor(
-    private userService: UserService,
-    private accountService: AccountService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private eventManager: JhiEventManager,
-    private modalService: NgbModal
-  ) {}
+    currentAccount: any;
+    users: User[];
+    error: any;
+    success: any;
+    routeData: any;
+    links: any;
+    totalItems: any;
+    queryCount: any;
+    itemsPerPage: any;
+    page: any;
+    predicate: any;
+    previousPage: any;
+    reverse: any;
 
-  ngOnInit(): void {
-    this.activatedRoute.data
-      .pipe(
-        flatMap(
-          () => this.accountService.identity(),
-          (data, account) => {
-            this.page = data.pagingParams.page;
-            this.previousPage = data.pagingParams.page;
-            this.ascending = data.pagingParams.ascending;
-            this.predicate = data.pagingParams.predicate;
+    constructor(
+        private userService: UserService,
+        private alertService: JhiAlertService,
+        private principal: Principal,
+        private parseLinks: JhiParseLinks,
+        private activatedRoute: ActivatedRoute,
+        private router: Router,
+        private eventManager: JhiEventManager
+    ) {
+        this.itemsPerPage = ITEMS_PER_PAGE;
+        this.routeData = this.activatedRoute.data.subscribe((data) => {
+            this.page = data['pagingParams'].page;
+            this.previousPage = data['pagingParams'].page;
+            this.reverse = data['pagingParams'].ascending;
+            this.predicate = data['pagingParams'].predicate;
+        });
+    }
+
+    ngOnInit() {
+        this.principal.identity().then((account) => {
             this.currentAccount = account;
             this.loadAll();
-            this.userListSubscription = this.eventManager.subscribe('userListModification', () => this.loadAll());
-          }
-        )
-      )
-      .subscribe();
-    this.handleBackNavigation();
-  }
-
-  ngOnDestroy(): void {
-    if (this.userListSubscription) {
-      this.eventManager.destroy(this.userListSubscription);
+            this.registerChangeInUsers();
+        });
     }
-  }
 
-  setActive(user: User, isActivated: boolean): void {
-    this.userService.update({ ...user, activated: isActivated }).subscribe(() => this.loadAll());
-  }
-
-  trackIdentity(index: number, item: User): any {
-    return item.id;
-  }
-
-  loadPage(page: number): void {
-    this.firstCall = false;
-    this.previousPage = page;
-    this.transition();
-  }
-
-  handleBackNavigation(): void {
-    this.activatedRoute.queryParamMap.subscribe((params: ParamMap) => {
-      if (!this.firstCall) {
-        let prevPage = params.get('page');
-        if (prevPage === null) {
-          prevPage = '1'; // because there are no params in the URL the first time /admin/user-management
-        }
-        const prevSort = params.get('sort');
-        const prevSortSplit = prevSort?.split(',');
-        if (prevSortSplit) {
-          this.predicate = prevSortSplit[0];
-          this.ascending = prevSortSplit[1] === 'asc';
-        } else {
-          this.predicate = 'id';
-          this.ascending = true;
-        }
-        if (+prevPage !== this.page) {
-          this.page = +prevPage;
-        }
-        this.loadPage(this.page);
-      }
-    });
-  }
-
-  transition(): void {
-    this.firstCall = false;
-    this.router.navigate(['./'], {
-      relativeTo: this.activatedRoute.parent,
-      queryParams: {
-        page: this.page,
-        sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
-      },
-    });
-    this.loadAll();
-  }
-
-  deleteUser(user: User): void {
-    const modalRef = this.modalService.open(UserManagementDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.user = user;
-  }
-
-  private loadAll(): void {
-    this.userService
-      .query({
-        page: this.page - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
-      .subscribe((res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers));
-  }
-
-  private sort(): string[] {
-    const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
-    if (this.predicate !== 'id') {
-      result.push('id');
+    ngOnDestroy() {
+        this.routeData.unsubscribe();
     }
-    return result;
-  }
 
-  private onSuccess(users: User[] | null, headers: HttpHeaders): void {
-    this.totalItems = Number(headers.get('X-Total-Count'));
-    this.users = users;
-  }
+    registerChangeInUsers() {
+        this.eventManager.subscribe('userListModification', (response) => this.loadAll());
+    }
+
+    setActive(user, isActivated) {
+        user.activated = isActivated;
+
+        this.userService.update(user).subscribe(
+            (response) => {
+                if (response.status === 200) {
+                    this.error = null;
+                    this.success = 'OK';
+                    this.loadAll();
+                } else {
+                    this.success = null;
+                    this.error = 'ERROR';
+                }
+            });
+    }
+
+    loadAll() {
+        this.userService.query({
+            page: this.page - 1,
+            size: this.itemsPerPage,
+            sort: this.sort()
+        }).subscribe(
+            (res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpResponse<any>) => this.onError(res.body)
+        );
+    }
+
+    trackIdentity(index, item: User) {
+        return item.id;
+    }
+
+    sort() {
+        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
+        if (this.predicate !== 'id') {
+            result.push('id');
+        }
+        return result;
+    }
+
+    loadPage(page: number) {
+        if (page !== this.previousPage) {
+            this.previousPage = page;
+            this.transition();
+        }
+    }
+
+    transition() {
+        this.router.navigate(['/user-management'], {
+            queryParams: {
+                page: this.page,
+                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+            }
+        });
+        this.loadAll();
+    }
+
+    private onSuccess(data, headers) {
+        this.links = this.parseLinks.parse(headers.get('link'));
+        this.totalItems = headers.get('X-Total-Count');
+        this.queryCount = this.totalItems;
+        this.users = data;
+    }
+
+    private onError(error) {
+        this.alertService.error(error.error, error.message, null);
+    }
 }

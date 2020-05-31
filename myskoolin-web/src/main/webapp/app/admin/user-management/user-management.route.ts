@@ -1,57 +1,76 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, Routes } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { JhiResolvePagingParams } from 'ng-jhipster';
+import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActivate } from '@angular/router';
 
-import { User, IUser } from 'app/core/user/user.model';
-import { UserService } from 'app/core/user/user.service';
-import { UserManagementComponent } from './user-management.component';
-import { UserManagementDetailComponent } from './user-management-detail.component';
-import { UserManagementUpdateComponent } from './user-management-update.component';
+import { JhiPaginationUtil } from 'ng-jhipster';
 
-@Injectable({ providedIn: 'root' })
-export class UserManagementResolve implements Resolve<IUser> {
-  constructor(private service: UserService) {}
+import { UserMgmtComponent } from './user-management.component';
+import { UserMgmtDetailComponent } from './user-management-detail.component';
+import { UserDialogComponent } from './user-management-dialog.component';
+import { UserDeleteDialogComponent } from './user-management-delete-dialog.component';
 
-  resolve(route: ActivatedRouteSnapshot): Observable<IUser> {
-    const id = route.params['login'];
-    if (id) {
-      return this.service.find(id);
+import { Principal } from '../../shared';
+import {Authorities} from '../../shared/constants/authorities.constants';
+
+@Injectable()
+export class UserResolve implements CanActivate {
+
+    constructor(private principal: Principal) { }
+
+    canActivate() {
+        return this.principal.identity().then((account) => this.principal.hasAnyAuthority([Authorities.ROLE_SCHOOLME_ADMIN]));
     }
-    return of(new User());
-  }
 }
 
-export const userManagementRoute: Routes = [
-  {
-    path: '',
-    component: UserManagementComponent,
-    resolve: {
-      pagingParams: JhiResolvePagingParams,
+@Injectable()
+export class UserResolvePagingParams implements Resolve<any> {
+
+    constructor(private paginationUtil: JhiPaginationUtil) {}
+
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        const page = route.queryParams['page'] ? route.queryParams['page'] : '1';
+        const sort = route.queryParams['sort'] ? route.queryParams['sort'] : 'id,asc';
+        return {
+            page: this.paginationUtil.parsePage(page),
+            predicate: this.paginationUtil.parsePredicate(sort),
+            ascending: this.paginationUtil.parseAscending(sort)
+        };
+    }
+}
+
+export const userMgmtRoute: Routes = [
+    {
+        path: 'user-management',
+        component: UserMgmtComponent,
+        resolve: {
+            'pagingParams': UserResolvePagingParams
+        },
+        data: {
+            pageTitle: 'userManagement.home.title'
+        }
     },
-    data: {
-      defaultSort: 'id,asc',
+    {
+        path: 'user-management/:login',
+        component: UserMgmtDetailComponent,
+        data: {
+            pageTitle: 'userManagement.home.title'
+        }
+    }
+];
+
+export const userDialogRoute: Routes = [
+    {
+        path: 'user-management-new',
+        component: UserDialogComponent,
+        outlet: 'popup'
     },
-  },
-  {
-    path: ':login/view',
-    component: UserManagementDetailComponent,
-    resolve: {
-      user: UserManagementResolve,
+    {
+        path: 'user-management/:login/edit',
+        component: UserDialogComponent,
+        outlet: 'popup'
     },
-  },
-  {
-    path: 'new',
-    component: UserManagementUpdateComponent,
-    resolve: {
-      user: UserManagementResolve,
-    },
-  },
-  {
-    path: ':login/edit',
-    component: UserManagementUpdateComponent,
-    resolve: {
-      user: UserManagementResolve,
-    },
-  },
+    {
+        path: 'user-management/:login/delete',
+        component: UserDeleteDialogComponent,
+        outlet: 'popup'
+    }
 ];

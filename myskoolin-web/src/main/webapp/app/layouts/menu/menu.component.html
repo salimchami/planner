@@ -1,0 +1,389 @@
+<!--<nav class="navbar header-navbar pcoded-header" [attr.header-theme]="headerTheme" [attr.pcoded-header-position]="pcodedHeaderPosition">-->
+    <!--<div class="navbar-wrapper">-->
+        <!--<div class="navbar-logo">-->
+            <!--<a class="mobile-menu" id="mobile-collapse" href="javascript:" (click)="toggleOpened()" [exclude]="'#main_navbar'" (clickOutside)="onClickedOutsideSidebar($event)">-->
+                <!--<i class="ti-menu"></i>-->
+            <!--</a>-->
+            <!--<a [routerLink]="['/dashboard/default/']">-->
+                <!--<img class="img-fluid" src="assets/images/logo.png" alt="Theme-Logo" />-->
+            <!--</a>-->
+            <!--<a href="javascript:" class="mobile-options" (click)="toggleHeaderNavRight()">-->
+                <!--<i class="ti-more"></i>-->
+            <!--</a>-->
+        <!--</div>-->
+        <!--<div class="navbar-container container-fluid">-->
+            <!--<ul class="nav-left">-->
+                <!--<li>-->
+                    <!--<div class="sidebar_toggle"><a href="javascript:"><i class="ti-menu"></i></a></div>-->
+                <!--</li>-->
+                <!--<li class="header-search">-->
+                    <!--<div id="main-search" class="main-search morphsearch-search">-->
+                        <!--<div class="input-group">-->
+                            <!--<span class="input-group-addon search-close" (click)="searchOff()"><i class="ti-close"></i></span>-->
+                            <!--<input class="form-control" [style.width]="searchWidthString">-->
+                            <!--<span class="input-group-addon search-btn" (click)="searchOn()"><i class="ti-search"></i></span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</li>-->
+                <!--<li appToggleFullScreen>-->
+                    <!--<a href="javascript:">-->
+                        <!--<i class="ti-fullscreen"></i>-->
+                    <!--</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--<ul [@mobileHeaderNavRight]="navRight" [ngClass]="navRight" class="nav-right">-->
+                <!--<li (clickOutside)="notificationOutsideClick('live')" class="header-notification" [ngClass]="liveNotificationClass" (click)="toggleLiveNotification()">-->
+                    <!--<a href="javascript:">-->
+                        <!--<i class="ti-bell"></i>-->
+                        <!--<span class="badge bg-c-pink"></span>-->
+                    <!--</a>-->
+                    <!--<ul [@notificationBottom]="liveNotification" class="show-notification">-->
+                        <!--<li>-->
+                            <!--<h6>Notifications</h6>-->
+                            <!--<label class="label label-danger">New</label>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<div class="media">-->
+                                <!--<img class="d-flex align-self-center img-radius" src="assets/images/avatar-2.jpg" alt="Generic placeholder image">-->
+                                <!--<div class="media-body">-->
+                                    <!--<h5 class="notification-user">John Doe</h5>-->
+                                    <!--<p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>-->
+                                    <!--<span class="notification-time">30 minutes ago</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<div class="media">-->
+                                <!--<img class="d-flex align-self-center img-radius" src="assets/images/avatar-4.jpg" alt="Generic placeholder image">-->
+                                <!--<div class="media-body">-->
+                                    <!--<h5 class="notification-user">Joseph William</h5>-->
+                                    <!--<p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>-->
+                                    <!--<span class="notification-time">30 minutes ago</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<div class="media">-->
+                                <!--<img class="d-flex align-self-center img-radius" src="assets/images/avatar-3.jpg" alt="Generic placeholder image">-->
+                                <!--<div class="media-body">-->
+                                    <!--<h5 class="notification-user">Sara Soudein</h5>-->
+                                    <!--<p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>-->
+                                    <!--<span class="notification-time">30 minutes ago</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li class="">-->
+                    <!--<a href="javascript:" (click)="toggleChat()">-->
+                        <!--<i class="ti-comments"></i>-->
+                        <!--<span class="badge bg-c-green"></span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<li (clickOutside)="notificationOutsideClick('profile')" class="user-profile header-notification" [ngClass]="profileNotificationClass" (click)="toggleProfileNotification()">-->
+                    <!--<a href="javascript:">-->
+                        <!--<img src="assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">-->
+                        <!--<span>John Doe</span>-->
+                        <!--<i class="ti-angle-down"></i>-->
+                    <!--</a>-->
+                    <!--<ul [@notificationBottom]="profileNotification" class="show-notification profile-notification">-->
+                        <!--<li>-->
+                            <!--<a href="javascript:">-->
+                                <!--<i class="ti-settings"></i> Settings-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a [routerLink]="['/user/profile/']">-->
+                                <!--<i class="ti-user"></i> Profile-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a [routerLink]="['/email/inbox/']">-->
+                                <!--<i class="ti-email"></i> My Messages-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a [routerLink]="['/authentication/lock-screen/']">-->
+                                <!--<i class="ti-lock"></i> Lock Screen-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a [routerLink]="['/authentication/login/']">-->
+                                <!--<i class="ti-layout-sidebar-left"></i> Logout-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--&lt;!&ndash; Sidebar chat start &ndash;&gt;-->
+            <!--<div [@slideInOut]="chatSlideInOut" id="sidebar" class="users p-chat-user showChat" [ngClass]="chatSlideInOut">-->
+                <!--<div class="had-container">-->
+                    <!--<div class="card card_main p-fixed users-main">-->
+                        <!--<div class="user-box">-->
+                            <!--<div class="chat-search-box">-->
+                                <!--<a class="back_friendlist" (click)="toggleChat()">-->
+                                    <!--<i class="fa fa-chevron-left"></i>-->
+                                <!--</a>-->
+                                <!--<div class="right-ti-control">-->
+                                    <!--<input class="form-control  search-text" placeholder="Search Friend" id="search-friends">-->
+                                    <!--<div class="form-icon">-->
+                                        <!--<i class="fa fa-search"></i>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="main-friend-list">-->
+                                <!--<div class="media userlist-box" data-username="Josephin Doe" placement="left" ngbTooltip="Josephin Doe" (click)="toggleInnerChat()">-->
+                                    <!--<a class="media-left" href="javascript:">-->
+                                        <!--<img class="media-object img-radius img-radius" src="assets/images/avatar-3.jpg" alt="Josephin Doe">-->
+                                        <!--<div class="live-status bg-success"></div>-->
+                                    <!--</a>-->
+                                    <!--<div class="media-body">-->
+                                        <!--<div class="f-13 chat-header">Josephin Doe</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="media userlist-box" data-username="Lary Doe" placement="left" ngbTooltip="Lary Doe" (click)="toggleInnerChat()">-->
+                                    <!--<a class="media-left" href="javascript:">-->
+                                        <!--<img class="media-object img-radius" src="assets/images/avatar-2.jpg" alt="Lary Doe">-->
+                                        <!--<div class="live-status bg-danger"></div>-->
+                                    <!--</a>-->
+                                    <!--<div class="media-body">-->
+                                        <!--<div class="f-13 chat-header">Lary Doe</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="media userlist-box" data-username="Alice" placement="left" ngbTooltip="Alice" (click)="toggleInnerChat()">-->
+                                    <!--<a class="media-left" href="javascript:">-->
+                                        <!--<img class="media-object img-radius" src="assets/images/avatar-4.jpg" alt="Alice">-->
+                                        <!--<div class="live-status bg-success"></div>-->
+                                    <!--</a>-->
+                                    <!--<div class="media-body">-->
+                                        <!--<div class="f-13 chat-header">Alice</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="media userlist-box" data-username="Alia" placement="left" ngbTooltip="Alia" (click)="toggleInnerChat()">-->
+                                    <!--<a class="media-left" href="javascript:">-->
+                                        <!--<img class="media-object img-radius" src="assets/images/avatar-3.jpg" alt="Alia">-->
+                                        <!--<div class="live-status bg-success"></div>-->
+                                    <!--</a>-->
+                                    <!--<div class="media-body">-->
+                                        <!--<div class="f-13 chat-header">Alia</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="media userlist-box" data-username="Suzen" placement="left" ngbTooltip="Suzen" (click)="toggleInnerChat()">-->
+                                    <!--<a class="media-left" href="javascript:">-->
+                                        <!--<img class="media-object img-radius" src="assets/images/avatar-2.jpg" alt="Suzen">-->
+                                        <!--<div class="live-status bg-danger"></div>-->
+                                    <!--</a>-->
+                                    <!--<div class="media-body">-->
+                                        <!--<div class="f-13 chat-header">Suzen</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash; Sidebar inner chat start&ndash;&gt;-->
+            <!--<div [@slideInOut]="innerChatSlideInOut" class="showChat_inner">-->
+                <!--<div class="media chat-inner-header">-->
+                    <!--<a class="back_chatBox">-->
+                        <!--<i class="fa fa-chevron-left" (click)="toggleInnerChat()"></i> Josephin Doe-->
+                    <!--</a>-->
+                <!--</div>-->
+                <!--<div class="media chat-messages">-->
+                    <!--<a class="media-left photo-table" href="javascript:">-->
+                        <!--<img class="media-object img-radius img-radius m-t-5" src="assets/images/avatar-3.jpg" alt="Generic placeholder image">-->
+                    <!--</a>-->
+                    <!--<div class="media-body chat-menu-content">-->
+                        <!--<div class="">-->
+                            <!--<p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>-->
+                            <!--<p class="chat-time">8:20 a.m.</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="media chat-messages">-->
+                    <!--<div class="media-body chat-menu-reply">-->
+                        <!--<div class="">-->
+                            <!--<p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>-->
+                            <!--<p class="chat-time">8:20 a.m.</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="media-right photo-table">-->
+                        <!--<a href="javascript:">-->
+                            <!--<img class="media-object img-radius img-radius m-t-5" src="assets/images/avatar-4.jpg" alt="Generic placeholder image">-->
+                        <!--</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="chat-reply-box p-b-20">-->
+                    <!--<div class="right-ti-control">-->
+                        <!--<input type="text" class="form-control search-text" placeholder="Share Your Thoughts">-->
+                        <!--<div class="form-icon">-->
+                            <!--<i class="fa fa-paper-plane"></i>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash; Sidebar inner chat end&ndash;&gt;-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</nav>-->
+
+
+
+
+
+
+<!-- OLD -->
+<!--<nav class="navbar navbar-dark navbar-expand-md jh-navbar">-->
+    <!--<div class="jh-logo-container float-left">-->
+        <!--<a class="jh-navbar-toggler d-lg-none float-right" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">-->
+            <!--<i class="fa fa-bars"></i>-->
+        <!--</a>-->
+        <!--<a class="navbar-brand logo float-left" routerLink="/" (click)="collapseNavbar()">-->
+            <!--<span class="logo-img"></span>-->
+            <!--<span jhiTranslate="global.title" class="navbar-title">Schoolme</span> <span class="navbar-version">{{version}}</span>-->
+        <!--</a>-->
+    <!--</div>-->
+    <!--<div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">-->
+        <!--<ul class="navbar-nav ml-auto">-->
+            <!--<li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">-->
+                <!--<a class="nav-link" routerLink="/" (click)="collapseNavbar()">-->
+                    <!--<span>-->
+                        <!--<i class="fa fa-home" aria-hidden="true"></i>-->
+                        <!--<span jhiTranslate="global.menu.home">Home</span>-->
+                    <!--</span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--&lt;!&ndash; jhipster-needle-add-element-to-menu - JHipster will add new menu items here &ndash;&gt;-->
+            <!--<li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">-->
+                <!--<a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">-->
+                    <!--<span>-->
+                        <!--<i class="fa fa-th-list" aria-hidden="true"></i>-->
+                        <!--<span jhiTranslate="global.menu.entities.main">-->
+                            <!--Entities-->
+                        <!--</span>-->
+                    <!--</span>-->
+                <!--</a>-->
+                <!--<ul class="dropdown-menu" ngbDropdownMenu>-->
+                    <!--&lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;-->
+                <!--</ul>-->
+            <!--</li>-->
+            <!--<li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">-->
+                <!--<a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">-->
+                    <!--<span>-->
+                        <!--<i class="fa fa-user-plus" aria-hidden="true"></i>-->
+                        <!--<span jhiTranslate="global.menu.admin.main">Administration</span>-->
+                    <!--</span>-->
+                <!--</a>-->
+                <!--<ul class="dropdown-menu" ngbDropdownMenu>-->
+                    <!--<li>-->
+                        <!--<a class="dropdown-item" routerLink="user-management" routerLinkActive="active" (click)="collapseNavbar()">-->
+                            <!--<i class="fa fa-fw fa-user" aria-hidden="true"></i>-->
+                            <!--<span jhiTranslate="global.menu.admin.userManagement">User management</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a class="dropdown-item" routerLink="jhi-tracker" routerLinkActive="active" (click)="collapseNavbar()">-->
+                            <!--<i class="fa fa-fw fa-eye" aria-hidden="true"></i>-->
+                            <!--<span jhiTranslate="global.menu.admin.tracker">User tracker</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a class="dropdown-item" routerLink="jhi-metrics" routerLinkActive="active" (click)="collapseNavbar()">-->
+                            <!--<i class="fa fa-fw fa-tachometer" aria-hidden="true"></i>-->
+                            <!--<span jhiTranslate="global.menu.admin.metrics">Metrics</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a class="dropdown-item" routerLink="jhi-health" routerLinkActive="active" (click)="collapseNavbar()">-->
+                            <!--<i class="fa fa-fw fa-heart" aria-hidden="true"></i>-->
+                            <!--<span jhiTranslate="global.menu.admin.health">Health</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a class="dropdown-item" routerLink="jhi-configuration" routerLinkActive="active" (click)="collapseNavbar()">-->
+                            <!--<i class="fa fa-fw fa-list" aria-hidden="true"></i>-->
+                            <!--<span jhiTranslate="global.menu.admin.configuration">Configuration</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a class="dropdown-item" routerLink="audits" routerLinkActive="active" (click)="collapseNavbar()">-->
+                            <!--<i class="fa fa-fw fa-bell" aria-hidden="true"></i>-->
+                            <!--<span jhiTranslate="global.menu.admin.audits">Audits</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a class="dropdown-item" routerLink="logs" routerLinkActive="active" (click)="collapseNavbar()">-->
+                            <!--<i class="fa fa-fw fa-tasks" aria-hidden="true"></i>-->
+                            <!--<span jhiTranslate="global.menu.admin.logs">Logs</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li *ngIf="swaggerEnabled">-->
+                        <!--<a class="dropdown-item" routerLink="docs" routerLinkActive="active" (click)="collapseNavbar()">-->
+                            <!--<i class="fa fa-fw fa-book" aria-hidden="true"></i>-->
+                            <!--<span jhiTranslate="global.menu.admin.apidocs">API</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--&lt;!&ndash; jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here &ndash;&gt;-->
+                <!--</ul>-->
+            <!--</li>-->
+            <!--<li ngbDropdown class="nav-item dropdown pointer" *ngIf="languages">-->
+                <!--<a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown" *ngIf="languages.length > 1">-->
+                    <!--<span>-->
+                        <!--<i class="fa fa-flag" aria-hidden="true"></i>-->
+                        <!--<span jhiTranslate="global.menu.language">Language</span>-->
+                    <!--</span>-->
+                <!--</a>-->
+                <!--<ul class="dropdown-menu" ngbDropdownMenu *ngIf="languages.length > 1">-->
+                    <!--<li *ngFor="let language of languages">-->
+                        <!--<a class="dropdown-item" [jhiActiveMenu]="language" href="javascript:void(0);" (click)="changeLanguage(language);collapseNavbar();">{{language | findLanguageFromKey}}</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</li>-->
+            <!--<li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">-->
+                <!--<a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">-->
+                  <!--<span *ngIf="!getImageUrl()">-->
+                    <!--<i class="fa fa-user" aria-hidden="true"></i>-->
+                    <!--<span jhiTranslate="global.menu.account.main">-->
+                      <!--Account-->
+                    <!--</span>-->
+                  <!--</span>-->
+                  <!--<span *ngIf="getImageUrl()">-->
+                      <!--<img [src]="getImageUrl()" class="profile-image img-circle" alt="Avatar">-->
+                  <!--</span>-->
+                <!--</a>-->
+                <!--<ul class="dropdown-menu" ngbDropdownMenu>-->
+                    <!--<li *ngSwitchCase="true">-->
+                        <!--<a class="dropdown-item" routerLink="settings" routerLinkActive="active" (click)="collapseNavbar()">-->
+                            <!--<i class="fa fa-fw fa-wrench" aria-hidden="true"></i>-->
+                            <!--<span jhiTranslate="global.menu.account.settings">Settings</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li *ngSwitchCase="true">-->
+                        <!--<a class="dropdown-item" routerLink="password" routerLinkActive="active" (click)="collapseNavbar()">-->
+                            <!--<i class="fa fa-fw fa-clock-o" aria-hidden="true"></i>-->
+                            <!--<span jhiTranslate="global.menu.account.password">Password</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li *ngSwitchCase="true">-->
+                        <!--<a class="dropdown-item" (click)="logout()" id="logout">-->
+                            <!--<i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>-->
+                            <!--<span jhiTranslate="global.menu.account.logout">Sign out</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li *ngSwitchCase="false">-->
+                        <!--<a class="dropdown-item" (click)="login()" id="login">-->
+                            <!--<i class="fa fa-fw fa-sign-in" aria-hidden="true"></i>-->
+                            <!--<span jhiTranslate="global.menu.account.login">Sign in</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li *ngSwitchCase="false">-->
+                        <!--<a class="dropdown-item" routerLink="register" routerLinkActive="active" (click)="collapseNavbar()">-->
+                            <!--<i class="fa fa-fw fa-user-plus" aria-hidden="true"></i>-->
+                            <!--<span jhiTranslate="global.menu.account.register">Register</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+<!--</nav>-->

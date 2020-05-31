@@ -1,29 +1,42 @@
 {
-  "compilerOptions": {
-    "target": "es6",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "removeComments": false,
-    "strict": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "skipLibCheck": true,
-    "outDir": "target/classes/static/app",
-    "lib": ["es7", "dom"],
-    "baseUrl": "./",
-    "paths": {
-      "app/*": ["src/main/webapp/app/*"]
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "target": "es6",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "removeComments": false,
+        "noImplicitAny": false,
+        "skipLibCheck": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "outDir": "target/www/app",
+        "lib": [
+            "es7",
+            "dom",
+            "dom.iterable"
+        ],
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "baseUrl": "./",
+        "paths": {
+            "app/*": [
+                "src/main/webapp/app/*"
+            ],
+            "@angular/*": [
+                "../node_modules/@angular/*"
+            ]
+        },
+        "importHelpers": true,
+        "allowJs": true
     },
-    "importHelpers": true
-  },
-  "angularCompilerOptions": {
-    "genDir": "target/classes/aot",
-    "fullTemplateTypeCheck": true,
-    "strictTemplates": true,
-    "preserveWhitespaces": true
-  }
+    "include": [
+        "src/main/webapp/app",
+        "src/test/javascript/"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }

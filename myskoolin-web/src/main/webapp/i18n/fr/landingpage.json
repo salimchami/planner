@@ -1,0 +1,237 @@
+{
+    "landing": {
+        "cookie-consent": {
+            "message": "Nous utilisons des \"cookies\" pour vous assurer la meilleure expérience sur Myskoolin.",
+            "dismiss": "Ok"
+        },
+        "title": "Le logiciel de gestion de collège et lycée en ligne",
+        "subtitle": "Premier logiciel de gestion de vie scolaire avec génération d'emploi du temps en intelligence artificielle et apprentissage à distance.<br />En tant qu'élève ou gestionnaire d'école, utilisez le toute votre vie !",
+        "subtitle-2": "Interfaces multiples : Direction, Vie scolaire, professeurs, infirmerie, parents et élèves.",
+        "navbar": {
+            "home": "Accueil",
+            "description": "Description",
+            "features": "Fonctionnalités",
+            "pricing": "Grille tarifaire",
+            "contact": "Contact",
+            "services": "Services",
+            "newsletter": "Lettre de diffusion"
+        },
+        "login": {
+            "username": "Nom d'utilisateur",
+            "username-placeholder": "Votre nom d'utilisateur",
+            "password": "Mot de passe",
+            "password-placeholder": "Votre mot de passe",
+            "remember-me": "Se rappeler de moi",
+            "lost-pwd": "Mot de passe perdu ?",
+            "signin": "Connexion",
+            "signin-failed": "Échec de la connexion!",
+            "signin-failed-tips": "Veuillez vérifier vos informations d'identification et réessayez.",
+            "success": {
+                "resetPwd": "<strong>Demande effectuée.</strong> Nous avons envoyé un message de réinitialisation de mot de passe à l'adresse Email que vous avez indiqué."
+            },
+            "error": {
+                "authentication": "<strong>Erreur lors de l'authentification.</strong> Veuillez saisir un nom d'utilisateur et un mot de passe valides.",
+                "resetPwd": {
+                    "emailNotExists": {
+                        "title": "Cet Email n'existe pas.",
+                        "content": "Veuillez saisir un Email valide."
+                    },
+                    "unknownError": "Une erreur inconnue est survenue. Veuillez contacter le support au {{contactPhone}}."
+                }
+            }
+        },
+        "reset-request": {
+            "title": "Réinitialisation de votre mot de passe",
+            "send": "Envoyer"
+        },
+        "reset-finish": {
+            "title": "Réinitialisation de votre mot de passe",
+            "send": "Réinitialiser mot de passe",
+            "password-robustness": "Robustesse du mot de passe",
+            "doNotMatch": "<strong>Erreur !</strong> Les deux mots de passe doivent être identiques.",
+            "error": "Votre mot de passe n'a pas pu être réinitialisé. Cela peut être dû à la durée de validité de la demande de réinitialisation qui est de 24 heures.",
+            "key-is-missing": "<strong>Une erreur s'est produite :</strong> La clef de réinitilisation est manquante. Veuillez refaire <a class=\"alert-link\" href=\"\" ui-sref=\"resetRequest\">une demande de réinitialisation de mot de passe.</a>",
+            "success": "Votre motde passe a été réinitialisé avec succès. Merci de <a class=\"alert-link\" href=\"/public\">vous authentifier</a>."
+        },
+        "description": {
+            "title": "Logiciel de gestion scolaire en ligne",
+            "item1": {
+                "title-colored": "Adapté",
+                "title": "à vos besoins",
+                "content": "Administration, vie scolaire, professeurs, infirmerie, parents d'élèves et élèves."
+            },
+            "item2": {
+                "title-colored": "Facile",
+                "title": "à utiliser",
+                "content": "Menu interactif. Notifications en temps réel. Interface personnalisée."
+            },
+            "item3": {
+                "title-colored": "Ergonomie",
+                "title": "soignée",
+                "content": "Chaque interface est adaptée au type de l'utilisateur correspondant."
+            },
+            "item4": {
+                "title-colored": "multi",
+                "title": "plateforme",
+                "content": "Compatible avec les PC, tablettes et smartphones."
+            }
+        },
+        "services": {
+            "title": "Répond à tous les besoins de gestion scolaire",
+            "content": "Myskoolin popose une interface par type d'utilisateur. Six interfaces au total répondent à l'intégralité des besoins d'un collège ou d'un lycée.",
+            "features-list": {
+                "item1-title": "Interfaces",
+                "item1": "Plusieurs interfaces disponibles <br />Direction, vie scolaire, professeurs, élèves, parents...",
+                "item2-title": "Emplois du temps",
+                "item2": "Génération automatique d'emplois du temps",
+                "item3-title": "Finances",
+                "item3": "Gestion des frais de scolarité",
+                "item4-title": "Gestion courante",
+                "item4": "Gestion du personnel, salles, infirmerie...",
+                "item5-title": "Calendrier",
+                "item5": "Calendrier personnel et dynamique",
+                "item6-title": "Tâches",
+                "item6": "Gestion de tâches",
+                "item7-title": "Communication",
+                "item7": "E-Mail interne, SMS...",
+                "item8-title": "Notifications",
+                "item8": "Réception de notifications"
+            },
+            "buttons": {
+                "subscribe": "Souscrire",
+                "quotation": "Demande de Devis",
+                "demo": "Démo",
+                "demo-soon": "Démo bientôt..."
+            }
+        },
+        "features": {
+            "title": "Fonctionnalités",
+            "title2": "Une solution complète",
+            "section1": "Gestion scolaire",
+            "section2": "Autres interfaces de consultation",
+            "administration": {
+                "title": "Administration",
+                "content": "Gestion de tous les éléments de l'établissement : salles, personnel, plannings, parents d'élèves, scolarité..."
+            },
+            "school-office": {
+                "title": "Vie scolaire",
+                "content": "Gestion et suivi des classes, élèves, absences, retards, sanctions, notes, bulletins, conseils de classes... "
+            },
+            "infirmary": {
+                "title": "Infirmerie",
+                "content": "Enregistrements des passages en infirmerie, suivis personnalisés, projets personnalisés de scolarisation, projets d'accueil individualisé..."
+            },
+            "timetables": {
+                "title": "Emplois du temps",
+                "content": "Génération automatique d'emplois du temps, Types d'EDT : Personnel, salles, niveaux, classes et élèves."
+            },
+            "teachers": {
+                "title": "Professeurs",
+                "content": "Déclaration des absences, sanctions et passages en infirmerie. Gestion des devoirs, examens, conseils de classes..."
+            },
+            "parents": {
+                "title": "Responsables d'élèves",
+                "content": "Un seul compte pour la consultation de l'ensemble de la scolarité de l'élève."
+            },
+            "students": {
+                "title": "Elèves",
+                "content": "Emploi du temps personnalisé, devoirs, examens, bulletins, conseils de classe..."
+            },
+            "elearning": {
+                "title": "Apprentissage à distance",
+                "content": "Module d'apprentissage à distance entièrement configurable"
+            },
+            "unlimited": "Illimité"
+        },
+        "pricing": {
+            "amount-per-user-year": "par an et par utlisateur",
+            "title": "Grille tarifaire",
+            "title2": "formules",
+            "basic": {
+                "title": "Basique"
+            },
+            "standard": {
+                "title": "Standard"
+            },
+            "advanced": {
+                "title": "Avancée"
+            },
+            "integral": {
+                "title": "Intégrale"
+            }
+        },
+        "steps": {
+            "subscribe": {
+                "title": "Souscription",
+                "content": "Sousciption à l'une des formules ci-dessus"
+            },
+            "configure": {
+                "title": "Configuration",
+                "content": "Ajout des élèves, classes... <br />Génération des emplois du temps..."
+            },
+            "readyToUse": {
+                "title": "Prêt à l'utilisation",
+                "content": "Le logiciel est prêt à l'utilisation"
+            }
+        },
+        "newsletter": {
+            "title": "Lettre de diffusion",
+            "content": "Inscrivez-vous à la lettre de diffusion pour recevoir nos nouveautés par mail.",
+            "email": "E-mail",
+            "email-placeholder": "Your e-mail",
+            "email-error": "Your e-mail is required and must be valid.",
+            "messages": {
+                "ok": "Merci de votre inscription. Vous allez recevoir dans quelques instants un email de confirmation.",
+                "ko": "Une erreur est survenue lors de la demande d'inscription à la lettre de diffusion.",
+                "already-registered":"Cet email est déjà enregistré à la lettre de diffusion"
+            }
+        },
+        "contact": {
+            "title": "Formulaire de contact",
+            "form": {
+                "name": "Nom",
+                "name-placeholder": "Votre nom et prénom",
+                "name-error": "Votre nom est obligatoire et doit avoir un minimum de 2 caractères.",
+                "phone": "Téléphone mobile",
+                "phone-placeholder": "Votre numéro de téléphone mobile",
+                "email": "E-mail",
+                "email-placeholder": "Votre e-mail",
+                "email-error": "Votre e-mail est obligatoire et doit être valide.",
+                "email-confirmation": "Merci. Vous avez été inscrit à la lettre de diffusion.",
+                "gender": "Sexe",
+                "gender-error": "Vous êtes une femme ? un homme ?",
+                "school-name": "Ecole",
+                "school-name-placeholder": "Nom de votre école (école primaire, collège ou lycée)",
+                "school-name-error": "Le nom de votre école est obligatoire et doit avoir un minimum de 2 caractères.",
+                "address": "Adresse",
+                "address-placeholder": "Votre adresse",
+                "address-error": "Votre adresse est obligatoire et doit être valide.",
+                "contact-reason": "Motif",
+                "contact-reason-placeholder": "Raison pour laquelle vous nous contactez",
+                "contact-reason-error": "Veuillez sélectionner la raison pour laquelle vous nous contactez.",
+                "message": "Message",
+                "message-placeholder": "Votre message",
+                "message-error": "Votre message doit être renseigné."
+            },
+            "contact-confirmation": "Nous vous remercions pour votre demande de contact. Elle a bien été envoyée et sera traitée dans les plus brefs délais."
+        },
+        "footer": {
+            "links": {
+                "manual": "Manuel d'utilisation",
+                "services": "Services",
+                "features": "Fonctionnalités",
+                "terms_of_use": "Conditions d'utilisation",
+                "about": "A propos",
+                "jobs": "Jobs",
+                "privacy_policy": "Protection de la vie privée"
+            },
+            "support": {
+                "title": "Support",
+                "content": "Tous nos clients ont la possibilité de contacter le service après-vente en cas de dysfonctionnement du système ou de demande d'information absente sur le site. Par ailleurs, chaque interface (vie scolaire, professeurs, administration...) possède une section d'aide expliquant en détail le fonctionnement du logiciel."
+            },
+            "copyright": {
+                "title": "tous droits résérvés"
+            }
+        }
+    }
+}

@@ -1,7 +1,5 @@
-import { Directive, Input, TemplateRef, ViewContainerRef, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-
-import { AccountService } from 'app/core/auth/account.service';
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Principal } from './principal.service';
 
 /**
  * @whatItDoes Conditionally includes an HTML element if current user has any
@@ -15,33 +13,29 @@ import { AccountService } from 'app/core/auth/account.service';
  * ```
  */
 @Directive({
-  selector: '[jhiHasAnyAuthority]',
+    selector: '[jhiHasAnyAuthority]'
 })
-export class HasAnyAuthorityDirective implements OnDestroy {
-  private authorities: string[] = [];
-  private authenticationSubscription?: Subscription;
+export class HasAnyAuthorityDirective {
 
-  constructor(private accountService: AccountService, private templateRef: TemplateRef<any>, private viewContainerRef: ViewContainerRef) {}
+    private authorities: string[];
 
-  @Input()
-  set jhiHasAnyAuthority(value: string | string[]) {
-    this.authorities = typeof value === 'string' ? [value] : value;
-    this.updateView();
-    // Get notified each time authentication state changes.
-    this.authenticationSubscription = this.accountService.getAuthenticationState().subscribe(() => this.updateView());
-  }
-
-  ngOnDestroy(): void {
-    if (this.authenticationSubscription) {
-      this.authenticationSubscription.unsubscribe();
+    constructor(private principal: Principal, private templateRef: TemplateRef<any>, private viewContainerRef: ViewContainerRef) {
     }
-  }
 
-  private updateView(): void {
-    const hasAnyAuthority = this.accountService.hasAnyAuthority(this.authorities);
-    this.viewContainerRef.clear();
-    if (hasAnyAuthority) {
-      this.viewContainerRef.createEmbeddedView(this.templateRef);
+    @Input()
+    set jhiHasAnyAuthority(value: string|string[]) {
+        this.authorities = typeof value === 'string' ? [ <string> value ] : <string[]> value;
+        this.updateView();
+        // Get notified each time authentication state changes.
+        this.principal.getAuthenticationState().subscribe((identity) => this.updateView());
     }
-  }
+
+    private updateView(): void {
+        this.principal.hasAnyAuthority(this.authorities).then((result) => {
+            this.viewContainerRef.clear();
+            if (result) {
+                this.viewContainerRef.createEmbeddedView(this.templateRef);
+            }
+        });
+    }
 }

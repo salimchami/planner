@@ -1,16 +1,11 @@
-import Spy = jasmine.Spy;
-
 import { SpyObject } from './spyobject';
-import { TrackerService } from 'app/core/tracker/tracker.service';
+import { JhiTrackerService } from '../../../../main/webapp/app/shared/tracker/tracker.service';
 
 export class MockTrackerService extends SpyObject {
-  connectSpy: Spy;
-  disconnectSpy: Spy;
 
-  constructor() {
-    super(TrackerService);
+    constructor() {
+        super(JhiTrackerService);
+    }
 
-    this.connectSpy = this.spy('connect').andReturn(this);
-    this.disconnectSpy = this.spy('disconnect').andReturn(this);
-  }
+    connect() {}
 }

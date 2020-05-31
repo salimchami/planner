@@ -1,6 +1,8 @@
 ######################
 # Project Specific
 ######################
+*/**/target/
+
 /src/main/webapp/content/css/main.css
 /target/classes/static/**
 /src/test/javascript/coverage/
@@ -8,9 +10,9 @@
 ######################
 # Node
 ######################
-/node/
+*/**/node/
 node_tmp/
-node_modules/
+*/**/node_modules/
 npm-debug.log.*
 /.awcache/*
 /.cache-loader/*

@@ -1,0 +1,396 @@
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-lg-8 center-block text-center" style="font-size: large">
+                        <div [ngSwitch]="routeState">
+                            <h2 *ngSwitchCase="'new'" class="card-header-text">
+                                <span jhiTranslate="teacher.new.title"></span>
+                                <span *ngIf="teacherUserForm.controls.firstName.value ||teacherUserForm.controls.lastName.value">"</span>
+                                {{teacherUserForm.controls.firstName.value}} {{teacherUserForm.controls.lastName.value}}
+                                <span *ngIf="teacherUserForm.controls.firstName.value ||teacherUserForm.controls.lastName.value">"</span>
+                            </h2>
+                            <h2 *ngSwitchCase="'edit'" class="card-header-text">
+                                <span jhiTranslate="teacher.edit.title"></span>
+                                <span *ngIf="teacherUserForm.controls.firstName.value ||teacherUserForm.controls.lastName.value">"</span>
+                                {{teacherUserForm.controls.firstName.value}} {{teacherUserForm.controls.lastName.value}}
+                                <span *ngIf="teacherUserForm.controls.firstName.value ||teacherUserForm.controls.lastName.value">"</span>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="float-right">
+                            <button type="button" class="btn btn-secondary btn-mat m-b-0" id="cancel" (click)="goBack()">
+                                <i class="mdi mdi-cancel mdi-18px"></i>
+                                <span jhiTranslate="global.buttons.cancel">Cancel</span>
+                            </button>
+                            <button type="submit" class="btn btn-primary btn-mat m-b-0" id="submit" [disabled]="!teacherUserForm.valid">
+                                    <span [ngSwitch]="routeState">
+                                        <span *ngSwitchCase="'new'">
+                                            <i class="mdi mdi-plus mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.create" (click)="createOrUpdateTeacher()">Create</span>
+                                        </span>
+                                        <span *ngSwitchCase="'edit'">
+                                            <i class="mdi mdi-pencil-box mdi-18px"></i>
+                                            <span jhiTranslate="global.buttons.update" (click)="createOrUpdateTeacher()">Update</span>
+                                        </span>
+                                    </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <jhi-card [classHeader]="true" [cardOptionBlock]="true">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form novalidate [formGroup]="teacherUserForm">
+                            <div class="form-group row">
+                                <label for="login" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.login">Teacher login</span> <span style="color: #c75b58;">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="login" type="text" class="form-control" formControlName="login"
+                                           placeholder="{{'teacher.new.form.login-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.login.invalid && (teacherUserForm.controls.login.dirty || teacherUserForm.controls.login.touched)">
+                                        <span jhiTranslate="teacher.new.form.login-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group row">
+                                <label for="firstName" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.firstName">Teacher firstName</span> <span style="color: #c75b58;">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="firstName" type="text" class="form-control" formControlName="firstName"
+                                           placeholder="{{'teacher.new.form.firstName-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.firstName.invalid && (teacherUserForm.controls.firstName.dirty || teacherUserForm.controls.firstName.touched)">
+                                        <span jhiTranslate="teacher.new.form.firstName-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="lastName" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.lastName">Teacher lastName</span> <span style="color: #c75b58;">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="lastName" type="text" class="form-control" formControlName="lastName"
+                                           placeholder="{{'teacher.new.form.lastName-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.lastName.invalid && (teacherUserForm.controls.lastName.dirty || teacherUserForm.controls.lastName.touched)">
+                                        <span jhiTranslate="teacher.new.form.lastName-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label"><span
+                                    jhiTranslate="teacher.new.form.sex">Gender</span> <span style="color: #c75b58;">*</span></label>
+                                <div class="col-sm-8">
+                                    <div class="form-radio">
+                                        <div class="radio radio-inline" *ngFor="let sex of sexes; let i = index">
+                                            <label id="teacherSex-{{i}}">
+                                                <input (click)="resetMessages()" type="radio" [value]="sex" [checked]="teacherUserForm.controls.sex.value === sex" formControlName="sex">
+                                                <i class="helper"></i>{{sex|translate}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.sex.invalid && (teacherUserForm.controls.sex.dirty || teacherUserForm.controls.sex.touched)">
+                                        <span jhiTranslate="teacher.new.form.sex-error"></span></div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="nationality" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.nationality">Teacher nationality</span> <span style="color: #c75b58;">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="nationality" type="text" class="form-control" formControlName="nationality"
+                                           placeholder="{{'teacher.new.form.nationality-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.nationality.invalid && (teacherUserForm.controls.nationality.dirty || teacherUserForm.controls.nationality.touched)">
+                                        <span jhiTranslate="teacher.new.form.nationality-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="birthDate" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.birthDate">Teacher birthDate</span> <span style="color: #c75b58;">*</span>
+                                </label>
+                                <div class="col-sm-3">
+                                    <mat-form-field class="input-group">
+                                        <input id="birthDate" matInput [matDatepicker]="birthDatePicker"
+                                               placeholder="{{'teacher.new.form.birthDate-placeholder'|translate}}"
+                                               formControlName="birthDate" (click)="birthDatePicker.open()" class="form-control">
+                                        <mat-datepicker-toggle matSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #birthDatePicker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="familySituation" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.familySituation">Teacher familySituation</span> <span style="color: #c75b58;">*</span>
+                                </label>
+                                <div class="col-sm-3">
+                                    <mat-form-field id="familySituation" class="input-group">
+                                        <mat-select placeholder="{{'teacher.new.form.familySituation-placeholder'|translate}}" [compareWith]="compareFamilySituationsFn"
+                                                    matInput formControlName="familySituation">
+                                            <mat-option *ngFor="let familySituation of familySituations" [value]="familySituation">{{familySituation|translate}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group row">
+                                <label for="homePhone" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.homePhone">Teacher homePhone</span></label>
+                                <div class="col-sm-8">
+                                    <input id="homePhone" type="text" class="form-control" formControlName="homePhone"
+                                           placeholder="{{'teacher.new.form.homePhone-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.homePhone.invalid && (teacherUserForm.controls.homePhone.dirty || teacherUserForm.controls.homePhone.touched)">
+                                        <span jhiTranslate="teacher.new.form.homePhone-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="cellPhone" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.cellPhone">Teacher cellPhone</span></label>
+                                <div class="col-sm-8">
+                                    <input id="cellPhone" type="text" class="form-control" formControlName="cellPhone"
+                                           placeholder="{{'teacher.new.form.cellPhone-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.cellPhone.invalid && (teacherUserForm.controls.cellPhone.dirty || teacherUserForm.controls.cellPhone.touched)">
+                                        <span jhiTranslate="teacher.new.form.cellPhone-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="proPhone" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.proPhone">Teacher proPhone</span></label>
+                                <div class="col-sm-8">
+                                    <input id="proPhone" type="text" class="form-control" formControlName="proPhone"
+                                           placeholder="{{'teacher.new.form.proPhone-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.proPhone.invalid && (teacherUserForm.controls.proPhone.dirty || teacherUserForm.controls.proPhone.touched)">
+                                        <span jhiTranslate="teacher.new.form.proPhone-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="proCellPhone" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.proCellPhone">Teacher proCellPhone</span></label>
+                                <div class="col-sm-8">
+                                    <input id="proCellPhone" type="text" class="form-control" formControlName="proCellPhone"
+                                           placeholder="{{'teacher.new.form.proCellPhone-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.proCellPhone.invalid && (teacherUserForm.controls.proCellPhone.dirty || teacherUserForm.controls.proCellPhone.touched)">
+                                        <span jhiTranslate="teacher.new.form.proCellPhone-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.email">Teacher email</span></label>
+                                <div class="col-sm-8">
+                                    <input id="email" type="text" class="form-control" formControlName="email"
+                                           placeholder="{{'teacher.new.form.email-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.email.invalid && (teacherUserForm.controls.email.dirty || teacherUserForm.controls.email.touched)">
+                                        <span jhiTranslate="teacher.new.form.email-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="proEmail" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.proEmail">Teacher proEmail</span></label>
+                                <div class="col-sm-8">
+                                    <input id="proEmail" type="text" class="form-control" formControlName="proEmail"
+                                           placeholder="{{'teacher.new.form.proEmail-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.proEmail.invalid && (teacherUserForm.controls.proEmail.dirty || teacherUserForm.controls.proEmail.touched)">
+                                        <span jhiTranslate="teacher.new.form.proEmail-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group row">
+                                <label for="addressName" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.addressName">Teacher address name</span> <span style="color: #c75b58;">*</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    <input id="addressName" type="text" class="form-control" formControlName="addressName"
+                                           placeholder="{{'teacher.new.form.addressName-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.addressName.invalid && (teacherUserForm.controls.addressName.dirty || teacherUserForm.controls.addressName.touched)">
+                                        <span jhiTranslate="teacher.new.form.addressName-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="postalCode" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.postalCode">Teacher postal code</span> <span style="color: #c75b58;">*</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    <input id="postalCode" type="text" class="form-control" formControlName="postalCode"
+                                           placeholder="{{'teacher.new.form.postalCode-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.postalCode.invalid && (teacherUserForm.controls.postalCode.dirty || teacherUserForm.controls.postalCode.touched)">
+                                        <span jhiTranslate="teacher.new.form.postalCode-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="city" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.city">Teacher city</span> <span style="color: #c75b58;">*</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    <input id="city" type="text" class="form-control" formControlName="city"
+                                           placeholder="{{'teacher.new.form.city-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.city.invalid && (teacherUserForm.controls.city.dirty || teacherUserForm.controls.city.touched)">
+                                        <span jhiTranslate="teacher.new.form.city-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="country" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.country">Teacher country</span> <span style="color: #c75b58;">*</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    <input id="country" type="text" class="form-control" formControlName="country"
+                                           placeholder="{{'teacher.new.form.country-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.country.invalid && (teacherUserForm.controls.country.dirty || teacherUserForm.controls.country.touched)">
+                                        <span jhiTranslate="teacher.new.form.country-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="form-group row">
+                                <label for="grades" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.grades">Teacher grades</span> <span style="color: #c75b58;">*</span>
+                                </label>
+                                <div class="col-sm-3">
+                                    <mat-form-field id="grades" class="input-group">
+                                        <mat-select placeholder="{{'teacher.new.form.grades-placeholder'|translate}}" [compareWith]="compareGradesFn"
+                                                    matInput multiple formControlName="grades" (selectionChange)="onGradesChange($event)">
+                                            <mat-option *ngFor="let grade of grades" [value]="grade">{{grade.name}} ({{grade.diminutive}})</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="taughtSubjects" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.taughtSubjects">Teacher taughtSubjects</span> <span style="color: #c75b58;">*</span>
+                                </label>
+                                <div class="col-sm-3">
+                                    <mat-form-field id="taughtSubjects" class="input-group">
+                                        <mat-select matInput multiple formControlName="taughtSubjects" [compareWith]="compareSubjectsFn"
+                                                    placeholder="{{'teacher.new.form.taughtSubjects-placeholder'|translate}}"
+                                                     [disabled]="isTaughtSubjectsDisabled()">
+                                            <mat-option *ngFor="let subject of taughtSubjects" [value]="subject">
+                                                <span *ngIf="subject.customName">{{subject.customName}} ({{subject.grade.name}})</span>
+                                                <span *ngIf="!subject.customName">{{subject.name}} ({{subject.grade.name}})</span>
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="form-group row">
+                                <label for="substitute" class="col-sm-4 col-form-label">
+                                        <span
+                                            jhiTranslate="teacher.new.form.substitute">Teacher substitute</span></label>
+                                <div class="col-sm-8">
+                                    <ui-switch id="substitute" class="js-danger" color="#9E4747" size="medium"
+                                               (change)="onSubstitutedChange($event)"
+                                               [formControlName]="'substitute'" ngDefaultControl></ui-switch>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="substitutedTeachers" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.substitutedTeachers">Teacher substitutedTeachers</span>
+                                </label>
+                                <div class="col-sm-3">
+                                    <mat-form-field class="input-group" id="substitutedTeachers">
+                                        <mat-select placeholder="{{'teacher.new.form.substitutedTeachers-placeholder'|translate}}"
+                                                    matInput multiple formControlName="substitutedTeachers">
+                                            <mat-option *ngFor="let substitutedTeacher of substitutedTeachers" [value]="substitutedTeacher">{{substitutedTeacher.firstName}} {{substitutedTeacher.lastName}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="form-group row">
+                                <label for="employedDate" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.employedDate">Teacher employedDate</span> <span style="color: #c75b58;">*</span>
+                                </label>
+                                <div class="col-sm-3">
+                                    <mat-form-field class="input-group">
+                                        <input id="employedDate" matInput [matDatepicker]="employedDatePicker"
+                                               placeholder="{{'teacher.new.form.employedDate-placeholder'|translate}}"
+                                               formControlName="employedDate" (click)="employedDatePicker.open()" class="form-control">
+                                        <mat-datepicker-toggle matSuffix [for]="employedDatePicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #employedDatePicker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exitDate" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.exitDate">Teacher exitDate</span>
+                                </label>
+                                <div class="col-sm-3">
+                                    <mat-form-field class="input-group">
+                                        <input id="exitDate" matInput [matDatepicker]="exitDatePicker"
+                                               placeholder="{{'teacher.new.form.exitDate-placeholder'|translate}}"
+                                               formControlName="exitDate" (click)="exitDatePicker.open()" class="form-control">
+                                        <mat-datepicker-toggle matSuffix [for]="exitDatePicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #exitDatePicker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exitReason" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.exitReason">Teacher exitReason</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    <input id="exitReason" type="text" class="form-control" formControlName="exitReason"
+                                           placeholder="{{'teacher.new.form.exitReason-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="form-group row">
+                                <label for="comment" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="teacher.new.form.comment">Teacher comment</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    <textarea id="comment" rows="4" class="form-control" formControlName="comment"
+                                              placeholder="{{'teacher.new.form.comment-placeholder'|translate}}"
+                                              (keypress)="resetMessages()"></textarea>
+                                    <div class="messages text-danger"
+                                         *ngIf="teacherUserForm.controls.comment.invalid && (teacherUserForm.controls.comment.dirty || teacherUserForm.controls.comment.touched)">
+                                        <span jhiTranslate="teacher.new.form.comment-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </jhi-card>
+        </div>
+    </div>
+</div>

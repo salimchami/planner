@@ -1,0 +1,124 @@
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <jhi-card [classHeader]="true">
+                <form>
+                    <div class="row">
+                        <h4 class="col-sm-12 center-block text-center"><span jhiTranslate="student.home.title"></span> </h4>
+                        <div class="col-sm-12">
+                            <label class="dt-cust-search f-right">
+                                <span class="form-group">
+                                    <label><span jhiTranslate="global.form.search"></span></label>
+                                    <input
+                                        type='text'
+                                        class="form-control input-sm m-l-10"
+                                        placeholder="{{'student.home.search-placeholder'|translate}}"
+                                        (keyup)='updateFilter($event)'
+                                    />
+                                </span>
+                                <span class="form-group">
+                                    <a class="btn btn-primary btn-mat btn-sm" [routerLink]="['/students', 'new']">
+                                        <i class="mdi mdi-plus mdi-18px"></i> <span jhiTranslate="global.form.create"></span>
+                                    </a>
+                                </span>
+                            </label>
+                            <div class="float-left form-group">
+                                <label for="nbRows"><span jhiTranslate="global.form.nb-rows">rows</span></label>
+                                <select id="nbRows" name="nbRows" class="form-control-sm form-control-inverse"
+                                        [(ngModel)]="rowsNumber">
+                                    <option *ngFor="let rowNb of rowsNumbers" [value]="rowNb">{{rowNb}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <ngx-datatable
+                        class="data-table"
+                        [rows]="students"
+                        [loadingIndicator]="loadingIndicator"
+                        [columnMode]="'force'"
+                        [headerHeight]="40"
+                        [footerHeight]="25"
+                        [rowHeight]="50"
+                        [limit]="rowsNumber"
+                        [reorderable]="true">
+
+                        <ngx-datatable-column prop="imageUrl">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                    <strong>{{'student.home.datatable.headers.imageUrl'|translate}}</strong>
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span class="text-center">{{value}}</span>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column prop="student">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                    <strong>{{'student.home.datatable.headers.schoolClass'|translate}}</strong>
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                <div class="float-left" style="height: 150px">
+                                    <strong *ngIf="value.schoolClassId"><a [routerLink]="['/school-classes', 'view', value.schoolClassId]">{{schoolClassName(value.schoolClassId)}}</a></strong>
+                                    <div *ngIf="!value.schoolClassId">
+                                        <div style="color: #7A4244;" jhiTranslate="student.new.form.no-school-class"></div>
+                                        <div>
+                                            <a [routerLink]="['/students', 'edit', row.id]"><span jhiTranslate="student.new.form.edit-student"></span></a>
+                                        </div>
+                                        <div>
+                                            <a [routerLink]="['/schoolClasses', 'new']"><span jhiTranslate="student.new.form.create-school-class"></span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="lastName">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                    <strong>{{'student.home.datatable.headers.lastName'|translate}}</strong>
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                <span class="float-left"><strong><a [routerLink]="['view', row.id]">{{value}}</a></strong></span>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="firstName">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                    <strong>{{'student.home.datatable.headers.firstName'|translate}}</strong>
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                <span class="float-left"><strong><a [routerLink]="['view', row.id]">{{value}}</a></strong></span>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column prop="sex">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                    <strong>{{'student.home.datatable.headers.sex'|translate}}</strong>
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span class="float-left">{{value|translate}}</span>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column prop="birthDate">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                    <strong>{{'student.home.datatable.headers.birthDate'|translate}}</strong>
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span class="float-left">{{value|date:dateHelper.dateFormat()}}</span>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </form>
+            </jhi-card>
+        </div>
+    </div>
+</div>

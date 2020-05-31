@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { SERVER_API_URL } from '../../app.constants';
 
-import { SERVER_API_URL } from 'app/app.constants';
-import { IUser } from 'app/core/user/user.model';
+@Injectable()
+export class Register {
 
-@Injectable({ providedIn: 'root' })
-export class RegisterService {
-  constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
-  save(account: IUser): Observable<{}> {
-    return this.http.post(SERVER_API_URL + 'api/register', account);
-  }
+    save(account: any): Observable<any> {
+        return this.http.post(SERVER_API_URL + 'api/register', account);
+    }
 }

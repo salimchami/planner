@@ -1,32 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ConfigurationService, Bean, PropertySource } from './configuration.service';
+import { JhiConfigurationService } from './configuration.service';
 
 @Component({
-  selector: 'jhi-configuration',
-  templateUrl: './configuration.component.html',
+    selector: 'jhi-configuration',
+    templateUrl: './configuration.component.html'
 })
-export class ConfigurationComponent implements OnInit {
-  allBeans!: Bean[];
-  beans: Bean[] = [];
-  beansFilter = '';
-  beansAscending = true;
-  propertySources: PropertySource[] = [];
+export class JhiConfigurationComponent implements OnInit {
+    allConfiguration: any = null;
+    configuration: any = null;
+    configKeys: any[];
+    filter: string;
+    orderProp: string;
+    reverse: boolean;
 
-  constructor(private configurationService: ConfigurationService) {}
+    constructor(
+        private configurationService: JhiConfigurationService
+    ) {
+        this.configKeys = [];
+        this.filter = '';
+        this.orderProp = 'prefix';
+        this.reverse = false;
+    }
 
-  ngOnInit(): void {
-    this.configurationService.getBeans().subscribe(beans => {
-      this.allBeans = beans;
-      this.filterAndSortBeans();
-    });
+    keys(dict): Array<string> {
+        return (dict === undefined) ? [] : Object.keys(dict);
+    }
 
-    this.configurationService.getPropertySources().subscribe(propertySources => (this.propertySources = propertySources));
-  }
+    ngOnInit() {
+        this.configurationService.get().subscribe((configuration) => {
+            this.configuration = configuration;
 
-  filterAndSortBeans(): void {
-    this.beans = this.allBeans
-      .filter(bean => !this.beansFilter || bean.prefix.toLowerCase().includes(this.beansFilter.toLowerCase()))
-      .sort((a, b) => (a.prefix < b.prefix ? (this.beansAscending ? -1 : 1) : this.beansAscending ? 1 : -1));
-  }
+            for (const config of configuration) {
+                if (config.properties !== undefined) {
+                    this.configKeys.push(Object.keys(config.properties));
+                }
+            }
+        });
+
+        this.configurationService.getEnv().subscribe((configuration) => {
+            this.allConfiguration = configuration;
+        });
+    }
 }

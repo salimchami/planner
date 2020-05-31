@@ -1,84 +1,73 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { JhiLanguageService } from 'ng-jhipster';
+import {Component, OnInit, AfterViewInit, ElementRef, Renderer2} from '@angular/core';
+import {HttpErrorResponse} from '@angular/common/http';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {JhiLanguageService} from 'ng-jhipster';
 
-import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/shared/constants/error.constants';
-import { LoginModalService } from 'app/core/login/login-modal.service';
-import { RegisterService } from './register.service';
+import {Register} from './register.service';
+import {LoginModalService, EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE} from '../../shared';
 
 @Component({
-  selector: 'jhi-register',
-  templateUrl: './register.component.html',
+    selector: 'jhi-register',
+    templateUrl: './register.component.html'
 })
-export class RegisterComponent implements AfterViewInit {
-  @ViewChild('login', { static: false })
-  login?: ElementRef;
+export class RegisterComponent implements OnInit, AfterViewInit {
 
-  doNotMatch = false;
-  error = false;
-  errorEmailExists = false;
-  errorUserExists = false;
-  success = false;
+    confirmPassword: string;
+    doNotMatch: string;
+    error: string;
+    errorEmailExists: string;
+    errorUserExists: string;
+    registerAccount: any;
+    success: boolean;
+    modalRef: NgbModalRef;
 
-  registerForm = this.fb.group({
-    login: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(50),
-        Validators.pattern('^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$'),
-      ],
-    ],
-    email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
-    confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
-  });
-
-  constructor(
-    private languageService: JhiLanguageService,
-    private loginModalService: LoginModalService,
-    private registerService: RegisterService,
-    private fb: FormBuilder
-  ) {}
-
-  ngAfterViewInit(): void {
-    if (this.login) {
-      this.login.nativeElement.focus();
+    constructor(
+        private languageService: JhiLanguageService,
+        private loginModalService: LoginModalService,
+        private registerService: Register,
+        private elementRef: ElementRef,
+        private renderer: Renderer2
+    ) {
     }
-  }
 
-  register(): void {
-    this.doNotMatch = false;
-    this.error = false;
-    this.errorEmailExists = false;
-    this.errorUserExists = false;
-
-    const password = this.registerForm.get(['password'])!.value;
-    if (password !== this.registerForm.get(['confirmPassword'])!.value) {
-      this.doNotMatch = true;
-    } else {
-      const login = this.registerForm.get(['login'])!.value;
-      const email = this.registerForm.get(['email'])!.value;
-      this.registerService.save({ login, email, password, langKey: this.languageService.getCurrentLanguage() }).subscribe(
-        () => (this.success = true),
-        response => this.processError(response)
-      );
+    ngOnInit() {
+        this.success = false;
+        this.registerAccount = {};
     }
-  }
 
-  openLogin(): void {
-    this.loginModalService.open();
-  }
-
-  private processError(response: HttpErrorResponse): void {
-    if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
-      this.errorUserExists = true;
-    } else if (response.status === 400 && response.error.type === EMAIL_ALREADY_USED_TYPE) {
-      this.errorEmailExists = true;
-    } else {
-      this.error = true;
+    ngAfterViewInit() {
+        this.elementRef.nativeElement.querySelector('#login').focus();
     }
-  }
+
+    register() {
+        if (this.registerAccount.password !== this.confirmPassword) {
+            this.doNotMatch = 'ERROR';
+        } else {
+            this.doNotMatch = null;
+            this.error = null;
+            this.errorUserExists = null;
+            this.errorEmailExists = null;
+            this.languageService.getCurrent().then((key) => {
+                this.registerAccount.langKey = key;
+                this.registerService.save(this.registerAccount).subscribe(() => {
+                    this.success = true;
+                }, (response) => this.processError(response));
+            });
+        }
+    }
+
+    openLogin() {
+        this.modalRef = this.loginModalService.open();
+    }
+
+    private processError(response: HttpErrorResponse) {
+        this.success = null;
+        if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
+            this.errorUserExists = 'ERROR';
+        } else if (response.status === 400 && response.error.type === EMAIL_ALREADY_USED_TYPE) {
+            this.errorEmailExists = 'ERROR';
+        } else {
+            this.error = 'ERROR';
+        }
+    }
 }

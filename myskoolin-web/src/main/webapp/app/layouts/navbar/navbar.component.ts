@@ -1,74 +1,87 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { JhiLanguageService } from 'ng-jhipster';
-import { SessionStorageService } from 'ngx-webstorage';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {JhiLanguageService} from 'ng-jhipster';
 
-import { VERSION } from 'app/app.constants';
-import { LANGUAGES } from 'app/core/language/language.constants';
-import { AccountService } from 'app/core/auth/account.service';
-import { LoginModalService } from 'app/core/login/login-modal.service';
-import { LoginService } from 'app/core/login/login.service';
-import { ProfileService } from 'app/layouts/profiles/profile.service';
+import {ProfileService} from '../profiles/profile.service';
+import {JhiLanguageHelper, Principal, LoginModalService, LoginService, NAVBAR_ANIMATIONS} from '../../shared';
+
+import {VERSION} from '../../app.constants';
+import {JhiMainComponent} from '../main/main.component';
 
 @Component({
-  selector: 'jhi-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['navbar.scss'],
+    selector: 'jhi-navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: [
+        'navbar.scss'
+    ],
+    animations: NAVBAR_ANIMATIONS
 })
 export class NavbarComponent implements OnInit {
-  inProduction?: boolean;
-  isNavbarCollapsed = true;
-  languages = LANGUAGES;
-  swaggerEnabled?: boolean;
-  version: string;
+    inProduction: boolean;
+    isNavbarCollapsed: boolean;
+    languages: any[];
+    swaggerEnabled: boolean;
+    modalRef: NgbModalRef;
+    version: string;
 
-  constructor(
-    private loginService: LoginService,
-    private languageService: JhiLanguageService,
-    private sessionStorage: SessionStorageService,
-    private accountService: AccountService,
-    private loginModalService: LoginModalService,
-    private profileService: ProfileService,
-    private router: Router
-  ) {
-    this.version = VERSION ? (VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION) : '';
-  }
+    public navRight: string;
 
-  ngOnInit(): void {
-    this.profileService.getProfileInfo().subscribe(profileInfo => {
-      this.inProduction = profileInfo.inProduction;
-      this.swaggerEnabled = profileInfo.swaggerEnabled;
-    });
-  }
+    constructor(private loginService: LoginService,
+                private languageService: JhiLanguageService,
+                private languageHelper: JhiLanguageHelper,
+                private principal: Principal,
+                private loginModalService: LoginModalService,
+                private profileService: ProfileService,
+                private router: Router,
+                private main: JhiMainComponent) {
+        this.version = VERSION ? 'v' + VERSION : '';
+        this.isNavbarCollapsed = true;
+        this.navRight = 'nav-on';
+    }
 
-  changeLanguage(languageKey: string): void {
-    this.sessionStorage.store('locale', languageKey);
-    this.languageService.changeLanguage(languageKey);
-  }
+    ngOnInit() {
+        this.languageHelper.getAll().then((languages) => {
+            this.languages = languages;
+        });
 
-  collapseNavbar(): void {
-    this.isNavbarCollapsed = true;
-  }
+        this.profileService.getProfileInfo().then((profileInfo) => {
+            this.inProduction = profileInfo.inProduction;
+            this.swaggerEnabled = profileInfo.swaggerEnabled;
+        });
+    }
 
-  isAuthenticated(): boolean {
-    return this.accountService.isAuthenticated();
-  }
+    setHeaderAttributes(windowWidth) {
+        if (windowWidth < 992) {
+            this.navRight = 'nav-off';
+        } else {
+            this.navRight = 'nav-on';
+        }
+    }
 
-  login(): void {
-    this.loginModalService.open();
-  }
+    changeLanguage(languageKey: string) {
+        this.languageService.changeLanguage(languageKey);
+    }
 
-  logout(): void {
-    this.collapseNavbar();
-    this.loginService.logout();
-    this.router.navigate(['']);
-  }
+    collapseNavbar() {
+        this.isNavbarCollapsed = true;
+    }
 
-  toggleNavbar(): void {
-    this.isNavbarCollapsed = !this.isNavbarCollapsed;
-  }
+    isAuthenticated() {
+        return this.principal.isAuthenticated();
+    }
 
-  getImageUrl(): string {
-    return this.isAuthenticated() ? this.accountService.getImageUrl() : '';
-  }
+    login() {
+        this.modalRef = this.loginModalService.open();
+    }
+
+    logout() {
+        this.collapseNavbar();
+        this.loginService.logout();
+        this.router.navigate(['']);
+    }
+
+    getImageUrl() {
+        return this.isAuthenticated() ? this.principal.getImageUrl() : null;
+    }
 }

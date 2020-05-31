@@ -1,0 +1,148 @@
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <jhi-card [classHeader]="true">
+                <form>
+                    <div class="row">
+                        <h4 class="col-sm-12 center-block text-center"><span jhiTranslate="subject.home.title"></span> </h4>
+                        <div class="col-sm-12">
+                            <label class="dt-cust-search f-right">
+                                <span class="form-group">
+                                    <label><span jhiTranslate="global.form.search"></span></label>
+                                    <input
+                                        type='text'
+                                        class="form-control input-sm m-l-10"
+                                        placeholder="{{'subject.home.search-placeholder'|translate}}"
+                                        (keyup)='updateFilter($event)'
+                                    />
+                                </span>
+                                <span class="form-group">
+                                    <a class="btn btn-primary btn-mat btn-sm" [routerLink]="['/subjects', 'new']">
+                                        <i class="mdi mdi-plus mdi-18px"></i> <span jhiTranslate="global.form.create"></span>
+                                    </a>
+                                </span>
+                            </label>
+                            <div class="float-left form-group">
+                                <label for="nbRows"><span jhiTranslate="global.form.nb-rows">rows</span></label>
+                                <select id="nbRows" name="nbRows" class="form-control-sm form-control-inverse"
+                                        [(ngModel)]="rowsNumber">
+                                    <option *ngFor="let rowNb of rowsNumbers" [value]="rowNb">{{rowNb}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <ngx-datatable
+                        #table
+                        class="data-table"
+                        [rows]="subjects"
+                        [loadingIndicator]="loadingIndicator"
+                        [columnMode]="'force'"
+                        [summaryRow]="true"
+                        [summaryPosition]="'bottom'"
+                        [headerHeight]="40"
+                        [footerHeight]="25"
+                        [rowHeight]="50"
+                        [limit]="rowsNumber"
+                        [reorderable]="true">
+                        <ngx-datatable-column prop="name">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                    <strong>{{'subject.home.datatable.headers.name'|translate}}</strong>
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                <span class="float-left"><strong><a [routerLink]="['view', row['id']]">{{value}}</a></strong></span>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column prop="customName">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                    <strong>{{'subject.home.datatable.headers.customName'|translate}}</strong>
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span class="float-left">{{value}}</span>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column prop="grade">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                    <strong>{{'subject.home.datatable.headers.grade-name'|translate}}</strong>
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span class="text-center">{{value['name']}} <span *ngIf="value['diminutive']"></span>({{value['diminutive']}})</span>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="gradeSerie">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                    <strong>{{'subject.home.datatable.headers.gradeSerie-name'|translate}}</strong>
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span class="text-center" *ngIf="value['name']">{{value['name']}} <span *ngIf="value['diminutive']">({{value['diminutive']}})</span></span>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column prop="foreignLanguage">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                    <strong>{{'subject.home.datatable.headers.foreignLanguage'|translate}}</strong>
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span class="float-left" *ngIf="value" jhiTranslate="global.yes"></span>
+                                <span class="float-left" *ngIf="!value" jhiTranslate="global.no"></span>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column prop="coursesFrequencyPerWeek">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                    <strong jhiTranslate="subject.home.datatable.headers.coursesFrequencyPerWeek">coursesFrequencyPerWeek</strong>
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                {{value}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="minMinutesPerDay">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                    <strong jhiTranslate="subject.home.datatable.headers.minMinutesPerDay">minMinutesPerDay</strong>
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                {{dateTimeHelper.displayHoursAndMinutes(value)}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="maxMinutesPerDay">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                    <strong jhiTranslate="subject.home.datatable.headers.maxMinutesPerDay">maxMinutesPerDay</strong>
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                {{dateTimeHelper.displayHoursAndMinutes(value)}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="minutesPerWeek">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                    <strong>{{'subject.home.datatable.headers.minutesPerWeek'|translate}}</strong>
+                                </span>
+                            </ng-template>
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                {{dateTimeHelper.displayHoursAndMinutes(value)}}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                    </ngx-datatable>
+                </form>
+            </jhi-card>
+        </div>
+    </div>
+</div>

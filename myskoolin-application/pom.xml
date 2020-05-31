@@ -3,13 +3,35 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>io.edukativ.schooling</groupId>
         <artifactId>myskoolin</artifactId>
+        <groupId>io.edukativ.schooling</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+
     <artifactId>myskoolin-application</artifactId>
-    <packaging>jar</packaging>
     <name>application</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>io.edukativ.schooling</groupId>
+            <artifactId>myskoolin-infrastructure</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.edukativ.schooling</groupId>
+            <artifactId>myskoolin-domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>

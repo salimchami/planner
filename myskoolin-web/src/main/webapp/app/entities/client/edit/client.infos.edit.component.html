@@ -1,0 +1,306 @@
+<div class="page-body">
+    <form (ngSubmit)="updateClientInfos()" novalidate [formGroup]="clientForm">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-8 center-block text-center" style="font-size: large">
+                            <h2 class="card-header-text">
+                                <span jhiTranslate="client.edit.infos.title"></span>
+                                <span *ngIf="clientForm.controls.name.value">"{{clientForm.controls.name.value}}"</span>
+                            </h2>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="float-right">
+                                <button type="button" class="btn btn-secondary btn-mat m-b-0" id="cancel"
+                                        (click)="goBack()">
+                                    <em class="mdi mdi-cancel mdi-18px"></em>
+                                    <span jhiTranslate="global.buttons.cancel">Cancel</span>
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-mat m-b-0" id="submit"
+                                        [disabled]="!clientForm.valid">
+                                    <em class="mdi mdi-pencil-box mdi-18px"></em>
+                                    <span jhiTranslate="global.buttons.update">Update</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <jhi-card [classHeader]="true" [cardOptionBlock]="true">
+                    <div class="row">
+                        <div class="col-sm-10 mobile-inputs m-t-20">
+                            <div class="form-group row">
+                                <label for="name" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="client.edit.form.name">Institution name</span> <span style="color: #c75b58;">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="name" type="text" class="form-control" formControlName="name"
+                                           placeholder="{{'client.edit.form.name-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="clientForm.controls.name.invalid && (clientForm.controls.name.dirty || clientForm.controls.name.touched)">
+                                        <span jhiTranslate="client.edit.form.name-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="addressName" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="client.edit.form.addressName">addressName</span> <span style="color: #c75b58;">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="addressName" type="text" class="form-control" formControlName="addressName"
+                                           placeholder="{{'client.edit.form.addressName-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="clientForm.controls.addressName.invalid && (clientForm.controls.addressName.dirty || clientForm.controls.addressName.touched)">
+                                        <span jhiTranslate="client.edit.form.addressName-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="addressPostalCode" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="client.edit.form.addressPostalCode">addressPostalCode</span> <span style="color: #c75b58;">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="addressPostalCode" type="text" class="form-control" formControlName="addressPostalCode"
+                                           placeholder="{{'client.edit.form.addressPostalCode-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="clientForm.controls.addressPostalCode.invalid && (clientForm.controls.addressPostalCode.dirty || clientForm.controls.addressPostalCode.touched)">
+                                        <span jhiTranslate="client.edit.form.addressPostalCode-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="addressCity" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="client.edit.form.addressCity">addressCity</span> <span style="color: #c75b58;">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="addressCity" type="text" class="form-control" formControlName="addressCity"
+                                           placeholder="{{'client.edit.form.addressCity-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="clientForm.controls.addressCity.invalid && (clientForm.controls.addressCity.dirty || clientForm.controls.addressCity.touched)">
+                                        <span jhiTranslate="client.edit.form.addressCity-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="addressCountry" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="client.edit.form.addressCountry">addressCountry</span> <span style="color: #c75b58;">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="addressCountry" type="text" class="form-control" formControlName="addressCountry"
+                                           placeholder="{{'client.edit.form.addressCountry-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="clientForm.controls.addressCountry.invalid && (clientForm.controls.addressCountry.dirty || clientForm.controls.addressCountry.touched)">
+                                        <span jhiTranslate="client.edit.form.addressCountry-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="surfacesMeasurementUnit" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="client.edit.form.surfacesMeasurementUnit">surfacesMeasurementUnit</span> <span style="color: #c75b58;">*</span>
+                                </label>
+                                <div class="col-sm-3">
+                                    <mat-form-field id="surfacesMeasurementUnit" class="input-group">
+                                        <mat-select placeholder="{{'client.edit.form.surfacesMeasurementUnit-placeholder'|translate}}"
+                                                    [compareWith]="compareSurfacesMeasurementUnitFn" matInput
+                                                    [formControlName]="'surfacesMeasurementUnit'">
+                                            <mat-option *ngFor="let unit of surfaces" [value]="unit.code"><span jhiTranslate="{{unit.code}}"></span></mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="distancesMeasurementUnit" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="client.edit.form.distancesMeasurementUnit">distancesMeasurementUnit</span> <span style="color: #c75b58;">*</span>
+                                </label>
+                                <div class="col-sm-3">
+                                    <mat-form-field id="distancesMeasurementUnit" class="input-group">
+                                        <mat-select placeholder="{{'client.edit.form.distancesMeasurementUnit-placeholder'|translate}}"
+                                                    formControlName="distancesMeasurementUnit" matInput
+                                                    [compareWith]="compareDistancesMeasurementUnitFn">
+                                            <mat-option *ngFor="let distance of distances" [value]="distance.code">{{distance.code|translate}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="majorityAge" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="client.edit.form.majorityAge">majorityAge</span> <span style="color: #c75b58;">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="majorityAge" type="number" class="form-control" formControlName="majorityAge"
+                                           placeholder="{{'client.edit.form.majorityAge-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                    <div class="messages text-danger"
+                                         *ngIf="clientForm.controls.majorityAge.invalid && (clientForm.controls.majorityAgee.dirty || clientForm.controls.majorityAge.touched)">
+                                        <span jhiTranslate="client.edit.form.majorityAge-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="contactsBy" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="client.edit.form.contactsBy">contactsBy</span> <span style="color: #c75b58;">*</span></label>
+                                <div class="col-sm-8">
+                                    <mat-form-field>
+                                        <mat-select multiple id="contactsBy" formControlName="contactsBy" matInput
+                                                    [compareWith]="compareContactsByMeasurementUnitFn">
+                                            <mat-option *ngFor="let contactBy of contactsBy" [value]="contactBy">{{contactBy.code|translate}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <div class="messages text-danger"
+                                         *ngIf="clientForm.controls.contactsBy.invalid && (clientForm.controls.contactsBy.dirty || clientForm.controls.contactsBy.touched)">
+                                        <span jhiTranslate="client.edit.form.contactsBy-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="principalWebsite" class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="client.edit.form.principalWebsite">principalWebsite</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    <input id="principalWebsite" type="text" class="form-control" formControlName="principalWebsite"
+                                           placeholder="{{'client.edit.form.principalWebsite-placeholder'|translate}}"
+                                           (keypress)="resetMessages()">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="client.edit.form.phones">phones</span> <span style="color: #c75b58;">*</span></label>
+                                <div class="col-sm-8">
+                                    <div formArrayName="phones" *ngFor="let phone of clientForm.get('phones')['controls']; let i = index">
+                                        <div class="row" [formGroupName]="i">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="{{'phone-title'+i}}"><span jhiTranslate="client.edit.form.phones-title"></span></label>
+                                                    <input id="{{'phone-title'+i}}" type="text" class="form-control" formControlName="name">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="{{'phone-value'+i}}"><span jhiTranslate="client.edit.form.phones-value"></span></label>
+                                                    <div class="input-group">
+                                                        <input id="{{'phone-value'+i}}" type="text" class="form-control" formControlName="number">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-btn">
+                                                                <button *ngIf="i === clientForm.get('phones')['controls'].length - 1" type="button" class="btn btn-sm btn-outline-info" (click)="addPhone()">
+                                                                    <span class="mdi mdi-plus-box" aria-hidden="true"></span>
+                                                                </button>
+                                                                <button *ngIf="i != 0" type="button" class="btn btn-sm btn-outline-danger" (click)="removePhone(i)">
+                                                                    <span class="mdi mdi-minus-box" aria-hidden="true"></span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="messages text-danger"
+                                         *ngIf="clientForm.controls.phones.invalid && (clientForm.controls.phones.dirty || clientForm.controls.phones.touched)">
+                                        <span jhiTranslate="client.edit.form.phones-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="client.edit.form.emails">emails</span> <span style="color: #c75b58;">*</span></label>
+                                <div class="col-sm-8">
+                                    <div formArrayName="emails" *ngFor="let email of clientForm.get('emails')['controls']; let i = index">
+                                        <div class="row" [formGroupName]="i">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="{{'email-name'+ i}}"><span jhiTranslate="client.edit.form.emails-name"></span></label>
+                                                    <input id="{{'email-name'+ i}}" type="text" class="form-control" formControlName="name">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="{{'phone-link'+ i}}"><span jhiTranslate="client.edit.form.emails-link"></span></label>
+                                                    <div class="input-group">
+                                                        <input id="{{'phone-link'+ i}}" type="text" class="form-control" formControlName="link">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-btn">
+                                                                <button *ngIf="i === clientForm.get('emails')['controls'].length - 1" type="button" class="btn btn-sm btn-outline-info" (click)="addEmail()">
+                                                                    <span class="mdi mdi-plus-box" aria-hidden="true"></span>
+                                                                </button>
+                                                                <button *ngIf="i != 0" type="button" class="btn btn-sm btn-outline-danger" (click)="removeEmail(i)">
+                                                                    <span class="mdi mdi-minus-box" aria-hidden="true"></span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="messages text-danger"
+                                         *ngIf="clientForm.controls.emails.invalid && (clientForm.controls.emails.dirty || clientForm.controls.emails.touched)">
+                                        <span jhiTranslate="client.edit.form.emails-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">
+                                    <span jhiTranslate="client.edit.form.websites">websites</span> <span style="color: #c75b58;">*</span></label>
+                                <div class="col-sm-8">
+                                    <div formArrayName="websites" *ngFor="let website of clientForm.get('websites')['controls']; let i = index">
+                                        <div class="row" [formGroupName]="i">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="{{'website-name'+ i}}"><span jhiTranslate="client.edit.form.websites-name"></span></label>
+                                                    <input id="{{'website-name'+ i}}" type="text" class="form-control" formControlName="name">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="{{'website-link'+ i}}"><span jhiTranslate="client.edit.form.websites-link"></span></label>
+                                                    <div class="input-group">
+                                                        <input id="{{'website-link'+ i}}" type="text" class="form-control" formControlName="link">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-btn">
+                                                                <button *ngIf="i === clientForm.get('websites')['controls'].length - 1" type="button" class="btn btn-sm btn-outline-info" (click)="addWebsite()">
+                                                                    <span class="mdi mdi-plus-box" aria-hidden="true"></span>
+                                                                </button>
+                                                                <button *ngIf="i != 0" type="button" class="btn btn-sm btn-outline-danger" (click)="removeWebsite(i)">
+                                                                    <span class="mdi mdi-minus-box" aria-hidden="true"></span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="messages text-danger"
+                                         *ngIf="clientForm.controls.websites.invalid && (clientForm.controls.websites.dirty || clientForm.controls.websites.touched)">
+                                        <span jhiTranslate="client.edit.form.websites-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </jhi-card>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-8 center-block text-center">
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="float-right">
+                                <button type="button" class="btn btn-secondary btn-mat m-b-0" id="cancel-2"
+                                        (click)="goBack()">
+                                    <em class="mdi mdi-cancel mdi-18px"></em>
+                                    <span jhiTranslate="global.buttons.cancel">Cancel</span>
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-mat m-b-0" id="submit-2"
+                                        [disabled]="!clientForm.valid">
+                                    <em class="mdi mdi-pencil-box mdi-18px"></em>
+                                    <span jhiTranslate="global.buttons.update">Update</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

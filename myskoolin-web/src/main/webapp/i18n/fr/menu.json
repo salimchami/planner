@@ -1,0 +1,74 @@
+{
+    "menu": {
+        "dashboards": {
+            "title": "Tableaux de bord",
+            "home": "Accueil"
+        },
+        "schooling": {
+            "title": "Vie scolaire"
+        },
+        "students": {
+            "title": "Elèves",
+            "title-more": "Elèves - Scolarité",
+            "list": "Liste",
+            "absences": "Absences",
+            "delays": "Retards",
+            "sanctions": "Sanctions",
+            "timetables": "Emplois du temps",
+            "school-reports": "Bulletins",
+            "continual-assessment": "Contrôle continu",
+            "orientation": "Orientation"
+        },
+        "school-classes": {
+            "title": "Classes",
+            "title-more": "Classes - Scolarité",
+            "list": "Liste",
+            "timetables": "Emplois du temps",
+            "daily-book": "Cahier de texte",
+            "continual-assessment": "Contrôle continu",
+            "absences": "Absences",
+            "delays": "Retards",
+            "sanctions": "Sanctions",
+            "school-reports": "Bulletins"
+        },
+        "parents": {
+            "title": "Responsables",
+            "list": "Liste"
+        },
+        "institution": {
+            "title": "Institution",
+            "school-rooms": "Salles de cours",
+            "infirmary": "Infirmerie",
+            "canteen": "Cantine",
+            "staff": "Personnel"
+        },
+        "timetables": {
+            "title": "Emplois du temps",
+            "list": "Liste",
+            "generation": "Génération automatique"
+        },
+        "staff": {
+            "title": "Personnel",
+            "other-staff": "Autre"
+        },
+        "teachers": {
+            "title": "Professeurs"
+        },
+        "subjects": {
+            "title": "Matières"
+        },
+        "settings": {
+            "title": "Paramètres",
+            "school-account-settings": "Paramètres du compte",
+            "contract": "Contrat"
+        },
+        "finance": {
+            "title": "Finance",
+            "tuition-fees": "Frais de scolarité"
+        },
+        "grades": {
+            "title": "Niveaux",
+            "list": "Liste"
+        }
+    }
+}

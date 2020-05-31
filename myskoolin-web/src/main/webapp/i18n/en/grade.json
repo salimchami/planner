@@ -1,0 +1,115 @@
+{
+    "grade": {
+        "home": {
+            "title": "Scholar grades",
+            "createLabel": "Create a new grade",
+            "createOrEditLabel": "Create or edit a grade",
+            "search-placeholder": "Grade name",
+            "datatable": {
+                "headers": {
+                    "name": "Name",
+                    "order": "Ordre",
+                    "notation": "Notation",
+                    "diminutive": "Diminutive",
+                    "ngSubjects": "Nb subjects"
+                }
+            }
+        },
+        "view": {
+            "title": "Grade",
+            "name": "Name",
+            "diminutive": "Diminutive",
+            "order": "Order",
+            "notation": "Notation",
+            "maxMinutesPerDay": "Maximum time per day",
+            "series": "Series",
+            "edit": "Edit",
+            "delete": "Delete",
+            "goback": "Back",
+            "series-array": {
+                "title": "School grade series",
+                "name": "Name",
+                "diminutive": "Diminutive",
+                "option": "Option",
+                "empty": "No Series"
+            },
+            "grades-ranking": {
+                "title": "Grades ranking"
+            },
+            "subjects-title":"Grade's subjects",
+            "subject-name": "Name",
+            "subject-customName": "Custom name",
+            "subject-foreignLanguage": "Foreign language",
+            "subject-gradeSerie": "Grade serie"
+        },
+        "edit": {
+            "title": "Editing grade",
+            "form": {
+                "toast-title": "Grade edit",
+                "update-successfull": "The grade has been successfully edited."
+            }
+        },
+        "new": {
+            "title": "New grade",
+            "form": {
+                "name": "Name",
+                "name-placeholder": "Grade name",
+                "name-error": "The grade name is required.",
+                "notation": "Notation",
+                "notation-placeholder": "Grade notation",
+                "notation-error": "The grade notation is required.",
+                "diminutive": "Diminutive",
+                "diminutive-placeholder": "Grade diminutive",
+                "maxMinutesPerDay": "Max minutes per day",
+                "maxMinutesPerDay-placeholder": "Max min. /day",
+                "maxMinutesPerDay-error": "The grade max minutes per day is required and can't be greater than 480 minutes.",
+                "series-array": {
+                    "title": "School grade series",
+                    "name": "Name",
+                    "diminutive": "Diminutive",
+                    "option": "Option",
+                    "name-placeholder": "Serie name",
+                    "diminutive-placeholder": "Serie diminutive",
+                    "option-placeholder": "Serie option"
+                },
+                "add-serie": "Add serie",
+                "orders": {
+                    "title": "Ordre des niveaux"
+                },
+                "remove-serie": "Remove last distance",
+                "search-or-add-grade-name": "Search or add grade name",
+                "type-distance": "Type a distance",
+                "name-already-exists": "The grade name already exists. Please enter a different one.",
+                "toast-title": "Grade creation",
+                "creation-successfull": "The grade has been successfully created."
+            }
+        },
+        "delete": {
+            "title": "Confirm delete grade {{name}}",
+            "question": "Are you sure you want to delete Grade {{ name }} ?",
+            "toast-title": "Delete grade {{name}}",
+            "delete-successfull": "The grade {{name}} has been successfully deleted"
+        },
+        "enums": {
+            "types": {
+                "normal": "Standard",
+                "sciences": "Sciences",
+                "music": "Music",
+                "sport": "Sport",
+                "it": "IT",
+                "multipurpose": "Multipurpose",
+                "stepped": "Stepped",
+                "amphitheater": "Amphitheater"
+            }
+        },
+        "created": "A new Grade is created with identifier {{ param }}",
+        "updated": "A Grade is updated with identifier {{ param }}",
+        "deleted": "A Grade is deleted with identifier {{ param }}",
+        "detail": {
+            "title": "Grades list",
+            "search-placeholder": "Search name"
+        },
+        "clientId": "Client Id",
+        "name": "Name"
+    }
+}

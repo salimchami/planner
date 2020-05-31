@@ -1,0 +1,39 @@
+.background-cell-color-blue {
+    background-color: #91a9d1;
+}
+
+.background-cell-color-red {
+    background-color: #f97171;
+}
+
+.event-time-breaks-bgColor {
+    background-color: #DDDDDD;
+}
+.event-time-breaks-fontColor {
+    background-color: #52524D;
+}
+
+.event-course-bgColor {
+    background-color: #31708f;
+}
+.event-course-fontColor {
+    background-color: #E8E6E2;
+}
+
+.table {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.fc-event {
+    height: 60px !important;
+}
+
+.fc-event-time, .fc-event-title {
+    padding: 0 1px;
+    white-space: nowrap;
+}
+
+.fc-title {
+    white-space: normal;
+}

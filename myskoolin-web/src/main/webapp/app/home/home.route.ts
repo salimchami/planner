@@ -1,12 +1,13 @@
-import { Route } from '@angular/router';
+import {Route} from '@angular/router';
 
-import { HomeComponent } from './home.component';
+import {HomeComponent} from './';
+import {AUTHORITIES_AUTHENTICATED_USERS} from '../shared';
 
 export const HOME_ROUTE: Route = {
-  path: '',
-  component: HomeComponent,
-  data: {
-    authorities: [],
-    pageTitle: 'home.title',
-  },
+    path: '',
+    component: HomeComponent,
+    data: {
+        authorities: AUTHORITIES_AUTHENTICATED_USERS,
+        pageTitle: 'home.title'
+    }
 };

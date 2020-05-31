@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="C:\Users\slim\01_projects\schoolme\schoolme-app\src\test\javascript\spec\app\shared\services\utils\calendar-helper.service.spec.ts">
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day monday should return week from monday" duration="1"/>
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day monday should return week from tuesday" duration="0"/>
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day monday should return week from wednesday" duration="0"/>
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day monday should return week from thursday" duration="0"/>
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day monday should return week from friday" duration="0"/>
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day monday should return week from saturday" duration="0"/>
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day monday should return week from second sunday" duration="0"/>
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day monday should return week from first sunday" duration="0"/>
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day sunday should return week from monday" duration="0"/>
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day sunday should return week from tuesday" duration="0"/>
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day sunday should return week from wednesday" duration="0"/>
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day sunday should return week from thursday" duration="0"/>
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day sunday should return week from friday" duration="0"/>
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day sunday should return week from saturday" duration="0"/>
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day sunday should return week from second sunday" duration="0"/>
+    <testCase name="Calendar Helper Tests dateByCurrentDayNameBasedOnToday - client first day sunday should return week from first sunday" duration="0"/>
+    <testCase name="Calendar Helper Tests timeSlotDurationInMinutes - valid should return week from monday" duration="3"/>
+  </file>
+</testExecutions>

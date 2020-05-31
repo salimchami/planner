@@ -1,0 +1,112 @@
+{
+    "schoolRoom": {
+        "home": {
+            "title": "Salles de cours",
+            "createLabel": "Créer un nouveau School Room",
+            "createOrEditLabel": "Créer ou éditer un School Room",
+            "search-placeholder": "Nom de salle",
+            "datatable": {
+                "headers": {
+                    "name": "Nom",
+                    "code": "Code",
+                    "seats": "Nb sièges",
+                    "surface": "Surface",
+                    "closed": "Fermée",
+                    "opened": "Ouverte",
+                    "state": "Etat",
+                    "type": "Type"
+                }
+            }
+        },
+        "view": {
+            "title": "Salle de cours",
+            "name": "Nom",
+            "type": "Type",
+            "surface": "Surface",
+            "seats": "Sièges",
+            "closed": "Fermée",
+            "comment": "Commentaire",
+            "longitude": "Longitude",
+            "latitude": "Latitude",
+            "state": "Etat",
+            "edit": "Modifier",
+            "delete": "Supprimer",
+            "goback": "Retour",
+            "distance-value": "Valeur",
+            "distances": "Distances"
+        },
+        "edit": {
+            "title" : "Modification salle de cours",
+            "form": {
+                "toast-title": "Modification salle de cours",
+                "update-successfull": "Modification effectuée avec succès"
+            }
+        },
+        "new": {
+            "title": "Nouvelle salle",
+            "form": {
+                "name": "Nom",
+                "name-placeholder": "Nom de la salle",
+                "name-error": "Le nom de la salle est obligatoire.",
+                "type": "Type",
+                "type-placeholder": "Type de salle",
+                "type-error": "Le type de la salle est obligatoire.",
+                "surface": "Surface",
+                "surface-placeholder": "Surface de la salle",
+                "surface-error": "La surface doit être supérieure à 2 et doit être un entier.",
+                "seats": "Sièges",
+                "seats-placeholder": "Nom de sièges dans la salle",
+                "seats-error": "Le nombre de sièges doit être supérieur à 2 et doit être un entier.",
+                "closed": "Fermée",
+                "closed-placeholder": "Salle fermée",
+                "comment": "Commentaire",
+                "comment-placeholder": "Commentaire sur la salle",
+                "longitude": "Longitude",
+                "longitude-placeholder": "Longitude de la salle",
+                "latitude": "Latitude",
+                "latitude-placeholder": "Latitude de la salle",
+                "new-school-room-confirmation": "La salle a été créée avec succès.",
+                "add-distances": "Ajouter les distances avec les autres salles",
+                "school-room-distances": "Distances avec les autres salles",
+                "others-school-rooms": "Salles de cours",
+                "distances-alert": "Veuillez remplir le formulaire ci-dessus avant de renseigner celui des distances.",
+                "school-room-name": "School room name",
+                "distance": "Distance",
+                "add-distance": "Ajouter distance",
+                "remove-distance": "Supprimer la dernière distance",
+                "search-or-add-school-room-name": "Rechercher ou ajouter un nom de salle",
+                "type-distance": "Entrez une distance",
+                "name-already-exists": "Le nom de la salle existe déjà. Veuillez en saisir un différent.",
+                "toast-title": "Création salle de cours",
+                "creation-successfull": "La salle de cours a été créée avec succès."
+            }
+        },
+        "delete": {
+            "title": "Confirmation de suppression de la salle de classe {{name}}",
+            "question": "Etes-vous certain de vouloir supprimer la salle de classe {{ name }} ?",
+            "toast-title": "Suppression de la salle de cours {{name}}",
+            "delete-successfull": "La salle de cours {{name}} a bien été supprimée"
+        },
+        "enums": {
+            "types": {
+                "normal": "Standard",
+                "sciences": "Sciences",
+                "music": "Musique",
+                "sport": "Sport",
+                "it": "IT",
+                "multipurpose": "Polyvalente",
+                "stepped": "A gradins",
+                "amphitheater": "Amphithéâtre"
+            }
+        },
+        "created": "Un nouveau School Room a été créé avec l'identifiant {{ param }}",
+        "updated": "Le School Room avec l'identifiant {{ param }} a été mis à jour",
+        "deleted": "Le School Room avec l'identifiant {{ param }} a été supprimé",
+        "detail": {
+            "title": "School Room",
+            "search-placeholder": "Search name"
+        },
+        "clientId": "Client Id",
+        "name": "Name"
+    }
+}

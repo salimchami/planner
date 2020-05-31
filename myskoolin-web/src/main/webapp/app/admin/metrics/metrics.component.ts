@@ -1,47 +1,78 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { flatMap } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { MetricsService, Metrics, MetricsKey, ThreadDump, Thread } from './metrics.service';
+import { JhiMetricsMonitoringModalComponent } from './metrics-modal.component';
+import { JhiMetricsService } from './metrics.service';
 
 @Component({
-  selector: 'jhi-metrics',
-  templateUrl: './metrics.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'jhi-metrics',
+    templateUrl: './metrics.component.html'
 })
-export class MetricsComponent implements OnInit {
-  metrics?: Metrics;
-  threads?: Thread[];
-  updatingMetrics = true;
+export class JhiMetricsMonitoringComponent implements OnInit {
+    metrics: any = {};
+    cachesStats: any = {};
+    servicesStats: any = {};
+    updatingMetrics = true;
+    JCACHE_KEY: string;
 
-  constructor(private metricsService: MetricsService, private changeDetector: ChangeDetectorRef) {}
+    constructor(
+        private modalService: NgbModal,
+        private metricsService: JhiMetricsService
+    ) {
+        this.JCACHE_KEY = 'jcache.statistics';
+    }
 
-  ngOnInit(): void {
-    this.refresh();
-  }
+    ngOnInit() {
+        this.refresh();
+    }
 
-  refresh(): void {
-    this.updatingMetrics = true;
-    this.metricsService
-      .getMetrics()
-      .pipe(
-        flatMap(
-          () => this.metricsService.threadDump(),
-          (metrics: Metrics, threadDump: ThreadDump) => {
+    refresh() {
+        this.updatingMetrics = true;
+        this.metricsService.getMetrics().subscribe((metrics) => {
             this.metrics = metrics;
-            this.threads = threadDump.threads;
             this.updatingMetrics = false;
-            this.changeDetector.detectChanges();
-          }
-        )
-      )
-      .subscribe();
-  }
+            this.servicesStats = {};
+            this.cachesStats = {};
+            Object.keys(metrics.timers).forEach((key) => {
+                const value = metrics.timers[key];
+                if (key.includes('web.rest') || key.includes('service')) {
+                    this.servicesStats[key] = value;
+                }
+            });
+            Object.keys(metrics.gauges).forEach((key) => {
+                if (key.includes('jcache.statistics')) {
+                    const value = metrics.gauges[key].value;
+                    // remove gets or puts
+                    const index = key.lastIndexOf('.');
+                    const newKey = key.substr(0, index);
 
-  metricsKeyExists(key: MetricsKey): boolean {
-    return this.metrics && this.metrics[key];
-  }
+                    // Keep the name of the fr.wideapps.schoolme.domain
+                    this.cachesStats[newKey] = {
+                        'name': this.JCACHE_KEY.length,
+                        'value': value
+                    };
+                }
+            });
+        });
+    }
 
-  metricsKeyExistsAndObjectNotEmpty(key: MetricsKey): boolean {
-    return this.metrics && this.metrics[key] && JSON.stringify(this.metrics[key]) !== '{}';
-  }
+    refreshThreadDumpData() {
+        this.metricsService.threadDump().subscribe((data) => {
+            const modalRef  = this.modalService.open(JhiMetricsMonitoringModalComponent, { size: 'lg'});
+            modalRef.componentInstance.threadDump = data;
+            modalRef.result.then((result) => {
+                // Left blank intentionally, nothing to do here
+            }, (reason) => {
+                // Left blank intentionally, nothing to do here
+            });
+        });
+    }
+
+    filterNaN(input) {
+        if (isNaN(input)) {
+            return 0;
+        }
+        return input;
+    }
+
 }

@@ -1,0 +1,451 @@
+<div class="page-body">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <button class="btn btn-default btn-md" id="go-back" (click)="goBack()">
+                            <i class="mdi mdi-arrow-left-bold"></i> {{'student.view.goback'|translate}}
+                        </button>
+                    </div>
+                    <div class="col-lg-4 center-block text-center" style="font-size: large">
+                        <h2 class="card-header-text"><span jhiTranslate="student.view.title"></span> "{{student.firstName}} {{student.lastName}}"
+                        </h2>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="float-right">
+                            <button class="btn btn-primary btn-mat" id="edit-btn"
+                                    [routerLink]='["../../edit", student.id]'>
+                                <i class="mdi mdi-pencil-box mdi-18px"></i> {{'student.view.edit'|translate}}
+                            </button>
+                            <button class="btn btn-danger btn-mat" id="delete-btn" (click)="modalDefault.show()">
+                                <i class="mdi mdi-delete-variant mdi-18px"></i> {{'student.view.delete'|translate}}
+                            </button>
+                            <jhi-modal-basic #modalDefault>
+                                <div class="app-modal-header">
+                                    <h4 class="modal-title" jhiTranslate="student.delete.title"
+                                        translateValues="{name: '{{student.firstName}} {{student.lastName}}'}">Confirm delete operation</h4>
+                                    <button type="button" class="close basic-close" (click)="modalDefault.hide()">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="app-modal-body">
+                                    <jhi-alert-error></jhi-alert-error>
+                                    <p jhiTranslate="student.delete.question"
+                                       translateValues="{name: '{{student.firstName}} {{student.lastName}}'}">Are you sure you want to delete
+                                        this school room ?</p>
+                                </div>
+                                <div class="app-modal-footer">
+                                    <button type="button" class="btn btn-default waves-effect"
+                                            (click)="modalDefault.hide()">
+                                        <span jhiTranslate="entity.action.cancel">Cancel</span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger waves-effect waves-light ">
+                                        <span jhiTranslate="entity.action.delete" (click)="deleteStudent()">Delete</span>
+                                    </button>
+                                </div>
+                            </jhi-modal-basic>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <jhi-card [classHeader]="true">
+                <div class="card-body">
+                    <ngb-tabset class="student-tab-title" [justify]="'fill'">
+                        <ngb-tab>
+                            <ng-template ngbTabTitle>
+                                <i class="mdi mdi-information-outline"></i> <span jhiTranslate="student.view.tab-user-infos-title"></span>
+                            </ng-template>
+                            <ng-template ngbTabContent>
+                                <div class="m-t-15">
+                                    <div class="view-info">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="general-info">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-xl-12">
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-12 col-xl-6">
+                                                                    <h4 class="sub-title"><span jhiTranslate="student.new.form.steps.step-1-user-infos-title"></span></h4>
+                                                                    <ul>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.login"></span> :
+                                                                            <strong id="finalLogin">{{student.login}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.firstName"></span> :
+                                                                            <strong id="finalFirstName">{{student.firstName}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.lastName"></span> :
+                                                                            <strong id="finalLastName">{{student.lastName}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.sex"></span> :
+                                                                            <strong id="finalSex">{{student.sex|translate}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.nationality"></span> :
+                                                                            <strong id="finalNationality">{{student.nationality}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.email"></span> :
+                                                                            <strong id="finalEmail">{{student.email}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.birthDate"></span> :
+                                                                            <strong id="finalBirthDate">{{student.birthDate|date:dateHelper.dateFormat()}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.cellPhone"></span> :
+                                                                            <strong id="finalCellPhone">{{student.cellPhone}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.homePhone"></span> :
+                                                                            <strong id="finalHomePhone">{{student.homePhone}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.addressName"></span> :
+                                                                            <strong id="finalAddressName">{{student.address.name}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.postalCode"></span> :
+                                                                            <strong id="finalPostalCode">{{student.address.postalCode}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.city"></span> :
+                                                                            <strong id="finalCity">{{student.address.city}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.country"></span> :
+                                                                            <strong id="finalCountry">{{student.address.country}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.comment"></span> :
+                                                                            <strong id="finalComment">{{student.comment}}</strong>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="col-sm-12 col-xl-6">
+                                                                    <h4 class="sub-title"><span jhiTranslate="student.new.form.steps.step-2-scholar-infos-title"></span></h4>
+                                                                    <ul>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.schoolClass"></span> :
+                                                                            <strong *ngIf="student.schoolClass"
+                                                                                id="finalSchoolClass">{{student.schoolClass.name}} <span *ngIf="student.schoolClass.customName">- {{student.schoolClass.customName}}</span></strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.nationalNumber"></span> :
+                                                                            <strong id="finalNationalNumber">{{student.schoolingInfos.nationalNumber}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.redoubling"></span> :
+                                                                            <strong>
+                                                                                <span *ngIf="student.schoolingInfos.redoubling"><span id="finalRedoublingYes" jhiTranslate="global.yes"></span></span>
+                                                                                <span *ngIf="!student.schoolingInfos.redoubling"><span id="finalRedoublingNo" jhiTranslate="global.no"></span></span>
+                                                                            </strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.entryDate"></span> :
+                                                                            <strong id="finalEntryDate">{{student.schoolingInfos.entryDate|date:dateHelper.dateFormat()}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.originEstablishment"></span> :
+                                                                            <strong id="finalOriginEstablishment">{{student.schoolingInfos.originEstablishment}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.individualizedReceptionPlan"></span> :
+                                                                            <strong>
+                                                                                <span *ngIf="student.schoolingInfos.individualizedReceptionPlan"><span id="finalIndividualizedReceptionPlanYes" jhiTranslate="global.yes"></span></span>
+                                                                                <span *ngIf="!student.schoolingInfos.individualizedReceptionPlan"><span id="finalIndividualizedReceptionPlanNo" jhiTranslate="global.no"></span></span>
+                                                                            </strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.individualizedReceptionPlanContent"></span> :
+                                                                            <strong id="finalIndividualizedReceptionPlan">{{student.schoolingInfos.individualizedReceptionPlanContent}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.personalizedSchoolingPlan"></span> :
+                                                                            <strong id="finalPersonalizedSchoolingPlan">
+                                                                                <span *ngIf="student.schoolingInfos.personalizedSchoolingPlan"><span jhiTranslate="global.yes"></span></span>
+                                                                                <span *ngIf="!student.schoolingInfos.personalizedSchoolingPlan"><span jhiTranslate="global.no"></span></span>
+                                                                            </strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.personalizedSchoolingPlanContent"></span> :
+                                                                            <strong id="finalPersonalizedSchoolingPlanContent">{{student.schoolingInfos.personalizedSchoolingPlanContent}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.exitDate"></span> :
+                                                                            <strong id="finalExitDate">{{student.schoolingInfos.exitDate|date:dateHelper.dateFormat()}}</strong>
+                                                                        </li>
+                                                                        <li *ngIf="student.schoolingInfos.exitDate">
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.exitReason"></span> :
+                                                                            <strong id="finalExitReason">{{student.schoolingInfos.exitReason}}</strong>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-12 col-xl-12">
+                                                                    <h4 class="sub-title"><span jhiTranslate="student.new.form.steps.step-4-medical-infos"></span></h4>
+                                                                    <ul>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.knownDiseases"></span> :
+                                                                            <strong id="knownDiseases">{{student.medicalInfos.knownDiseases}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.allergies"></span> :
+                                                                            <strong id="allergies">{{student.medicalInfos.allergies}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.healthInsurance"></span> :
+                                                                            <strong id="healthInsurance">{{student.medicalInfos.healthInsurance}}</strong>
+                                                                        </li>
+                                                                        <li *ngIf="student.medicalInfos.healthInsurance">
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.healthInsuranceName"></span> :
+                                                                            <strong id="healthInsuranceName">{{student.medicalInfos.healthInsuranceName}}</strong>
+                                                                        </li>
+                                                                        <li *ngIf="student.medicalInfos.healthInsurance">
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.healthInsuranceReference"></span> :
+                                                                            <strong id="healthInsuranceReference">{{student.medicalInfos.healthInsuranceReference}}</strong>
+                                                                        </li>
+                                                                        <li *ngIf="student.medicalInfos.healthInsurance">
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.healthInsuranceContact"></span> :
+                                                                            <strong id="healthInsuranceContact">{{student.medicalInfos.healthInsuranceContact}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.complementaryHealthInsurance"></span> :
+                                                                            <strong id="complementaryHealthInsurance">{{student.medicalInfos.complementaryHealthInsurance}}</strong>
+                                                                        </li>
+                                                                        <li *ngIf="student.medicalInfos.complementaryHealthInsurance">
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.complementaryHealthInsuranceName"></span> :
+                                                                            <strong id="complementaryHealthInsuranceName">{{student.medicalInfos.complementaryHealthInsuranceName}}</strong>
+                                                                        </li>
+                                                                        <li *ngIf="student.medicalInfos.complementaryHealthInsurance">
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.complementaryHealthInsuranceReference"></span> :
+                                                                            <strong id="complementaryHealthInsuranceReference">{{student.medicalInfos.complementaryHealthInsuranceReference}}</strong>
+                                                                        </li>
+                                                                        <li *ngIf="student.medicalInfos.complementaryHealthInsurance">
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.complementaryHealthInsuranceContact"></span> :
+                                                                            <strong id="complementaryHealthInsuranceContact">{{student.medicalInfos.complementaryHealthInsuranceContact}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.healthComment"></span> :
+                                                                            <strong id="healthComment">{{student.medicalInfos.healthComment}}</strong>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-12 col-xl-6">
+                                                                    <h4 class="sub-title"><span jhiTranslate="student.new.form.steps.step-5-canteen-infos-title"></span></h4>
+                                                                    <ul>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.canteenRecorded"></span> :
+                                                                            <strong>
+                                                                                <span id="finalCanteenRecordedYes" *ngIf="student.canteenRegistration.recorded" jhiTranslate="global.yes"></span>
+                                                                                <span id="finalCanteenRecordedNo" *ngIf="!student.canteenRegistration.recorded" jhiTranslate="global.no"></span>
+                                                                            </strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.canteenBreakfast"></span> :
+                                                                            <strong>
+                                                                                <span id="finalCanteenBreakfastYes" *ngIf="student.canteenRegistration.breakfast" jhiTranslate="global.yes"></span>
+                                                                                <span id="finalCanteenBreakfastNo" *ngIf="!student.canteenRegistration.breakfast" jhiTranslate="global.no"></span>
+                                                                            </strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.canteenLunch"></span> :
+                                                                            <strong>
+                                                                                <span id="finalCanteenLunchYes" *ngIf="student.canteenRegistration.lunch" jhiTranslate="global.yes"></span>
+                                                                                <span id="finalCanteenLunchNo" *ngIf="!student.canteenRegistration.lunch" jhiTranslate="global.no"></span>
+                                                                            </strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.canteenDinner"></span> :
+                                                                            <strong>
+                                                                                <span id="finalCanteenDinnerYes" *ngIf="student.canteenRegistration.dinner" jhiTranslate="global.yes"></span>
+                                                                                <span id="finalCanteenDinnerNo" *ngIf="!student.canteenRegistration.dinner" jhiTranslate="global.no"></span>
+                                                                            </strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.canteenWeekDays"></span> :
+                                                                            <div style="margin-left: 30px;" *ngFor="let weekDay of student.canteenRegistration.weekDays; let i= index">
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <i class="icofont icofont-right"></i>
+                                                                                        <strong id="finalCanteenWeekDays-{{i}}">{{weekDay.code|translate}}</strong>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.subscriptionPeriodStart"></span> :
+                                                                            <strong id="finalSubscriptionPeriodStart">{{student.canteenRegistration.subscriptionPeriodStart|date:dateHelper.dateFormat()}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.subscriptionPeriodEnd"></span> :
+                                                                            <strong id="finalSubscriptionPeriodEnd">{{student.canteenRegistration.subscriptionPeriodEnd|date:dateHelper.dateFormat()}}</strong>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="col-sm-12 col-xl-6">
+                                                                    <h4 class="sub-title"><span jhiTranslate="student.new.form.steps.step-6-residential-school-title"></span></h4>
+                                                                    <ul>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.residentialSchoolRegistered"></span> :
+                                                                            <strong>
+                                                                                <span id="finalResidentialSchoolRegisteredYes" *ngIf="student.residentialSchool.registered" jhiTranslate="global.yes"></span>
+                                                                                <span id="finalResidentialSchoolRegisteredNo" *ngIf="!student.residentialSchool.registered" jhiTranslate="global.no"></span>
+                                                                            </strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.residentialSchoolName"></span> :
+                                                                            <strong id="finalResidentialSchoolName">{{student.residentialSchool.name}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.residentialSchoolPeriodStart"></span> :
+                                                                            <strong id="finalResidentialSchoolPeriodStart">{{student.residentialSchool.periodStart|date:dateHelper.dateFormat()}}</strong>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="student.new.form.residentialSchoolPeriodEnd"></span> :
+                                                                            <strong id="finalResidentialSchoolPeriodEnd">{{student.residentialSchool.periodEnd|date:dateHelper.dateFormat()}}</strong>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab>
+                            <ng-template ngbTabTitle>
+                                <i class="mdi mdi-human-male-female"></i> <span jhiTranslate="student.view.tab-responsibles-title"></span>
+                            </ng-template>
+                            <ng-template ngbTabContent>
+                                <jhi-student-view-responsibles></jhi-student-view-responsibles>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab>
+                            <ng-template ngbTabTitle>
+                                <i class="mdi mdi-timetable"></i> <span jhiTranslate="student.view.tab-timetable-title"></span>
+                            </ng-template>
+                            <ng-template ngbTabContent>
+                                <jhi-student-view-timetables></jhi-student-view-timetables>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab>
+                            <ng-template ngbTabTitle>
+                                <i class="mdi mdi-book-open"></i> <span jhiTranslate="student.view.tab-daily-book-title"></span>
+                            </ng-template>
+                            <ng-template ngbTabContent>
+                                <jhi-student-view-daily-book></jhi-student-view-daily-book>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab>
+                            <ng-template ngbTabTitle>
+                                <i class="mdi mdi-pen"></i> <span jhiTranslate="student.view.tab-continual-assessment-title"></span>
+                            </ng-template>
+                            <ng-template ngbTabContent>
+                                <jhi-student-view-continual-assessment></jhi-student-view-continual-assessment>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab>
+                            <ng-template ngbTabTitle>
+                                <i class="mdi mdi-alert-box"></i> <span jhiTranslate="student.view.tab-absences-title"></span>
+                            </ng-template>
+                            <ng-template ngbTabContent>
+                                <jhi-student-view-absences></jhi-student-view-absences>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab>
+                            <ng-template ngbTabTitle>
+                                <i class="mdi mdi-clock-alert"></i> <span jhiTranslate="student.view.tab-delays-title"></span>
+                            </ng-template>
+                            <ng-template ngbTabContent>
+                                <jhi-student-view-delays></jhi-student-view-delays>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab>
+                            <ng-template ngbTabTitle>
+                                <i class="mdi mdi-alert"></i> <span jhiTranslate="student.view.tab-sanctions-title"></span>
+                            </ng-template>
+                            <ng-template ngbTabContent>
+                                <jhi-student-view-sanctions></jhi-student-view-sanctions>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab>
+                            <ng-template ngbTabTitle>
+                                <i class="mdi mdi-note-multiple-outline"></i> <span jhiTranslate="student.view.tab-reports-title"></span>
+                            </ng-template>
+                            <ng-template ngbTabContent>
+                                <jhi-student-view-reports></jhi-student-view-reports>
+                            </ng-template>
+                        </ngb-tab>
+<!--                        <ngb-tab ngbTabTitle>-->
+<!--                            <ng-template ngbTabTitle>-->
+<!--                                <i class="mdi mdi-arrow-expand-all"></i> <span jhiTranslate="student.view.tab-orientation-title"></span>-->
+<!--                            </ng-template>-->
+<!--                            <ng-template ngbTabContent>-->
+<!--                                <jhi-student-view-orientation></jhi-student-view-orientation>-->
+<!--                            </ng-template>-->
+<!--                        </ngb-tab>-->
+                    </ngb-tabset>
+                </div>
+            </jhi-card>
+        </div>
+    </div>
+</div>

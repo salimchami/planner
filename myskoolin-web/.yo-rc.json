@@ -1,15 +1,14 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "io.edukativ.schooling",
+      "packageName": "fr.wideapps.schoolme",
       "nativeLanguage": "en"
     },
-    "jhipsterVersion": "6.9.0",
-    "applicationType": "monolith",
-    "baseName": "myskoolin",
-    "packageName": "io.edukativ.schooling",
-    "packageFolder": "io/edukativ/schooling",
-    "serverPort": "8080",
+    "jhipsterVersion": "4.14.1",
+    "baseName": "schoolme",
+    "packageName": "fr.wideapps.schoolme",
+    "packageFolder": "fr/wideapps/schoolme",
+    "serverPort": "8081",
     "authenticationType": "jwt",
     "cacheProvider": "no",
     "enableHibernateCache": false,
@@ -17,27 +16,28 @@
     "databaseType": "mongodb",
     "devDatabaseType": "mongodb",
     "prodDatabaseType": "mongodb",
-    "searchEngine": "elasticsearch",
+    "searchEngine": false,
     "messageBroker": false,
     "serviceDiscoveryType": "eureka",
     "buildTool": "maven",
-    "enableSwaggerCodegen": false,
-    "jwtSecretKey": "MzMyYmE3ZjEyZDZlMTYxMWNhYTYyODYwYjYyZWFlMDA5Y2NkMTg2MTAxYTgzZmRkZmMyNTQwYWY2MmExY2Q5ZDJjMmYwMzM4ZGFmZDY2YTIzMjlhOTRiMDc1MmQ5NjhiNjI0ZjRhMTdhZDUzM2JkOGVmNzQwODg3YWQ3MTRjMjk=",
-    "embeddableLaunchScript": false,
-    "useSass": true,
-    "clientPackageManager": "npm",
+    "enableSocialSignIn": false,
+    "enableSwaggerCodegen": true,
+    "jwtSecretKey": "3a68c6585af2921833edb34a2fe9e54a26184e01",
     "clientFramework": "angularX",
-    "clientTheme": "none",
-    "clientThemeVariant": "",
-    "creationTimestamp": 1590694859983,
-    "testFrameworks": ["gatling", "cucumber", "protractor"],
+    "useSass": true,
+    "clientPackageManager": "yarn",
+    "applicationType": "monolith",
+    "testFrameworks": [
+      "gatling",
+      "cucumber",
+      "protractor"
+    ],
     "jhiPrefix": "jhi",
-    "entitySuffix": "",
-    "dtoSuffix": "DTO",
-    "otherModules": [],
     "enableTranslation": true,
     "nativeLanguage": "en",
-    "languages": ["en", "fr"],
-    "blueprints": []
+    "languages": [
+      "en",
+      "fr"
+    ]
   }
 }

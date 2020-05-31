@@ -1,27 +1,62 @@
-import { Component } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
-
-import { User } from 'app/core/user/user.model';
-import { UserService } from 'app/core/user/user.service';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {JhiEventManager} from 'ng-jhipster';
+import {User} from '../../shared/model/user.model';
+import {UserService} from '../../shared';
+import {UserModalService} from './user-modal.service';
 
 @Component({
-  selector: 'jhi-user-mgmt-delete-dialog',
-  templateUrl: './user-management-delete-dialog.component.html',
+    selector: 'jhi-user-mgmt-delete-dialog',
+    templateUrl: './user-management-delete-dialog.component.html'
 })
-export class UserManagementDeleteDialogComponent {
-  user?: User;
+export class UserMgmtDeleteDialogComponent {
 
-  constructor(private userService: UserService, public activeModal: NgbActiveModal, private eventManager: JhiEventManager) {}
+    user: User;
 
-  cancel(): void {
-    this.activeModal.dismiss();
-  }
+    constructor(
+        private userService: UserService,
+        public activeModal: NgbActiveModal,
+        private eventManager: JhiEventManager
+    ) {
+    }
 
-  confirmDelete(login: string): void {
-    this.userService.delete(login).subscribe(() => {
-      this.eventManager.broadcast('userListModification');
-      this.activeModal.close();
-    });
-  }
+    clear() {
+        this.activeModal.dismiss('cancel');
+    }
+
+    confirmDelete(login) {
+        this.userService.delete(login).subscribe((response) => {
+            this.eventManager.broadcast({
+                name: 'userListModification',
+                content: 'Deleted a user'
+            });
+            this.activeModal.dismiss(true);
+        });
+    }
+}
+
+@Component({
+    selector: 'jhi-user-delete-dialog',
+    template: ''
+})
+export class UserDeleteDialogComponent implements OnInit, OnDestroy {
+
+    routeSub: any;
+
+    constructor(
+        private route: ActivatedRoute,
+        private userModalService: UserModalService
+    ) {
+    }
+
+    ngOnInit() {
+        this.routeSub = this.route.params.subscribe((params) => {
+            this.userModalService.open(UserMgmtDeleteDialogComponent as Component, params['login']);
+        });
+    }
+
+    ngOnDestroy() {
+        this.routeSub.unsubscribe();
+    }
 }

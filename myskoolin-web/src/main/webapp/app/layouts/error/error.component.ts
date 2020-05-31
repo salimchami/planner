@@ -1,39 +1,27 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'jhi-error',
-  templateUrl: './error.component.html',
+    selector: 'jhi-error',
+    templateUrl: './error.component.html'
 })
-export class ErrorComponent implements OnInit, OnDestroy {
-  errorMessage?: string;
-  errorKey?: string;
-  langChangeSubscription?: Subscription;
+export class ErrorComponent implements OnInit {
+    errorMessage: string;
+    error403: boolean;
 
-  constructor(private translateService: TranslateService, private route: ActivatedRoute) {}
-
-  ngOnInit(): void {
-    this.route.data.subscribe(routeData => {
-      if (routeData.errorMessage) {
-        this.errorKey = routeData.errorMessage;
-        this.getErrorMessageTranslation();
-        this.langChangeSubscription = this.translateService.onLangChange.subscribe(() => this.getErrorMessageTranslation());
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.langChangeSubscription) {
-      this.langChangeSubscription.unsubscribe();
+    constructor(
+        private route: ActivatedRoute
+    ) {
     }
-  }
 
-  private getErrorMessageTranslation(): void {
-    this.errorMessage = '';
-    if (this.errorKey) {
-      this.translateService.get(this.errorKey).subscribe(translatedErrorMessage => (this.errorMessage = translatedErrorMessage));
+    ngOnInit() {
+        this.route.data.subscribe((routeData) => {
+            if (routeData.error403) {
+                this.error403 = routeData.error403;
+            }
+            if (routeData.errorMessage) {
+                this.errorMessage = routeData.errorMessage;
+            }
+        });
     }
-  }
 }

@@ -1,0 +1,63 @@
+.ui-select-choices.dropdown-menu {
+    display: block;
+}
+
+.open > .dropdown-menu {
+    display: block;
+}
+
+.demo[_ngcontent-jwr-5] {
+    padding: 50px 0
+}
+
+.card[_ngcontent-jwr-1] {
+    height: 100%;
+}
+
+.card-header[_ngcontent-jwr-1] {
+    background-color: #fff;
+    padding: 0;
+    font-size: 1.25rem;
+}
+
+.card-block[_ngcontent-jwr-1] {
+    overflow-y: auto;
+}
+
+.card-footer[_ngcontent-jwr-1] {
+    background-color: #fff;
+    border-top: 0 none;
+}
+
+.nav-item[_ngcontent-jwr-1] {
+    padding: 1rem 0rem;
+    border-bottom: 0.5rem solid #ccc;
+}
+
+.active[_ngcontent-jwr-1] {
+    font-weight: bold;
+    color: black;
+    border-bottom-color: #1976D2 !important;
+}
+
+.enabled[_ngcontent-jwr-1] {
+    cursor: pointer;
+    border-bottom-color: rgb(88, 162, 234);
+}
+
+.disabled[_ngcontent-jwr-1] {
+    color: #ccc;
+}
+
+.completed[_ngcontent-jwr-1] {
+    cursor: default;
+}
+
+.ngx-datepicker-container .ngx-datepicker-calendar-container {
+    z-index: 999 !important;
+}
+
+.is-loading ::ng-deep .mat-option-text {
+    display: flex;
+    justify-content: center;
+}

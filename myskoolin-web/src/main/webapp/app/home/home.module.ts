@@ -1,12 +1,26 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-
-import { MyskoolinSharedModule } from 'app/shared/shared.module';
-import { HOME_ROUTE } from './home.route';
-import { HomeComponent } from './home.component';
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {RouterModule} from '@angular/router';
+import {SchoolmeSharedModule} from '../shared';
+import {HOME_ROUTE, HomeComponent} from './';
+import {JhiLandingpageComponent} from '../layouts';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
-  imports: [MyskoolinSharedModule, RouterModule.forChild([HOME_ROUTE])],
-  declarations: [HomeComponent],
+    imports: [
+        BrowserAnimationsModule,
+        SchoolmeSharedModule,
+        RouterModule.forChild([HOME_ROUTE]),
+        FormsModule,
+        ReactiveFormsModule,
+    ],
+    declarations: [
+        HomeComponent,
+        JhiLandingpageComponent
+    ],
+    entryComponents: [],
+    providers: [],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class MyskoolinHomeModule {}
+export class SchoolmeHomeModule {
+}

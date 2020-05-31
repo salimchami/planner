@@ -1,12 +1,13 @@
-/* after changing this file run 'npm run webpack:build' */
-
-/***************************
-put Sass variables here:
-eg $input-color: red;
-****************************/
-// Override Bootstrap variables
-@import 'bootstrap-variables';
-// Import Bootstrap source files from node_modules
+$fa-font-path: '~font-awesome/fonts';
+$mdi-font-path: "~@mdi/font/fonts" !default;
+@import "bootstrap-variables";
 @import '~bootstrap/scss/bootstrap';
+@import '~font-awesome/scss/font-awesome';
+@import '~@mdi/font/scss/materialdesignicons';
+@import '~@swimlane/ngx-datatable/src/themes/bootstrap';
+@import '~@swimlane/ngx-datatable/src/themes/material';
+//@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~dragula/dist/dragula.min.css";
+@import "~angular-calendar/css/angular-calendar.css";
 
-/* jhipster-needle-scss-add-vendor JHipster will add new css style */

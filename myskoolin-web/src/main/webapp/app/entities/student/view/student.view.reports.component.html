@@ -1,0 +1,22 @@
+<div class="m-t-15">
+    <div class="view-info">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="general-info">
+                    <div class="row">
+                        <div class="col-lg-12 col-xl-12">
+                            <div class="form-group row">
+                                <div class="col-sm-12 col-xl-12">
+                                    <div *ngIf="!student.reports || !student.reports.length"
+                                         class="text-center font-weight-bold font-italic">
+                                        <span jhiTranslate="student.view.reports.no-reports"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

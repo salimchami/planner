@@ -1,0 +1,241 @@
+<div class="page-body">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <button class="btn btn-default btn-md" id="go-back" (click)="goBack()">
+                            <i class="mdi mdi-arrow-left-bold"></i> {{'schoolClass.view.goback'|translate}}
+                        </button>
+                    </div>
+                    <div class="col-lg-4 center-block text-center" style="font-size: large">
+                        <h2 class="card-header-text"><span jhiTranslate="schoolClass.view.title"></span> "{{schoolClass.name}}"
+                        </h2>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="float-right">
+                            <button class="btn btn-primary btn-mat" id="edit-btn"
+                                    [routerLink]='["../../edit", schoolClass.id]'>
+                                <i class="mdi mdi-pencil-box mdi-18px"></i> {{'schoolClass.view.edit'|translate}}
+                            </button>
+                            <button class="btn btn-danger btn-mat" id="delete-btn" (click)="modalDefault.show()">
+                                <i class="mdi mdi-delete-variant mdi-18px"></i> {{'schoolClass.view.delete'|translate}}
+                            </button>
+                            <jhi-modal-basic #modalDefault>
+                                <div class="app-modal-header">
+                                    <h4 class="modal-title" jhiTranslate="schoolClass.delete.title"
+                                        translateValues="{name: '{{schoolClass.name}}'}">Confirm delete operation</h4>
+                                    <button type="button" class="close basic-close" (click)="modalDefault.hide()">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="app-modal-body">
+                                    <jhi-alert-error></jhi-alert-error>
+                                    <p jhiTranslate="schoolClass.delete.question"
+                                       translateValues="{name: '{{schoolClass.name}}'}">Are you sure you want to delete
+                                        this school room ?</p>
+                                </div>
+                                <div class="app-modal-footer">
+                                    <button type="button" class="btn btn-default waves-effect"
+                                            (click)="modalDefault.hide()">
+                                        <span jhiTranslate="entity.action.cancel">Cancel</span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger waves-effect waves-light ">
+                                        <span jhiTranslate="entity.action.delete" (click)="deleteSchoolClass()">Delete</span>
+                                    </button>
+                                </div>
+                            </jhi-modal-basic>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <jhi-card [classHeader]="true">
+                <div class="card-body">
+                    <ngb-tabset class="schoolClass-tab-title" [justify]="'fill'">
+                        <ngb-tab>
+                            <ng-template ngbTabTitle>
+                                <em class="mdi mdi-information-outline"></em> <span jhiTranslate="schoolClass.view.tab-schoolclass-infos-title"></span>
+                            </ng-template>
+                            <ng-template ngbTabContent>
+                                <div class="m-t-15">
+                                    <div class="view-info">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="general-info">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-xl-8">
+                                                            <ngx-datatable
+                                                                class="data-table"
+                                                                [rows]="schoolClass.students"
+                                                                [columnMode]="'force'"
+                                                                [headerHeight]="40"
+                                                                [footerHeight]="25"
+                                                                [rowHeight]="50"
+                                                                [limit]="studentsRowsNumber"
+                                                                [reorderable]="true">
+                                                                <ngx-datatable-column prop="lastName">
+                                                                    <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                                                        <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                                                            <strong>{{'student.home.datatable.headers.lastName'|translate}}</strong>
+                                                                        </span>
+                                                                    </ng-template>
+                                                                    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                                        <span class="float-left"><strong><a [routerLink]="['/students', 'view', row.id]">{{value}}</a></strong></span>
+                                                                    </ng-template>
+                                                                </ngx-datatable-column>
+                                                                <ngx-datatable-column prop="firstName">
+                                                                    <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                                                        <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                                                            <strong>{{'student.home.datatable.headers.firstName'|translate}}</strong>
+                                                                        </span>
+                                                                    </ng-template>
+                                                                    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                                        <span class="float-left"><strong><a [routerLink]="['/students', 'view', row.id]">{{value}}</a></strong></span>
+                                                                    </ng-template>
+                                                                </ngx-datatable-column>
+
+                                                                <ngx-datatable-column prop="sex">
+                                                                    <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                                                        <span class="datatable-header-cell-wrapper draggable text-center" (click)="sort()">
+                                                                            <strong>{{'student.home.datatable.headers.sex'|translate}}</strong>
+                                                                        </span>
+                                                                    </ng-template>
+                                                                    <ng-template let-value="value" ngx-datatable-cell-template>
+                                                                        <span class="float-left">{{value|translate}}</span>
+                                                                    </ng-template>
+                                                                </ngx-datatable-column>
+
+                                                            </ngx-datatable>
+                                                        </div>
+                                                        <div class="col-lg-6 col-xl-4">
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-12 col-xl-12">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="schoolClass.view.form.name"></span> :
+                                                                            <strong id="name">{{schoolClass.name}}</strong>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-12 col-xl-12">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="schoolClass.view.form.customName"></span> :
+                                                                            <strong id="customName">{{schoolClass.customName}}</strong>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-12 col-xl-12">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="schoolClass.view.form.headTeachers"></span> :
+                                                                            <ul>
+                                                                                <li *ngFor="let headTeacher of schoolClass.headTeachers; let i = index">
+                                                                                    <strong id="headTeachers-{{i}}">{{headTeacher.firstName}} {{headTeacher.lastName}}</strong>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-12 col-xl-12">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="schoolClass.view.form.grade"></span> :
+                                                                            <strong id="grade">{{schoolClass.grade.name}}
+                                                                                <span *ngIf="schoolClass.grade.diminutive">- ({{schoolClass.grade.diminutive}})</span>
+                                                                            </strong>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row" *ngIf="schoolClass.gradeSerie">
+                                                                <div class="col-sm-12 col-xl-12">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="schoolClass.view.form.gradeSerie"></span> :
+                                                                            <strong id="gradeSerie">{{schoolClass.gradeSerie.name}}
+                                                                                <span *ngIf="schoolClass.gradeSerie.diminutive">- ({{schoolClass.gradeSerie.diminutive}})</span>
+                                                                            </strong>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-12 col-xl-12">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="schoolClass.view.form.coursesStartDate"></span> :
+                                                                            <strong id="coursesStartDate">{{schoolClass.coursesStartDate | date: dateHelper.dateFormat()}}</strong>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-12 col-xl-12">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="schoolClass.view.form.coursesEndDate"></span> :
+                                                                            <strong id="coursesEndDate">{{schoolClass.coursesEndDate | date: dateHelper.dateFormat()}}</strong>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-12 col-xl-12">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <i class="icofont icofont-stylish-right text-danger"></i>
+                                                                            <span jhiTranslate="schoolClass.view.form.councilsDates"></span> :
+                                                                            <ul>
+                                                                                <li *ngFor="let councilDate of schoolClass.councilsDates; let i = index">
+                                                                                    <strong id="councilsDates-{{i}}">{{councilDate | date: dateHelper.dateFormat()}}</strong>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab>
+                            <ng-template ngbTabTitle>
+                                <em class="mdi mdi-timetable"></em> <span jhiTranslate="schoolClass.view.tab-timetable-title"></span>
+                            </ng-template>
+                            <ng-template ngbTabContent>
+                                <jhi-school-class-view-timetables></jhi-school-class-view-timetables>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab>
+                            <ng-template ngbTabTitle>
+                                <em class="mdi mdi-teach"></em> <span jhiTranslate="schoolClass.view.tab-teachers-title"></span>
+                            </ng-template>
+                            <ng-template ngbTabContent>
+                                <jhi-school-class-view-teachers [schoolClass]="schoolClass"></jhi-school-class-view-teachers>
+                            </ng-template>
+                        </ngb-tab>
+                    </ngb-tabset>
+                </div>
+            </jhi-card>
+        </div>
+    </div>
+</div>
