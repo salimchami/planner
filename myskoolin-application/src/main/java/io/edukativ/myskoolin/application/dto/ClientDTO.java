@@ -14,6 +14,8 @@ public class ClientDTO {
     private List<PhoneDTO> phones;
     private List<WebsiteDTO> websites;
     private String principalWebsite;
+    private String surfacesMeasurementUnit;
+    private String distancesMeasurementUnit;
 
     public String getId() {
         return id;
@@ -77,5 +79,13 @@ public class ClientDTO {
 
     public void setPrincipalWebsite(String principalWebsite) {
         this.principalWebsite = principalWebsite;
+    }
+
+    public String getSurfacesMeasurementUnit() {
+        return surfacesMeasurementUnit;
+    }
+
+    public void setSurfacesMeasurementUnit(String surfacesMeasurementUnit) {
+        this.surfacesMeasurementUnit = surfacesMeasurementUnit;
     }
 }

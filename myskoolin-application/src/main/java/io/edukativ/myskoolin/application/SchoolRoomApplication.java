@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 public class SchoolRoomApplication {
@@ -30,7 +29,7 @@ public class SchoolRoomApplication {
         Optional<UserDbDTO> optCurrentUser = userService.getCurrentUserWithAuthorities();
         return optCurrentUser.map(user -> {
             final List<SchoolRoomDbDTO> schoolRooms = schoolRoomRepository.findByClientId(false, user.getClientId());
-            return schoolRooms.stream().map(schoolRoomMapper::schoolRoomDbDTOToSchoolRoomDTO).collect(Collectors.toList());
+            return schoolRoomMapper.schoolRoomsDbDTOToSchoolRoomsDTO(schoolRooms);
         }).orElse(Collections.emptyList());
     }
 

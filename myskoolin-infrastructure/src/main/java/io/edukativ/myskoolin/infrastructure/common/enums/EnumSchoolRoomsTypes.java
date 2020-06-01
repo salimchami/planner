@@ -23,7 +23,7 @@ public enum EnumSchoolRoomsTypes {
     STEPPED("schoolRoom.enums.types.stepped"),
     AMPHITHEATER("schoolRoom.enums.types.amphitheater");
 
-    private String code;
+    private final String code;
 
     EnumSchoolRoomsTypes(String code) {
         this.code = code;

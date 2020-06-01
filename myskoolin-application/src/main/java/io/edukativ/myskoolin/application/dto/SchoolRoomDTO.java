@@ -1,16 +1,10 @@
 package io.edukativ.myskoolin.application.dto;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import io.edukativ.myskoolin.domain.vo.EnumSchoolRoomsTypes;
-import io.edukativ.myskoolin.domain.vo.SchoolRoomDistance;
-import io.edukativ.myskoolin.domain.vo.TimeSlot;
-import io.edukativ.myskoolin.infrastructure.schooling.dto.SchoolRoomDbDTO;
+import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypes;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A SchoolRoom.
@@ -23,9 +17,9 @@ public class SchoolRoomDTO implements Serializable {
 
     private String clientId;
 
-    private List<SchoolRoomDistance> distances;
+    private List<SchoolRoomDistanceDTO> distances;
 
-    private List<TimeSlot> timetable;
+    private List<TimeSlotDTO> timetable;
 
     private String name;
 
@@ -45,27 +39,8 @@ public class SchoolRoomDTO implements Serializable {
 
     private Boolean deleted;
 
-    /*
-    ###########################################
-    ############# BASIC INFOS - END ###########
-    ###########################################
-     */
-
-    public SchoolRoomDTO() {
-    }
-
-    public SchoolRoomDTO(SchoolRoomDbDTO schoolRoom) {
-        this.id = schoolRoom.getId().toString();
-        this.clientId = schoolRoom.getClientId().toHexString();
-        this.name = schoolRoom.getName();
-        this.closed = schoolRoom.isClosed();
-        this.seats = schoolRoom.getSeats();
-        this.type = EnumSchoolRoomsTypes.valueOf(schoolRoom.getType().name());
-        this.surface = schoolRoom.getSurface();
-        this.comment = schoolRoom.getComment();
-        this.longitude = schoolRoom.getLongitude();
-        this.latitude = schoolRoom.getLatitude();
-        this.deleted = schoolRoom.getDeleted();
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public String getId() {
@@ -76,31 +51,28 @@ public class SchoolRoomDTO implements Serializable {
         this.id = id;
     }
 
-    public Boolean isClosed() {
-        return closed;
+    public String getClientId() {
+        return clientId;
     }
 
-    public void setClosed(Boolean closed) {
-        this.closed = closed;
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public List<SchoolRoomDistance> getDistances() {
-        if (this.distances == null) {
-            this.distances = new ArrayList<>();
-        }
+    public List<SchoolRoomDistanceDTO> getDistances() {
         return distances;
     }
 
-    public void setDistances(List<SchoolRoomDistance> distances) {
+    public void setDistances(List<SchoolRoomDistanceDTO> distances) {
         this.distances = distances;
+    }
+
+    public List<TimeSlotDTO> getTimetable() {
+        return timetable;
+    }
+
+    public void setTimetable(List<TimeSlotDTO> timetable) {
+        this.timetable = timetable;
     }
 
     public String getName() {
@@ -111,12 +83,28 @@ public class SchoolRoomDTO implements Serializable {
         this.name = name;
     }
 
+    public Boolean getClosed() {
+        return closed;
+    }
+
+    public void setClosed(Boolean closed) {
+        this.closed = closed;
+    }
+
     public Integer getSeats() {
         return seats;
     }
 
     public void setSeats(Integer seats) {
         this.seats = seats;
+    }
+
+    public EnumSchoolRoomsTypes getType() {
+        return type;
+    }
+
+    public void setType(EnumSchoolRoomsTypes type) {
+        this.type = type;
     }
 
     public BigDecimal getSurface() {
@@ -127,52 +115,12 @@ public class SchoolRoomDTO implements Serializable {
         this.surface = surface;
     }
 
-    public List<TimeSlot> getTimetable() {
-        if (this.timetable == null) {
-            this.timetable = new ArrayList<>();
-        }
-
-        return timetable;
+    public String getComment() {
+        return comment;
     }
 
-    public void setTimetable(List<TimeSlot> timetable) {
-        this.timetable = timetable;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        SchoolRoomDTO schoolRoom = (SchoolRoomDTO) o;
-        return !(schoolRoom.id == null || id == null) && Objects.equals(id, schoolRoom.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
-
-    @Override
-    public String toString() {
-        try {
-            return new com.fasterxml.jackson.databind.ObjectMapper().writer().writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            return "SchoolRoom{" +
-                "id=" + id +
-                ", clientId='" + clientId + "'" +
-                ", closed='" + closed + "'" +
-                ", comment='" + comment + "'" +
-                ", distances='" + distances + "'" +
-                ", name='" + name + "'" +
-                ", seats='" + seats + "'" +
-                ", surface='" + surface + "'" +
-                ", timetable='" + timetable + "'" +
-                '}';
-        }
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public String getLongitude() {
@@ -197,21 +145,5 @@ public class SchoolRoomDTO implements Serializable {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
-    }
-
-    public EnumSchoolRoomsTypes getType() {
-        return type;
-    }
-
-    public void setType(EnumSchoolRoomsTypes type) {
-        this.type = type;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
     }
 }
