@@ -262,7 +262,7 @@ public class UserService {
         return userRepository.findOneByLogin(login);
     }
 
-    public Optional<UserDbDTO> getUserWithAuthorities() {
+    public Optional<UserDbDTO> getCurrentUserWithAuthorities() {
         return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin);
     }
 
@@ -289,5 +289,4 @@ public class UserService {
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(AuthorityDbDTO::getName).collect(Collectors.toList());
     }
-
 }

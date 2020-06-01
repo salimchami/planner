@@ -16,9 +16,8 @@ import java.util.Optional;
 @Repository
 public interface SchoolRoomRepository extends MongoRepository<SchoolRoomDbDTO, String> {
 
-
     @Query("{ 'deleted': ?0, 'clientId': ?1 }")
-    Optional<List<SchoolRoomDbDTO>> findByClientId(@Param("deleted") boolean deleted, @Param("clientId") ObjectId clientId);
+    List<SchoolRoomDbDTO> findByClientId(@Param("deleted") boolean deleted, @Param("clientId") ObjectId clientId);
 
     @Query("{ 'name' :  ?0, 'deleted': ?1, 'clientId': ?2 }")
     Optional<SchoolRoomDbDTO> findOneByName(@Param("name") String name, @Param("deleted") boolean deleted, @Param("clientId") ObjectId clientId);

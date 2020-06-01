@@ -79,7 +79,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
             .antMatchers("/public/**").permitAll()
             .antMatchers(HttpMethod.GET, "/api/clients/**").hasAuthority(AuthoritiesConstants.ADMINISTRATION)
-            .antMatchers("/api/clients/**").hasAuthority(AuthoritiesConstants.SCHOOLME_ADMIN)
+            .antMatchers("/api/clients/current").hasAnyAuthority(AuthoritiesConstants.ADMINISTRATION)
+            .antMatchers("/api/clients/**").hasAnyAuthority(AuthoritiesConstants.SCHOOLME_ADMIN)
             .antMatchers("/api/grades/**").hasAuthority(AuthoritiesConstants.ADMINISTRATION)
             .antMatchers("/api/subjects/**").hasAuthority(AuthoritiesConstants.ADMINISTRATION)
             .antMatchers("/api/navigations/**").hasAnyAuthority(AuthoritiesConstants.allAuthenticatedAuthorities().toArray(new String[0]))

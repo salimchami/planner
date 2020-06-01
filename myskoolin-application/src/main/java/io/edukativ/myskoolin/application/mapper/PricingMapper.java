@@ -9,9 +9,9 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {FeatureMapper.class})
 public interface PricingMapper {
 
-    PricingDTO pricingToPricingDTO(PricingDbDTO grade);
+    PricingDTO pricingDbDTOToPricingDTO(PricingDbDTO grade);
 
-    PricingDbDTO pricingDTOToPricing(PricingDTO grade);
+    PricingDbDTO pricingDTOToPricingDbDTO(PricingDTO grade);
 
-    List<PricingDTO> pricingsToPricingsDTO(List<PricingDbDTO> all);
+    List<PricingDTO> pricingsDbDTOToPricingsDTO(List<PricingDbDTO> all);
 }

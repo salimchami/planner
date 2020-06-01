@@ -41,7 +41,7 @@ class PricingResource {
     public List<PricingDTO> getAllPricings() {
         log.debug("REST request to get all Pricings");
         final List<PricingDbDTO> all = pricingRepository.findAll();
-        return pricingMapper.pricingsToPricingsDTO(all);
+        return pricingMapper.pricingsDbDTOToPricingsDTO(all);
     }
 
     /**
@@ -53,8 +53,8 @@ class PricingResource {
         log.debug("REST request to get Pricing : {}", id);
         Optional<PricingDbDTO> pricing = pricingRepository.findById(id);
         return pricing
-            .map(result -> new ResponseEntity<PricingDTO>(
-                pricingMapper.pricingToPricingDTO(result),
+            .map(result -> new ResponseEntity<>(
+                pricingMapper.pricingDbDTOToPricingDTO(result),
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
