@@ -12,6 +12,7 @@ import java.util.List;
 public class SchoolRoomDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    public static final String ENTITY_NAME = "schoolRoom";
 
     private String id;
 

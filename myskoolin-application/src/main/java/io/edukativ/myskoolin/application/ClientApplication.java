@@ -8,10 +8,12 @@ import io.edukativ.myskoolin.infrastructure.commercial.dto.ClientDbDTO;
 import io.edukativ.myskoolin.infrastructure.schooling.repository.ClientRepository;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Component
+@Transactional
 public class ClientApplication {
 
     private final UserService userService;

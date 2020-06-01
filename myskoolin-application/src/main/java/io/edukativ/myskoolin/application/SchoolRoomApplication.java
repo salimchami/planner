@@ -7,12 +7,14 @@ import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.schooling.dto.SchoolRoomDbDTO;
 import io.edukativ.myskoolin.infrastructure.schooling.repository.SchoolRoomRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Component
+@Transactional
 public class SchoolRoomApplication {
 
     private final SchoolRoomMapper schoolRoomMapper;
@@ -39,5 +41,17 @@ public class SchoolRoomApplication {
             final Optional<SchoolRoomDbDTO> optSchoolRoomDTO = schoolRoomRepository.findOneByName(name, false, user.getClientId());
             return optSchoolRoomDTO.map(schoolRoomMapper::schoolRoomDbDTOToSchoolRoomDTO);
         });
+    }
+
+    public SchoolRoomDTO createSchoolRoom(SchoolRoomDTO schoolRoomDTO) {
+        return null;
+    }
+
+    public SchoolRoomDTO updateSchoolRoom(SchoolRoomDTO schoolRoomDTO) {
+        return null;
+    }
+
+    public void deleteSchoolRoom(String id) {
+
     }
 }
