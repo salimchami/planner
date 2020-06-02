@@ -1,9 +1,9 @@
 package io.edukativ.myskoolin.front.web.rest;
 
-import io.edukativ.myskoolin.application.dto.PasswordChangeDTO;
-import io.edukativ.myskoolin.application.dto.UserDTO;
+import io.edukativ.myskoolin.infrastructure.temp.PasswordChangeDTO;
+import io.edukativ.myskoolin.infrastructure.temp.UserDTO;
 import io.edukativ.myskoolin.application.security.UserService;
-import io.edukativ.myskoolin.application.utils.SecurityUtils;
+import io.edukativ.myskoolin.application.security.SecurityUtils;
 import io.edukativ.myskoolin.front.web.rest.errors.EmailAlreadyUsedException;
 import io.edukativ.myskoolin.front.web.rest.errors.InvalidPasswordException;
 import io.edukativ.myskoolin.front.web.rest.errors.LoginAlreadyUsedException;
@@ -42,6 +42,7 @@ public class AccountResource {
     private final UserService userService;
 
     private final MailProvider mailService;
+
 
     public AccountResource(UserRepository userRepository, UserService userService, MailProvider mailService) {
 

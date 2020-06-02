@@ -21,14 +21,14 @@ public class SchoolRoom {
     private List<SchoolRoomDistance> distances;
     private List<TimeSlot> timetable;
     private String name;
-    private Boolean closed = false;
+    private boolean closed;
     private Integer seats;
     private EnumSchoolRoomsTypes type;
     private BigDecimal surface;
     private String comment;
     private String longitude;
     private String latitude;
-    private Boolean deleted = false;
+    private boolean deleted;
 
     public SchoolRoom() {
     }
@@ -97,11 +97,11 @@ public class SchoolRoom {
         this.name = name;
     }
 
-    public Boolean getClosed() {
+    public boolean getClosed() {
         return closed;
     }
 
-    public void setClosed(Boolean closed) {
+    public void setClosed(boolean closed) {
         this.closed = closed;
     }
 
@@ -153,11 +153,11 @@ public class SchoolRoom {
         this.latitude = latitude;
     }
 
-    public Boolean getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
@@ -199,4 +199,16 @@ public class SchoolRoom {
     }
 
 
+    public void update(SchoolRoom schoolRoom) {
+        this.distances = schoolRoom.getDistances();
+        this.timetable = schoolRoom.getTimetable();
+        this.name = schoolRoom.getName();
+        this.closed = schoolRoom.getClosed();
+        this.seats = schoolRoom.getSeats();
+        this.type = schoolRoom.getType();
+        this.surface = schoolRoom.getSurface();
+        this.comment = schoolRoom.getComment();
+        this.longitude = schoolRoom.getLongitude();
+        this.latitude = schoolRoom.getLatitude();
+    }
 }

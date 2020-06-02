@@ -5,6 +5,7 @@ import io.edukativ.myskoolin.domain.entity.SchoolRoom;
 import io.edukativ.myskoolin.domain.entity.Subject;
 import io.edukativ.myskoolin.domain.entity.User;
 import io.edukativ.myskoolin.domain.vo.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.domain.vo.Teacher;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -42,9 +43,9 @@ public class SchoolResourcesNeeds {
         return true;
     }
 
-    private boolean isTeachersSufficient(List<User> teachers, Map<Subject, Integer> teachersBySubject) {
+    private boolean isTeachersSufficient(List<Teacher> teachers, Map<Subject, Integer> teachersBySubject) {
         for (Map.Entry<Subject, Integer> entry : teachersBySubject.entrySet()) {
-            final long count = teachers.stream().filter(schoolRoom -> schoolRoom.getTeacher().getTaughtSubjects().contains(entry.getKey().getId())).count();
+            final long count = teachers.stream().filter(schoolRoom -> schoolRoom.getTaughtSubjects().contains(entry.getKey().getId())).count();
             if (count != entry.getValue()) {
                 insufficientTeachersForSubject.add(entry.getKey().getId());
                 return false;

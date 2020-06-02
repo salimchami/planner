@@ -34,8 +34,7 @@ import java.util.List;
 @Configuration
 @EnableElasticsearchRepositories("io.edukativ.myskoolin.infrastructure.app.repository.search")
 @EnableMongoRepositories(basePackages = {
-    "io.edukativ.myskoolin.infrastructure.app.repository",
-    "io.edukativ.myskoolin.infrastructure.schooling.repository"
+    "io.edukativ.myskoolin.infrastructure"
 }, includeFilters = @Filter(type = FilterType.ASSIGNABLE_TYPE, value = MongoRepository.class))
 @Profile("!" + JHipsterConstants.SPRING_PROFILE_CLOUD)
 @Import(value = MongoAutoConfiguration.class)

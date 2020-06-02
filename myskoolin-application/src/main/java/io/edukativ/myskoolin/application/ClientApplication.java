@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.application;
 
-import io.edukativ.myskoolin.application.dto.ClientDTO;
-import io.edukativ.myskoolin.application.mapper.ClientMapper;
+import io.edukativ.myskoolin.infrastructure.temp.ClientDTO;
+import io.edukativ.myskoolin.infrastructure.temp.ClientMapper;
 import io.edukativ.myskoolin.application.security.UserService;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.commercial.dto.ClientDbDTO;

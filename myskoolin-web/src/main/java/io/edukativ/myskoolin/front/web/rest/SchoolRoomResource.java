@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.front.web.rest;
 
 import io.edukativ.myskoolin.application.SchoolRoomApplication;
-import io.edukativ.myskoolin.application.dto.SchoolRoomDTO;
+import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDTO;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypes;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
@@ -51,7 +51,7 @@ class SchoolRoomResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(Constants.APPLICATION_NAME, false,
                 SchoolRoomDTO.ENTITY_NAME, "", "A new schoolRoom must have a client")).body(null);
         }
-        SchoolRoomDTO schoolRoom = schoolRoomApplication.createSchoolRoom(schoolRoomDTO);
+        SchoolRoomDTO schoolRoom = schoolRoomApplication.createOrUpdateSchoolRoom(schoolRoomDTO);
         return ResponseEntity.created(new URI("/api/school-rooms/" + schoolRoom.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(Constants.APPLICATION_NAME, false, "schoolRoom", schoolRoom.getId()))
             .body(schoolRoom);
@@ -73,7 +73,7 @@ class SchoolRoomResource {
                 false, SchoolRoomDTO.ENTITY_NAME, "", "The schoolRoom must have an id")).body(null);
         }
 
-        SchoolRoomDTO updatedSchoolRoom = schoolRoomApplication.updateSchoolRoom(schoolRoomDTO);
+        SchoolRoomDTO updatedSchoolRoom = schoolRoomApplication.createOrUpdateSchoolRoom(schoolRoomDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(Constants.APPLICATION_NAME, false,
                 SchoolRoomDTO.ENTITY_NAME, updatedSchoolRoom.getId()))

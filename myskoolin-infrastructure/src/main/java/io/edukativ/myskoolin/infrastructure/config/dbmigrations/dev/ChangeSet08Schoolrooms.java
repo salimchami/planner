@@ -4,7 +4,7 @@ import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypes;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev.util.DevDbMigrationsConstants;
-import io.edukativ.myskoolin.infrastructure.schooling.dto.SchoolRoomDbDTO;
+import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDbDTO;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.math.BigDecimal;

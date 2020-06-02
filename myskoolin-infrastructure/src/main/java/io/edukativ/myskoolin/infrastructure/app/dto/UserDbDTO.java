@@ -57,16 +57,16 @@ public class UserDbDTO extends AbstractAuditingEntity implements Serializable {
     @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private String id;
 
+    @Indexed
+    @Field(MONGO_FIELD_CLIENT_ID)
+    private ObjectId clientId;
+
     @NotNull
     @TextIndexed
     @Size(min = 1, max = 50)
     @Field(MONGO_FIELD_LOGIN)
     @Pattern(regexp = Constants.LOGIN_REGEX)
     private String login;
-
-    @Indexed
-    @Field(MONGO_FIELD_CLIENT_ID)
-    private ObjectId clientId;
 
     @NotNull
     @JsonIgnore
@@ -148,6 +148,7 @@ public class UserDbDTO extends AbstractAuditingEntity implements Serializable {
                      @Size(min = 2, max = 10) String langKey, @Size(max = 256) String imageUrl,
                      @Size(max = 20) String activationKey, @Size(max = 20) String resetKey, Instant resetDate,
                      Set<AuthorityDbDTO> authorities, AddressDbVO address, ZonedDateTime birthDate) {
+        this.id = id;
         this.login = login;
         this.clientId = clientId;
         this.password = password;

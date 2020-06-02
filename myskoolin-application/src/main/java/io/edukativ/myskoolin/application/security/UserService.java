@@ -1,7 +1,6 @@
 package io.edukativ.myskoolin.application.security;
 
-import io.edukativ.myskoolin.application.dto.UserDTO;
-import io.edukativ.myskoolin.application.utils.SecurityUtils;
+import io.edukativ.myskoolin.infrastructure.temp.UserDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.exceptions.EmailAlreadyUsedException;

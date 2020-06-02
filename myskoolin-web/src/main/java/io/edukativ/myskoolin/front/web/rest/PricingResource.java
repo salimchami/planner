@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.front.web.rest;
 
-import io.edukativ.myskoolin.application.dto.PricingDTO;
-import io.edukativ.myskoolin.application.mapper.PricingMapper;
+import io.edukativ.myskoolin.infrastructure.temp.PricingDTO;
+import io.edukativ.myskoolin.infrastructure.temp.PricingMapper;
 import io.edukativ.myskoolin.infrastructure.commercial.dto.PricingDbDTO;
 import io.edukativ.myskoolin.infrastructure.schooling.repository.PricingRepository;
 import org.slf4j.Logger;

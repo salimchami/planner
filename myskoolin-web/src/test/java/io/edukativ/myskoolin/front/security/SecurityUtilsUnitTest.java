@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.front.security;
 
-import io.edukativ.myskoolin.application.utils.SecurityUtils;
+import io.edukativ.myskoolin.application.security.SecurityUtils;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

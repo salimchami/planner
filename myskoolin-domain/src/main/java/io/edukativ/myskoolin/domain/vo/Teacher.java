@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 /**
  * A Teacher.
  */
-public class Teacher {
+public class Teacher extends User {
 
     private ZonedDateTime employedDate;
     private Boolean substitute = false;
@@ -43,8 +43,8 @@ public class Teacher {
         this.grades = grades;
     }
 
-    public static List<User> teachersByGrade(List<User> teachers, Grade grade) {
-        return teachers.stream().filter(user -> user.getTeacher().getGrades().contains(grade)).collect(Collectors.toList());
+    public static List<Teacher> teachersByGrade(List<Teacher> teachers, Grade grade) {
+        return teachers.stream().filter(teacher -> teacher.getGrades().contains(grade)).collect(Collectors.toList());
     }
 
     public ZonedDateTime getEmployedDate() {
@@ -142,17 +142,17 @@ public class Teacher {
         return Objects.hash(employedDate, substitute, timetable, grades);
     }
 
-    public static List<User> teachersByTaughtSubjectsAndGrade(List<User> allTeachers, List<Subject> scholClassSubjects, String gradeId) {
+    public static List<Teacher> teachersByTaughtSubjectsAndGrade(List<Teacher> allTeachers, List<Subject> scholClassSubjects, String gradeId) {
         return allTeachers.stream()
-                .filter(user -> user.getTeacher().getGrades().stream().map(Grade::getId).collect(Collectors.toList()).contains(gradeId))
-                .filter(user -> scholClassSubjects.stream().map(Subject::getId).collect(Collectors.toList()).containsAll(user.getTeacher().getTaughtSubjects()))
+                .filter(teacher -> teacher.getGrades().stream().map(Grade::getId).collect(Collectors.toList()).contains(gradeId))
+                .filter(teacher -> scholClassSubjects.stream().map(Subject::getId).collect(Collectors.toList()).containsAll(teacher.getTaughtSubjects()))
                 .collect(Collectors.toList());
     }
 
-    public static Optional<User> searchForTeacher(List<User> possibleTeachersForSubject, TimeSlot timeSlot) {
-        Optional<User> optUser = Optional.empty();
-        for (User teacherUser : possibleTeachersForSubject) {
-            if (teacherUser.getTeacher().getTimetable().isEmpty() || teacherUser.getTeacher().getTimetable()
+    public static Optional<Teacher> searchForTeacher(List<Teacher> possibleTeachersForSubject, TimeSlot timeSlot) {
+        Optional<Teacher> optUser = Optional.empty();
+        for (Teacher teacherUser : possibleTeachersForSubject) {
+            if (teacherUser.getTimetable().isEmpty() || teacherUser.getTimetable()
                     .stream().noneMatch(teacherTimeSlot -> teacherTimeSlot.isOverlapping(timeSlot))) {
                 optUser = Optional.of(teacherUser);
                 break;
@@ -161,10 +161,10 @@ public class Teacher {
         return optUser;
     }
 
-    public static List<User> teachersBySubjects(List<User> allTeachers, String subjectId) {
+    public static List<Teacher> teachersBySubjects(List<Teacher> allTeachers, String subjectId) {
         return allTeachers
                 .stream()
-                .filter(user -> user.getTeacher().taughtSubjects.contains(subjectId))
+                .filter(user -> user.taughtSubjects.contains(subjectId))
                 .collect(Collectors.toList());
     }
 

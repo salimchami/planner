@@ -1,11 +1,14 @@
 package io.edukativ.myskoolin.application;
 
-import io.edukativ.myskoolin.application.dto.SchoolRoomDTO;
-import io.edukativ.myskoolin.application.mapper.SchoolRoomMapper;
+import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDTO;
+import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomMapper;
 import io.edukativ.myskoolin.application.security.UserService;
+import io.edukativ.myskoolin.domain.entity.SchoolRoom;
+import io.edukativ.myskoolin.domain.schoolrooms.api.SchoolRoomAPI;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.dto.SchoolRoomDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.repository.SchoolRoomRepository;
+import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDbDTO;
+import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomRepository;
+import io.edukativ.myskoolin.infrastructure.temp.UserMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,20 +21,25 @@ import java.util.Optional;
 public class SchoolRoomApplication {
 
     private final SchoolRoomMapper schoolRoomMapper;
+    private final UserMapper userMapper;
     private final SchoolRoomRepository schoolRoomRepository;
     private final UserService userService;
+    private final SchoolRoomAPI schoolRoomAPI;
 
-    public SchoolRoomApplication(SchoolRoomMapper schoolRoomMapper, SchoolRoomRepository schoolRoomRepository, UserService userService) {
+    public SchoolRoomApplication(SchoolRoomMapper schoolRoomMapper, UserMapper userMapper, SchoolRoomRepository schoolRoomRepository,
+                                 UserService userService, SchoolRoomAPI schoolRoomAPI) {
         this.schoolRoomMapper = schoolRoomMapper;
+        this.userMapper = userMapper;
         this.schoolRoomRepository = schoolRoomRepository;
         this.userService = userService;
+        this.schoolRoomAPI = schoolRoomAPI;
     }
 
     public List<SchoolRoomDTO> findSchoolRooms() {
         Optional<UserDbDTO> optCurrentUser = userService.getCurrentUserWithAuthorities();
         return optCurrentUser.map(user -> {
             final List<SchoolRoomDbDTO> schoolRooms = schoolRoomRepository.findByClientId(false, user.getClientId());
-            return schoolRoomMapper.schoolRoomsDbDTOToSchoolRoomsDTO(schoolRooms);
+            return schoolRoomMapper.dbDtosToDtos(schoolRooms);
         }).orElse(Collections.emptyList());
     }
 
@@ -39,19 +47,20 @@ public class SchoolRoomApplication {
         final Optional<UserDbDTO> optUserWithAuthorities = userService.getCurrentUserWithAuthorities();
         return optUserWithAuthorities.flatMap(user -> {
             final Optional<SchoolRoomDbDTO> optSchoolRoomDTO = schoolRoomRepository.findOneByName(name, false, user.getClientId());
-            return optSchoolRoomDTO.map(schoolRoomMapper::schoolRoomDbDTOToSchoolRoomDTO);
+            return optSchoolRoomDTO.map(schoolRoomMapper::dbDTOToDTO);
         });
     }
 
-    public SchoolRoomDTO createSchoolRoom(SchoolRoomDTO schoolRoomDTO) {
-        return null;
-    }
-
-    public SchoolRoomDTO updateSchoolRoom(SchoolRoomDTO schoolRoomDTO) {
-        return null;
+    public SchoolRoomDTO createOrUpdateSchoolRoom(SchoolRoomDTO schoolRoomDTO) {
+        final Optional<UserDbDTO> optUserWithAuthorities = userService.getCurrentUserWithAuthorities();
+        return optUserWithAuthorities.flatMap(userDbDTO -> {
+            final SchoolRoom schoolRoom = schoolRoomMapper.dtoToDomain(schoolRoomDTO);
+            Optional<SchoolRoom> optSavedSchoolRoom = schoolRoomAPI.createOrUpdateSchoolRoom(schoolRoom, userMapper.dbDtoToDomain(userDbDTO));
+            return optSavedSchoolRoom.map(schoolRoomMapper::domainToDto);
+        }).orElseThrow();
     }
 
     public void deleteSchoolRoom(String id) {
-
+        schoolRoomAPI.deleteSchoolRoom(id);
     }
 }

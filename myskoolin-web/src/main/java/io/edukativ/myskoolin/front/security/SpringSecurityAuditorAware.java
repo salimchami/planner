@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.front.security;
 
-import io.edukativ.myskoolin.application.utils.SecurityUtils;
+import io.edukativ.myskoolin.application.security.SecurityUtils;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;

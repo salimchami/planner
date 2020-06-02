@@ -1,8 +1,6 @@
 package io.edukativ.myskoolin.domain.entity;
 
-import io.edukativ.myskoolin.domain.vo.Student;
-import io.edukativ.myskoolin.domain.vo.Teacher;
-
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,13 +11,25 @@ import java.util.Set;
 public class User {
 
     private String id;
+    private String login;
     private String clientId;
-    private String sex;
-    private boolean activated;
+    private String password;
+    private String gender;
+    private String firstName;
+    private String lastName;
+    private String cellPhone;
+    private String homePhone;
+    private String nationality;
+    private String email;
+    private boolean activated = false;
+    private String langKey;
+    private String imageUrl;
+    private String activationKey;
+    private String resetKey;
+    private Instant resetDate = null;
     private Set<Authority> authorities = new HashSet<>();
-    private Student student;
+    private Address address;
     private ZonedDateTime birthDate;
-    private Teacher teacher;
     private boolean deleted;
     private boolean archived;
 
@@ -33,17 +43,27 @@ public class User {
         this.archived = false;
     }
 
-    public User(String id, String clientId, String sex, boolean activated,
-                Set<Authority> authorities, Student student, ZonedDateTime birthDate,
-                Teacher teacher, boolean deleted, boolean archived) {
+    public User(String id, String login, String clientId, String password, String gender, String firstName, String lastName, String cellPhone, String homePhone, String nationality, String email, boolean activated, String langKey, String imageUrl, String activationKey, String resetKey, Instant resetDate, Set<Authority> authorities, Address address, ZonedDateTime birthDate, boolean deleted, boolean archived) {
         this.id = id;
+        this.login = login;
         this.clientId = clientId;
-        this.sex = sex;
+        this.password = password;
+        this.gender = gender;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.cellPhone = cellPhone;
+        this.homePhone = homePhone;
+        this.nationality = nationality;
+        this.email = email;
         this.activated = activated;
+        this.langKey = langKey;
+        this.imageUrl = imageUrl;
+        this.activationKey = activationKey;
+        this.resetKey = resetKey;
+        this.resetDate = resetDate;
         this.authorities = authorities;
-        this.student = student;
+        this.address = address;
         this.birthDate = birthDate;
-        this.teacher = teacher;
         this.deleted = deleted;
         this.archived = archived;
     }
@@ -68,6 +88,14 @@ public class User {
         this.id = id;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public String getClientId() {
         return clientId;
     }
@@ -76,12 +104,68 @@ public class User {
         this.clientId = clientId;
     }
 
-    public String getSex() {
-        return sex;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getCellPhone() {
+        return cellPhone;
+    }
+
+    public void setCellPhone(String cellPhone) {
+        this.cellPhone = cellPhone;
+    }
+
+    public String getHomePhone() {
+        return homePhone;
+    }
+
+    public void setHomePhone(String homePhone) {
+        this.homePhone = homePhone;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public boolean isActivated() {
@@ -92,6 +176,46 @@ public class User {
         this.activated = activated;
     }
 
+    public String getLangKey() {
+        return langKey;
+    }
+
+    public void setLangKey(String langKey) {
+        this.langKey = langKey;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getActivationKey() {
+        return activationKey;
+    }
+
+    public void setActivationKey(String activationKey) {
+        this.activationKey = activationKey;
+    }
+
+    public String getResetKey() {
+        return resetKey;
+    }
+
+    public void setResetKey(String resetKey) {
+        this.resetKey = resetKey;
+    }
+
+    public Instant getResetDate() {
+        return resetDate;
+    }
+
+    public void setResetDate(Instant resetDate) {
+        this.resetDate = resetDate;
+    }
+
     public Set<Authority> getAuthorities() {
         return authorities;
     }
@@ -100,12 +224,12 @@ public class User {
         this.authorities = authorities;
     }
 
-    public Student getStudent() {
-        return student;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public ZonedDateTime getBirthDate() {
@@ -114,14 +238,6 @@ public class User {
 
     public void setBirthDate(ZonedDateTime birthDate) {
         this.birthDate = birthDate;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
     }
 
     public boolean isDeleted() {

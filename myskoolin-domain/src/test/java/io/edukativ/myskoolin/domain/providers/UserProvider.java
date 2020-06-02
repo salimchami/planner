@@ -1,13 +1,14 @@
 package io.edukativ.myskoolin.domain.providers;
 
-import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.domain.commons.exceptions.NotFoundException;
-import io.edukativ.myskoolin.domain.entity.Authority;
 import io.edukativ.myskoolin.domain.entity.Grade;
 import io.edukativ.myskoolin.domain.entity.User;
 import io.edukativ.myskoolin.domain.vo.Teacher;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -34,20 +35,18 @@ public class UserProvider {
             GlobalProvider.Subjects.Troisieme.SUBJECT_TROISIEME_FRANCAIS_EPI_ID
     );
 
-    public static User teacherUser(String id, List<Grade> grades, List<String> taughtSubjects) {
-        User user = defaultUser(id);
-        Teacher teacher = new Teacher(null, false,
-                null, null, taughtSubjects, new ArrayList<>(),
-                null, grades);
-        user.setTeacher(teacher);
-        return user;
+    public static Teacher teacherUser(String id, List<Grade> grades, List<String> taughtSubjects) {
+//        User user = defaultUser(id);
+//        Teacher teacher = new Teacher(null, false,
+//                null, null, taughtSubjects, new ArrayList<>(),
+//                null, grades);
+//        user.setTeacher(teacher);
+//        return user;
+        return null;
     }
 
     public static User defaultUser(String id) {
-        return new User(id, GlobalProvider.CLIENT_ID, "sex",
-                true,
-                new HashSet<>(Collections.singletonList(new Authority(AuthoritiesConstants.TEACHERS))),
-                null, null, null, false, false);
+        return null;
     }
 
     private static List<User> musiqueTeachers(Grade... grades) {
@@ -174,6 +173,7 @@ public class UserProvider {
                 teacherUser(GlobalProvider.TEACHER_LATIN_2_ID, new ArrayList<>(Arrays.asList(grades)), subjects)
         );
     }
+
     private static List<User> allemandTeachers(Grade... grades) {
         List<String> subjects = Arrays.asList(
                 GlobalProvider.Subjects.Sixieme.SUBJECT_SIXIEME_ALLEMAND_ID,

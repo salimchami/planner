@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.front.web.rest.vm;
 
-import io.edukativ.myskoolin.application.dto.UserDTO;
+import io.edukativ.myskoolin.infrastructure.temp.UserDTO;
 
 import javax.validation.constraints.Size;
 
