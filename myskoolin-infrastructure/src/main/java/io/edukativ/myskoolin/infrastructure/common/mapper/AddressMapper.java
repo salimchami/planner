@@ -12,5 +12,8 @@ public interface AddressMapper {
 
     AddressDbVO dtoToDbDto(AddressVO address);
 
-    Address dbDtoToDomain(AddressDbVO address);
+    default Address dbDtoToDomain(AddressDbVO address) {
+        return new Address(address.getName(),
+                address.getPostalCode(), address.getCity(), address.getCountry());
+    }
 }

@@ -1,5 +1,8 @@
 package io.edukativ.myskoolin.front.service.mapper;
 
+import io.edukativ.myskoolin.infrastructure.common.mapper.AddressMapper;
+import io.edukativ.myskoolin.infrastructure.common.mapper.AuthorityMapper;
+import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
 import io.edukativ.myskoolin.infrastructure.temp.UserDTO;
 import io.edukativ.myskoolin.infrastructure.temp.UserMapper;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
@@ -13,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 /**
  * Unit tests for {@link UserMapper}.
@@ -28,6 +32,9 @@ public class UserMapperTest {
 
     @BeforeEach
     public void init() {
+        AddressMapper addressMapper= mock(AddressMapper.class);
+        AuthorityMapper authorityMapper= mock(AuthorityMapper.class);
+        ObjectIdMapper objectIdMapper = mock(ObjectIdMapper.class);
         userMapper = new UserMapper(addressMapper, authorityMapper, objectIdMapper);
         user = new UserDbDTO();
         user.setLogin(DEFAULT_LOGIN);
