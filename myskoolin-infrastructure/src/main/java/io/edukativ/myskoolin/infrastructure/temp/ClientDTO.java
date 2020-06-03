@@ -1,13 +1,14 @@
 package io.edukativ.myskoolin.infrastructure.temp;
 
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumContactsBy;
+import io.edukativ.myskoolin.infrastructure.common.vo.AddressVO;
 
 import java.util.List;
 
 public class ClientDTO {
 
     private String id;
-    private AddressDTO address;
+    private AddressVO address;
     private List<EnumContactsBy> contactsBy;
     private List<EmailDTO> emails;
     private String name;
@@ -25,11 +26,11 @@ public class ClientDTO {
         this.id = id;
     }
 
-    public AddressDTO getAddress() {
+    public AddressVO getAddress() {
         return address;
     }
 
-    public void setAddress(AddressDTO address) {
+    public void setAddress(AddressVO address) {
         this.address = address;
     }
 

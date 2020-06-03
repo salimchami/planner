@@ -1,6 +1,8 @@
 package io.edukativ.myskoolin.infrastructure.temp;
 
 import io.edukativ.myskoolin.infrastructure.commercial.dto.ClientDbDTO;
+import io.edukativ.myskoolin.infrastructure.common.mapper.AddressMapper;
+import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {

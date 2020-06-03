@@ -1,6 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.schooling.dto;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.AbsenceDbVO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.InfirmaryStatisticsDbVO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.MedicalInfosDbVO;

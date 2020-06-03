@@ -22,6 +22,7 @@ public class Grade implements Comparable<Grade> {
     private Boolean deleted = false;
     private List<GradeSerie> series;
     private TimeTableOptions timeTableOptions;
+    private int nbSubjects;
 
     public Grade() {
     }
@@ -180,5 +181,13 @@ public class Grade implements Comparable<Grade> {
 
     public void setMaxMinutesPerWeek(Integer maxMinutesPerWeek) {
         this.maxMinutesPerWeek = maxMinutesPerWeek;
+    }
+
+    public int getNbSubjects() {
+        return nbSubjects;
+    }
+
+    public void setNbSubjects(int nbSubjects) {
+        this.nbSubjects = nbSubjects;
     }
 }

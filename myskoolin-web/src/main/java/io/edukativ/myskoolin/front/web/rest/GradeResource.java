@@ -1,9 +1,16 @@
 package io.edukativ.myskoolin.front.web.rest;
 
+import io.edukativ.myskoolin.application.GradeApplication;
+import io.edukativ.myskoolin.infrastructure.grades.GradeDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * REST controller for managing Grade.
@@ -14,8 +21,13 @@ class GradeResource {
 
     private final Logger log = LoggerFactory.getLogger(GradeResource.class);
 
-//    @Timed
-//    @PostMapping(value = "/grades")
+    private final GradeApplication gradeApplication;
+
+    GradeResource(GradeApplication gradeApplication) {
+        this.gradeApplication = gradeApplication;
+    }
+
+    //    @PostMapping(value = "/grades")
 //    public ResponseEntity<List<GradeDTO>> createGrades(@RequestBody List<GradeDTO> grades) throws URISyntaxException {
 //        log.debug("REST request to save Grades : {}", grades);
 //        List<Grade> gradesModel = grades.stream().map(GradeDTO::toGrade).collect(Collectors.toList());
@@ -24,7 +36,6 @@ class GradeResource {
 //            .body(result.stream().map(GradeDTO::new).collect(Collectors.toList()));
 //    }
 //
-//    @Timed
 //    @PutMapping(value = "/grades")
 //    public ResponseEntity<List<GradeDTO>> updateGrades(@RequestBody List<GradeDTO> grades) throws URISyntaxException {
 //        log.debug("REST request to update Grades : {}", grades);
@@ -35,21 +46,13 @@ class GradeResource {
 //        return ResponseEntity.ok().body(gradesDTO);
 //    }
 //
-//    @Timed
-//    @GetMapping(value = "/grades")
-//    public ResponseEntity<List<GradeDTO>> getAllGrades() {
-//        log.debug("REST request to get all Grades");
-//        List<Grade> gradesModel = gradeService.allGrades();
-//        List<GradeDTO> grades = gradeMapper.gradesToGradesDTO(gradesModel);
-//        grades.forEach(grade -> {
-//            Integer nbSubjects = subjectService.countByGrade(grade.getId());
-//            grade.setNbSubjects(nbSubjects);
-//
-//        });
-//        return new ResponseEntity<>(grades, HttpStatus.OK);
-//    }
-//
-//    @Timed
+
+    @GetMapping(value = "/grades")
+    public ResponseEntity<List<GradeDTO>> getAllGrades() {
+        log.debug("REST request to get all Grades");
+        return new ResponseEntity<>(gradeApplication.findGrades(), HttpStatus.OK);
+    }
+
 //    @GetMapping(value = "/grades/{name}")
 //    public ResponseEntity<GradeDTO> getGrade(@PathVariable String name) {
 //        log.debug("REST request to get Grade : {}", name);
@@ -65,7 +68,6 @@ class GradeResource {
 //            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 //    }
 //
-//    @Timed
 //    @DeleteMapping(value = "/grades/{id}")
 //    public ResponseEntity<Void> deleteGrade(@PathVariable String id) {
 //        log.debug("REST request to delete Grade : {}", id);
@@ -73,7 +75,6 @@ class GradeResource {
 //        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("grade", id)).build();
 //    }
 //
-//    @Timed
 //    @Transactional
 //    @GetMapping(value = "/grades/nameAvailable/{name}")
 //    public Boolean nameAvailable(@PathVariable String name) {
@@ -87,7 +88,6 @@ class GradeResource {
 //        return result[0];
 //    }
 //
-//    @Timed
 //    @Transactional
 //    @GetMapping(value = "/grades/diminutiveAvailable/{diminutive}")
 //    public Boolean diminutiveAvailable(@PathVariable String diminutive) {
@@ -101,7 +101,6 @@ class GradeResource {
 //        return result[0];
 //    }
 //
-//    @Timed
 //    @GetMapping(value = "/grades/allSeries")
 //    public ResponseEntity<List<GradeSerie>> getAllGradesSeries() {
 //        log.debug("REST request to get all Grades");

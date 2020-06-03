@@ -2,6 +2,7 @@ package io.edukativ.myskoolin.infrastructure.temp;
 
 import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
+import io.edukativ.myskoolin.infrastructure.common.vo.AddressVO;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
 
 import javax.validation.constraints.Email;
@@ -64,7 +65,7 @@ public class UserDTO {
 
     private Set<String> authorities;
 
-    private AddressDTO address;
+    private AddressVO address;
 
     private ZonedDateTime birthDate;
 
@@ -79,7 +80,7 @@ public class UserDTO {
         this.cellPhone = user.getCellPhone();
         this.homePhone = user.getHomePhone();
         this.nationality = user.getNationality();
-        this.address = new AddressDTO();
+        this.address = new AddressVO();
         this.address.setCity(user.getAddress().getCity());
         this.address.setCountry(user.getAddress().getCountry());
         this.address.setName(user.getAddress().getName());
@@ -245,11 +246,11 @@ public class UserDTO {
         this.nationality = nationality;
     }
 
-    public AddressDTO getAddress() {
+    public AddressVO getAddress() {
         return address;
     }
 
-    public void setAddress(AddressDTO address) {
+    public void setAddress(AddressVO address) {
         this.address = address;
     }
 

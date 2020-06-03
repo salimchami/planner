@@ -6,8 +6,8 @@ import io.edukativ.myskoolin.infrastructure.commercial.dto.ClientDbDTO;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolClassNotation;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev.util.DevDbMigrationsConstants;
-import io.edukativ.myskoolin.infrastructure.schooling.dto.GradeDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.GradeSerieDbVO;
+import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
+import io.edukativ.myskoolin.infrastructure.grades.GradeSerieDbVO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.TimeTableOptionsDbVO;
 import org.springframework.data.mongodb.core.MongoTemplate;
 

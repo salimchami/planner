@@ -1,8 +1,9 @@
 package io.edukativ.myskoolin.infrastructure.schooling.dto;
 
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolClassNotation;
+import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.DailyBookTimeSlotDbVO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.GradeSerieDbVO;
+import io.edukativ.myskoolin.infrastructure.grades.GradeSerieDbVO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.SchoolClassTimeTableDbVO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.TeachersBySubjectDbVO;
 import org.bson.types.ObjectId;

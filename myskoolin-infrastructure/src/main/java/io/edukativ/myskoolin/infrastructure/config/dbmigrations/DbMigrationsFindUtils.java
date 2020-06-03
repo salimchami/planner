@@ -3,7 +3,7 @@ package io.edukativ.myskoolin.infrastructure.config.dbmigrations;
 import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.commercial.dto.PricingDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.dto.GradeDbDTO;
+import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
 import io.edukativ.myskoolin.infrastructure.schooling.dto.SubjectDbDTO;
 import io.edukativ.myskoolin.infrastructure.schooling.dto.TeacherDbDTO;
 import org.bson.types.ObjectId;

@@ -1,6 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.schooling.dto;
 
-import io.edukativ.myskoolin.infrastructure.schooling.vo.GradeSerieDbVO;
+import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
+import io.edukativ.myskoolin.infrastructure.grades.GradeSerieDbVO;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

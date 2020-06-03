@@ -4,7 +4,7 @@ import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDTO;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomMapper;
 import io.edukativ.myskoolin.application.security.UserService;
 import io.edukativ.myskoolin.domain.entity.SchoolRoom;
-import io.edukativ.myskoolin.domain.schoolrooms.api.SchoolRoomAPI;
+import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoomAPI;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDbDTO;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomRepository;
