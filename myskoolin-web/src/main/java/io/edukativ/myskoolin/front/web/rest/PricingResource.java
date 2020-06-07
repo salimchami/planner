@@ -1,9 +1,9 @@
 package io.edukativ.myskoolin.front.web.rest;
 
-import io.edukativ.myskoolin.infrastructure.temp.PricingDTO;
-import io.edukativ.myskoolin.infrastructure.temp.PricingMapper;
-import io.edukativ.myskoolin.infrastructure.commercial.dto.PricingDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.repository.PricingRepository;
+import io.edukativ.myskoolin.infrastructure.commercial.PricingDTO;
+import io.edukativ.myskoolin.infrastructure.commercial.PricingMapper;
+import io.edukativ.myskoolin.infrastructure.commercial.PricingDbDTO;
+import io.edukativ.myskoolin.infrastructure.schooling.PricingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

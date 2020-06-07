@@ -9,7 +9,7 @@ import io.edukativ.myskoolin.infrastructure.app.repository.AuthorityRepository;
 import io.edukativ.myskoolin.infrastructure.app.repository.search.UserSearchRepository;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
 import io.edukativ.myskoolin.infrastructure.app.repository.UserRepository;
-import io.edukativ.myskoolin.infrastructure.temp.UserDTO;
+import io.edukativ.myskoolin.infrastructure.app.dto.UserDTO;
 import io.github.jhipster.security.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

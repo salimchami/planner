@@ -1,7 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.subjects;
 
 import io.edukativ.myskoolin.domain.subjects.SubjectSPI;
-import io.edukativ.myskoolin.infrastructure.schooling.repository.SubjectRepository;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 

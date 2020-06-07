@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.schoolrooms;
 
-import io.edukativ.myskoolin.infrastructure.temp.DistanceDTO;
+import io.edukativ.myskoolin.infrastructure.schooling.DistanceDTO;
 
 import java.io.Serializable;
 

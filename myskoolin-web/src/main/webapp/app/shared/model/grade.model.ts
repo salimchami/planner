@@ -20,6 +20,7 @@ export class Grade implements BaseEntity {
         public timeTableOptions?: TimeTableOptions,
         public subjects?: Array<Subject>,
         public id?: string,
+        public nbSubjects?: number,
     ) {
         this.subjects = [];
         this.series = [];
@@ -55,6 +56,8 @@ export class Grade implements BaseEntity {
         this.maxMinutesPerDay = json.maxMinutesPerDay;
         this.series = json.series;
         this.timeTableOptions = json.timeTableOptions;
+        this.nbSubjects = json.nbSubjects;
+        this.subjects = json.subjects;
         return this;
     }
 }

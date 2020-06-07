@@ -1,7 +1,8 @@
 package io.edukativ.myskoolin.infrastructure.grades;
 
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolClassNotation;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.TimeTableOptionsDbVO;
+import io.edukativ.myskoolin.infrastructure.schooling.TimeTableOptionsVO;
+import io.edukativ.myskoolin.infrastructure.subjects.SubjectDTO;
 
 import java.util.List;
 
@@ -15,8 +16,9 @@ public class GradeDTO {
     private String diminutive;
     private Integer maxMinutesPerDay;
     private Boolean deleted;
-    private List<GradeSerieDbVO> series;
-    private TimeTableOptionsDbVO timeTableOptions;
+    private List<GradeSerieVO> series;
+    private TimeTableOptionsVO timeTableOptions;
+    private List<SubjectDTO> subjects;
     private int nbSubjects;
 
     public String getId() {
@@ -83,19 +85,19 @@ public class GradeDTO {
         this.deleted = deleted;
     }
 
-    public List<GradeSerieDbVO> getSeries() {
+    public List<GradeSerieVO> getSeries() {
         return series;
     }
 
-    public void setSeries(List<GradeSerieDbVO> series) {
+    public void setSeries(List<GradeSerieVO> series) {
         this.series = series;
     }
 
-    public TimeTableOptionsDbVO getTimeTableOptions() {
+    public TimeTableOptionsVO getTimeTableOptions() {
         return timeTableOptions;
     }
 
-    public void setTimeTableOptions(TimeTableOptionsDbVO timeTableOptions) {
+    public void setTimeTableOptions(TimeTableOptionsVO timeTableOptions) {
         this.timeTableOptions = timeTableOptions;
     }
 
@@ -105,5 +107,13 @@ public class GradeDTO {
 
     public void setNbSubjects(int nbSubjects) {
         this.nbSubjects = nbSubjects;
+    }
+
+    public List<SubjectDTO> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<SubjectDTO> subjects) {
+        this.subjects = subjects;
     }
 }

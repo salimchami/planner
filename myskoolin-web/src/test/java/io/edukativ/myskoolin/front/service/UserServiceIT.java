@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.front.service;
 
-import io.edukativ.myskoolin.infrastructure.temp.UserDTO;
+import io.edukativ.myskoolin.infrastructure.app.dto.UserDTO;
 import io.edukativ.myskoolin.application.security.UserService;
 import io.edukativ.myskoolin.front.MyskoolinApp;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;

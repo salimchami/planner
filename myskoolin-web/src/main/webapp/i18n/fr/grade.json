@@ -40,7 +40,10 @@
             "subject-name": "Nom",
             "subject-customName": "Nom personnalisé",
             "subject-foreignLanguage": "Langue étrangère",
-            "subject-gradeSerie": "Série"
+            "subject-gradeSerie": "Série",
+            "grades-timetable": {
+                "title": "Emploi du temps du niveau"
+            }
         },
         "edit": {
             "title": "Modification niveau scolaire",

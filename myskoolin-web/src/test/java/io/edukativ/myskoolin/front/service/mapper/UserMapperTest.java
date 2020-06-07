@@ -1,10 +1,10 @@
 package io.edukativ.myskoolin.front.service.mapper;
 
 import io.edukativ.myskoolin.infrastructure.common.mapper.AddressMapper;
-import io.edukativ.myskoolin.infrastructure.common.mapper.AuthorityMapper;
+import io.edukativ.myskoolin.infrastructure.app.mapper.AuthorityMapper;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
-import io.edukativ.myskoolin.infrastructure.temp.UserDTO;
-import io.edukativ.myskoolin.infrastructure.temp.UserMapper;
+import io.edukativ.myskoolin.infrastructure.app.dto.UserDTO;
+import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;

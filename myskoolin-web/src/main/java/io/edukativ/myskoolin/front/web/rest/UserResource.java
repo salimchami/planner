@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.front.web.rest;
 
-import io.edukativ.myskoolin.infrastructure.temp.UserDTO;
+import io.edukativ.myskoolin.infrastructure.app.dto.UserDTO;
 import io.edukativ.myskoolin.application.security.UserService;
 import io.edukativ.myskoolin.infrastructure.app.providers.MailProvider;
 import io.edukativ.myskoolin.infrastructure.config.Constants;

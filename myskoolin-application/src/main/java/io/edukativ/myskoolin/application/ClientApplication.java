@@ -1,11 +1,11 @@
 package io.edukativ.myskoolin.application;
 
-import io.edukativ.myskoolin.infrastructure.temp.ClientDTO;
-import io.edukativ.myskoolin.infrastructure.temp.ClientMapper;
+import io.edukativ.myskoolin.infrastructure.commercial.ClientDTO;
+import io.edukativ.myskoolin.infrastructure.commercial.ClientMapper;
 import io.edukativ.myskoolin.application.security.UserService;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
-import io.edukativ.myskoolin.infrastructure.commercial.dto.ClientDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.repository.ClientRepository;
+import io.edukativ.myskoolin.infrastructure.commercial.ClientDbDTO;
+import io.edukativ.myskoolin.infrastructure.commercial.ClientRepository;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

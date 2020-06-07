@@ -2,7 +2,7 @@ package io.edukativ.myskoolin.infrastructure.common.vo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumPartsOfDay;
-import io.edukativ.myskoolin.infrastructure.schooling.dto.SubjectDbDTO;
+import io.edukativ.myskoolin.infrastructure.subjects.SubjectDbDTO;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotNull;

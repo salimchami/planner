@@ -2,7 +2,7 @@ package io.edukativ.myskoolin.infrastructure.grades;
 
 import io.edukativ.myskoolin.domain.entity.Grade;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
-import io.edukativ.myskoolin.infrastructure.temp.TimeTableOptionsMapper;
+import io.edukativ.myskoolin.infrastructure.schooling.TimeTableOptionsMapper;
 import org.mapstruct.Mapper;
 
 import java.util.List;

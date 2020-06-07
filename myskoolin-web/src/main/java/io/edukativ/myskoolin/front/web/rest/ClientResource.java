@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.front.web.rest;
 
 import io.edukativ.myskoolin.application.ClientApplication;
-import io.edukativ.myskoolin.infrastructure.temp.ClientDTO;
+import io.edukativ.myskoolin.infrastructure.commercial.ClientDTO;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;

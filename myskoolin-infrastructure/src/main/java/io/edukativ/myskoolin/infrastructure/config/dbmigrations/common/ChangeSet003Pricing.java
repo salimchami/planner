@@ -2,7 +2,7 @@ package io.edukativ.myskoolin.infrastructure.config.dbmigrations.common;
 
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
-import io.edukativ.myskoolin.infrastructure.commercial.dto.PricingDbDTO;
+import io.edukativ.myskoolin.infrastructure.commercial.PricingDbDTO;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumCurrency;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsConstants;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.MigrationTempData;

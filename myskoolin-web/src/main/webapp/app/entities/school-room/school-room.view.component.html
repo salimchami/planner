@@ -22,6 +22,7 @@
                                 </button>
                                 <jhi-modal-basic #modalDefault>
                                     <div class="app-modal-header">
+                                        {{schoolRoom}}
                                         <h4 class="modal-title" jhiTranslate="schoolRoom.delete.title" translateValues="{name: '{{schoolRoom.name}}'}">Confirm delete operation</h4>
                                         <button type="button" class="close basic-close" (click)="modalDefault.hide()">
                                             <span aria-hidden="true">&times;</span>

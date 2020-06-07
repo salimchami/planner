@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.front.web.rest;
 
-import io.edukativ.myskoolin.infrastructure.temp.PasswordChangeDTO;
-import io.edukativ.myskoolin.infrastructure.temp.UserDTO;
+import io.edukativ.myskoolin.infrastructure.app.dto.PasswordChangeDTO;
+import io.edukativ.myskoolin.infrastructure.app.dto.UserDTO;
 import io.edukativ.myskoolin.application.security.UserService;
 import io.edukativ.myskoolin.application.security.SecurityUtils;
 import io.edukativ.myskoolin.front.web.rest.errors.EmailAlreadyUsedException;

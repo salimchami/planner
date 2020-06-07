@@ -40,7 +40,10 @@
             "subject-name": "Name",
             "subject-customName": "Custom name",
             "subject-foreignLanguage": "Foreign language",
-            "subject-gradeSerie": "Grade serie"
+            "subject-gradeSerie": "Grade serie",
+            "grades-timetable": {
+                "title": "Emploi du temps du niveau"
+            }
         },
         "edit": {
             "title": "Editing grade",

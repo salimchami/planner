@@ -3,11 +3,12 @@ package io.edukativ.myskoolin.infrastructure.config.dbmigrations;
 import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.FeatureDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
-import io.edukativ.myskoolin.infrastructure.commercial.dto.ClientDbDTO;
-import io.edukativ.myskoolin.infrastructure.commercial.dto.PricingDbDTO;
+import io.edukativ.myskoolin.infrastructure.commercial.ClientDbDTO;
+import io.edukativ.myskoolin.infrastructure.commercial.PricingDbDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.dto.*;
+import io.edukativ.myskoolin.infrastructure.schooling.*;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDbDTO;
+import io.edukativ.myskoolin.infrastructure.subjects.SubjectDbDTO;
 
 import java.util.ArrayList;
 import java.util.List;

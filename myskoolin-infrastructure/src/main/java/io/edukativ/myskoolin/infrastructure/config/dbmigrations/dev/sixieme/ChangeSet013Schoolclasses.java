@@ -7,10 +7,10 @@ import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsFind
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.MigrationTempData;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev.util.DevDbMigrationsConstants;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.dto.SchoolClassDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.dto.StudentDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.dto.SubjectDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.dto.TeacherDbDTO;
+import io.edukativ.myskoolin.infrastructure.schooling.SchoolClassDbDTO;
+import io.edukativ.myskoolin.infrastructure.schooling.StudentDbDTO;
+import io.edukativ.myskoolin.infrastructure.subjects.SubjectDbDTO;
+import io.edukativ.myskoolin.infrastructure.schooling.TeacherDbDTO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.TeachersBySubjectDbVO;
 import org.springframework.data.mongodb.core.MongoTemplate;
 

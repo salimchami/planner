@@ -8,7 +8,7 @@ import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoomAPI;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDbDTO;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomRepository;
-import io.edukativ.myskoolin.infrastructure.temp.UserMapper;
+import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

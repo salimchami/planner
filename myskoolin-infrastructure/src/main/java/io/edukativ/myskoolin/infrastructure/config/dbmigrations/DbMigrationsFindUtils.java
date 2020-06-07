@@ -1,10 +1,10 @@
 package io.edukativ.myskoolin.infrastructure.config.dbmigrations;
 
 import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
-import io.edukativ.myskoolin.infrastructure.commercial.dto.PricingDbDTO;
+import io.edukativ.myskoolin.infrastructure.commercial.PricingDbDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.dto.SubjectDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.dto.TeacherDbDTO;
+import io.edukativ.myskoolin.infrastructure.subjects.SubjectDbDTO;
+import io.edukativ.myskoolin.infrastructure.schooling.TeacherDbDTO;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;

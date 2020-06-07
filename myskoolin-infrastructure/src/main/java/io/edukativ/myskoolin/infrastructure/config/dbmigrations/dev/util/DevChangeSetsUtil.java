@@ -1,9 +1,9 @@
 package io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev.util;
 
-import io.edukativ.myskoolin.infrastructure.commercial.dto.ClientDbDTO;
-import io.edukativ.myskoolin.infrastructure.commercial.dto.ContractDbDTO;
-import io.edukativ.myskoolin.infrastructure.commercial.dto.InterlocutorDbDTO;
-import io.edukativ.myskoolin.infrastructure.commercial.dto.PricingDbDTO;
+import io.edukativ.myskoolin.infrastructure.commercial.ClientDbDTO;
+import io.edukativ.myskoolin.infrastructure.commercial.ContractDbDTO;
+import io.edukativ.myskoolin.infrastructure.commercial.InterlocutorDbDTO;
+import io.edukativ.myskoolin.infrastructure.commercial.PricingDbDTO;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumContactsBy;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumGender;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSex;

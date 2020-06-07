@@ -10,7 +10,7 @@ import io.edukativ.myskoolin.domain.subjects.SubjectSPI;
 import io.edukativ.myskoolin.infrastructure.grades.GradeMapper;
 import io.edukativ.myskoolin.infrastructure.grades.GradeProvider;
 import io.edukativ.myskoolin.infrastructure.grades.GradeRepository;
-import io.edukativ.myskoolin.infrastructure.schooling.repository.SubjectRepository;
+import io.edukativ.myskoolin.infrastructure.subjects.SubjectRepository;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomMapper;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomProvider;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomRepository;

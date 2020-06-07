@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.schoolrooms;
 
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypes;
-import io.edukativ.myskoolin.infrastructure.temp.TimeSlotDTO;
+import io.edukativ.myskoolin.infrastructure.schooling.TimeSlotDTO;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
