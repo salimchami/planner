@@ -3,6 +3,7 @@ package io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev;
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.infrastructure.config.dbmigrations.MigrationTempData;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev.util.DevDbMigrationsConstants;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDbDTO;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -56,6 +57,7 @@ public class ChangeSet08Schoolrooms {
                     break;
             }
             mongoTemplate.insert(room);
+            MigrationTempData.schoolRooms.add(room);
         }
     }
 
@@ -83,6 +85,7 @@ public class ChangeSet08Schoolrooms {
                     break;
             }
             mongoTemplate.insert(room);
+            MigrationTempData.schoolRooms.add(room);
         }
     }
 
@@ -104,6 +107,7 @@ public class ChangeSet08Schoolrooms {
                     break;
             }
             mongoTemplate.insert(room);
+            MigrationTempData.schoolRooms.add(room);
         }
     }
 
@@ -131,6 +135,7 @@ public class ChangeSet08Schoolrooms {
                     break;
             }
             mongoTemplate.insert(room);
+            MigrationTempData.schoolRooms.add(room);
         }
     }
 
@@ -155,6 +160,7 @@ public class ChangeSet08Schoolrooms {
                     break;
             }
             mongoTemplate.insert(room);
+            MigrationTempData.schoolRooms.add(room);
         }
     }
 
@@ -165,6 +171,7 @@ public class ChangeSet08Schoolrooms {
             new BigDecimal("200"),
             "", "25546878", "6546454657", false);
         mongoTemplate.insert(room);
+        MigrationTempData.schoolRooms.add(room);
     }
 
     @ChangeSet(order = "07", author = "sch", id = "07-schoolrooms-STEPPED")
@@ -174,6 +181,7 @@ public class ChangeSet08Schoolrooms {
             new BigDecimal("200"),
             "", "25546878", "6546454657", false);
         mongoTemplate.insert(room);
+        MigrationTempData.schoolRooms.add(room);
     }
 
     @ChangeSet(order = "08", author = "sch", id = "08-schoolrooms-AMPHITHEATER")
@@ -183,5 +191,6 @@ public class ChangeSet08Schoolrooms {
             new BigDecimal("200"),
             "", "25546878", "6546454657", false);
         mongoTemplate.insert(room);
+        MigrationTempData.schoolRooms.add(room);
     }
 }

@@ -1,19 +1,17 @@
 package io.edukativ.myskoolin.infrastructure.schooling.dto;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.edukativ.myskoolin.infrastructure.app.dto.AbstractUserDbDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.AbsenceDbVO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.InfirmaryStatisticsDbVO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.MedicalInfosDbVO;
-import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.SchoolClassTimeSlotDbVO;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,8 +19,10 @@ import java.util.Objects;
  * A Teacher.
  */
 @Document(collection = "teachers")
-public class TeacherDbDTO extends UserDbDTO implements Serializable {
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "teacher")
+public class TeacherDbDTO extends AbstractUserDbDTO {
 
+    public static final String MONGO_COLLECTION_NAME = "teachers";
     private static final long serialVersionUID = 1L;
     public static final String MONGO_FIELD_COMMENT = "comment";
     public static final String MONGO_FIELD_EMPLOYED_DATE = "employed_date";
@@ -52,11 +52,11 @@ public class TeacherDbDTO extends UserDbDTO implements Serializable {
     private String familySituation;
 
     @Field(MONGO_FIELD_SUBSTITUTE)
-    private Boolean substitute = false;
+    private Boolean substitute;
 
     @DBRef
     @Field(MONGO_FIELD_SUBSTITUTED_TEACHERS)
-    private List<UserDbDTO> substitutedTeachers;
+    private List<TeacherDbDTO> substitutedTeachers;
 
     //private Set<Option> taughtOptions;
     @Field(MONGO_FIELD_ABSENCES)
@@ -97,161 +97,193 @@ public class TeacherDbDTO extends UserDbDTO implements Serializable {
     public TeacherDbDTO() {
     }
 
-    public TeacherDbDTO(String comment, ZonedDateTime employedDate, String familySituation,
-                        Boolean substitute, List<UserDbDTO> substitutedTeachers, List<AbsenceDbVO> absences,
-                        List<SubjectDbDTO> taughtSubjects, List<SchoolClassTimeSlotDbVO> timetable, String proCellPhone,
-                        String proPhone, String proEmail, InfirmaryStatisticsDbVO infirmaryStatistics, MedicalInfosDbVO medicalInfos, ZonedDateTime exitDate,
-                        String exitReason, List<GradeDbDTO> grades) {
-        this.comment = comment;
-        this.employedDate = employedDate;
-        this.familySituation = familySituation;
-        this.substitute = substitute;
-        this.substitutedTeachers = substitutedTeachers;
-        this.absences = absences;
-        this.taughtSubjects = taughtSubjects;
-        this.timetable = timetable;
-        this.proCellPhone = proCellPhone;
-        this.proPhone = proPhone;
-        this.proEmail = proEmail;
-        this.infirmaryStatistics = infirmaryStatistics;
-        this.medicalInfos = medicalInfos;
-        this.exitDate = exitDate;
-        this.exitReason = exitReason;
-        this.grades = grades;
+    protected TeacherDbDTO(TeacherDbDTOBuilder builder) {
+        super(builder);
+        this.comment = builder.comment;
+        this.employedDate = builder.employedDate;
+        this.familySituation = builder.familySituation;
+        this.substitute = builder.substitute;
+        this.substitutedTeachers = builder.substitutedTeachers;
+        this.absences = builder.absences;
+        this.taughtSubjects = builder.taughtSubjects;
+        this.timetable = builder.timetable;
+        this.proCellPhone = builder.proCellPhone;
+        this.proPhone = builder.proPhone;
+        this.proEmail = builder.proEmail;
+        this.infirmaryStatistics = builder.infirmaryStatistics;
+        this.medicalInfos = builder.medicalInfos;
+        this.exitDate = builder.exitDate;
+        this.exitReason = builder.exitReason;
+        this.grades = builder.grades;
+    }
+
+    public static class TeacherDbDTOBuilder extends AbstractUserDbDTOBuilder<TeacherDbDTO.TeacherDbDTOBuilder, TeacherDbDTO> {
+
+        private String comment;
+        private ZonedDateTime employedDate;
+        private String familySituation;
+        private Boolean substitute;
+        private List<TeacherDbDTO> substitutedTeachers;
+        private List<AbsenceDbVO> absences;
+        private List<SubjectDbDTO> taughtSubjects;
+        private List<SchoolClassTimeSlotDbVO> timetable;
+        private String proCellPhone;
+        private String proPhone;
+        private String proEmail;
+        private InfirmaryStatisticsDbVO infirmaryStatistics;
+        private MedicalInfosDbVO medicalInfos;
+        private ZonedDateTime exitDate;
+        private String exitReason;
+        private List<GradeDbDTO> grades;
+
+        public TeacherDbDTOBuilder comment(String comment) {
+            this.comment = comment;
+            return this;
+        }
+
+        public TeacherDbDTOBuilder employedDate(ZonedDateTime employedDate) {
+            this.employedDate = employedDate;
+            return this;
+        }
+
+        public TeacherDbDTOBuilder familySituation(String familySituation) {
+            this.familySituation = familySituation;
+            return this;
+        }
+
+        public TeacherDbDTOBuilder substitute(boolean substitute) {
+            this.substitute = substitute;
+            return this;
+        }
+
+        public TeacherDbDTOBuilder substitutedTeachers(List<TeacherDbDTO> substitutedTeachers) {
+            this.substitutedTeachers = substitutedTeachers;
+            return this;
+        }
+
+        public TeacherDbDTOBuilder absences(List<AbsenceDbVO> absences) {
+            this.absences = absences;
+            return this;
+        }
+
+        public TeacherDbDTOBuilder taughtSubjects(List<SubjectDbDTO> taughtSubjects) {
+            this.taughtSubjects = taughtSubjects;
+            return this;
+        }
+
+        public TeacherDbDTOBuilder timetable(List<SchoolClassTimeSlotDbVO> timetable) {
+            this.timetable = timetable;
+            return this;
+        }
+
+        public TeacherDbDTOBuilder proCellPhone(String proCellPhone) {
+            this.proCellPhone = proCellPhone;
+            return this;
+        }
+
+        public TeacherDbDTOBuilder proPhone(String proPhone) {
+            this.proPhone = proPhone;
+            return this;
+        }
+
+        public TeacherDbDTOBuilder proEmail(String proEmail) {
+            this.proEmail = proEmail;
+            return this;
+        }
+
+        public TeacherDbDTOBuilder infirmaryStatistics(InfirmaryStatisticsDbVO infirmaryStatistics) {
+            this.infirmaryStatistics = infirmaryStatistics;
+            return this;
+        }
+
+        public TeacherDbDTOBuilder medicalInfos(MedicalInfosDbVO medicalInfos) {
+            this.medicalInfos = medicalInfos;
+            return this;
+        }
+
+        public TeacherDbDTOBuilder exitDate(ZonedDateTime exitDate) {
+            this.exitDate = exitDate;
+            return this;
+        }
+
+        public TeacherDbDTOBuilder exitReason(String exitReason) {
+            this.exitReason = exitReason;
+            return this;
+        }
+
+        public TeacherDbDTOBuilder grades(List<GradeDbDTO> grades) {
+            this.grades = grades;
+            return this;
+        }
+
+        @Override
+        public TeacherDbDTO build() {
+            return new TeacherDbDTO(this);
+        }
     }
 
     public String getComment() {
         return comment;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     public ZonedDateTime getEmployedDate() {
         return employedDate;
-    }
-
-    public void setEmployedDate(ZonedDateTime employedDate) {
-        this.employedDate = employedDate;
     }
 
     public String getFamilySituation() {
         return familySituation;
     }
 
-    public void setFamilySituation(String familySituation) {
-        this.familySituation = familySituation;
-    }
-
     public Boolean getSubstitute() {
         return substitute;
     }
 
-    public void setSubstitute(Boolean substitute) {
-        this.substitute = substitute;
-    }
-
-    public List<UserDbDTO> getSubstitutedTeachers() {
+    public List<TeacherDbDTO> getSubstitutedTeachers() {
         return substitutedTeachers;
-    }
-
-    public void setSubstitutedTeachers(List<UserDbDTO> substitutedTeachers) {
-        this.substitutedTeachers = substitutedTeachers;
     }
 
     public List<AbsenceDbVO> getAbsences() {
         return absences;
     }
 
-    public void setAbsences(List<AbsenceDbVO> absences) {
-        this.absences = absences;
-    }
-
     public List<SubjectDbDTO> getTaughtSubjects() {
-        if(taughtSubjects == null) {
-            taughtSubjects = new ArrayList<>();
-        }
         return taughtSubjects;
     }
 
-    public void setTaughtSubjects(List<SubjectDbDTO> taughtSubjects) {
-        this.taughtSubjects = taughtSubjects;
-    }
-
     public List<SchoolClassTimeSlotDbVO> getTimetable() {
-        if(timetable == null) {
-            timetable = new ArrayList<>();
-        }
         return timetable;
-    }
-
-    public void setTimetable(List<SchoolClassTimeSlotDbVO> timetable) {
-        this.timetable = timetable;
     }
 
     public String getProCellPhone() {
         return proCellPhone;
     }
 
-    public void setProCellPhone(String proCellPhone) {
-        this.proCellPhone = proCellPhone;
-    }
-
     public String getProPhone() {
         return proPhone;
-    }
-
-    public void setProPhone(String proPhone) {
-        this.proPhone = proPhone;
     }
 
     public String getProEmail() {
         return proEmail;
     }
 
-    public void setProEmail(String proEmail) {
-        this.proEmail = proEmail;
-    }
-
     public InfirmaryStatisticsDbVO getInfirmaryStatistics() {
         return infirmaryStatistics;
-    }
-
-    public void setInfirmaryStatistics(InfirmaryStatisticsDbVO infirmaryStatistics) {
-        this.infirmaryStatistics = infirmaryStatistics;
     }
 
     public MedicalInfosDbVO getMedicalInfos() {
         return medicalInfos;
     }
 
-    public void setMedicalInfos(MedicalInfosDbVO medicalInfos) {
-        this.medicalInfos = medicalInfos;
-    }
-
     public ZonedDateTime getExitDate() {
         return exitDate;
-    }
-
-    public void setExitDate(ZonedDateTime exitDate) {
-        this.exitDate = exitDate;
     }
 
     public String getExitReason() {
         return exitReason;
     }
 
-    public void setExitReason(String exitReason) {
-        this.exitReason = exitReason;
-    }
-
     public List<GradeDbDTO> getGrades() {
         return grades;
-    }
-
-    public void setGrades(List<GradeDbDTO> grades) {
-        this.grades = grades;
     }
 
     @Override

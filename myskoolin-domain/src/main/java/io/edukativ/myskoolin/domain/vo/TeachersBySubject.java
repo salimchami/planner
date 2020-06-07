@@ -1,14 +1,16 @@
 package io.edukativ.myskoolin.domain.vo;
 
+import java.util.List;
+
 public class TeachersBySubject {
 
     private String subjectId;
-    private String teacherUserId;
+    private List<String> teacherUserId;
 
     public TeachersBySubject() {
     }
 
-    public TeachersBySubject(String subjectId, String teacherUserId) {
+    public TeachersBySubject(String subjectId, List<String> teacherUserId) {
         this.subjectId = subjectId;
         this.teacherUserId = teacherUserId;
     }
@@ -21,11 +23,11 @@ public class TeachersBySubject {
         this.subjectId = subjectId;
     }
 
-    public String getTeacherUserId() {
+    public List<String> getTeacherUserId() {
         return teacherUserId;
     }
 
-    public void setTeacherUserId(String teacherUserId) {
+    public void setTeacherUserId(List<String> teacherUserId) {
         this.teacherUserId = teacherUserId;
     }
 }

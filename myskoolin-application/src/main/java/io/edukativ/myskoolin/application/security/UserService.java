@@ -1,6 +1,5 @@
 package io.edukativ.myskoolin.application.security;
 
-import io.edukativ.myskoolin.infrastructure.temp.UserDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.exceptions.EmailAlreadyUsedException;
@@ -9,7 +8,8 @@ import io.edukativ.myskoolin.infrastructure.app.exceptions.UsernameAlreadyUsedEx
 import io.edukativ.myskoolin.infrastructure.app.repository.AuthorityRepository;
 import io.edukativ.myskoolin.infrastructure.app.repository.search.UserSearchRepository;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
-import io.edukativ.myskoolin.infrastructure.schooling.repository.UserRepository;
+import io.edukativ.myskoolin.infrastructure.app.repository.UserRepository;
+import io.edukativ.myskoolin.infrastructure.temp.UserDTO;
 import io.github.jhipster.security.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,39 +53,44 @@ public class UserService {
     public Optional<UserDbDTO> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
         return userRepository.findOneByActivationKey(key)
-            .map(user -> {
-                // activate given user for the registration key.
-                user.setActivated(true);
-                user.setActivationKey(null);
-                userRepository.save(user);
-                userSearchRepository.save(user);
-                log.debug("Activated user: {}", user);
-                return user;
-            });
+                .map(dbUser -> {
+                    UserDbDTO user = new UserDbDTO.UserDbDTOBuilder(dbUser)
+                            .activated(true)
+                            .activationKey(null)
+                            .build();
+                    // activate given user for the registration key.
+                    userRepository.save(user);
+                    userSearchRepository.save(user);
+                    log.debug("Activated user: {}", user);
+                    return user;
+                });
     }
 
     public Optional<UserDbDTO> completePasswordReset(String newPassword, String key) {
         log.debug("Reset user password for reset key {}", key);
         return userRepository.findOneByResetKey(key)
-            .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
-            .map(user -> {
-                user.setPassword(passwordEncoder.encode(newPassword));
-                user.setResetKey(null);
-                user.setResetDate(null);
-                userRepository.save(user);
-                return user;
-            });
+                .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
+                .map(dbUser -> {
+                    UserDbDTO user = new UserDbDTO.UserDbDTOBuilder(dbUser)
+                            .password(passwordEncoder.encode(newPassword))
+                            .resetKey(null)
+                            .resetDate(null).build();
+                    userRepository.save(user);
+                    return dbUser;
+                });
     }
 
     public Optional<UserDbDTO> requestPasswordReset(String mail) {
         return userRepository.findOneByEmailIgnoreCase(mail)
-            .filter(UserDbDTO::isActivated)
-            .map(user -> {
-                user.setResetKey(RandomUtil.generateResetKey());
-                user.setResetDate(Instant.now());
-                userRepository.save(user);
-                return user;
-            });
+                .filter(UserDbDTO::isActivated)
+                .map(dbUser -> {
+                    UserDbDTO user = new UserDbDTO.UserDbDTOBuilder(dbUser)
+                            .resetKey(RandomUtil.generateResetKey())
+                            .resetDate(Instant.now())
+                            .build();
+                    userRepository.save(user);
+                    return dbUser;
+                });
     }
 
     public UserDbDTO registerUser(UserDTO userDTO, String password) {
@@ -101,25 +106,21 @@ public class UserService {
                 throw new EmailAlreadyUsedException();
             }
         });
-        UserDbDTO newUser = new UserDbDTO();
         String encryptedPassword = passwordEncoder.encode(password);
-        newUser.setLogin(userDTO.getLogin().toLowerCase());
-        // new user gets initially a generated password
-        newUser.setPassword(encryptedPassword);
-        newUser.setFirstName(userDTO.getFirstName());
-        newUser.setLastName(userDTO.getLastName());
-        if (userDTO.getEmail() != null) {
-            newUser.setEmail(userDTO.getEmail().toLowerCase());
-        }
-        newUser.setImageUrl(userDTO.getImageUrl());
-        newUser.setLangKey(userDTO.getLangKey());
-        // new user is not active
-        newUser.setActivated(false);
-        // new user gets registration key
-        newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<AuthorityDbDTO> authorities = new HashSet<>();
         authorityRepository.findAllById(userDTO.getAuthorities()).forEach(authorities::add);
-        newUser.setAuthorities(authorities);
+        UserDbDTO newUser = new UserDbDTO.UserDbDTOBuilder()
+                .login(userDTO.getLogin().toLowerCase())
+                .password(encryptedPassword)
+                .firstName(userDTO.getFirstName())
+                .lastName(userDTO.getLastName())
+                .email(userDTO.getEmail())
+                .imageUrl(userDTO.getImageUrl())
+                .langKey(userDTO.getLangKey())
+                .activated(false)
+                .authorities(authorities)
+                .activationKey(RandomUtil.generateActivationKey())
+                .build();
         userRepository.save(newUser);
         userSearchRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
@@ -128,39 +129,35 @@ public class UserService {
 
     private boolean removeNonActivatedUser(UserDbDTO existingUser) {
         if (existingUser.isActivated()) {
-             return false;
+            return false;
         }
         userRepository.delete(existingUser);
         return true;
     }
 
     public UserDbDTO createUser(UserDTO userDTO) {
-        UserDbDTO user = new UserDbDTO();
-        user.setLogin(userDTO.getLogin().toLowerCase());
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        if (userDTO.getEmail() != null) {
-            user.setEmail(userDTO.getEmail().toLowerCase());
-        }
-        user.setImageUrl(userDTO.getImageUrl());
-        if (userDTO.getLangKey() == null) {
-            user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
-        } else {
-            user.setLangKey(userDTO.getLangKey());
-        }
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
-        user.setPassword(encryptedPassword);
-        user.setResetKey(RandomUtil.generateResetKey());
-        user.setResetDate(Instant.now());
-        user.setActivated(true);
+        Set<AuthorityDbDTO> authorities = null;
         if (userDTO.getAuthorities() != null) {
-            Set<AuthorityDbDTO> authorities = userDTO.getAuthorities().stream()
-                .map(authorityRepository::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
-            user.setAuthorities(authorities);
+            authorities = userDTO.getAuthorities().stream()
+                    .map(authorityRepository::findById)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toSet());
         }
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+                .login(userDTO.getLogin().toLowerCase())
+                .firstName(userDTO.getFirstName())
+                .lastName(userDTO.getLastName())
+                .email(userDTO.getEmail())
+                .imageUrl(userDTO.getImageUrl())
+                .langKey(userDTO.getLangKey())
+                .password(encryptedPassword)
+                .resetKey(RandomUtil.generateResetKey())
+                .resetDate(Instant.now())
+                .activated(true)
+                .authorities(authorities)
+                .build();
         userRepository.save(user);
         userSearchRepository.save(user);
         log.debug("Created Information for User: {}", user);
@@ -175,32 +172,35 @@ public class UserService {
      */
     public Optional<UserDTO> updateUser(UserDTO userDTO) {
         return Optional.of(userRepository
-            .findById(userDTO.getId()))
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .map(user -> {
-                user.setLogin(userDTO.getLogin().toLowerCase());
-                user.setFirstName(userDTO.getFirstName());
-                user.setLastName(userDTO.getLastName());
-                if (userDTO.getEmail() != null) {
-                    user.setEmail(userDTO.getEmail().toLowerCase());
-                }
-                user.setImageUrl(userDTO.getImageUrl());
-                user.setActivated(userDTO.isActivated());
-                user.setLangKey(userDTO.getLangKey());
-                Set<AuthorityDbDTO> managedAuthorities = user.getAuthorities();
-                managedAuthorities.clear();
-                userDTO.getAuthorities().stream()
-                    .map(authorityRepository::findById)
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .forEach(managedAuthorities::add);
-                userRepository.save(user);
-                userSearchRepository.save(user);
-                log.debug("Changed Information for User: {}", user);
-                return user;
-            })
-            .map(UserDTO::new);
+                .findById(userDTO.getId()))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(dbUser -> {
+                    Set<AuthorityDbDTO> managedAuthorities = dbUser.getAuthorities();
+                    managedAuthorities.clear();
+                    userDTO.getAuthorities().stream()
+                            .map(authorityRepository::findById)
+                            .filter(Optional::isPresent)
+                            .map(Optional::get)
+                            .forEach(managedAuthorities::add);
+
+                    UserDbDTO user = new UserDbDTO.UserDbDTOBuilder(dbUser)
+                            .login(userDTO.getLogin().toLowerCase())
+                            .firstName(userDTO.getFirstName())
+                            .lastName(userDTO.getLastName())
+                            .email(userDTO.getEmail())
+                            .imageUrl(userDTO.getImageUrl())
+                            .activated(userDTO.isActivated())
+                            .langKey(userDTO.getLangKey())
+                            .authorities(managedAuthorities)
+                            .build();
+
+                    userRepository.save(user);
+                    userSearchRepository.save(user);
+                    log.debug("Changed Information for User: {}", dbUser);
+                    return dbUser;
+                })
+                .map(UserDTO::new);
     }
 
     public void deleteUser(String login) {
@@ -222,35 +222,37 @@ public class UserService {
      */
     public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
         SecurityUtils.getCurrentUserLogin()
-            .flatMap(userRepository::findOneByLogin)
-            .ifPresent(user -> {
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                if (email != null) {
-                    user.setEmail(email.toLowerCase());
-                }
-                user.setLangKey(langKey);
-                user.setImageUrl(imageUrl);
-                userRepository.save(user);
-                userSearchRepository.save(user);
-                log.debug("Changed Information for User: {}", user);
-            });
+                .flatMap(userRepository::findOneByLogin)
+                .ifPresent(dbUser -> {
+                    UserDbDTO user = new UserDbDTO.UserDbDTOBuilder(dbUser)
+                            .firstName(firstName)
+                            .lastName(lastName)
+                            .email(email)
+                            .langKey(langKey)
+                            .imageUrl(imageUrl)
+                            .build();
+                    userRepository.save(user);
+                    userSearchRepository.save(user);
+                    log.debug("Changed Information for User: {}", user);
+                });
     }
 
 
     public void changePassword(String currentClearTextPassword, String newPassword) {
         SecurityUtils.getCurrentUserLogin()
-            .flatMap(userRepository::findOneByLogin)
-            .ifPresent(user -> {
-                String currentEncryptedPassword = user.getPassword();
-                if (!passwordEncoder.matches(currentClearTextPassword, currentEncryptedPassword)) {
-                    throw new InvalidPasswordException();
-                }
-                String encryptedPassword = passwordEncoder.encode(newPassword);
-                user.setPassword(encryptedPassword);
-                userRepository.save(user);
-                log.debug("Changed password for User: {}", user);
-            });
+                .flatMap(userRepository::findOneByLogin)
+                .ifPresent(dbUser -> {
+                    String currentEncryptedPassword = dbUser.getPassword();
+                    if (!passwordEncoder.matches(currentClearTextPassword, currentEncryptedPassword)) {
+                        throw new InvalidPasswordException();
+                    }
+                    String encryptedPassword = passwordEncoder.encode(newPassword);
+                    UserDbDTO user = new UserDbDTO.UserDbDTOBuilder(dbUser)
+                            .password(encryptedPassword)
+                            .build();
+                    userRepository.save(user);
+                    log.debug("Changed password for User: {}", user);
+                });
     }
 
     public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
@@ -262,7 +264,9 @@ public class UserService {
     }
 
     public Optional<UserDbDTO> getCurrentUserWithAuthorities() {
-        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin);
+        return SecurityUtils.getCurrentUserLogin().flatMap(s -> {
+            return userRepository.findOneByLogin(s);
+        });
     }
 
     /**
@@ -273,16 +277,17 @@ public class UserService {
     @Scheduled(cron = "0 0 1 * * ?")
     public void removeNotActivatedUsers() {
         userRepository
-            .findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant.now().minus(3, ChronoUnit.DAYS))
-            .forEach(user -> {
-                log.debug("Deleting not activated user {}", user.getLogin());
-                userRepository.delete(user);
-                userSearchRepository.delete(user);
-            });
+                .findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant.now().minus(3, ChronoUnit.DAYS))
+                .forEach(user -> {
+                    log.debug("Deleting not activated user {}", user.getLogin());
+                    userRepository.delete(user);
+                    userSearchRepository.delete(user);
+                });
     }
 
     /**
      * Gets a list of all the authorities.
+     *
      * @return a list of all the authorities.
      */
     public List<String> getAuthorities() {

@@ -1,9 +1,9 @@
 package io.edukativ.myskoolin.front.service;
 
 import io.edukativ.myskoolin.front.MyskoolinApp;
+import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.providers.MailProvider;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
-import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,8 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -138,10 +139,11 @@ public class MailProviderIT {
 
     @Test
     public void testSendEmailFromTemplate() throws Exception {
-        UserDbDTO user = new UserDbDTO();
-        user.setLogin("john");
-        user.setEmail("john.doe@example.com");
-        user.setLangKey("en");
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .login("john")
+            .email("john.doe@example.com")
+            .langKey("en")
+            .build();
         mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title");
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
@@ -154,10 +156,11 @@ public class MailProviderIT {
 
     @Test
     public void testSendActivationEmail() throws Exception {
-        UserDbDTO user = new UserDbDTO();
-        user.setLangKey(Constants.DEFAULT_LANGUAGE);
-        user.setLogin("john");
-        user.setEmail("john.doe@example.com");
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .langKey(Constants.DEFAULT_LANGUAGE)
+            .login("john")
+            .email("john.doe@example.com")
+            .build();
         mailService.sendActivationEmail(user);
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
@@ -169,10 +172,11 @@ public class MailProviderIT {
 
     @Test
     public void testCreationEmail() throws Exception {
-        UserDbDTO user = new UserDbDTO();
-        user.setLangKey(Constants.DEFAULT_LANGUAGE);
-        user.setLogin("john");
-        user.setEmail("john.doe@example.com");
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .langKey(Constants.DEFAULT_LANGUAGE)
+            .login("john")
+            .email("john.doe@example.com")
+            .build();
         mailService.sendCreationEmail(user);
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
@@ -184,10 +188,11 @@ public class MailProviderIT {
 
     @Test
     public void testSendPasswordResetMail() throws Exception {
-        UserDbDTO user = new UserDbDTO();
-        user.setLangKey(Constants.DEFAULT_LANGUAGE);
-        user.setLogin("john");
-        user.setEmail("john.doe@example.com");
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .langKey(Constants.DEFAULT_LANGUAGE)
+            .login("john")
+            .email("john.doe@example.com")
+            .build();
         mailService.sendPasswordResetMail(user);
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
@@ -209,20 +214,21 @@ public class MailProviderIT {
 
     @Test
     public void testSendLocalizedEmailForAllSupportedLanguages() throws Exception {
-        UserDbDTO user = new UserDbDTO();
-        user.setLogin("john");
-        user.setEmail("john.doe@example.com");
         for (String langKey : languages) {
-            user.setLangKey(langKey);
+            UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+                .login("john")
+                .email("john.doe@example.com")
+                .langKey(langKey)
+                .build();
             mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title");
             verify(javaMailSender, atLeastOnce()).send(messageCaptor.capture());
             MimeMessage message = messageCaptor.getValue();
 
             String propertyFilePath = "i18n/messages_" + getJavaLocale(langKey) + ".properties";
             URL resource = this.getClass().getClassLoader().getResource(propertyFilePath);
-            File file = new File(new URI(resource.getFile()).getPath());
+            File file = new File(new URI(Objects.requireNonNull(resource).getFile()).getPath());
             Properties properties = new Properties();
-            properties.load(new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")));
+            properties.load(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
 
             String emailTitle = (String) properties.get("email.test.title");
             assertThat(message.getSubject()).isEqualTo(emailTitle);
@@ -237,7 +243,7 @@ public class MailProviderIT {
         String javaLangKey = langKey;
         Matcher matcher2 = PATTERN_LOCALE_2.matcher(langKey);
         if (matcher2.matches()) {
-            javaLangKey = matcher2.group(1) + "_"+ matcher2.group(2).toUpperCase();
+            javaLangKey = matcher2.group(1) + "_" + matcher2.group(2).toUpperCase();
         }
         Matcher matcher3 = PATTERN_LOCALE_3.matcher(langKey);
         if (matcher3.matches()) {

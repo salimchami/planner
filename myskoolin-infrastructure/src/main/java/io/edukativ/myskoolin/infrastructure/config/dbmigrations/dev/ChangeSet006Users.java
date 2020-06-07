@@ -23,57 +23,56 @@ import java.time.ZonedDateTime;
 @ChangeLog(order = "006")
 public class ChangeSet006Users {
 
-    //admin
     private static final String ADMIN_PASS = "admin";
-    private static final String USER_COLLECTION = "users";
+    private static final String DEFAULT_PHONE = "00000000";
 
     @ChangeSet(order = "01", author = "sch", id = "01-dev-users")
     public void addUsers(MongoTemplate mongoTemplate) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        final UserDbDTO lecpe = new UserDbDTO(null,
-            "lecpe",
-            DevDbMigrationsConstants.CLIENT_01_ID,
-            passwordEncoder.encode(ADMIN_PASS),
-            "global.constants.sexes.male",
-            "Jean",
-            "LECPE",
-            "00000000",
-            "00000000",
-            "Francaise",
-            "schme7700@gmail.com",
-            DbMigrationsConstants.LANG_KEY_EN,
-            null, null, null,
-            null,
-            Sets.newHashSet(DbMigrationsFindUtils.findAuthoritiesByIds(mongoTemplate, AuthoritiesConstants.SCHOOL_LIFE)),
-            new AddressDbVO("9, rue du capitaine ferber", "75020", "Paris", "France"),
-            ZonedDateTime.of(1980, 8, 15, 12, 0, 0, 0, ZoneId.systemDefault()));
-        lecpe.setId(DevDbMigrationsConstants.SCHOOL_LIFE_USER_ID_01.toString());
-        lecpe.setActivated(true);
+
+        final UserDbDTO lecpe = new UserDbDTO.UserDbDTOBuilder()
+                .id(DevDbMigrationsConstants.SCHOOL_LIFE_USER_ID_01.toString())
+                .login("lecpe")
+                .clientId(DevDbMigrationsConstants.CLIENT_01_ID)
+                .password(passwordEncoder.encode(ADMIN_PASS))
+                .gender("global.constants.sexes.male")
+                .firstName("Jean")
+                .lastName("LECPE")
+                .homePhone(DEFAULT_PHONE)
+                .cellPhone(DEFAULT_PHONE)
+                .nationality("Francaise")
+                .email("schme7700@gmail.com")
+                .langKey(DbMigrationsConstants.LANG_KEY_EN)
+                .authorities(Sets.newHashSet(DbMigrationsFindUtils.findAuthoritiesByIds(mongoTemplate, AuthoritiesConstants.SCHOOL_LIFE)))
+                .address(new AddressDbVO("9, rue du capitaine ferber", "75020", "Paris", "France"))
+                .birthDate(ZonedDateTime.of(1980, 8, 15, 12, 0, 0, 0, ZoneId.systemDefault()))
+                .activated(true)
+                .build();
         DbMigrationsInsertUtils.insertUser(mongoTemplate, lecpe);
     }
 
     @ChangeSet(order = "03", author = "sch", id = "03-dev-users")
     public void addAdmin(MongoTemplate mongoTemplate) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        final UserDbDTO lecpe = new UserDbDTO(null,
-            "leboss",
-            DevDbMigrationsConstants.CLIENT_01_ID,
-            passwordEncoder.encode(ADMIN_PASS),
-            "global.constants.sexes.male",
-            "Jean",
-            "LEBON",
-            "00000000",
-            "00000000",
-            "Francaise",
-            "schme7700@gmail.com",
-            DbMigrationsConstants.LANG_KEY_FR,
-            null, null, null,
-            null,
-            Sets.newHashSet(DbMigrationsFindUtils.findAuthoritiesByIds(mongoTemplate, AuthoritiesConstants.ADMINISTRATION)),
-            new AddressDbVO("9, rue du capitaine ferber", "75020", "Paris", "France"),
-            ZonedDateTime.of(1980, 8, 15, 12, 0, 0, 0, ZoneId.systemDefault()));
-        lecpe.setId(DevDbMigrationsConstants.ADMINISTRATION_USER_ID_01.toString());
-        lecpe.setActivated(true);
+
+        final UserDbDTO lecpe = new UserDbDTO.UserDbDTOBuilder()
+                .id(DevDbMigrationsConstants.ADMINISTRATION_USER_ID_01.toString())
+                .login("leboss")
+                .clientId(DevDbMigrationsConstants.CLIENT_01_ID)
+                .password(passwordEncoder.encode(ADMIN_PASS))
+                .gender("global.constants.sexes.male")
+                .firstName("Jean")
+                .lastName("LEBON")
+                .homePhone(DEFAULT_PHONE)
+                .cellPhone(DEFAULT_PHONE)
+                .nationality("Francaise")
+                .email("schme7700@gmail.com")
+                .langKey(DbMigrationsConstants.LANG_KEY_FR)
+                .authorities(Sets.newHashSet(DbMigrationsFindUtils.findAuthoritiesByIds(mongoTemplate, AuthoritiesConstants.ADMINISTRATION)))
+                .address(new AddressDbVO("9, rue du capitaine ferber", "75020", "Paris", "France"))
+                .birthDate(ZonedDateTime.of(1980, 8, 15, 12, 0, 0, 0, ZoneId.systemDefault()))
+                .activated(true)
+                .build();
         DbMigrationsInsertUtils.insertUser(mongoTemplate, lecpe);
     }
 }

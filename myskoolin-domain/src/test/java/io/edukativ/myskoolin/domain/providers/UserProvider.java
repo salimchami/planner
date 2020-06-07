@@ -49,7 +49,7 @@ public class UserProvider {
         return null;
     }
 
-    private static List<User> musiqueTeachers(Grade... grades) {
+    private static List<Teacher> musiqueTeachers(Grade... grades) {
         List<String> subjects = Arrays.asList(
                 GlobalProvider.Subjects.Sixieme.SUBJECT_SIXIEME_MUSIQUE_ID,
                 GlobalProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_MUSIQUE_ID,
@@ -62,7 +62,7 @@ public class UserProvider {
         );
     }
 
-    private static List<User> physiqueTeachers(Grade... grades) {
+    private static List<Teacher> physiqueTeachers(Grade... grades) {
         List<String> subjects = Arrays.asList(
                 GlobalProvider.Subjects.Sixieme.SUBJECT_SIXIEME_PHYSIQUE_ID,
                 GlobalProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_PHYSIQUE_ID,
@@ -77,7 +77,7 @@ public class UserProvider {
         );
     }
 
-    private static List<User> svtTeachers(Grade... grades) {
+    private static List<Teacher> svtTeachers(Grade... grades) {
         List<String> subjects = Arrays.asList(
                 GlobalProvider.Subjects.Sixieme.SUBJECT_SIXIEME_SVT_ID,
                 GlobalProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_SVT_ID,
@@ -92,7 +92,7 @@ public class UserProvider {
         );
     }
 
-    private static List<User> educCivTeachers(Grade... grades) {
+    private static List<Teacher> educCivTeachers(Grade... grades) {
         List<String> subjects = Arrays.asList(
                 GlobalProvider.Subjects.Sixieme.SUBJECT_SIXIEME_EDUCCIV_ID,
                 GlobalProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_EDUCCIV_ID,
@@ -105,7 +105,7 @@ public class UserProvider {
         );
     }
 
-    private static List<User> mathsTeachers(Grade... grades) {
+    private static List<Teacher> mathsTeachers(Grade... grades) {
         List<String> subjects = Arrays.asList(
                 GlobalProvider.Subjects.Sixieme.SUBJECT_SIXIEME_MATHS_ID,
                 GlobalProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_MATHS_ID,
@@ -121,7 +121,7 @@ public class UserProvider {
         );
     }
 
-    private static List<User> histGeoTeachers(Grade... grades) {
+    private static List<Teacher> histGeoTeachers(Grade... grades) {
         List<String> subjects = Arrays.asList(
                 GlobalProvider.Subjects.Sixieme.SUBJECT_SIXIEME_HISTGEO_GEO_ID,
                 GlobalProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_HISTGEO_GEO_ID,
@@ -134,7 +134,7 @@ public class UserProvider {
         );
     }
 
-    private static List<User> dessinTeachers(Grade... grades) {
+    private static List<Teacher> dessinTeachers(Grade... grades) {
         List<String> subjects = Arrays.asList(
                 GlobalProvider.Subjects.Sixieme.SUBJECT_SIXIEME_DESSIN_ID,
                 GlobalProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_DESSIN_ID,
@@ -147,7 +147,7 @@ public class UserProvider {
         );
     }
 
-    private static List<User> anglaisTeachers(Grade... grades) {
+    private static List<Teacher> anglaisTeachers(Grade... grades) {
         List<String> subjects = Arrays.asList(
                 GlobalProvider.Subjects.Sixieme.SUBJECT_SIXIEME_ANGLAIS_ID,
                 GlobalProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_ANGLAIS_ID,
@@ -162,7 +162,7 @@ public class UserProvider {
         );
     }
 
-    private static List<User> latinTeachers(Grade... grades) {
+    private static List<Teacher> latinTeachers(Grade... grades) {
         List<String> subjects = Arrays.asList(
                 GlobalProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_LATIN_ID,
                 GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_LATIN_ID,
@@ -174,7 +174,7 @@ public class UserProvider {
         );
     }
 
-    private static List<User> allemandTeachers(Grade... grades) {
+    private static List<Teacher> allemandTeachers(Grade... grades) {
         List<String> subjects = Arrays.asList(
                 GlobalProvider.Subjects.Sixieme.SUBJECT_SIXIEME_ALLEMAND_ID,
                 GlobalProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_ALLEMAND_ID,
@@ -188,7 +188,7 @@ public class UserProvider {
         );
     }
 
-    private static List<User> sportTeachers(Grade... grades) {
+    private static List<Teacher> sportTeachers(Grade... grades) {
         List<String> subjects = Arrays.asList(
                 GlobalProvider.Subjects.Sixieme.SUBJECT_SIXIEME_SPORT_ID,
                 GlobalProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_SPORT_ID,
@@ -203,7 +203,7 @@ public class UserProvider {
         );
     }
 
-    private static List<User> francaisTeachers(Grade... grades) {
+    private static List<Teacher> francaisTeachers(Grade... grades) {
         List<String> subjects = Arrays.asList(
                 GlobalProvider.Subjects.Sixieme.SUBJECT_SIXIEME_FRANCAIS_ID,
                 GlobalProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_FRANCAIS_ID,
@@ -219,7 +219,7 @@ public class UserProvider {
         );
     }
 
-    private static List<User> technoTeachers(Grade... grades) {
+    private static List<Teacher> technoTeachers(Grade... grades) {
         List<String> subjects = Arrays.asList(
                 GlobalProvider.Subjects.Sixieme.SUBJECT_SIXIEME_TECHNOLOGIE_ID,
                 GlobalProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_TECHNOLOGIE_ID,
@@ -237,7 +237,7 @@ public class UserProvider {
         return allTeachers.stream().filter(user -> user.getId().equals(id)).findFirst().orElseThrow(() -> new NotFoundException("teacher not found, id : " + id));
     }
 
-    public static List<User> teacherUsers(List<Grade> grades) {
+    public static List<Teacher> teacherUsers(List<Grade> grades) {
         Grade[] gradesArr = grades.toArray(new Grade[0]);
         return Stream.of(
                 musiqueTeachers(gradesArr), physiqueTeachers(gradesArr), svtTeachers(gradesArr), educCivTeachers(gradesArr),

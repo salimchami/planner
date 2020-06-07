@@ -5,6 +5,7 @@ import com.github.mongobee.changeset.ChangeSet;
 import io.edukativ.myskoolin.infrastructure.commercial.dto.ClientDbDTO;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolClassNotation;
+import io.edukativ.myskoolin.infrastructure.config.dbmigrations.MigrationTempData;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev.util.DevDbMigrationsConstants;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeSerieDbVO;
@@ -45,6 +46,7 @@ public class ChangeSet007Grades {
         );
         grade.setId(DevDbMigrationsConstants.GRADE_SIXIEME_ID);
         mongoTemplate.insert(grade);
+        MigrationTempData.grades.add(grade);
     }
 
     @ChangeSet(order = "02", author = "sch", id = "02-grades-cinquieme")
@@ -61,6 +63,7 @@ public class ChangeSet007Grades {
         );
         grade.setId(DevDbMigrationsConstants.GRADE_CINQUIEME_ID);
         mongoTemplate.insert(grade);
+        MigrationTempData.grades.add(grade);
     }
 
     @ChangeSet(order = "03", author = "sch", id = "03-grades-quatrieme")
@@ -77,6 +80,7 @@ public class ChangeSet007Grades {
         );
         grade.setId(DevDbMigrationsConstants.GRADE_QUATRIEME_ID);
         mongoTemplate.insert(grade);
+        MigrationTempData.grades.add(grade);
     }
 
     @ChangeSet(order = "04", author = "sch", id = "04-grades-troisieme")
@@ -93,6 +97,7 @@ public class ChangeSet007Grades {
         );
         grade.setId(DevDbMigrationsConstants.GRADE_TROISIEME_ID);
         mongoTemplate.insert(grade);
+        MigrationTempData.grades.add(grade);
     }
 
     @ChangeSet(order = "05", author = "sch", id = "05-grades-seconde")
@@ -109,6 +114,7 @@ public class ChangeSet007Grades {
         );
         grade.setId(DevDbMigrationsConstants.GRADE_SECONDE_ID);
         mongoTemplate.insert(grade);
+        MigrationTempData.grades.add(grade);
     }
 
     @ChangeSet(order = "06", author = "sch", id = "06-grades-premiere")
@@ -130,6 +136,7 @@ public class ChangeSet007Grades {
         );
         grade.setId(DevDbMigrationsConstants.GRADE_PREMIERE_ID);
         mongoTemplate.insert(grade);
+        MigrationTempData.grades.add(grade);
     }
 
     @ChangeSet(order = "07", author = "sch", id = "07-grades-terminale")
@@ -151,6 +158,7 @@ public class ChangeSet007Grades {
         );
         grade.setId(DevDbMigrationsConstants.GRADE_TERMINALE_ID);
         mongoTemplate.insert(grade);
+        MigrationTempData.grades.add(grade);
     }
 
 

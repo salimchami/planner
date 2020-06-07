@@ -1,15 +1,15 @@
 package io.edukativ.myskoolin.infrastructure.schooling.dto;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.edukativ.myskoolin.infrastructure.app.dto.AbstractUserDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.*;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.validation.constraints.Max;
-import java.io.Serializable;
-import java.util.ArrayList;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,9 +17,11 @@ import java.util.Objects;
  * A Student.
  */
 @Document(collection = "students")
-public class StudentDbDTO extends UserDbDTO implements Serializable {
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "student")
+public class StudentDbDTO extends AbstractUserDbDTO {
 
     private static final long serialVersionUID = 1L;
+    public static final String MONGO_COLLECTION_NAME = "students";
     public static final String MONGO_FIELD_INFIRMARY_STATISTICS = "infirmary_statistics";
     public static final String MONGO_FIELD_RESPONSIBLES = "responsibles";
     public static final String MONGO_FIELD_RESPONSIBLE_ACCOUNT = "responsible_account";
@@ -40,11 +42,12 @@ public class StudentDbDTO extends UserDbDTO implements Serializable {
     @Field(MONGO_FIELD_INFIRMARY_STATISTICS)
     private InfirmaryStatisticsDbVO infirmaryStatistics;
 
-    @Max(5)
+    @Size(max = 5)
     @Field(MONGO_FIELD_RESPONSIBLES)
     private List<ResponsibleDbVO> responsibles;
 
     @Indexed
+    @DBRef
     @Field(MONGO_FIELD_RESPONSIBLE_ACCOUNT)
     private UserDbDTO responsibleAccount;
 
@@ -117,182 +120,197 @@ public class StudentDbDTO extends UserDbDTO implements Serializable {
     public StudentDbDTO() {
     }
 
-    public StudentDbDTO(InfirmaryStatisticsDbVO infirmaryStatistics, List<ResponsibleDbVO> responsibles,
-                        UserDbDTO responsibleAccount, String comment, CanteenRegistrationDbVO canteenRegistration,
-                        MedicalInfosDbVO medicalInfos, SchoolingInfosDbVO schoolingInfos, ResidentialSchoolDbVO residentialSchool,
-                        SchoolClassTimeTableDbVO timetable, List<DailyBookTimeSlotDbVO> dailyBook, List<ContinuousAssessmentItemDbVO> continuousAssessment,
-                        String schoolClassId, List<SanctionDbVO> sanctions, List<DelayDbVO> delays, List<ReportDbVO> reports, OrientationDbVO orientation) {
-        this.infirmaryStatistics = infirmaryStatistics;
-        this.responsibles = responsibles;
-        this.responsibleAccount = responsibleAccount;
-        this.comment = comment;
-        this.canteenRegistration = canteenRegistration;
-        this.medicalInfos = medicalInfos;
-        this.schoolingInfos = schoolingInfos;
-        this.residentialSchool = residentialSchool;
-        this.timetable = timetable;
-        this.dailyBook = dailyBook;
-        this.continuousAssessment = continuousAssessment;
-        this.schoolClassId = schoolClassId;
-        this.sanctions = sanctions;
-        this.delays = delays;
-        this.reports = reports;
-        this.orientation = orientation;
+    private StudentDbDTO(StudentDbDTOBuilder builder) {
+        super(builder);
+        this.infirmaryStatistics = builder.infirmaryStatistics;
+        this.responsibles = builder.responsibles;
+        this.responsibleAccount = builder.responsibleAccount;
+        this.comment = builder.comment;
+        this.canteenRegistration = builder.canteenRegistration;
+        this.medicalInfos = builder.medicalInfos;
+        this.schoolingInfos = builder.schoolingInfos;
+        this.residentialSchool = builder.residentialSchool;
+        this.timetable = builder.timetable;
+        this.dailyBook = builder.dailyBook;
+        this.continuousAssessment = builder.continuousAssessment;
+        this.schoolClassId = builder.schoolClassId;
+        this.sanctions = builder.sanctions;
+        this.delays = builder.delays;
+        this.reports = builder.reports;
+        this.orientation = builder.orientation;
     }
 
-//    public static Student fromDbObject(BasicDBObject dbObject) {
-//        Student student = new Student();
-//        student.setInfirmaryStatistics(InfirmaryStatistics.fromDbObject((BasicDBObject) dbObject.get(MONGO_FIELD_INFIRMARY_STATISTICS)));
-//        student.setResponsibles(Responsible.fromDbObjects((BasicDBList) dbObject.get(MONGO_FIELD_RESPONSIBLES)));
-//        student.setResponsibleAccount(ResponsibleAccount.fromDbObject((BasicDBObject) dbObject.get(MONGO_FIELD_RESPONSIBLE_ACCOUNT)));
-//        student.setComment(dbObject.getString(MONGO_FIELD_COMMENT));
-//        student.setCanteenRegistration(CanteenRegistration.fromDbObject((BasicDBObject) dbObject.get(MONGO_FIELD_CANTEEN_REGISTRATION)));
-//        student.setMedicalInfos(MedicalInfos.fromDbObject((BasicDBObject) dbObject.get(MONGO_FIELD_MEDICAL_INFOS)));
-//        student.setSchoolingInfos(SchoolingInfos.fromDbObject((BasicDBObject) dbObject.get(MONGO_FIELD_SCHOOLING_INFOS)));
-//        student.setResidentialSchool(ResidentialSchool.fromDbObject((BasicDBObject) dbObject.get(MONGO_FIELD_RESIDENTIAL_SCHOOL)));
-//        student.setTimetable(SchoolClassTimeTable.fromDbObject((BasicDBObject) dbObject.get(MONGO_FIELD_TIMETABLE)));
-//        student.setDailyBook(DailyBookTimeSlot.fromDbObjects((BasicDBList) dbObject.get(MONGO_FIELD_DAILY_BOOK)));
-//        student.setContinuousAssessment(ContinuousAssessmentItem.fromDbObject((BasicDBObject) dbObject.get(MONGO_FIELD_CONTINUOUS_ASSESSMENT)));
-//        student.setSchoolClassId(dbObject.getString(MONGO_FIELD_SCHOOL_CLASS_ID));
-//        student.setSanctions(Sanction.fromDbObjects((BasicDBList) dbObject.get(MONGO_FIELD_SANCTIONS)));
-//        student.setDelays(Delay.fromDbObjects((BasicDBList) dbObject.get(MONGO_FIELD_DELAYS)));
-//        student.setReports(Report.fromDbObjects((BasicDBList) dbObject.get(MONGO_FIELD_REPORTS)));
-//        student.setOrientation(Orientation.fromDbObject((BasicDBObject) dbObject.get(MONGO_FIELD_ORIENTATION)));
-//        return student;
-//    }
+    public void changeSchoolClassId(String schoolClassId) {
+        this.schoolClassId = schoolClassId;
+    }
+
+    public static class StudentDbDTOBuilder extends AbstractUserDbDTOBuilder<StudentDbDTO.StudentDbDTOBuilder, StudentDbDTO> {
+
+        private InfirmaryStatisticsDbVO infirmaryStatistics;
+        private List<ResponsibleDbVO> responsibles;
+        private UserDbDTO responsibleAccount;
+        private String comment;
+        private CanteenRegistrationDbVO canteenRegistration;
+        private MedicalInfosDbVO medicalInfos;
+        private SchoolingInfosDbVO schoolingInfos;
+        private ResidentialSchoolDbVO residentialSchool;
+        private SchoolClassTimeTableDbVO timetable;
+        private List<DailyBookTimeSlotDbVO> dailyBook;
+        private List<ContinuousAssessmentItemDbVO> continuousAssessment;
+        private String schoolClassId;
+        private List<SanctionDbVO> sanctions;
+        private List<DelayDbVO> delays;
+        private List<ReportDbVO> reports;
+        private OrientationDbVO orientation;
+
+        public StudentDbDTOBuilder infirmaryStatistics(InfirmaryStatisticsDbVO infirmaryStatistics) {
+            this.infirmaryStatistics = infirmaryStatistics;
+            return this;
+        }
+
+        public StudentDbDTOBuilder responsibles(List<ResponsibleDbVO> responsibles) {
+            this.responsibles = responsibles;
+            return this;
+        }
+
+        public StudentDbDTOBuilder responsibleAccount(UserDbDTO responsibleAccount) {
+            this.responsibleAccount = responsibleAccount;
+            return this;
+        }
+
+        public StudentDbDTOBuilder comment(String comment) {
+            this.comment = comment;
+            return this;
+        }
+
+        public StudentDbDTOBuilder canteenRegistration(CanteenRegistrationDbVO canteenRegistration) {
+            this.canteenRegistration = canteenRegistration;
+            return this;
+        }
+
+        public StudentDbDTOBuilder medicalInfos(MedicalInfosDbVO medicalInfos) {
+            this.medicalInfos = medicalInfos;
+            return this;
+        }
+
+        public StudentDbDTOBuilder schoolingInfos(SchoolingInfosDbVO schoolingInfos) {
+            this.schoolingInfos = schoolingInfos;
+            return this;
+        }
+
+        public StudentDbDTOBuilder residentialSchool(ResidentialSchoolDbVO residentialSchool) {
+            this.residentialSchool = residentialSchool;
+            return this;
+        }
+
+        public StudentDbDTOBuilder timetable(SchoolClassTimeTableDbVO timetable) {
+            this.timetable = timetable;
+            return this;
+        }
+
+        public StudentDbDTOBuilder dailyBook(List<DailyBookTimeSlotDbVO> dailyBook) {
+            this.dailyBook = dailyBook;
+            return this;
+        }
+
+        public StudentDbDTOBuilder continuousAssessment(List<ContinuousAssessmentItemDbVO> continuousAssessment) {
+            this.continuousAssessment = continuousAssessment;
+            return this;
+        }
+
+        public StudentDbDTOBuilder schoolClassId(String schoolClassId) {
+            this.schoolClassId = schoolClassId;
+            return this;
+        }
+
+        public StudentDbDTOBuilder sanctions(List<SanctionDbVO> sanctions) {
+            this.sanctions = sanctions;
+            return this;
+        }
+
+        public StudentDbDTOBuilder delays(List<DelayDbVO> delays) {
+            this.delays = delays;
+            return this;
+        }
+
+        public StudentDbDTOBuilder reports(List<ReportDbVO> reports) {
+            this.reports = reports;
+            return this;
+        }
+
+        public StudentDbDTOBuilder orientation(OrientationDbVO orientation) {
+            this.orientation = orientation;
+            return this;
+        }
+
+        @Override
+        public StudentDbDTO build() {
+            return new StudentDbDTO(this);
+        }
+    }
 
     public InfirmaryStatisticsDbVO getInfirmaryStatistics() {
         return infirmaryStatistics;
     }
 
-    public void setInfirmaryStatistics(InfirmaryStatisticsDbVO infirmaryStatistics) {
-        this.infirmaryStatistics = infirmaryStatistics;
-    }
-
     public List<ResponsibleDbVO> getResponsibles() {
-        if (this.responsibles == null) {
-            this.responsibles = new ArrayList<>();
-        }
         return responsibles;
-    }
-
-    public void setResponsibles(List<ResponsibleDbVO> responsibles) {
-        this.responsibles = responsibles;
     }
 
     public UserDbDTO getResponsibleAccount() {
         return responsibleAccount;
     }
 
-    public void setResponsibleAccount(UserDbDTO responsibleAccount) {
-        this.responsibleAccount = responsibleAccount;
-    }
-
     public String getComment() {
         return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
     public CanteenRegistrationDbVO getCanteenRegistration() {
         return canteenRegistration;
     }
 
-    public void setCanteenRegistration(CanteenRegistrationDbVO canteenRegistration) {
-        this.canteenRegistration = canteenRegistration;
-    }
-
     public MedicalInfosDbVO getMedicalInfos() {
         return medicalInfos;
-    }
-
-    public void setMedicalInfos(MedicalInfosDbVO medicalInfos) {
-        this.medicalInfos = medicalInfos;
     }
 
     public SchoolingInfosDbVO getSchoolingInfos() {
         return schoolingInfos;
     }
 
-    public void setSchoolingInfos(SchoolingInfosDbVO schoolingInfos) {
-        this.schoolingInfos = schoolingInfos;
-    }
-
     public ResidentialSchoolDbVO getResidentialSchool() {
         return residentialSchool;
-    }
-
-    public void setResidentialSchool(ResidentialSchoolDbVO residentialSchool) {
-        this.residentialSchool = residentialSchool;
     }
 
     public SchoolClassTimeTableDbVO getTimetable() {
         return timetable;
     }
 
-    public void setTimetable(SchoolClassTimeTableDbVO timetable) {
-        this.timetable = timetable;
-    }
-
     public List<DailyBookTimeSlotDbVO> getDailyBook() {
         return dailyBook;
     }
 
-    public void setDailyBook(List<DailyBookTimeSlotDbVO> dailyBook) {
-        this.dailyBook = dailyBook;
-    }
-
     public List<ContinuousAssessmentItemDbVO> getContinuousAssessment() {
-        if (this.continuousAssessment == null) {
-            this.continuousAssessment = new ArrayList<>();
-        }
         return continuousAssessment;
-    }
-
-    public void setContinuousAssessment(List<ContinuousAssessmentItemDbVO> continuousAssessment) {
-        this.continuousAssessment = continuousAssessment;
     }
 
     public String getSchoolClassId() {
         return schoolClassId;
     }
 
-    public void setSchoolClassId(String schoolClassId) {
-        this.schoolClassId = schoolClassId;
-    }
-
     public List<SanctionDbVO> getSanctions() {
         return sanctions;
-    }
-
-    public void setSanctions(List<SanctionDbVO> sanctions) {
-        this.sanctions = sanctions;
     }
 
     public List<DelayDbVO> getDelays() {
         return delays;
     }
 
-    public void setDelays(List<DelayDbVO> delays) {
-        this.delays = delays;
-    }
-
     public List<ReportDbVO> getReports() {
         return reports;
     }
 
-    public void setReports(List<ReportDbVO> reports) {
-        this.reports = reports;
-    }
-
     public OrientationDbVO getOrientation() {
         return orientation;
-    }
-
-    public void setOrientation(OrientationDbVO orientation) {
-        this.orientation = orientation;
     }
 
     @Override

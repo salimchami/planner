@@ -7,7 +7,7 @@ import io.edukativ.myskoolin.infrastructure.config.Constants;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.infrastructure.app.repository.search.UserSearchRepository;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.repository.UserRepository;
+import io.edukativ.myskoolin.infrastructure.app.repository.UserRepository;
 import io.edukativ.myskoolin.front.web.rest.errors.BadRequestAlertException;
 import io.edukativ.myskoolin.front.web.rest.errors.EmailAlreadyUsedException;
 import io.edukativ.myskoolin.front.web.rest.errors.LoginAlreadyUsedException;

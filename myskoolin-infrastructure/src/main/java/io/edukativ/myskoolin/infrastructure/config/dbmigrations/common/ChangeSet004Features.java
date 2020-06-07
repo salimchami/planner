@@ -4,6 +4,7 @@ import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.infrastructure.app.dto.FeatureDbDTO;
+import io.edukativ.myskoolin.infrastructure.config.dbmigrations.MigrationTempData;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Arrays;
@@ -67,5 +68,6 @@ public class ChangeSet004Features {
             new FeatureDbDTO("feature-15", "state_timetables", Arrays.asList(SCHOOLME_ADMIN,
                 ADMINISTRATION, SCHOOL_LIFE)));
         mongoTemplate.insert(features, FeatureDbDTO.MONGO_COLLECTION_NAME);
+        MigrationTempData.features.addAll(features);
     }
 }

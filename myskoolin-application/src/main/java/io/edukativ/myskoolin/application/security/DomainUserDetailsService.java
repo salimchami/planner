@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.application.security;
 
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.repository.UserRepository;
+import io.edukativ.myskoolin.infrastructure.app.repository.UserRepository;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

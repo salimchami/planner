@@ -6,7 +6,7 @@ import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.infrastructure.app.repository.search.UserSearchRepository;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.repository.UserRepository;
+import io.edukativ.myskoolin.infrastructure.app.repository.UserRepository;
 import io.edukativ.myskoolin.infrastructure.temp.UserMapper;
 import io.edukativ.myskoolin.front.web.rest.vm.ManagedUserVM;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -20,10 +20,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Instant;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -68,7 +65,6 @@ public class UserResourceIT {
 
     /**
      * This repository is mocked in the io.edukativ.schooling.repository.search test package.
-     *
      */
     @Autowired
     private UserSearchRepository mockUserSearchRepository;
@@ -83,21 +79,21 @@ public class UserResourceIT {
 
     /**
      * Create a User.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which has a required relationship to the User entity.
      */
     public static UserDbDTO createEntity() {
-        UserDbDTO user = new UserDbDTO();
-        user.setLogin(DEFAULT_LOGIN);
-        user.setPassword(RandomStringUtils.random(60));
-        user.setActivated(true);
-        user.setEmail(DEFAULT_EMAIL);
-        user.setFirstName(DEFAULT_FIRSTNAME);
-        user.setLastName(DEFAULT_LASTNAME);
-        user.setImageUrl(DEFAULT_IMAGEURL);
-        user.setLangKey(DEFAULT_LANGKEY);
-        return user;
+        return new UserDbDTO.UserDbDTOBuilder()
+            .login(DEFAULT_LOGIN)
+            .password(RandomStringUtils.random(60))
+            .activated(true)
+            .email(DEFAULT_EMAIL)
+            .firstName(DEFAULT_FIRSTNAME)
+            .lastName(DEFAULT_LASTNAME)
+            .imageUrl(DEFAULT_IMAGEURL)
+            .langKey(DEFAULT_LANGKEY)
+            .build();
     }
 
     @BeforeEach
@@ -272,7 +268,9 @@ public class UserResourceIT {
         int databaseSizeBeforeUpdate = userRepository.findAll().size();
 
         // Update the user
-        UserDbDTO updatedUser = userRepository.findById(user.getId()).get();
+        final Optional<UserDbDTO> byId = userRepository.findById(user.getId());
+        assertThat(byId).isNotEmpty();
+        UserDbDTO updatedUser = byId.get();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
         managedUserVM.setId(updatedUser.getId());
@@ -314,7 +312,9 @@ public class UserResourceIT {
         int databaseSizeBeforeUpdate = userRepository.findAll().size();
 
         // Update the user
-        UserDbDTO updatedUser = userRepository.findById(user.getId()).get();
+        final Optional<UserDbDTO> byId = userRepository.findById(user.getId());
+        assertThat(byId).isNotEmpty();
+        UserDbDTO updatedUser = byId.get();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
         managedUserVM.setId(updatedUser.getId());
@@ -356,20 +356,23 @@ public class UserResourceIT {
         userRepository.save(user);
         mockUserSearchRepository.save(user);
 
-        UserDbDTO anotherUser = new UserDbDTO();
-        anotherUser.setLogin("jhipster");
-        anotherUser.setPassword(RandomStringUtils.random(60));
-        anotherUser.setActivated(true);
-        anotherUser.setEmail("jhipster@localhost");
-        anotherUser.setFirstName("java");
-        anotherUser.setLastName("hipster");
-        anotherUser.setImageUrl("");
-        anotherUser.setLangKey("en");
+        UserDbDTO anotherUser = new UserDbDTO.UserDbDTOBuilder()
+            .login("jhipster")
+            .password(RandomStringUtils.random(60))
+            .activated(true)
+            .email("jhipster@localhost")
+            .firstName("java")
+            .lastName("hipster")
+            .imageUrl("")
+            .langKey("en")
+            .build();
         userRepository.save(anotherUser);
         mockUserSearchRepository.save(anotherUser);
 
         // Update the user
-        UserDbDTO updatedUser = userRepository.findById(user.getId()).get();
+        final Optional<UserDbDTO> byId = userRepository.findById(user.getId());
+        assertThat(byId).isNotEmpty();
+        UserDbDTO updatedUser = byId.get();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
         managedUserVM.setId(updatedUser.getId());
@@ -399,20 +402,23 @@ public class UserResourceIT {
         userRepository.save(user);
         mockUserSearchRepository.save(user);
 
-        UserDbDTO anotherUser = new UserDbDTO();
-        anotherUser.setLogin("jhipster");
-        anotherUser.setPassword(RandomStringUtils.random(60));
-        anotherUser.setActivated(true);
-        anotherUser.setEmail("jhipster@localhost");
-        anotherUser.setFirstName("java");
-        anotherUser.setLastName("hipster");
-        anotherUser.setImageUrl("");
-        anotherUser.setLangKey("en");
+        UserDbDTO anotherUser = new UserDbDTO.UserDbDTOBuilder()
+            .login("jhipster")
+            .password(RandomStringUtils.random(60))
+            .activated(true)
+            .email("jhipster@localhost")
+            .firstName("java")
+            .lastName("hipster")
+            .imageUrl("")
+            .langKey("en")
+            .build();
         userRepository.save(anotherUser);
         mockUserSearchRepository.save(anotherUser);
 
         // Update the user
-        UserDbDTO updatedUser = userRepository.findById(user.getId()).get();
+        final Optional<UserDbDTO> byId = userRepository.findById(user.getId());
+        assertThat(byId).isNotEmpty();
+        UserDbDTO updatedUser = byId.get();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
         managedUserVM.setId(updatedUser.getId());
@@ -465,14 +471,20 @@ public class UserResourceIT {
     @Test
     public void testUserEquals() throws Exception {
         TestUtil.equalsVerifier(UserDbDTO.class);
-        UserDbDTO user1 = new UserDbDTO();
-        user1.setId("id1");
-        UserDbDTO user2 = new UserDbDTO();
-        user2.setId(user1.getId());
+        UserDbDTO user1 = new UserDbDTO.UserDbDTOBuilder()
+            .id("id1")
+            .build();
+        UserDbDTO user2 = new UserDbDTO.UserDbDTOBuilder()
+            .id(user1.getId())
+            .build();
         assertThat(user1).isEqualTo(user2);
-        user2.setId("id2");
+        user2 = new UserDbDTO.UserDbDTOBuilder()
+            .id("id2")
+            .build();
         assertThat(user1).isNotEqualTo(user2);
-        user1.setId(null);
+        user1 = new UserDbDTO.UserDbDTOBuilder()
+            .id(null)
+            .build();
         assertThat(user1).isNotEqualTo(user2);
     }
 
@@ -509,16 +521,18 @@ public class UserResourceIT {
 
     @Test
     public void testUserToUserDTO() {
-        user.setId(DEFAULT_ID);
-        user.setCreatedBy(DEFAULT_LOGIN);
-        user.setCreatedDate(Instant.now());
-        user.setLastModifiedBy(DEFAULT_LOGIN);
-        user.setLastModifiedDate(Instant.now());
         Set<AuthorityDbDTO> authorities = new HashSet<>();
         AuthorityDbDTO authority = new AuthorityDbDTO();
         authority.setName(AuthoritiesConstants.INFIRMARY);
         authorities.add(authority);
-        user.setAuthorities(authorities);
+        user = new UserDbDTO.UserDbDTOBuilder(user)
+            .id(DEFAULT_ID)
+            .createdBy(DEFAULT_LOGIN)
+            .createdDate(Instant.now())
+            .lastModifiedBy(DEFAULT_LOGIN)
+            .lastModifiedDate(Instant.now())
+            .authorities(authorities)
+            .build();
 
         UserDTO userDTO = userMapper.userToUserDTO(user);
 

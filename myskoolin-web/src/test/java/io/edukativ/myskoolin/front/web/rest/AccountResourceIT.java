@@ -1,5 +1,6 @@
 package io.edukativ.myskoolin.front.web.rest;
 
+import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import io.edukativ.myskoolin.infrastructure.temp.PasswordChangeDTO;
 import io.edukativ.myskoolin.infrastructure.temp.UserDTO;
 import io.edukativ.myskoolin.application.security.UserService;
@@ -8,7 +9,7 @@ import io.edukativ.myskoolin.infrastructure.app.repository.AuthorityRepository;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.repository.UserRepository;
+import io.edukativ.myskoolin.infrastructure.app.repository.UserRepository;
 import io.edukativ.myskoolin.front.web.rest.vm.KeyAndPasswordVM;
 import io.edukativ.myskoolin.front.web.rest.vm.ManagedUserVM;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -277,8 +278,10 @@ public class AccountResourceIT {
 
         Optional<UserDbDTO> testUser = userRepository.findOneByEmailIgnoreCase("alice2@example.com");
         assertThat(testUser.isPresent()).isTrue();
-        testUser.get().setActivated(true);
-        userRepository.save(testUser.get());
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder(testUser.get())
+            .activated(true)
+            .build();
+        userRepository.save(user);
 
         // Second (already activated) user
         restAccountMockMvc.perform(
@@ -358,8 +361,10 @@ public class AccountResourceIT {
         assertThat(testUser4.isPresent()).isTrue();
         assertThat(testUser4.get().getEmail()).isEqualTo("test-register-duplicate-email@example.com");
 
-        testUser4.get().setActivated(true);
-        userService.updateUser((new UserDTO(testUser4.get())));
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder(testUser4.get())
+            .activated(true)
+            .build();
+        userService.updateUser((new UserDTO(user)));
 
         // Register 4th (already activated) user
         restAccountMockMvc.perform(
@@ -390,19 +395,22 @@ public class AccountResourceIT {
 
         Optional<UserDbDTO> userDup = userRepository.findOneByLogin("badguy");
         assertThat(userDup.isPresent()).isTrue();
+        final Optional<AuthorityDbDTO> byId = authorityRepository.findById(AuthoritiesConstants.TEACHERS);
+        assertThat(byId).isNotEmpty();
         assertThat(userDup.get().getAuthorities()).hasSize(1)
-            .containsExactly(authorityRepository.findById(AuthoritiesConstants.TEACHERS).get());
+            .containsExactly(byId.get());
     }
 
     @Test
     public void testActivateAccount() throws Exception {
         final String activationKey = "some activation key";
-        UserDbDTO user = new UserDbDTO();
-        user.setLogin("activate-account");
-        user.setEmail("activate-account@example.com");
-        user.setPassword(RandomStringUtils.random(60));
-        user.setActivated(false);
-        user.setActivationKey(activationKey);
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .login("activate-account")
+            .email("activate-account@example.com")
+            .password(RandomStringUtils.random(60))
+            .activated(false)
+            .activationKey(activationKey)
+            .build();
 
         userRepository.save(user);
 
@@ -410,6 +418,7 @@ public class AccountResourceIT {
             .andExpect(status().isOk());
 
         user = userRepository.findOneByLogin(user.getLogin()).orElse(null);
+        assertThat(user).isNotNull();
         assertThat(user.isActivated()).isTrue();
     }
 
@@ -422,11 +431,12 @@ public class AccountResourceIT {
     @Test
     @WithMockUser("save-account")
     public void testSaveAccount() throws Exception {
-        UserDbDTO user = new UserDbDTO();
-        user.setLogin("save-account");
-        user.setEmail("save-account@example.com");
-        user.setPassword(RandomStringUtils.random(60));
-        user.setActivated(true);
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .login("save-account")
+            .email("save-account@example.com")
+            .password(RandomStringUtils.random(60))
+            .activated(true)
+            .build();
         userRepository.save(user);
 
         UserDTO userDTO = new UserDTO();
@@ -446,6 +456,7 @@ public class AccountResourceIT {
             .andExpect(status().isOk());
 
         UserDbDTO updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);
+        assertThat(updatedUser).isNotNull();
         assertThat(updatedUser.getFirstName()).isEqualTo(userDTO.getFirstName());
         assertThat(updatedUser.getLastName()).isEqualTo(userDTO.getLastName());
         assertThat(updatedUser.getEmail()).isEqualTo(userDTO.getEmail());
@@ -459,11 +470,12 @@ public class AccountResourceIT {
     @Test
     @WithMockUser("save-invalid-email")
     public void testSaveInvalidEmail() throws Exception {
-        UserDbDTO user = new UserDbDTO();
-        user.setLogin("save-invalid-email");
-        user.setEmail("save-invalid-email@example.com");
-        user.setPassword(RandomStringUtils.random(60));
-        user.setActivated(true);
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .login("save-invalid-email")
+            .email("save-invalid-email@example.com")
+            .password(RandomStringUtils.random(60))
+            .activated(true)
+            .build();
 
         userRepository.save(user);
 
@@ -489,18 +501,20 @@ public class AccountResourceIT {
     @Test
     @WithMockUser("save-existing-email")
     public void testSaveExistingEmail() throws Exception {
-        UserDbDTO user = new UserDbDTO();
-        user.setLogin("save-existing-email");
-        user.setEmail("save-existing-email@example.com");
-        user.setPassword(RandomStringUtils.random(60));
-        user.setActivated(true);
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .login("save-existing-email")
+            .email("save-existing-email@example.com")
+            .password(RandomStringUtils.random(60))
+            .activated(true)
+            .build();
         userRepository.save(user);
 
-        UserDbDTO anotherUser = new UserDbDTO();
-        anotherUser.setLogin("save-existing-email2");
-        anotherUser.setEmail("save-existing-email2@example.com");
-        anotherUser.setPassword(RandomStringUtils.random(60));
-        anotherUser.setActivated(true);
+        UserDbDTO anotherUser = new UserDbDTO.UserDbDTOBuilder()
+            .login("save-existing-email2")
+            .email("save-existing-email2@example.com")
+            .password(RandomStringUtils.random(60))
+            .activated(true)
+            .build();
 
         userRepository.save(anotherUser);
 
@@ -527,11 +541,12 @@ public class AccountResourceIT {
     @Test
     @WithMockUser("save-existing-email-and-login")
     public void testSaveExistingEmailAndLogin() throws Exception {
-        UserDbDTO user = new UserDbDTO();
-        user.setLogin("save-existing-email-and-login");
-        user.setEmail("save-existing-email-and-login@example.com");
-        user.setPassword(RandomStringUtils.random(60));
-        user.setActivated(true);
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .login("save-existing-email-and-login")
+            .email("save-existing-email-and-login@example.com")
+            .password(RandomStringUtils.random(60))
+            .activated(true)
+            .build();
         userRepository.save(user);
 
         UserDTO userDTO = new UserDTO();
@@ -557,17 +572,18 @@ public class AccountResourceIT {
     @Test
     @WithMockUser("change-password-wrong-existing-password")
     public void testChangePasswordWrongExistingPassword() throws Exception {
-        UserDbDTO user = new UserDbDTO();
         String currentPassword = RandomStringUtils.random(60);
-        user.setPassword(passwordEncoder.encode(currentPassword));
-        user.setLogin("change-password-wrong-existing-password");
-        user.setEmail("change-password-wrong-existing-password@example.com");
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .password(passwordEncoder.encode(currentPassword))
+            .login("change-password-wrong-existing-password")
+            .email("change-password-wrong-existing-password@example.com")
+            .build();
         userRepository.save(user);
 
         restAccountMockMvc.perform(post("/api/account/change-password")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO("1"+currentPassword, "new password")))
-)
+            .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO("1" + currentPassword, "new password")))
+        )
             .andExpect(status().isBadRequest());
 
         UserDbDTO updatedUser = userRepository.findOneByLogin("change-password-wrong-existing-password").orElse(null);
@@ -578,17 +594,18 @@ public class AccountResourceIT {
     @Test
     @WithMockUser("change-password")
     public void testChangePassword() throws Exception {
-        UserDbDTO user = new UserDbDTO();
         String currentPassword = RandomStringUtils.random(60);
-        user.setPassword(passwordEncoder.encode(currentPassword));
-        user.setLogin("change-password");
-        user.setEmail("change-password@example.com");
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .password(passwordEncoder.encode(currentPassword))
+            .login("change-password")
+            .email("change-password@example.com")
+            .build();
         userRepository.save(user);
 
         restAccountMockMvc.perform(post("/api/account/change-password")
             .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO(currentPassword, "new password")))
-)
+        )
             .andExpect(status().isOk());
 
         UserDbDTO updatedUser = userRepository.findOneByLogin("change-password").orElse(null);
@@ -598,11 +615,12 @@ public class AccountResourceIT {
     @Test
     @WithMockUser("change-password-too-small")
     public void testChangePasswordTooSmall() throws Exception {
-        UserDbDTO user = new UserDbDTO();
         String currentPassword = RandomStringUtils.random(60);
-        user.setPassword(passwordEncoder.encode(currentPassword));
-        user.setLogin("change-password-too-small");
-        user.setEmail("change-password-too-small@example.com");
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .password(passwordEncoder.encode(currentPassword))
+            .login("change-password-too-small")
+            .email("change-password-too-small@example.com")
+            .build();
         userRepository.save(user);
 
         String newPassword = RandomStringUtils.random(ManagedUserVM.PASSWORD_MIN_LENGTH - 1);
@@ -610,7 +628,7 @@ public class AccountResourceIT {
         restAccountMockMvc.perform(post("/api/account/change-password")
             .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO(currentPassword, newPassword)))
-)
+        )
             .andExpect(status().isBadRequest());
 
         UserDbDTO updatedUser = userRepository.findOneByLogin("change-password-too-small").orElse(null);
@@ -620,11 +638,12 @@ public class AccountResourceIT {
     @Test
     @WithMockUser("change-password-too-long")
     public void testChangePasswordTooLong() throws Exception {
-        UserDbDTO user = new UserDbDTO();
         String currentPassword = RandomStringUtils.random(60);
-        user.setPassword(passwordEncoder.encode(currentPassword));
-        user.setLogin("change-password-too-long");
-        user.setEmail("change-password-too-long@example.com");
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .password(passwordEncoder.encode(currentPassword))
+            .login("change-password-too-long")
+            .email("change-password-too-long@example.com")
+            .build();
         userRepository.save(user);
 
         String newPassword = RandomStringUtils.random(ManagedUserVM.PASSWORD_MAX_LENGTH + 1);
@@ -632,7 +651,7 @@ public class AccountResourceIT {
         restAccountMockMvc.perform(post("/api/account/change-password")
             .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO(currentPassword, newPassword)))
-)
+        )
             .andExpect(status().isBadRequest());
 
         UserDbDTO updatedUser = userRepository.findOneByLogin("change-password-too-long").orElse(null);
@@ -642,17 +661,18 @@ public class AccountResourceIT {
     @Test
     @WithMockUser("change-password-empty")
     public void testChangePasswordEmpty() throws Exception {
-        UserDbDTO user = new UserDbDTO();
         String currentPassword = RandomStringUtils.random(60);
-        user.setPassword(passwordEncoder.encode(currentPassword));
-        user.setLogin("change-password-empty");
-        user.setEmail("change-password-empty@example.com");
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .password(passwordEncoder.encode(currentPassword))
+            .login("change-password-empty")
+            .email("change-password-empty@example.com")
+            .build();
         userRepository.save(user);
 
         restAccountMockMvc.perform(post("/api/account/change-password")
             .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO(currentPassword, "")))
-)
+        )
             .andExpect(status().isBadRequest());
 
         UserDbDTO updatedUser = userRepository.findOneByLogin("change-password-empty").orElse(null);
@@ -661,31 +681,33 @@ public class AccountResourceIT {
 
     @Test
     public void testRequestPasswordReset() throws Exception {
-        UserDbDTO user = new UserDbDTO();
-        user.setPassword(RandomStringUtils.random(60));
-        user.setActivated(true);
-        user.setLogin("password-reset");
-        user.setEmail("password-reset@example.com");
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .password(RandomStringUtils.random(60))
+            .activated(true)
+            .login("password-reset")
+            .email("password-reset@example.com")
+            .build();
         userRepository.save(user);
 
         restAccountMockMvc.perform(post("/api/account/reset-password/init")
             .content("password-reset@example.com")
-)
+        )
             .andExpect(status().isOk());
     }
 
     @Test
     public void testRequestPasswordResetUpperCaseEmail() throws Exception {
-        UserDbDTO user = new UserDbDTO();
-        user.setPassword(RandomStringUtils.random(60));
-        user.setActivated(true);
-        user.setLogin("password-reset-upper-case");
-        user.setEmail("password-reset-upper-case@example.com");
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .password(RandomStringUtils.random(60))
+            .activated(true)
+            .login("password-reset-upper-case")
+            .email("password-reset-upper-case@example.com")
+            .build();
         userRepository.save(user);
 
         restAccountMockMvc.perform(post("/api/account/reset-password/init")
             .content("password-reset-upper-case@EXAMPLE.COM")
-)
+        )
             .andExpect(status().isOk());
     }
 
@@ -699,12 +721,13 @@ public class AccountResourceIT {
 
     @Test
     public void testFinishPasswordReset() throws Exception {
-        UserDbDTO user = new UserDbDTO();
-        user.setPassword(RandomStringUtils.random(60));
-        user.setLogin("finish-password-reset");
-        user.setEmail("finish-password-reset@example.com");
-        user.setResetDate(Instant.now().plusSeconds(60));
-        user.setResetKey("reset key");
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .password(RandomStringUtils.random(60))
+            .login("finish-password-reset")
+            .email("finish-password-reset@example.com")
+            .resetDate(Instant.now().plusSeconds(60))
+            .resetKey("reset key")
+            .build();
         userRepository.save(user);
 
         KeyAndPasswordVM keyAndPassword = new KeyAndPasswordVM();
@@ -723,12 +746,13 @@ public class AccountResourceIT {
 
     @Test
     public void testFinishPasswordResetTooSmall() throws Exception {
-        UserDbDTO user = new UserDbDTO();
-        user.setPassword(RandomStringUtils.random(60));
-        user.setLogin("finish-password-reset-too-small");
-        user.setEmail("finish-password-reset-too-small@example.com");
-        user.setResetDate(Instant.now().plusSeconds(60));
-        user.setResetKey("reset key too small");
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .password(RandomStringUtils.random(60))
+            .login("finish-password-reset-too-small")
+            .email("finish-password-reset-too-small@example.com")
+            .resetDate(Instant.now().plusSeconds(60))
+            .resetKey("reset key too small")
+            .build();
         userRepository.save(user);
 
         KeyAndPasswordVM keyAndPassword = new KeyAndPasswordVM();

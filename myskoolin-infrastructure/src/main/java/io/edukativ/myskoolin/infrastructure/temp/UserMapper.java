@@ -55,18 +55,17 @@ public class UserMapper {
         if (userDTO == null) {
             return null;
         } else {
-            UserDbDTO user = new UserDbDTO();
-            user.setId(userDTO.getId());
-            user.setLogin(userDTO.getLogin());
-            user.setFirstName(userDTO.getFirstName());
-            user.setLastName(userDTO.getLastName());
-            user.setEmail(userDTO.getEmail());
-            user.setImageUrl(userDTO.getImageUrl());
-            user.setActivated(userDTO.isActivated());
-            user.setLangKey(userDTO.getLangKey());
-            Set<AuthorityDbDTO> authorities = this.authoritiesFromStrings(userDTO.getAuthorities());
-            user.setAuthorities(authorities);
-            return user;
+            return new UserDbDTO.UserDbDTOBuilder()
+                    .id(userDTO.getId())
+                    .login(userDTO.getLogin())
+                    .firstName(userDTO.getFirstName())
+                    .lastName(userDTO.getLastName())
+                    .email(userDTO.getEmail())
+                    .imageUrl(userDTO.getImageUrl())
+                    .activated(userDTO.isActivated())
+                    .langKey(userDTO.getLangKey())
+                    .authorities(this.authoritiesFromStrings(userDTO.getAuthorities()))
+                    .build();
         }
     }
 
@@ -89,9 +88,7 @@ public class UserMapper {
         if (id == null) {
             return null;
         }
-        UserDbDTO user = new UserDbDTO();
-        user.setId(id);
-        return user;
+        return new UserDbDTO.UserDbDTOBuilder().id(id).build();
     }
 
     public User dbDtoToDomain(UserDbDTO userDbDTO) {

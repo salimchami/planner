@@ -4,12 +4,12 @@ import io.edukativ.myskoolin.domain.commons.exceptions.NotFoundException;
 import io.edukativ.myskoolin.domain.entity.Grade;
 import io.edukativ.myskoolin.domain.entity.SchoolClass;
 import io.edukativ.myskoolin.domain.entity.Subject;
-import io.edukativ.myskoolin.domain.entity.User;
 import io.edukativ.myskoolin.domain.providers.GlobalProvider;
 import io.edukativ.myskoolin.domain.providers.GradeProvider;
 import io.edukativ.myskoolin.domain.providers.subjects.*;
 import io.edukativ.myskoolin.domain.vo.EnumSchoolClassNotation;
 import io.edukativ.myskoolin.domain.vo.GradeSerie;
+import io.edukativ.myskoolin.domain.vo.Teacher;
 import io.edukativ.myskoolin.domain.vo.TeachersBySubject;
 
 import java.time.ZoneId;
@@ -39,17 +39,17 @@ public final class SchoolClassProvider {
                 name, grade, gradeSerie, teachersBySubjects);
     }
 
-    public static User teacherById(List<User> teachers, String id) {
+    public static Teacher teacherById(List<Teacher> teachers, String id) {
         return teachers.stream().filter(user -> user.getId().equals(id)).findFirst()
                 .orElseThrow(() -> new NotFoundException("teacher not found"));
     }
 
-    public static String randomTeacherIdByIds(List<User> teachers, List<String> ids) {
+    public static String randomTeacherIdByIds(List<Teacher> teachers, List<String> ids) {
         int index = randomGenerator.nextInt(ids.size());
         return teacherById(teachers, ids.get(index)).getId();
     }
 
-    public static List<SchoolClass> generateTroisieme(List<User> allTeachers, Grade grade, Integer nb) {
+    public static List<SchoolClass> generateTroisieme(List<Teacher> allTeachers, Grade grade, Integer nb) {
         List<SchoolClass> schoolClasses = new ArrayList<>();
         for (int i = 1; i <= nb; i++) {
             schoolClasses.add(SchoolClassTroisiemeProvider.generate("Troisieme" + i, grade, allTeachers, "Troisième " + i));
@@ -57,7 +57,7 @@ public final class SchoolClassProvider {
         return schoolClasses;
     }
 
-    public static List<SchoolClass> generateQuatrieme(List<User> allTeachers, Grade grade, Integer nb) {
+    public static List<SchoolClass> generateQuatrieme(List<Teacher> allTeachers, Grade grade, Integer nb) {
         List<SchoolClass> schoolClasses = new ArrayList<>();
         for (int i = 1; i <= nb; i++) {
             schoolClasses.add(SchoolClassQuatriemeProvider.generate("Quatrieme" + i, grade, allTeachers, "Quatrième " + i));
@@ -65,7 +65,7 @@ public final class SchoolClassProvider {
         return schoolClasses;
     }
 
-    public static List<SchoolClass> generateCinquieme(List<User> allTeachers, Grade grade, Integer nb) {
+    public static List<SchoolClass> generateCinquieme(List<Teacher> allTeachers, Grade grade, Integer nb) {
         List<SchoolClass> schoolClasses = new ArrayList<>();
         for (int i = 1; i <= nb; i++) {
             schoolClasses.add(SchoolClassCinquiemeProvider.generate("Cinquieme" + i, grade, allTeachers, "Cinquième " + i));
@@ -73,7 +73,7 @@ public final class SchoolClassProvider {
         return schoolClasses;
     }
 
-    public static List<SchoolClass> generateSixieme(List<User> allTeachers, Grade grade, Integer nb) {
+    public static List<SchoolClass> generateSixieme(List<Teacher> allTeachers, Grade grade, Integer nb) {
         List<SchoolClass> schoolClasses = new ArrayList<>();
         for (int i = 1; i <= nb; i++) {
             schoolClasses.add(SchoolClassSixiemeProvider.generate("Sixieme" + i, grade, allTeachers, "Sixième " + i));
@@ -81,7 +81,7 @@ public final class SchoolClassProvider {
         return schoolClasses;
     }
 
-    public static List<SchoolClass> schoolClasses(List<User> teachers, int sixiemes, int cinquiemes, int quatriemes, int troisiemes) {
+    public static List<SchoolClass> schoolClasses(List<Teacher> teachers, int sixiemes, int cinquiemes, int quatriemes, int troisiemes) {
         return Stream.of(
                 SchoolClassProvider.generateSixieme(teachers, GradeProvider.sixiemeGrade, sixiemes),
                 SchoolClassProvider.generateCinquieme(teachers, GradeProvider.cinquiemeGrade, cinquiemes),

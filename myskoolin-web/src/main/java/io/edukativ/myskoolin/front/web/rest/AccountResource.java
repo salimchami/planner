@@ -11,7 +11,7 @@ import io.edukativ.myskoolin.front.web.rest.vm.KeyAndPasswordVM;
 import io.edukativ.myskoolin.front.web.rest.vm.ManagedUserVM;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.providers.MailProvider;
-import io.edukativ.myskoolin.infrastructure.schooling.repository.UserRepository;
+import io.edukativ.myskoolin.infrastructure.app.repository.UserRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

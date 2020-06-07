@@ -6,6 +6,7 @@ import io.edukativ.myskoolin.domain.providers.UserProvider;
 import io.edukativ.myskoolin.domain.providers.schoolclasses.SchoolClassProvider;
 import io.edukativ.myskoolin.domain.providers.subjects.SubjectProvider;
 import io.edukativ.myskoolin.domain.entity.*;
+import io.edukativ.myskoolin.domain.vo.Teacher;
 import io.edukativ.myskoolin.domain.vo.TimeTableOptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -17,7 +18,7 @@ class TimeTablesGenerationTest {
 
     private List<SchoolRoom> allSchoolRooms;
     private List<Subject> subjects;
-    private List<User> teachers;
+    private List<Teacher> teachers;
     private Map<Grade, TimeTableOptions> timeTableOptionsByGrade;
     private TimeTablesGeneration sut;
     private TimeTableOptions clientTimeTableOptions;

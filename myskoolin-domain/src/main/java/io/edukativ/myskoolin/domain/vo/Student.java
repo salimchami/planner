@@ -1,5 +1,7 @@
 package io.edukativ.myskoolin.domain.vo;
 
+import io.edukativ.myskoolin.domain.entity.User;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,7 +9,7 @@ import java.util.Objects;
 /**
  * A Student.
  */
-public class Student {
+public class Student extends User {
 
     private String comment;
     private CanteenRegistration canteenRegistration;

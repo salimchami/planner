@@ -32,19 +32,20 @@ public class UserMapperTest {
 
     @BeforeEach
     public void init() {
-        AddressMapper addressMapper= mock(AddressMapper.class);
-        AuthorityMapper authorityMapper= mock(AuthorityMapper.class);
+        AddressMapper addressMapper = mock(AddressMapper.class);
+        AuthorityMapper authorityMapper = mock(AuthorityMapper.class);
         ObjectIdMapper objectIdMapper = mock(ObjectIdMapper.class);
         userMapper = new UserMapper(addressMapper, authorityMapper, objectIdMapper);
-        user = new UserDbDTO();
-        user.setLogin(DEFAULT_LOGIN);
-        user.setPassword(RandomStringUtils.random(60));
-        user.setActivated(true);
-        user.setEmail("johndoe@localhost");
-        user.setFirstName("john");
-        user.setLastName("doe");
-        user.setImageUrl("image_url");
-        user.setLangKey("en");
+        user = new UserDbDTO.UserDbDTOBuilder()
+            .login(DEFAULT_LOGIN)
+            .password(RandomStringUtils.random(60))
+            .activated(true)
+            .email("johndoe@localhost")
+            .firstName("john")
+            .lastName("doe")
+            .imageUrl("image_url")
+            .langKey("en")
+            .build();
 
         userDto = new UserDTO(user);
     }

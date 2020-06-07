@@ -2,7 +2,7 @@ package io.edukativ.myskoolin.front.web.rest;
 
 import io.edukativ.myskoolin.front.MyskoolinApp;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.repository.UserRepository;
+import io.edukativ.myskoolin.infrastructure.app.repository.UserRepository;
 import io.edukativ.myskoolin.front.web.rest.vm.LoginVM;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +34,12 @@ public class UserJWTControllerIT {
 
     @Test
     public void testAuthorize() throws Exception {
-        UserDbDTO user = new UserDbDTO();
-        user.setLogin("user-jwt-controller");
-        user.setEmail("user-jwt-controller@example.com");
-        user.setActivated(true);
-        user.setPassword(passwordEncoder.encode("test"));
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .login("user-jwt-controller")
+            .email("user-jwt-controller@example.com")
+            .activated(true)
+            .password(passwordEncoder.encode("test"))
+            .build();
 
         userRepository.save(user);
 
@@ -57,11 +58,12 @@ public class UserJWTControllerIT {
 
     @Test
     public void testAuthorizeWithRememberMe() throws Exception {
-        UserDbDTO user = new UserDbDTO();
-        user.setLogin("user-jwt-controller-remember-me");
-        user.setEmail("user-jwt-controller-remember-me@example.com");
-        user.setActivated(true);
-        user.setPassword(passwordEncoder.encode("test"));
+        UserDbDTO user = new UserDbDTO.UserDbDTOBuilder()
+            .login("user-jwt-controller-remember-me")
+            .email("user-jwt-controller-remember-me@example.com")
+            .activated(true)
+            .password(passwordEncoder.encode("test"))
+            .build();
 
         userRepository.save(user);
 

@@ -3,7 +3,7 @@ package io.edukativ.myskoolin.front.security;
 import io.edukativ.myskoolin.application.security.DomainUserDetailsService;
 import io.edukativ.myskoolin.application.security.UserNotActivatedException;
 import io.edukativ.myskoolin.front.MyskoolinApp;
-import io.edukativ.myskoolin.infrastructure.schooling.repository.UserRepository;
+import io.edukativ.myskoolin.infrastructure.app.repository.UserRepository;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -42,34 +42,37 @@ public class DomainUserDetailsServiceIT {
     public void init() {
         userRepository.deleteAll();
 
-        UserDbDTO userOne = new UserDbDTO();
-        userOne.setLogin(USER_ONE_LOGIN);
-        userOne.setPassword(RandomStringUtils.random(60));
-        userOne.setActivated(true);
-        userOne.setEmail(USER_ONE_EMAIL);
-        userOne.setFirstName("userOne");
-        userOne.setLastName("doe");
-        userOne.setLangKey("en");
+        UserDbDTO userOne = new UserDbDTO.UserDbDTOBuilder()
+            .login(USER_ONE_LOGIN)
+            .password(RandomStringUtils.random(60))
+            .activated(true)
+            .email(USER_ONE_EMAIL)
+            .firstName("userOne")
+            .lastName("doe")
+            .langKey("en")
+            .build();
         userRepository.save(userOne);
 
-        UserDbDTO userTwo = new UserDbDTO();
-        userTwo.setLogin(USER_TWO_LOGIN);
-        userTwo.setPassword(RandomStringUtils.random(60));
-        userTwo.setActivated(true);
-        userTwo.setEmail(USER_TWO_EMAIL);
-        userTwo.setFirstName("userTwo");
-        userTwo.setLastName("doe");
-        userTwo.setLangKey("en");
+        UserDbDTO userTwo = new UserDbDTO.UserDbDTOBuilder()
+            .login(USER_TWO_LOGIN)
+            .password(RandomStringUtils.random(60))
+            .activated(true)
+            .email(USER_TWO_EMAIL)
+            .firstName("userTwo")
+            .lastName("doe")
+            .langKey("en")
+            .build();
         userRepository.save(userTwo);
 
-        UserDbDTO userThree = new UserDbDTO();
-        userThree.setLogin(USER_THREE_LOGIN);
-        userThree.setPassword(RandomStringUtils.random(60));
-        userThree.setActivated(false);
-        userThree.setEmail(USER_THREE_EMAIL);
-        userThree.setFirstName("userThree");
-        userThree.setLastName("doe");
-        userThree.setLangKey("en");
+        UserDbDTO userThree = new UserDbDTO.UserDbDTOBuilder()
+            .login(USER_THREE_LOGIN)
+            .password(RandomStringUtils.random(60))
+            .activated(false)
+            .email(USER_THREE_EMAIL)
+            .firstName("userThree")
+            .lastName("doe")
+            .langKey("en")
+            .build();
         userRepository.save(userThree);
     }
 

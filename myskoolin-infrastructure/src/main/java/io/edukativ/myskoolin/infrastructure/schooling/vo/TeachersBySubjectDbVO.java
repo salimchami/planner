@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.schooling.vo;
 
-import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.schooling.dto.SubjectDbDTO;
+import io.edukativ.myskoolin.infrastructure.schooling.dto.TeacherDbDTO;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
@@ -12,12 +12,12 @@ public class TeachersBySubjectDbVO {
 
     private SubjectDbDTO subject;
     @Field(MONGO_FIELD_TEACHER_USERS)
-    private List<UserDbDTO> teacherUsers;
+    private List<TeacherDbDTO> teacherUsers;
 
     public TeachersBySubjectDbVO() {
     }
 
-    public TeachersBySubjectDbVO(SubjectDbDTO subject, List<UserDbDTO> teacherUsers) {
+    public TeachersBySubjectDbVO(SubjectDbDTO subject, List<TeacherDbDTO> teacherUsers) {
         this.subject = subject;
         this.teacherUsers = teacherUsers;
     }
@@ -30,11 +30,11 @@ public class TeachersBySubjectDbVO {
         this.subject = subject;
     }
 
-    public List<UserDbDTO> getTeacherUsers() {
+    public List<TeacherDbDTO> getTeacherUsers() {
         return teacherUsers;
     }
 
-    public void setTeacherUsers(List<UserDbDTO> teacherUsers) {
+    public void setTeacherUsers(List<TeacherDbDTO> teacherUsers) {
         this.teacherUsers = teacherUsers;
     }
 }

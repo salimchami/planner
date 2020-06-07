@@ -5,6 +5,7 @@ import com.github.mongobee.changeset.ChangeSet;
 import io.edukativ.myskoolin.infrastructure.commercial.dto.PricingDbDTO;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumCurrency;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsConstants;
+import io.edukativ.myskoolin.infrastructure.config.dbmigrations.MigrationTempData;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.math.BigDecimal;
@@ -73,6 +74,7 @@ public class ChangeSet003Pricing {
                 10,
                 1500, "#416DB0", "mdi mdi-all-inclusive", 4));
         mongoTemplate.insert(pricings, PricingDbDTO.MONGO_COLLECTION_NAME);
+        MigrationTempData.pricings.addAll(pricings);
 
     }
 }

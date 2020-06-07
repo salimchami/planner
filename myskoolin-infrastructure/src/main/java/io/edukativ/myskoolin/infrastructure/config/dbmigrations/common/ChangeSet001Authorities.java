@@ -4,6 +4,7 @@ import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
+import io.edukativ.myskoolin.infrastructure.config.dbmigrations.MigrationTempData;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class ChangeSet001Authorities {
         List<AuthorityDbDTO> authorities = new ArrayList<>();
         AuthoritiesConstants.ALL_AUTHORITIES.forEach(auth -> authorities.add(new AuthorityDbDTO(auth)));
         mongoTemplate.insert(authorities, AuthorityDbDTO.MONGO_COLLECTION_NAME);
+        MigrationTempData.authorities.addAll(authorities);
     }
 
 }

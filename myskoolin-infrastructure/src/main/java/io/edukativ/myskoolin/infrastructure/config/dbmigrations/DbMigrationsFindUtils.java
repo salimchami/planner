@@ -1,7 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.config.dbmigrations;
 
 import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
-import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.commercial.dto.PricingDbDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
 import io.edukativ.myskoolin.infrastructure.schooling.dto.SubjectDbDTO;
@@ -64,8 +63,11 @@ public final class DbMigrationsFindUtils {
         List<TeacherDbDTO> result = new ArrayList<>();
         Query teachersQuery = new Query();
         teachersQuery.addCriteria(Criteria.where(MONGO_FIELD_CLIENT_ID).is(clientId));
-        final List<TeacherDbDTO> users = mongoTemplate.find(teachersQuery, TeacherDbDTO.class, UserDbDTO.MONGO_COLLECTION_NAME);
-        for (TeacherDbDTO user : users) {
+
+//        final List<TeacherDbDTO> users = mongoTemplate.find(teachersQuery, TeacherDbDTO.class, MONGO_COLLECTION_NAME);
+        final List<TeacherDbDTO> teachers = MigrationTempData.teachersByClientId(clientId.toString());
+
+        for (TeacherDbDTO user : teachers) {
             final List<SubjectDbDTO> subjects = user.getTaughtSubjects()
                 .stream()
                 .filter(subject -> subject.getGrade().getId().toString().equals(grade.getId().toString()))

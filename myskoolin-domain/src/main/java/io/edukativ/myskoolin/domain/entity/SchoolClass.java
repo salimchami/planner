@@ -217,7 +217,7 @@ public class SchoolClass {
                 '}';
     }
 
-    public String getTeacherBySubject(String subjectId) {
+    public List<String> getTeachersBySubject(String subjectId) {
         return this.teachersBySubjects.stream()
                 .filter(teachersBySubject -> teachersBySubject.getSubjectId().equals(subjectId))
                 .map(TeachersBySubject::getTeacherUserId)

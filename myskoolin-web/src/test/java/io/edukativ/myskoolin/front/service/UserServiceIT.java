@@ -6,7 +6,7 @@ import io.edukativ.myskoolin.front.MyskoolinApp;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.repository.search.UserSearchRepository;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
-import io.edukativ.myskoolin.infrastructure.schooling.repository.UserRepository;
+import io.edukativ.myskoolin.infrastructure.app.repository.UserRepository;
 import io.github.jhipster.security.RandomUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,8 +50,6 @@ public class UserServiceIT {
 
     /**
      * This repository is mocked in the io.edukativ.schooling.repository.search test package.
-     *
-     *
      */
     @Autowired
     private UserSearchRepository mockUserSearchRepository;
@@ -61,15 +59,16 @@ public class UserServiceIT {
     @BeforeEach
     public void init() {
         userRepository.deleteAll();
-        user = new UserDbDTO();
-        user.setLogin(DEFAULT_LOGIN);
-        user.setPassword(RandomStringUtils.random(60));
-        user.setActivated(true);
-        user.setEmail(DEFAULT_EMAIL);
-        user.setFirstName(DEFAULT_FIRSTNAME);
-        user.setLastName(DEFAULT_LASTNAME);
-        user.setImageUrl(DEFAULT_IMAGEURL);
-        user.setLangKey(DEFAULT_LANGKEY);
+        user = new UserDbDTO.UserDbDTOBuilder()
+            .login(DEFAULT_LOGIN)
+            .password(RandomStringUtils.random(60))
+            .activated(true)
+            .email(DEFAULT_EMAIL)
+            .firstName(DEFAULT_FIRSTNAME)
+            .lastName(DEFAULT_LASTNAME)
+            .imageUrl(DEFAULT_IMAGEURL)
+            .langKey(DEFAULT_LANGKEY)
+            .build();
     }
 
     @Test
@@ -87,7 +86,8 @@ public class UserServiceIT {
 
     @Test
     public void assertThatOnlyActivatedUserCanRequestPasswordReset() {
-        user.setActivated(false);
+        user = new UserDbDTO.UserDbDTOBuilder(user)
+            .activated(false).build();
         userRepository.save(user);
 
         Optional<UserDbDTO> maybeUser = userService.requestPasswordReset(user.getLogin());
@@ -99,9 +99,11 @@ public class UserServiceIT {
     public void assertThatResetKeyMustNotBeOlderThan24Hours() {
         Instant daysAgo = Instant.now().minus(25, ChronoUnit.HOURS);
         String resetKey = RandomUtil.generateResetKey();
-        user.setActivated(true);
-        user.setResetDate(daysAgo);
-        user.setResetKey(resetKey);
+        user = new UserDbDTO.UserDbDTOBuilder(user)
+            .activated(true)
+            .resetDate(daysAgo)
+            .resetKey(resetKey)
+            .build();
         userRepository.save(user);
 
         Optional<UserDbDTO> maybeUser = userService.completePasswordReset("johndoe2", user.getResetKey());
@@ -112,9 +114,11 @@ public class UserServiceIT {
     @Test
     public void assertThatResetKeyMustBeValid() {
         Instant daysAgo = Instant.now().minus(25, ChronoUnit.HOURS);
-        user.setActivated(true);
-        user.setResetDate(daysAgo);
-        user.setResetKey("1234");
+        user = new UserDbDTO.UserDbDTOBuilder(user)
+            .activated(true)
+            .resetDate(daysAgo)
+            .resetKey("1234")
+            .build();
         userRepository.save(user);
 
         Optional<UserDbDTO> maybeUser = userService.completePasswordReset("johndoe2", user.getResetKey());
@@ -127,9 +131,11 @@ public class UserServiceIT {
         String oldPassword = user.getPassword();
         Instant daysAgo = Instant.now().minus(2, ChronoUnit.HOURS);
         String resetKey = RandomUtil.generateResetKey();
-        user.setActivated(true);
-        user.setResetDate(daysAgo);
-        user.setResetKey(resetKey);
+        user = new UserDbDTO.UserDbDTOBuilder(user)
+            .activated(true)
+            .resetDate(daysAgo)
+            .resetKey(resetKey)
+            .build();
         userRepository.save(user);
 
         Optional<UserDbDTO> maybeUser = userService.completePasswordReset("johndoe2", user.getResetKey());
@@ -144,8 +150,10 @@ public class UserServiceIT {
     @Test
     public void assertThatNotActivatedUsersWithNotNullActivationKeyCreatedBefore3DaysAreDeleted() {
         Instant now = Instant.now();
-        user.setActivated(false);
-        user.setActivationKey(RandomStringUtils.random(20));
+        user = new UserDbDTO.UserDbDTOBuilder(user)
+            .activated(false)
+            .activationKey(RandomStringUtils.random(20))
+            .build();
         UserDbDTO dbUser = userRepository.save(user);
         dbUser.setCreatedDate(now.minus(4, ChronoUnit.DAYS));
         userRepository.save(user);
@@ -163,7 +171,9 @@ public class UserServiceIT {
     @Test
     public void assertThatNotActivatedUsersWithNullActivationKeyCreatedBefore3DaysAreNotDeleted() {
         Instant now = Instant.now();
-        user.setActivated(false);
+        user = new UserDbDTO.UserDbDTOBuilder(user)
+            .activated(false)
+            .build();
         UserDbDTO dbUser = userRepository.save(user);
         dbUser.setCreatedDate(now.minus(4, ChronoUnit.DAYS));
         userRepository.save(user);
@@ -180,8 +190,11 @@ public class UserServiceIT {
 
     @Test
     public void assertThatAnonymousUserIsNotGet() {
-        user.setLogin(Constants.ANONYMOUS_USER);
-        if (!userRepository.findOneByLogin(Constants.ANONYMOUS_USER).isPresent()) {
+        user = new UserDbDTO.UserDbDTOBuilder(user)
+            .login(Constants.ANONYMOUS_USER)
+            .build();
+        final Optional<UserDbDTO> oneByLogin = userRepository.findOneByLogin(Constants.ANONYMOUS_USER);
+        if (oneByLogin.isEmpty()) {
             userRepository.save(user);
         }
         final PageRequest pageable = PageRequest.of(0, (int) userRepository.count());
