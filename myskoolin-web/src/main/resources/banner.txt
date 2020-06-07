@@ -1,4 +1,4 @@
-${AnsiColor.RED}                            __                 __ __
+${AnsiColor.RED}                         __                 __ __
 ${AnsiColor.GREEN}.--------.--.--.${AnsiColor.RED} .-----.|  |--.-----.-----.|  |__|.-----.
 ${AnsiColor.GREEN}|        |  |  |${AnsiColor.RED} |__ --||    <|  _  |  _  ||  |  ||     |
 ${AnsiColor.GREEN}|__|__|__|___  |${AnsiColor.RED} |_____||__|__|_____|_____||__|__||__|__|

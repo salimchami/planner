@@ -55,7 +55,7 @@ public class GradeDbDTO implements Serializable, Comparable<GradeDbDTO> {
     private Integer maxMinutesPerDay;
 
     @Field(MONGO_FIELD_DELETED)
-    private Boolean deleted = false;
+    private boolean deleted;
 
     @Field(MONGO_FIELD_SERIES)
     private List<GradeSerieDbVO> series;
@@ -130,11 +130,11 @@ public class GradeDbDTO implements Serializable, Comparable<GradeDbDTO> {
         this.maxMinutesPerDay = maxMinutesPerDay;
     }
 
-    public Boolean getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

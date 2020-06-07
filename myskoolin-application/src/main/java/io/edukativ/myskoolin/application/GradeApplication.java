@@ -2,13 +2,12 @@ package io.edukativ.myskoolin.application;
 
 import io.edukativ.myskoolin.application.security.UserService;
 import io.edukativ.myskoolin.domain.entity.Grade;
+import io.edukativ.myskoolin.domain.entity.User;
 import io.edukativ.myskoolin.domain.grades.GradeAPI;
+import io.edukativ.myskoolin.domain.vo.GradeSerie;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;
-import io.edukativ.myskoolin.infrastructure.grades.GradeDTO;
-import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
-import io.edukativ.myskoolin.infrastructure.grades.GradeMapper;
-import io.edukativ.myskoolin.infrastructure.grades.GradeRepository;
+import io.edukativ.myskoolin.infrastructure.grades.*;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDbDTO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectMapper;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectRepository;
@@ -30,9 +29,10 @@ public class GradeApplication {
     private final GradeRepository gradeRepository;
     private final SubjectRepository subjectRepository;
     private final SubjectMapper subjectMapper;
+    private final GradeSerieMapper gradeSerieMapper;
 
     public GradeApplication(GradeMapper gradeMapper, UserMapper userMapper,
-                            UserService userService, GradeAPI gradeAPI, GradeRepository gradeRepository, SubjectRepository subjectRepository, SubjectMapper subjectMapper) {
+                            UserService userService, GradeAPI gradeAPI, GradeRepository gradeRepository, SubjectRepository subjectRepository, SubjectMapper subjectMapper, GradeSerieMapper gradeSerieMapper) {
         this.gradeMapper = gradeMapper;
         this.userMapper = userMapper;
         this.userService = userService;
@@ -40,6 +40,7 @@ public class GradeApplication {
         this.gradeRepository = gradeRepository;
         this.subjectRepository = subjectRepository;
         this.subjectMapper = subjectMapper;
+        this.gradeSerieMapper = gradeSerieMapper;
     }
 
     public List<GradeDTO> findGrades() {
@@ -60,27 +61,50 @@ public class GradeApplication {
                 grade.setSubjects(subjectMapper.dbDtosToDtos(subjects));
                 return grade;
             });
-        }).orElse(null);
+        }).orElse(Optional.empty());
     }
 
-//    public Optional<GradeDTO> findOneByName(String name) {
-//        final Optional<UserDbDTO> optUserWithAuthorities = userService.getCurrentUserWithAuthorities();
-//        return optUserWithAuthorities.flatMap(user -> {
-//            final Optional<GradeDbDTO> optGradeDTO = gradeRepository.findOneByName(name, false, user.getClientId());
-//            return optGradeDTO.map(gradeMapper::dbDTOToDTO);
-//        });
-//    }
-//
-//    public GradeDTO createOrUpdateGrade(GradeDTO gradeDTO) {
-//        final Optional<UserDbDTO> optUserWithAuthorities = userService.getCurrentUserWithAuthorities();
-//        return optUserWithAuthorities.flatMap(userDbDTO -> {
-//            final Grade grade = gradeMapper.dtoToDomain(gradeDTO);
-//            Optional<Grade> optSavedGrade = gradeAPI.createOrUpdateGrade(grade, userMapper.dbDtoToDomain(userDbDTO));
-//            return optSavedGrade.map(gradeMapper::domainToDto);
-//        }).orElseThrow();
-//    }
-//
-//    public void deleteGrade(String id) {
-//        gradeAPI.deleteGrade(id);
-//    }
+    public List<GradeDTO> updateGrades(List<GradeDTO> grades) {
+        List<GradeDbDTO> dbGrades = gradeMapper.dtosToDbDtos(grades);
+        final List<GradeDbDTO> savedDbGrades = gradeRepository.saveAll(dbGrades);
+        return gradeMapper.dbDtosToDtos(savedDbGrades);
+    }
+
+    public List<GradeDTO> createGrades(List<GradeDTO> grades) {
+        final List<GradeDbDTO> gradesDbDTO = gradeMapper.dtosToDbDtos(grades);
+        final List<GradeDbDTO> savedGradesDbDTO = gradeRepository.saveAll(gradesDbDTO);
+        return gradeMapper.dbDtosToDtos(savedGradesDbDTO);
+    }
+
+    public void deleteGrade(String id) {
+        final Optional<GradeDbDTO> grade = gradeRepository.findById(id);
+        grade.ifPresent(gradeDbDTO -> {
+            gradeDbDTO.setDeleted(true);
+            gradeRepository.save(gradeDbDTO);
+        });
+    }
+
+    public Boolean isGradeAvailableByName(String name) {
+        Optional<UserDbDTO> optCurrentUser = userService.getCurrentUserWithAuthorities();
+        return optCurrentUser
+                .map(user -> gradeRepository.findOneByName(name, false, user.getClientId()).isEmpty())
+                .orElse(false);
+    }
+
+    public Boolean isGradeDiminutiveAvailable(String diminutive) {
+        Optional<UserDbDTO> optCurrentUser = userService.getCurrentUserWithAuthorities();
+        return optCurrentUser
+                .map(user -> gradeRepository.findOneByDiminutive(diminutive, false, user.getClientId()).isEmpty())
+                .orElse(false);
+    }
+
+    public List<GradeSerieVO> findAllSeries() {
+        Optional<UserDbDTO> optCurrentUser = userService.getCurrentUserWithAuthorities();
+        return optCurrentUser
+                .map(user -> {
+                    final User currentUser = userMapper.dbDtoToDomain(user);
+                    final List<GradeSerie> allGradesSeries = gradeAPI.findAllGradesSeries(currentUser);
+                    return gradeSerieMapper.modelToDtos(allGradesSeries);
+                }).orElse(Collections.emptyList());
+    }
 }

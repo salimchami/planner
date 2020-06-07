@@ -21,4 +21,6 @@ public interface GradeMapper {
     List<GradeDTO> modelsToDtos(List<Grade> grades);
 
     List<Grade> dbDtosToModels(List<GradeDbDTO> allNotDeleted);
+
+    List<GradeDbDTO> dtosToDbDtos(List<GradeDTO> grades);
 }

@@ -136,18 +136,24 @@ export class GradeEditComponent implements OnInit, OnDestroy {
             });
             switch (this.routeState) {
                 case 'edit':
-                    if (!this.grades.filter((grade) => grade.name === form.value.name).length) {
-                        this.notificationService.addToast('grade.new.form.error-toast-title',
-                            'grade.new.form.form-name-error',
-                            'error');
-                    } else {
+                    if (form.dirty && form.valid) {
                         this.grade = this.grade.update(this.grade.id, values.name, values.order, values.notation, values.diminutive, values.maxMinutesPerDay, series, null);
                         this.update();
+                    } else {
+                        this.notificationService.addToast('grade.new.form.error-toast-title',
+                            'grade.new.form.form-error',
+                            'error');
                     }
                     break;
                 case 'new':
-                    this.grade = new Grade(user.clientId, values.name, values.order, values.notation, values.diminutive, values.maxMinutesPerDay, series, null);
-                    this.create();
+                    if (form.dirty && form.valid) {
+                        this.grade = new Grade(user.clientId, values.name, values.order, values.notation, values.diminutive, values.maxMinutesPerDay, series, null);
+                        this.create();
+                    } else {
+                        this.notificationService.addToast('grade.new.form.error-toast-title',
+                            'grade.new.form.form-error',
+                            'error');
+                    }
                     break;
             }
         });

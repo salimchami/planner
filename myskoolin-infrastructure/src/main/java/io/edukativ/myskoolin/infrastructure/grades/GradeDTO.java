@@ -15,7 +15,7 @@ public class GradeDTO {
     private EnumSchoolClassNotation notation;
     private String diminutive;
     private Integer maxMinutesPerDay;
-    private Boolean deleted;
+    private boolean deleted;
     private List<GradeSerieVO> series;
     private TimeTableOptionsVO timeTableOptions;
     private List<SubjectDTO> subjects;
@@ -77,11 +77,11 @@ public class GradeDTO {
         this.maxMinutesPerDay = maxMinutesPerDay;
     }
 
-    public Boolean getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

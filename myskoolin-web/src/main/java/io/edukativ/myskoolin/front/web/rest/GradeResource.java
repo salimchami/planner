@@ -1,15 +1,18 @@
 package io.edukativ.myskoolin.front.web.rest;
 
 import io.edukativ.myskoolin.application.GradeApplication;
+import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
+import io.edukativ.myskoolin.infrastructure.config.Constants;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDTO;
+import io.edukativ.myskoolin.infrastructure.grades.GradeSerieVO;
+import io.github.jhipster.web.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,88 +32,82 @@ class GradeResource {
         this.gradeApplication = gradeApplication;
     }
 
-    //    @PostMapping
-//    public ResponseEntity<List<GradeDTO>> createGrades(@RequestBody List<GradeDTO> grades) throws URISyntaxException {
-//        log.debug("REST request to save Grades : {}", grades);
-//        List<Grade> gradesModel = grades.stream().map(GradeDTO::toGrade).collect(Collectors.toList());
-//        List<Grade> result = gradeRepository.save(gradesModel);
-//        return ResponseEntity.created(new URI("/api/grades"))
-//            .body(result.stream().map(GradeDTO::new).collect(Collectors.toList()));
-//    }
-//
-//    @PutMapping
-//    public ResponseEntity<List<GradeDTO>> updateGrades(@RequestBody List<GradeDTO> grades) throws URISyntaxException {
-//        log.debug("REST request to update Grades : {}", grades);
-//        grades.forEach(gradeDTO -> gradeDTO.setDeleted(false));
-//        List<Grade> gradesModel = gradeMapper.gradesDtoToGrades(grades);
-//        List<Grade> resultModelResult = gradeRepository.save(gradesModel);
-//        List<GradeDTO> gradesDTO = gradeMapper.gradesToGradesDTO(resultModelResult);
-//        return ResponseEntity.ok().body(gradesDTO);
-//    }
+    @PostMapping
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE
+    })
+    public ResponseEntity<List<GradeDTO>> createGrades(@RequestBody List<GradeDTO> grades) {
+        log.debug("REST request to update Grades : {}", grades);
+        List<GradeDTO> gradesDTO = gradeApplication.createGrades(grades);
+        return ResponseEntity.status(HttpStatus.CREATED).body(gradesDTO);
+    }
+
+    @PutMapping
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE
+    })
+    public ResponseEntity<List<GradeDTO>> updateGrades(@RequestBody List<GradeDTO> grades) {
+        log.debug("REST request to update Grades : {}", grades);
+        List<GradeDTO> gradesDTO = gradeApplication.updateGrades(grades);
+        return ResponseEntity.ok().body(gradesDTO);
+    }
 //
 
     @GetMapping
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE
+    })
     public ResponseEntity<List<GradeDTO>> getAllGrades() {
         log.debug("REST request to get all Grades");
         return new ResponseEntity<>(gradeApplication.findGrades(), HttpStatus.OK);
     }
 
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE
+    })
     @GetMapping(value = "/{name}")
     public ResponseEntity<GradeDTO> getGrade(@PathVariable String name) {
         log.debug("REST request to get Grade : {}", name);
         Optional<GradeDTO> optGrade = gradeApplication.findGradeByName(name);
         return optGrade.map(grade -> new ResponseEntity<>(grade, HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NO_CONTENT));
-
-//        return optGrade
-//            .map(grade -> {
-//                List<Subject> subjects = subjectService.findByGrade(new ObjectId(grade.getId()));
-//                grade.setSubjects(subjectMapper.subjectsToSubjectsDTO(subjects));
-//                return new ResponseEntity<>(
-//                    grade,
-//                    HttpStatus.OK);
-//            })
-//            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-//
-//    @DeleteMapping(value = "/grades/{id}")
-//    public ResponseEntity<Void> deleteGrade(@PathVariable String id) {
-//        log.debug("REST request to delete Grade : {}", id);
-//        gradeRepository.delete(id);
-//        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("grade", id)).build();
-//    }
-//
-//    @Transactional
-//    @GetMapping(value = "/grades/nameAvailable/{name}")
-//    public Boolean nameAvailable(@PathVariable String name) {
-//        log.debug("REST request to get Client by name : {}", name);
-//        final Boolean[] result = {false};
-//        Optional<User> currentUser = userService.getUserWithAuthorities();
-//        currentUser.ifPresent(user -> {
-//            Optional<Grade> grade = gradeRepository.findOneByName(name, false, currentUser.get().getClientId());
-//            grade.ifPresent(grade1 -> result[0] = true);
-//        });
-//        return result[0];
-//    }
-//
-//    @Transactional
-//    @GetMapping(value = "/grades/diminutiveAvailable/{diminutive}")
-//    public Boolean diminutiveAvailable(@PathVariable String diminutive) {
-//        log.debug("REST request to get Client by diminutive : {}", diminutive);
-//        final Boolean[] result = {false};
-//        Optional<User> currentUser = userService.getUserWithAuthorities();
-//        currentUser.ifPresent(user -> {
-//            Optional<Grade> grade = gradeRepository.findOneByDiminutive(diminutive, false, currentUser.get().getClientId());
-//            grade.ifPresent(grade1 -> result[0] = true);
-//        });
-//        return result[0];
-//    }
-//
-//    @GetMapping(value = "/grades/allSeries")
-//    public ResponseEntity<List<GradeSerie>> getAllGradesSeries() {
-//        log.debug("REST request to get all Grades");
-//        List<GradeSerie> gradesSeries = gradeService.findAllSeries();
-//        return new ResponseEntity<>(gradesSeries, HttpStatus.OK);
-//    }
 
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE
+    })
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteGrade(@PathVariable String id) {
+        log.debug("REST request to delete Grade : {}", id);
+        gradeApplication.deleteGrade(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+            .headers(HeaderUtil.createEntityDeletionAlert(Constants.APPLICATION_NAME, false, "grade", id))
+            .build();
+    }
+
+    @Transactional
+    @GetMapping(value = "/nameAvailable/{name}")
+    public Boolean nameAvailable(@PathVariable String name) {
+        log.debug("REST request to get Client by name : {}", name);
+        return gradeApplication.isGradeAvailableByName(name);
+    }
+
+    @Transactional
+    @GetMapping(value = "/diminutiveAvailable/{diminutive}")
+    public Boolean diminutiveAvailable(@PathVariable String diminutive) {
+        log.debug("REST request to get Client by diminutive : {}", diminutive);
+        return gradeApplication.isGradeDiminutiveAvailable(diminutive);
+    }
+
+    @GetMapping(value = "/allSeries")
+    public ResponseEntity<List<GradeSerieVO>> getAllGradesSeries() {
+        log.debug("REST request to get all Grades");
+        List<GradeSerieVO> gradesSeries = gradeApplication.findAllSeries();
+        return new ResponseEntity<>(gradesSeries, HttpStatus.OK);
+    }
 }
