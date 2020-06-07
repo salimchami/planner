@@ -1,12 +1,17 @@
 package io.edukativ.myskoolin.front.service.mapper;
 
+import com.google.common.collect.Sets;
+import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
+import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import io.edukativ.myskoolin.infrastructure.common.mapper.AddressMapper;
 import io.edukativ.myskoolin.infrastructure.app.mapper.AuthorityMapper;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDTO;
 import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
+import io.edukativ.myskoolin.infrastructure.common.vo.AddressDbVO;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +34,7 @@ public class UserMapperTest {
     private UserMapper userMapper;
     private UserDbDTO user;
     private UserDTO userDto;
+    private ObjectId clientId;
 
     @BeforeEach
     public void init() {
@@ -36,15 +42,19 @@ public class UserMapperTest {
         AuthorityMapper authorityMapper = mock(AuthorityMapper.class);
         ObjectIdMapper objectIdMapper = mock(ObjectIdMapper.class);
         userMapper = new UserMapper(addressMapper, authorityMapper, objectIdMapper);
+        clientId = new ObjectId("60a2d3827407395bcf9ef001");
         user = new UserDbDTO.UserDbDTOBuilder()
+            .clientId(clientId)
             .login(DEFAULT_LOGIN)
             .password(RandomStringUtils.random(60))
-            .activated(true)
-            .email("johndoe@localhost")
             .firstName("john")
             .lastName("doe")
+            .activated(true)
+            .email("johndoe@localhost")
             .imageUrl("image_url")
             .langKey("en")
+            .address(new AddressDbVO("the address", "54654654", "New York", "USA"))
+            .authorities(Sets.newHashSet(new AuthorityDbDTO(AuthoritiesConstants.SCHOOLME_ADMIN)))
             .build();
 
         userDto = new UserDTO(user);
