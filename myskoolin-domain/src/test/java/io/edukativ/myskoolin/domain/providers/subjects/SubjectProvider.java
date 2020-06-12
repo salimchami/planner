@@ -17,10 +17,10 @@ public final class SubjectProvider {
     public static Subject subject(String id, Grade grade, String name, Boolean foreignLanguage, Integer minMinutesPerDay,
                                   Integer maxMinutesPerDay, Integer minutesPerWeek, Integer coursesFrequencyPerWeek,
                                   List<PreferredPartsOfDays> preferredDays, List<EnumSchoolRoomsTypes> schoolRoomsTypes,
-                                  Integer daysBetweenTimeSlots) {
+                                  Integer daysBetweenTimeSlots, String comment) {
         return new Subject(id, GlobalProvider.CLIENT_ID, name, "", grade, null,
                 BigDecimal.ONE, "color", "bgColor", foreignLanguage, maxMinutesPerDay, minMinutesPerDay,
-                minutesPerWeek, coursesFrequencyPerWeek, false, preferredDays, schoolRoomsTypes, daysBetweenTimeSlots);
+                minutesPerWeek, coursesFrequencyPerWeek, false, comment, preferredDays, schoolRoomsTypes, daysBetweenTimeSlots);
     }
 
     public static List<Subject> allSubjects() {

@@ -2,9 +2,6 @@ package io.edukativ.myskoolin.domain.vo;
 
 import java.util.Arrays;
 
-/**
- * Currency enumeration.
- */
 public enum EnumSchoolRoomsTypes {
 
     NORMAL("schoolRoom.enums.types.normal"),

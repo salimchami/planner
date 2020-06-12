@@ -20,6 +20,7 @@ public class GradeDTO {
     private TimeTableOptionsVO timeTableOptions;
     private List<SubjectDTO> subjects;
     private int nbSubjects;
+    private Integer maxMinutesPerWeek;
 
     public String getId() {
         return id;
@@ -115,5 +116,13 @@ public class GradeDTO {
 
     public void setSubjects(List<SubjectDTO> subjects) {
         this.subjects = subjects;
+    }
+
+    public Integer getMaxMinutesPerWeek() {
+        return maxMinutesPerWeek;
+    }
+
+    public void setMaxMinutesPerWeek(Integer maxMinutesPerWeek) {
+        this.maxMinutesPerWeek = maxMinutesPerWeek;
     }
 }

@@ -7,8 +7,8 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface EmailMapper {
 
-    EmailDTO dbDtoToDto(EmailDbVO email);
+    EmailDTO map(EmailDbVO email);
 
-    EmailDbVO dtoToDbDto(EmailDTO email);
+    EmailDbVO map(EmailDTO email);
 
 }

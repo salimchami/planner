@@ -23,11 +23,6 @@ public class TimeSlot implements Comparable<TimeSlot> {
     private Boolean autoAlterable;
     private boolean half;
 
-    private String schoolRoomId;
-    private String schoolClassId;
-    private String subjectId;
-    private String teacherId;
-
     public TimeSlot() {
     }
 
@@ -44,10 +39,6 @@ public class TimeSlot implements Comparable<TimeSlot> {
         this.fontColorCssClass = timeSlot.getFontColorCssClass();
         this.autoAlterable = timeSlot.getAutoAlterable();
         this.half = half;
-        this.schoolRoomId = timeSlot.getSchoolRoomId();
-        this.schoolClassId = timeSlot.getSchoolClassId();
-        this.subjectId = timeSlot.getSubjectId();
-        this.teacherId = timeSlot.getTeacherId();
     }
 
     public TimeSlot(EnumDays day, Time startTime, Time endTime) {
@@ -65,7 +56,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
         this.fontColorCssClass = fontColorCssClass;
     }
 
-    public TimeSlot(String title, String secondTitle, String comment, Boolean canceled, EnumDays day, Time startTime, Time endTime, ZonedDateTime date, String bgColor, String fontColorCssClass, Boolean autoAlterable, boolean half, String schoolRoomId, String schoolClassId, String subjectId, String teacherId) {
+    public TimeSlot(String title, String secondTitle, String comment, Boolean canceled, EnumDays day, Time startTime, Time endTime, ZonedDateTime date, String bgColor, String fontColorCssClass, Boolean autoAlterable, boolean half) {
         this.title = title;
         this.secondTitle = secondTitle;
         this.comment = comment;
@@ -78,10 +69,6 @@ public class TimeSlot implements Comparable<TimeSlot> {
         this.fontColorCssClass = fontColorCssClass;
         this.autoAlterable = autoAlterable;
         this.half = half;
-        this.schoolRoomId = schoolRoomId;
-        this.schoolClassId = schoolClassId;
-        this.subjectId = subjectId;
-        this.teacherId = teacherId;
     }
 
     public String getTitle() {
@@ -178,38 +165,6 @@ public class TimeSlot implements Comparable<TimeSlot> {
 
     public void setHalf(boolean half) {
         this.half = half;
-    }
-
-    public String getSchoolRoomId() {
-        return schoolRoomId;
-    }
-
-    public void setSchoolRoomId(String schoolRoomId) {
-        this.schoolRoomId = schoolRoomId;
-    }
-
-    public String getSchoolClassId() {
-        return schoolClassId;
-    }
-
-    public void setSchoolClassId(String schoolClassId) {
-        this.schoolClassId = schoolClassId;
-    }
-
-    public String getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(String subjectId) {
-        this.subjectId = subjectId;
-    }
-
-    public String getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId;
     }
 
     @Override
@@ -345,8 +300,6 @@ public class TimeSlot implements Comparable<TimeSlot> {
                 "day=" + day +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
-                ", subject=" + subjectId +
-                ", schoolClassId=" + schoolClassId +
                 '}';
     }
 }

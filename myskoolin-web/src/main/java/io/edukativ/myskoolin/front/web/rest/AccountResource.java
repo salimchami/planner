@@ -62,7 +62,7 @@ public class AccountResource {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public void registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
-        if (!checkPasswordLength(managedUserVM.getPassword())) {
+        if (checkPasswordLength(managedUserVM.getPassword())) {
             throw new InvalidPasswordException();
         }
         UserDbDTO user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
@@ -78,7 +78,7 @@ public class AccountResource {
     @GetMapping("/activate")
     public void activateAccount(@RequestParam(value = "key") String key) {
         Optional<UserDbDTO> user = userService.activateRegistration(key);
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new AccountResourceException("No user was found for this activation key");
         }
     }
@@ -103,9 +103,7 @@ public class AccountResource {
      */
     @GetMapping("/account")
     public UserDTO getAccount() {
-        return userService.getCurrentUserWithAuthorities()
-            .map(UserDTO::new)
-            .orElseThrow(() -> new AccountResourceException("User could not be found"));
+        return new UserDTO(userService.getCurrentUserWithAuthorities());
     }
 
     /**
@@ -123,7 +121,7 @@ public class AccountResource {
             throw new EmailAlreadyUsedException();
         }
         Optional<UserDbDTO> user = userRepository.findOneByLogin(userLogin);
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new AccountResourceException("User could not be found");
         }
         userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
@@ -138,7 +136,7 @@ public class AccountResource {
      */
     @PostMapping(path = "/account/change-password")
     public void changePassword(@RequestBody PasswordChangeDTO passwordChangeDto) {
-        if (!checkPasswordLength(passwordChangeDto.getNewPassword())) {
+        if (checkPasswordLength(passwordChangeDto.getNewPassword())) {
             throw new InvalidPasswordException();
         }
         userService.changePassword(passwordChangeDto.getCurrentPassword(), passwordChangeDto.getNewPassword());
@@ -170,20 +168,20 @@ public class AccountResource {
      */
     @PostMapping(path = "/account/reset-password/finish")
     public void finishPasswordReset(@RequestBody KeyAndPasswordVM keyAndPassword) {
-        if (!checkPasswordLength(keyAndPassword.getNewPassword())) {
+        if (checkPasswordLength(keyAndPassword.getNewPassword())) {
             throw new InvalidPasswordException();
         }
         Optional<UserDbDTO> user =
             userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
 
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new AccountResourceException("No user was found for this reset key");
         }
     }
 
     private static boolean checkPasswordLength(String password) {
-        return !StringUtils.isEmpty(password) &&
-            password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH &&
-            password.length() <= ManagedUserVM.PASSWORD_MAX_LENGTH;
+        return StringUtils.isEmpty(password) ||
+            password.length() < ManagedUserVM.PASSWORD_MIN_LENGTH ||
+            password.length() > ManagedUserVM.PASSWORD_MAX_LENGTH;
     }
 }

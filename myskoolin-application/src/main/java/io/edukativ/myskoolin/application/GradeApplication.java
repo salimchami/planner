@@ -14,7 +14,6 @@ import io.edukativ.myskoolin.infrastructure.subjects.SubjectRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +31,9 @@ public class GradeApplication {
     private final GradeSerieMapper gradeSerieMapper;
 
     public GradeApplication(GradeMapper gradeMapper, UserMapper userMapper,
-                            UserService userService, GradeAPI gradeAPI, GradeRepository gradeRepository, SubjectRepository subjectRepository, SubjectMapper subjectMapper, GradeSerieMapper gradeSerieMapper) {
+                            UserService userService, GradeAPI gradeAPI, GradeRepository gradeRepository,
+                            SubjectRepository subjectRepository, SubjectMapper subjectMapper,
+                            GradeSerieMapper gradeSerieMapper) {
         this.gradeMapper = gradeMapper;
         this.userMapper = userMapper;
         this.userService = userService;
@@ -44,24 +45,21 @@ public class GradeApplication {
     }
 
     public List<GradeDTO> findGrades() {
-        Optional<UserDbDTO> optCurrentUser = userService.getCurrentUserWithAuthorities();
-        return optCurrentUser.map(user -> {
-            final List<Grade> grades = gradeAPI.findGrades(userMapper.dbDtoToDomain(user));
-            return gradeMapper.modelsToDtos(grades);
-        }).orElse(Collections.emptyList());
+        UserDbDTO user = userService.getCurrentUserWithAuthorities();
+        final List<Grade> grades = gradeAPI.findGrades(userMapper.dbDtoToDomain(user));
+        return gradeMapper.modelsToDtos(grades);
     }
 
     public Optional<GradeDTO> findGradeByName(String name) {
-        Optional<UserDbDTO> optCurrentUser = userService.getCurrentUserWithAuthorities();
-        return optCurrentUser.map(user -> {
-            Optional<GradeDbDTO> optDbGrade = gradeRepository.findOneByName(name, false, user.getClientId());
-            return optDbGrade.map(dbGrade -> {
-                final List<SubjectDbDTO> subjects = subjectRepository.findByGrade(dbGrade.getId(), false);
-                final GradeDTO grade = gradeMapper.dbDtoToDto(dbGrade);
-                grade.setSubjects(subjectMapper.dbDtosToDtos(subjects));
-                return grade;
-            });
-        }).orElse(Optional.empty());
+        UserDbDTO user = userService.getCurrentUserWithAuthorities();
+        Optional<GradeDbDTO> optDbGrade = gradeRepository.findOneByName(name, false, user.getClientId());
+        return optDbGrade.map(dbGrade -> {
+            final List<SubjectDbDTO> subjects = subjectRepository.findByGrade(dbGrade.getId(), false);
+            final GradeDTO grade = gradeMapper.map(dbGrade);
+            grade.setSubjects(subjectMapper.dbDtosToDtos(subjects));
+            return grade;
+        });
+
     }
 
     public List<GradeDTO> updateGrades(List<GradeDTO> grades) {
@@ -85,26 +83,19 @@ public class GradeApplication {
     }
 
     public Boolean isGradeAvailableByName(String name) {
-        Optional<UserDbDTO> optCurrentUser = userService.getCurrentUserWithAuthorities();
-        return optCurrentUser
-                .map(user -> gradeRepository.findOneByName(name, false, user.getClientId()).isEmpty())
-                .orElse(false);
+        UserDbDTO user = userService.getCurrentUserWithAuthorities();
+        return gradeRepository.findOneByName(name, false, user.getClientId()).isEmpty();
     }
 
     public Boolean isGradeDiminutiveAvailable(String diminutive) {
-        Optional<UserDbDTO> optCurrentUser = userService.getCurrentUserWithAuthorities();
-        return optCurrentUser
-                .map(user -> gradeRepository.findOneByDiminutive(diminutive, false, user.getClientId()).isEmpty())
-                .orElse(false);
+        UserDbDTO user = userService.getCurrentUserWithAuthorities();
+        return gradeRepository.findOneByDiminutive(diminutive, false, user.getClientId()).isEmpty();
     }
 
     public List<GradeSerieVO> findAllSeries() {
-        Optional<UserDbDTO> optCurrentUser = userService.getCurrentUserWithAuthorities();
-        return optCurrentUser
-                .map(user -> {
-                    final User currentUser = userMapper.dbDtoToDomain(user);
-                    final List<GradeSerie> allGradesSeries = gradeAPI.findAllGradesSeries(currentUser);
-                    return gradeSerieMapper.modelToDtos(allGradesSeries);
-                }).orElse(Collections.emptyList());
+        UserDbDTO user = userService.getCurrentUserWithAuthorities();
+        final User currentUser = userMapper.dbDtoToDomain(user);
+        final List<GradeSerie> allGradesSeries = gradeAPI.findAllGradesSeries(currentUser);
+        return gradeSerieMapper.modelToDtos(allGradesSeries);
     }
 }

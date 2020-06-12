@@ -4,7 +4,7 @@ import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumPartsOfDay;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsFindUtils;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.MigrationTempData;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev.util.DevDbMigrationsConstants;
@@ -39,7 +39,7 @@ public class ChangeSet009SixiemeSubjects {
             null,
             BigDecimal.valueOf(1), DevDbMigrationsConstants.SUBJECT_TECHNOLOGY_COLOR, DevDbMigrationsConstants.SUBJECT_TECHNOLOGY_BGCOLOR,
             false, 120, 60, BigDecimal.valueOf(60 * 2L).intValue(), 2,
-            false, null, EnumSchoolRoomsTypes.IT);
+            false, null, Collections.singletonList(EnumSchoolRoomsTypesDb.IT), false);
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_TECHNO_ID);
         subject.setPreferredPartsOfDaysInTimetables(
             Arrays.asList(
@@ -63,7 +63,7 @@ public class ChangeSet009SixiemeSubjects {
             null,
             BigDecimal.valueOf(5), DevDbMigrationsConstants.SUBJECT_FRANCAIS_COLOR, DevDbMigrationsConstants.SUBJECT_FRANCAIS_BGCOLOR,
             false, 120, 60, BigDecimal.valueOf(60 * 4.5).intValue(), 3,
-            false, null, EnumSchoolRoomsTypes.NORMAL);
+            false, null, Collections.singletonList(EnumSchoolRoomsTypesDb.NORMAL), false);
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_FRANCAIS_ID);
         subject.setPreferredPartsOfDaysInTimetables(
             Arrays.asList(
@@ -89,7 +89,7 @@ public class ChangeSet009SixiemeSubjects {
             null,
             BigDecimal.valueOf(2), DevDbMigrationsConstants.SUBJECT_SPORT_COLOR, DevDbMigrationsConstants.SUBJECT_SPORT_BGCOLOR,
             false, 120, 120, BigDecimal.valueOf(60 * 4L).intValue(), 2,
-            false, null, EnumSchoolRoomsTypes.SPORT);
+            false, null, Collections.singletonList(EnumSchoolRoomsTypesDb.SPORT), false);
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_SPORT_ID);
         subject.setPreferredPartsOfDaysInTimetables(
             Arrays.asList(
@@ -115,7 +115,7 @@ public class ChangeSet009SixiemeSubjects {
             null,
             BigDecimal.valueOf(4), DevDbMigrationsConstants.SUBJECT_SPORT_COLOR, DevDbMigrationsConstants.SUBJECT_SPORT_BGCOLOR,
             true, 120, 60, BigDecimal.valueOf(60 * 4L).intValue(), 2,
-            false, "LV1", EnumSchoolRoomsTypes.NORMAL);
+            false, "LV1", Collections.singletonList(EnumSchoolRoomsTypesDb.NORMAL), false);
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_ANGLAIS_ID);
         mongoTemplate.insert(subject, MONGO_COLLECTION_NAME);
         MigrationTempData.subjects.add(subject);
@@ -134,7 +134,7 @@ public class ChangeSet009SixiemeSubjects {
             BigDecimal.valueOf(1), DevDbMigrationsConstants.SUBJECT_ARTS_PLASTIQUES_COLOR,
             DevDbMigrationsConstants.SUBJECT_ARTS_PLASTIQUES_BGCOLOR,
             false, 60, 60, 60, 1,
-            false, null, EnumSchoolRoomsTypes.NORMAL);
+            false, null, Collections.singletonList(EnumSchoolRoomsTypesDb.NORMAL), false);
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_ARTS_PLASTIQUES_ID);
         subject.setPreferredPartsOfDaysInTimetables(Collections.singletonList(
             new PreferredPartsOfDaysDbVO(EnumDays.FRIDAY, Arrays.asList(EnumPartsOfDay.AM, EnumPartsOfDay.PM))
@@ -157,7 +157,7 @@ public class ChangeSet009SixiemeSubjects {
             BigDecimal.valueOf(4), DevDbMigrationsConstants.SUBJECT_HIST_GEO_COLOR,
             DevDbMigrationsConstants.SUBJECT_HIST_GEO_BGCOLOR,
             false, 60, 60, BigDecimal.valueOf(60 * 3L).intValue(), 3,
-            false, null, EnumSchoolRoomsTypes.NORMAL);
+            false, null, Collections.singletonList(EnumSchoolRoomsTypesDb.NORMAL), false);
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_HIST_GEO_ID);
         subject.setPreferredPartsOfDaysInTimetables(Arrays.asList(
             new PreferredPartsOfDaysDbVO(EnumDays.MONDAY, Collections.singletonList(EnumPartsOfDay.AM)),
@@ -182,7 +182,7 @@ public class ChangeSet009SixiemeSubjects {
             BigDecimal.valueOf(5), DevDbMigrationsConstants.SUBJECT_MATHS_COLOR,
             DevDbMigrationsConstants.SUBJECT_MATHS_BGCOLOR,
             false, 120, 60, BigDecimal.valueOf(60 * 4.5).intValue(), 5,
-            false, null, EnumSchoolRoomsTypes.NORMAL);
+            false, null, Collections.singletonList(EnumSchoolRoomsTypesDb.NORMAL), false);
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_MATHEMATIQUES_ID);
         mongoTemplate.insert(subject, MONGO_COLLECTION_NAME);
         MigrationTempData.subjects.add(subject);
@@ -201,7 +201,7 @@ public class ChangeSet009SixiemeSubjects {
             BigDecimal.valueOf(1), DevDbMigrationsConstants.SUBJECT_EDUCATION_CIVIQUE_COLOR,
             DevDbMigrationsConstants.SUBJECT_EDUCATION_CIVIQUE_BGCOLOR,
             false, 60, 60, BigDecimal.valueOf(60 * 3L).intValue(), 3,
-            false, null, EnumSchoolRoomsTypes.NORMAL);
+            false, null, Collections.singletonList(EnumSchoolRoomsTypesDb.NORMAL), false);
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_EDUC_CIV_ID);
         mongoTemplate.insert(subject, MONGO_COLLECTION_NAME);
         MigrationTempData.subjects.add(subject);
@@ -220,7 +220,7 @@ public class ChangeSet009SixiemeSubjects {
             BigDecimal.valueOf(1), DevDbMigrationsConstants.SUBJECT_SVT_COLOR,
             DevDbMigrationsConstants.SUBJECT_SVT_BGCOLOR,
             false, 120, 120, BigDecimal.valueOf(60 * 4L).intValue(), 4,
-            false, null, EnumSchoolRoomsTypes.SCIENCES);
+            false, null, Collections.singletonList(EnumSchoolRoomsTypesDb.SCIENCES), false);
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_SVT_ID);
         mongoTemplate.insert(subject, MONGO_COLLECTION_NAME);
         MigrationTempData.subjects.add(subject);
@@ -239,7 +239,7 @@ public class ChangeSet009SixiemeSubjects {
             BigDecimal.valueOf(1), DevDbMigrationsConstants.SUBJECT_PHYSIQUE_CHIMIE_COLOR,
             DevDbMigrationsConstants.SUBJECT_PHYSIQUE_CHIMIE_BGCOLOR,
             false, 120, 120, BigDecimal.valueOf(60 * 4L).intValue(), 4,
-            false, null, EnumSchoolRoomsTypes.SCIENCES);
+            false, null, Collections.singletonList(EnumSchoolRoomsTypesDb.SCIENCES), false);
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_PHYSIQUE_ID);
         mongoTemplate.insert(subject, MONGO_COLLECTION_NAME);
         MigrationTempData.subjects.add(subject);
@@ -258,7 +258,7 @@ public class ChangeSet009SixiemeSubjects {
             BigDecimal.valueOf(1), DevDbMigrationsConstants.SUBJECT_MUSIQUE_COLOR,
             DevDbMigrationsConstants.SUBJECT_MUSIQUE_BGCOLOR,
             false, 60, 60, BigDecimal.valueOf(60).intValue(), 1,
-            false, null, EnumSchoolRoomsTypes.MUSIC);
+            false, null, Collections.singletonList(EnumSchoolRoomsTypesDb.MUSIC), false);
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_MUSIC_ID);
         subject.setPreferredPartsOfDaysInTimetables(Arrays.asList(
             new PreferredPartsOfDaysDbVO(EnumDays.MONDAY, Collections.singletonList(EnumPartsOfDay.PM)),

@@ -1,6 +1,7 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
 import io.edukativ.myskoolin.domain.entity.Subject;
+import io.edukativ.myskoolin.domain.vo.SchoolClassTimeSlot;
 import io.edukativ.myskoolin.domain.vo.TimeSlot;
 
 import java.util.List;
@@ -16,11 +17,11 @@ public class TimeTableValidation {
     private boolean halfTimeslotsNotOverlapping;
     private boolean timeSlotsNotEmpty;
     private List<Subject> subjects;
-    private List<TimeSlot> timeSlots;
+    private List<SchoolClassTimeSlot> timeSlots;
 
     public TimeTableValidation(String schoolClassName, boolean durationOk, boolean notOutside, boolean standardTimeslotsNotOverlapping,
                                boolean halfTimeslotsNotOverlapping, boolean allTimeSlotsHaveSchoolRooms,
-                               boolean allTimeSlotsHaveTeachers, boolean timeSlotsNotEmpty, List<Subject> subjects, List<TimeSlot> timeSlots) {
+                               boolean allTimeSlotsHaveTeachers, boolean timeSlotsNotEmpty, List<Subject> subjects, List<SchoolClassTimeSlot> timeSlots) {
         this.schoolClassName = schoolClassName;
         this.durationOk = durationOk;
         this.notOutside = notOutside;
@@ -73,7 +74,7 @@ public class TimeTableValidation {
         return subjects;
     }
 
-    public List<TimeSlot> getTimeSlots() {
+    public List<SchoolClassTimeSlot> getTimeSlots() {
         return timeSlots;
     }
 

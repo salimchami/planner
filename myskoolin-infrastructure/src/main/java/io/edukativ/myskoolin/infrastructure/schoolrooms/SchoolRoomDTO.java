@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.schoolrooms;
 
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypes;
-import io.edukativ.myskoolin.infrastructure.schooling.TimeSlotDTO;
+import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
+import io.edukativ.myskoolin.infrastructure.schooling.TimeSlotVO;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -21,7 +21,7 @@ public class SchoolRoomDTO implements Serializable {
 
     private List<SchoolRoomDistanceDTO> distances;
 
-    private List<TimeSlotDTO> timetable;
+    private List<TimeSlotVO> timetable;
 
     private String name;
 
@@ -29,7 +29,7 @@ public class SchoolRoomDTO implements Serializable {
 
     private Integer seats;
 
-    private EnumSchoolRoomsTypes type;
+    private EnumSchoolRoomsTypesDb type;
 
     private BigDecimal surface;
 
@@ -69,11 +69,11 @@ public class SchoolRoomDTO implements Serializable {
         this.distances = distances;
     }
 
-    public List<TimeSlotDTO> getTimetable() {
+    public List<TimeSlotVO> getTimetable() {
         return timetable;
     }
 
-    public void setTimetable(List<TimeSlotDTO> timetable) {
+    public void setTimetable(List<TimeSlotVO> timetable) {
         this.timetable = timetable;
     }
 
@@ -101,11 +101,11 @@ public class SchoolRoomDTO implements Serializable {
         this.seats = seats;
     }
 
-    public EnumSchoolRoomsTypes getType() {
+    public EnumSchoolRoomsTypesDb getType() {
         return type;
     }
 
-    public void setType(EnumSchoolRoomsTypes type) {
+    public void setType(EnumSchoolRoomsTypesDb type) {
         this.type = type;
     }
 

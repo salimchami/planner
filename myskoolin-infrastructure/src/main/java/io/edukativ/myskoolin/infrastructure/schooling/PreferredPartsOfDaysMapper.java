@@ -7,5 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface PreferredPartsOfDaysMapper {
 
-    PreferredPartsOfDaysVO dbVoToVo(PreferredPartsOfDaysDbVO preferredPartsOfDays);
+    PreferredPartsOfDaysVO map(PreferredPartsOfDaysDbVO preferredPartsOfDays);
 }

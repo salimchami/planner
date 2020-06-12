@@ -12,7 +12,7 @@ import java.util.Arrays;
  */
 @JsonSerialize(using = EnumSchoolRoomsTypesSerializer.class)
 @JsonDeserialize(using = EnumSchoolRoomsTypesDeserializer.class)
-public enum EnumSchoolRoomsTypes {
+public enum EnumSchoolRoomsTypesDb {
 
     NORMAL("schoolRoom.enums.types.normal"),
     SCIENCES("schoolRoom.enums.types.sciences"),
@@ -25,7 +25,7 @@ public enum EnumSchoolRoomsTypes {
 
     private final String code;
 
-    EnumSchoolRoomsTypes(String code) {
+    EnumSchoolRoomsTypesDb(String code) {
         this.code = code;
     }
 
@@ -33,8 +33,8 @@ public enum EnumSchoolRoomsTypes {
         return code;
     }
 
-    public static EnumSchoolRoomsTypes fromCode(String code) {
-        return Arrays.stream(EnumSchoolRoomsTypes.values())
+    public static EnumSchoolRoomsTypesDb fromCode(String code) {
+        return Arrays.stream(EnumSchoolRoomsTypesDb.values())
             .filter(type -> code.equals(type.getCode()))
             .findFirst()
             .orElse(null);

@@ -1,11 +1,11 @@
 package io.edukativ.myskoolin.infrastructure.common.utils;
 
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 
 @ReadingConverter
-public class EnumSchoolRoomTypesToEnumConverter implements Converter<String, EnumSchoolRoomsTypes> {
+public class EnumSchoolRoomTypesToEnumConverter implements Converter<String, EnumSchoolRoomsTypesDb> {
 
     public static final EnumSchoolRoomTypesToEnumConverter INSTANCE = new EnumSchoolRoomTypesToEnumConverter();
 
@@ -13,8 +13,8 @@ public class EnumSchoolRoomTypesToEnumConverter implements Converter<String, Enu
     }
 
     @Override
-    public EnumSchoolRoomsTypes convert(String source) {
-        return EnumSchoolRoomsTypes.fromCode(source);
+    public EnumSchoolRoomsTypesDb convert(String source) {
+        return EnumSchoolRoomsTypesDb.fromCode(source);
     }
 
 }

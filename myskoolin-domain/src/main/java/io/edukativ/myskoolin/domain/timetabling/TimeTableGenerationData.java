@@ -4,6 +4,7 @@ import io.edukativ.myskoolin.domain.entity.SchoolClass;
 import io.edukativ.myskoolin.domain.entity.SchoolRoom;
 import io.edukativ.myskoolin.domain.entity.Subject;
 import io.edukativ.myskoolin.domain.vo.EnumDays;
+import io.edukativ.myskoolin.domain.vo.SchoolClassTimeSlot;
 import io.edukativ.myskoolin.domain.vo.TimeSlot;
 import io.edukativ.myskoolin.domain.vo.TimeTableOptions;
 
@@ -81,7 +82,7 @@ public class TimeTableGenerationData {
     private boolean validateSchoolRooms(List<SchoolRoom> schoolRooms) {
         return schoolClass.getTimetable().stream().allMatch(timeSlot -> {
             Optional<SchoolRoom> timeSlotSchoolRoom = schoolRooms.stream().filter(schoolRoom -> schoolRoom.getId().equals(timeSlot.getSchoolRoomId())).findFirst();
-            Optional<Subject> timeSlotSubject = subjects.stream().filter(subject -> subject.getId().equals(timeSlot.getSubjectId())).findFirst();
+            Optional<Subject> timeSlotSubject = subjects.stream().filter(subject -> subject.getId().equals(timeSlot.getSubject().getId())).findFirst();
             return timeSlotSchoolRoom.isPresent() && timeSlotSubject.isPresent() && timeSlotSubject.get().getSchoolRoomsTypes().contains(timeSlotSchoolRoom.get().getType());
         });
     }
@@ -136,9 +137,9 @@ public class TimeTableGenerationData {
                 || firstTimeSlot.getStartTime().toLocalTime().isBefore(timeTableOptions.getCoursesStartTime().toLocalTime());
     }
 
-    public static int addedDurationForSubject(Subject subject, List<TimeSlot> timeSlots) {
+    public static int addedDurationForSubject(Subject subject, List<SchoolClassTimeSlot> timeSlots) {
         return timeSlots.stream()
-                .filter(timeSlot -> timeSlot.getSubjectId().equals(subject.getId()))
+                .filter(timeSlot -> timeSlot.getSubject().getId().equals(subject.getId()))
                 .reduce(0, (partialTotalminutes, timeSlot) ->
                         partialTotalminutes + timeSlotDurationInMinutesWithHalf(timeSlot, LocalDateTime.now()), Integer::sum);
     }

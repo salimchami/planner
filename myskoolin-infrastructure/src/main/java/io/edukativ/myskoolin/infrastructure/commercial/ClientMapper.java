@@ -18,9 +18,9 @@ import org.mapstruct.Mapper;
 })
 public interface ClientMapper {
 
-    ClientDTO dbDTOtoDTO(ClientDbDTO client);
+    ClientDTO map(ClientDbDTO client);
 
-    ClientDbDTO dTOtoDbDTO(ClientDTO client);
+    ClientDbDTO map(ClientDTO client);
 
 
 }

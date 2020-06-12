@@ -95,7 +95,7 @@ public class UserMapper {
         User user = new User();
         user.setId(userDbDTO.getId());
         user.setLogin(userDbDTO.getLogin());
-        user.setClientId(objectIdMapper.toString(userDbDTO.getClientId()));
+        user.setClientId(objectIdMapper.map(userDbDTO.getClientId()));
         user.setGender(userDbDTO.getGender());
         user.setFirstName(userDbDTO.getFirstName());
         user.setLastName(userDbDTO.getLastName());

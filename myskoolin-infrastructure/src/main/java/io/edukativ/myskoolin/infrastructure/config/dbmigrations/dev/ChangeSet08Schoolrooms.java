@@ -2,7 +2,7 @@ package io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev;
 
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.MigrationTempData;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev.util.DevDbMigrationsConstants;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDbDTO;
@@ -19,7 +19,7 @@ public class ChangeSet08Schoolrooms {
     public void addSchoolRoomsNORMAL(MongoTemplate mongoTemplate) {
         for (int i = 100; i < 110; i++) {
             SchoolRoomDbDTO room = new SchoolRoomDbDTO(null, DevDbMigrationsConstants.CLIENT_01_ID,
-                new ArrayList<>(), new ArrayList<>(), Integer.toString(i), false, 22, EnumSchoolRoomsTypes.NORMAL,
+                new ArrayList<>(), new ArrayList<>(), Integer.toString(i), false, 22, EnumSchoolRoomsTypesDb.NORMAL,
                 new BigDecimal("30"),
                 "", "2556878", "654654657", false);
             switch (i) {
@@ -65,7 +65,7 @@ public class ChangeSet08Schoolrooms {
     public void addSchoolRoomsSciences(MongoTemplate mongoTemplate) {
         for (int i = 1; i <= 4; i++) {
             SchoolRoomDbDTO room = new SchoolRoomDbDTO(null, DevDbMigrationsConstants.CLIENT_01_ID,
-                new ArrayList<>(), new ArrayList<>(), "SCIENCES-".concat(Integer.toString(i)), false, 35, EnumSchoolRoomsTypes.SCIENCES,
+                new ArrayList<>(), new ArrayList<>(), "SCIENCES-".concat(Integer.toString(i)), false, 35, EnumSchoolRoomsTypesDb.SCIENCES,
                 new BigDecimal("40"),
                 "", "25546878", "6546454657", false);
             switch (i) {
@@ -93,7 +93,7 @@ public class ChangeSet08Schoolrooms {
     public void addSchoolRoomsMusic(MongoTemplate mongoTemplate) {
         for (int i = 1; i <= 2; i++) {
             SchoolRoomDbDTO room = new SchoolRoomDbDTO(null, DevDbMigrationsConstants.CLIENT_01_ID,
-                new ArrayList<>(), new ArrayList<>(), "MUSIC-".concat(Integer.toString(i)), false, 35, EnumSchoolRoomsTypes.MUSIC,
+                new ArrayList<>(), new ArrayList<>(), "MUSIC-".concat(Integer.toString(i)), false, 35, EnumSchoolRoomsTypesDb.MUSIC,
                 new BigDecimal("40"),
                 "", "25546878", "6546454657", false);
             switch (i) {
@@ -115,7 +115,7 @@ public class ChangeSet08Schoolrooms {
     public void addSchoolRoomsSport(MongoTemplate mongoTemplate) {
         for (int i = 1; i <= 4; i++) {
             SchoolRoomDbDTO room = new SchoolRoomDbDTO(null, DevDbMigrationsConstants.CLIENT_01_ID,
-                new ArrayList<>(), new ArrayList<>(), "SPORT-".concat(Integer.toString(i)), false, 0, EnumSchoolRoomsTypes.SPORT,
+                new ArrayList<>(), new ArrayList<>(), "SPORT-".concat(Integer.toString(i)), false, 0, EnumSchoolRoomsTypesDb.SPORT,
                 new BigDecimal("100"),
                 "", "25546878", "6546454657", false);
             switch (i) {
@@ -143,7 +143,7 @@ public class ChangeSet08Schoolrooms {
     public void addSchoolRoomsIT(MongoTemplate mongoTemplate) {
         for (int i = 1; i <= 3; i++) {
             SchoolRoomDbDTO room = new SchoolRoomDbDTO(null, DevDbMigrationsConstants.CLIENT_01_ID,
-                new ArrayList<>(), new ArrayList<>(), "IT-".concat(Integer.toString(i)), false, 22, EnumSchoolRoomsTypes.IT,
+                new ArrayList<>(), new ArrayList<>(), "IT-".concat(Integer.toString(i)), false, 22, EnumSchoolRoomsTypesDb.IT,
                 new BigDecimal("30"),
                 "", "25546878", "6546454657", false);
             switch (i) {
@@ -167,7 +167,7 @@ public class ChangeSet08Schoolrooms {
     @ChangeSet(order = "06", author = "sch", id = "06-schoolrooms-MULTIPURPOSE")
     public void addSchoolRoomsMulti(MongoTemplate mongoTemplate) {
         SchoolRoomDbDTO room = new SchoolRoomDbDTO(null, DevDbMigrationsConstants.CLIENT_01_ID,
-            new ArrayList<>(), new ArrayList<>(), "Salle polyvalente", false, 80, EnumSchoolRoomsTypes.MULTIPURPOSE,
+            new ArrayList<>(), new ArrayList<>(), "Salle polyvalente", false, 80, EnumSchoolRoomsTypesDb.MULTIPURPOSE,
             new BigDecimal("200"),
             "", "25546878", "6546454657", false);
         mongoTemplate.insert(room);
@@ -177,7 +177,7 @@ public class ChangeSet08Schoolrooms {
     @ChangeSet(order = "07", author = "sch", id = "07-schoolrooms-STEPPED")
     public void addSchoolRoomsSTEPPED(MongoTemplate mongoTemplate) {
         SchoolRoomDbDTO room = new SchoolRoomDbDTO(null, DevDbMigrationsConstants.CLIENT_01_ID,
-            new ArrayList<>(), new ArrayList<>(), "René Descartes", false, 80, EnumSchoolRoomsTypes.STEPPED,
+            new ArrayList<>(), new ArrayList<>(), "René Descartes", false, 80, EnumSchoolRoomsTypesDb.STEPPED,
             new BigDecimal("200"),
             "", "25546878", "6546454657", false);
         mongoTemplate.insert(room);
@@ -187,7 +187,7 @@ public class ChangeSet08Schoolrooms {
     @ChangeSet(order = "08", author = "sch", id = "08-schoolrooms-AMPHITHEATER")
     public void addSchoolRoomsAMPHITHEATER(MongoTemplate mongoTemplate) {
         SchoolRoomDbDTO room = new SchoolRoomDbDTO(null, DevDbMigrationsConstants.CLIENT_01_ID,
-            new ArrayList<>(), new ArrayList<>(), "Amphitheater", false, 80, EnumSchoolRoomsTypes.AMPHITHEATER,
+            new ArrayList<>(), new ArrayList<>(), "Amphitheater", false, 80, EnumSchoolRoomsTypesDb.AMPHITHEATER,
             new BigDecimal("200"),
             "", "25546878", "6546454657", false);
         mongoTemplate.insert(room);

@@ -1,18 +1,17 @@
 package io.edukativ.myskoolin.application;
 
-import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDTO;
-import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomMapper;
 import io.edukativ.myskoolin.application.security.UserService;
 import io.edukativ.myskoolin.domain.entity.SchoolRoom;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoomAPI;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
-import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDbDTO;
-import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomRepository;
 import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;
+import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDTO;
+import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDbDTO;
+import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomMapper;
+import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,28 +35,23 @@ public class SchoolRoomApplication {
     }
 
     public List<SchoolRoomDTO> findSchoolRooms() {
-        Optional<UserDbDTO> optCurrentUser = userService.getCurrentUserWithAuthorities();
-        return optCurrentUser.map(user -> {
-            final List<SchoolRoomDbDTO> schoolRooms = schoolRoomRepository.findByClientId(false, user.getClientId());
-            return schoolRoomMapper.dbDtosToDtos(schoolRooms);
-        }).orElse(Collections.emptyList());
+        UserDbDTO user = userService.getCurrentUserWithAuthorities();
+        final List<SchoolRoomDbDTO> schoolRooms = schoolRoomRepository.findByClientId(false, user.getClientId());
+        return schoolRoomMapper.dbDtosToDtos(schoolRooms);
     }
 
     public Optional<SchoolRoomDTO> findOneByName(String name) {
-        final Optional<UserDbDTO> optUserWithAuthorities = userService.getCurrentUserWithAuthorities();
-        return optUserWithAuthorities.flatMap(user -> {
-            final Optional<SchoolRoomDbDTO> optSchoolRoomDTO = schoolRoomRepository.findOneByName(name, false, user.getClientId());
-            return optSchoolRoomDTO.map(schoolRoomMapper::dbDTOToDTO);
-        });
+        UserDbDTO user = userService.getCurrentUserWithAuthorities();
+        final Optional<SchoolRoomDbDTO> optSchoolRoomDTO = schoolRoomRepository.findOneByName(name, false, user.getClientId());
+        return optSchoolRoomDTO.map(schoolRoomMapper::dbDTOToDTO);
     }
 
     public SchoolRoomDTO createOrUpdateSchoolRoom(SchoolRoomDTO schoolRoomDTO) {
-        final Optional<UserDbDTO> optUserWithAuthorities = userService.getCurrentUserWithAuthorities();
-        return optUserWithAuthorities.flatMap(userDbDTO -> {
-            final SchoolRoom schoolRoom = schoolRoomMapper.dtoToDomain(schoolRoomDTO);
-            Optional<SchoolRoom> optSavedSchoolRoom = schoolRoomAPI.createOrUpdateSchoolRoom(schoolRoom, userMapper.dbDtoToDomain(userDbDTO));
-            return optSavedSchoolRoom.map(schoolRoomMapper::domainToDto);
-        }).orElseThrow();
+        UserDbDTO user = userService.getCurrentUserWithAuthorities();
+        final SchoolRoom schoolRoom = schoolRoomMapper.dtoToDomain(schoolRoomDTO);
+        Optional<SchoolRoom> optSavedSchoolRoom = schoolRoomAPI.createOrUpdateSchoolRoom(schoolRoom, userMapper.dbDtoToDomain(user));
+        // FIXME: delete orElse(null)
+        return optSavedSchoolRoom.map(schoolRoomMapper::domainToDto).orElse(null);
     }
 
     public void deleteSchoolRoom(String id) {

@@ -263,10 +263,9 @@ public class UserService {
         return userRepository.findOneByLogin(login);
     }
 
-    public Optional<UserDbDTO> getCurrentUserWithAuthorities() {
-        return SecurityUtils.getCurrentUserLogin().flatMap(s -> {
-            return userRepository.findOneByLogin(s);
-        });
+    public UserDbDTO getCurrentUserWithAuthorities() {
+        final Optional<UserDbDTO> userDbDTO = SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin);
+        return userDbDTO.orElseThrow(() -> new CurrentUserNotFoundException("No current user found !"));
     }
 
     /**

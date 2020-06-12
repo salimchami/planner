@@ -1,12 +1,12 @@
 package io.edukativ.myskoolin.application;
 
-import io.edukativ.myskoolin.infrastructure.commercial.ClientDTO;
-import io.edukativ.myskoolin.infrastructure.commercial.ClientMapper;
+import io.edukativ.myskoolin.application.security.CurrentUserNotFoundException;
 import io.edukativ.myskoolin.application.security.UserService;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
+import io.edukativ.myskoolin.infrastructure.commercial.ClientDTO;
 import io.edukativ.myskoolin.infrastructure.commercial.ClientDbDTO;
+import io.edukativ.myskoolin.infrastructure.commercial.ClientMapper;
 import io.edukativ.myskoolin.infrastructure.commercial.ClientRepository;
-import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,14 +27,12 @@ public class ClientApplication {
     }
 
     public Optional<ClientDTO> currentClient() {
-        Optional<UserDbDTO> user = userService.getCurrentUserWithAuthorities();
-        if (user.isPresent()) {
-            ObjectId clientId = user.get().getClientId();
-            Optional<ClientDbDTO> client = clientRepository.findOneById(clientId);
-            if (client.isPresent()) {
-                return Optional.of(clientMapper.dbDTOtoDTO(client.get()));
-            }
+        try {
+            UserDbDTO user = userService.getCurrentUserWithAuthorities();
+            Optional<ClientDbDTO> client = clientRepository.findOneById(user.getClientId());
+            return Optional.of(clientMapper.map(client.get()));
+        } catch (CurrentUserNotFoundException e) {
+            return Optional.empty();
         }
-        return Optional.empty();
     }
 }

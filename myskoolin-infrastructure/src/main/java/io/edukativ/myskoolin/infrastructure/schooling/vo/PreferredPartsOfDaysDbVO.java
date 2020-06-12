@@ -3,9 +3,10 @@ package io.edukativ.myskoolin.infrastructure.schooling.vo;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumPartsOfDay;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PreferredPartsOfDaysDbVO {
+public class PreferredPartsOfDaysDbVO implements Serializable {
 
     private EnumDays day;
     private List<EnumPartsOfDay> partsOfDay;

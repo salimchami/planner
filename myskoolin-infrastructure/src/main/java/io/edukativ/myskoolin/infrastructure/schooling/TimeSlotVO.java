@@ -1,25 +1,31 @@
 package io.edukativ.myskoolin.infrastructure.schooling;
 
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
-import io.edukativ.myskoolin.infrastructure.common.vo.TimeDbVO;
+import io.edukativ.myskoolin.infrastructure.common.vo.TimeVO;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
-public class TimeSlotDTO implements Serializable {
+public class TimeSlotVO implements Serializable {
 
     private String title;
     private String secondTitle;
     private String comment;
     private Boolean canceled;
     private EnumDays day;
-    private TimeDbVO startTime;
-    private TimeDbVO endTime;
+    private TimeVO startTime;
+    private TimeVO endTime;
     private ZonedDateTime date;
     private String bgColor;
     private String fontColorCssClass;
     private Boolean autoAlterable;
     private boolean half;
+
+    private String schoolRoomId;
+    private String schoolClassId;
+    private String subjectId;
+    private String teacherId;
+
 
     public String getTitle() {
         return title;
@@ -61,19 +67,19 @@ public class TimeSlotDTO implements Serializable {
         this.day = day;
     }
 
-    public TimeDbVO getStartTime() {
+    public TimeVO getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(TimeDbVO startTime) {
+    public void setStartTime(TimeVO startTime) {
         this.startTime = startTime;
     }
 
-    public TimeDbVO getEndTime() {
+    public TimeVO getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(TimeDbVO endTime) {
+    public void setEndTime(TimeVO endTime) {
         this.endTime = endTime;
     }
 
@@ -115,5 +121,37 @@ public class TimeSlotDTO implements Serializable {
 
     public void setHalf(boolean half) {
         this.half = half;
+    }
+
+    public String getSchoolRoomId() {
+        return schoolRoomId;
+    }
+
+    public void setSchoolRoomId(String schoolRoomId) {
+        this.schoolRoomId = schoolRoomId;
+    }
+
+    public String getSchoolClassId() {
+        return schoolClassId;
+    }
+
+    public void setSchoolClassId(String schoolClassId) {
+        this.schoolClassId = schoolClassId;
+    }
+
+    public String getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(String subjectId) {
+        this.subjectId = subjectId;
+    }
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
     }
 }

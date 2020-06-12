@@ -8,9 +8,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface FeatureMapper {
 
-    FeatureDTO featureToFeatureDTO(FeatureDbDTO grade);
+    FeatureDTO map(FeatureDbDTO grade);
 
-    FeatureDbDTO featureDTOToFeature(FeatureDTO grade);
+    FeatureDbDTO map(FeatureDTO grade);
 
     List<FeatureDTO> featuresToFeaturesDTO(List<FeatureDbDTO> all);
 

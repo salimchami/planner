@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.subjects;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeSerieDbVO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.PreferredPartsOfDaysDbVO;
@@ -47,6 +47,7 @@ public class SubjectDbDTO implements Comparable<SubjectDbDTO>, Serializable {
     public static final String MONGO_FIELD_PARTS_OF_DAYS_IN_TIMETABLES = "parts_of_days_in_timetables";
     public static final String MONGO_FIELD_SCHOOL_ROOMS_TYPE = "school_room_type";
     public static final String MONGO_FIELD_DAY_BETWEEN_TIMESLOTS = "days_between_timeslots";
+    public static final String MONGO_FIELD_GROUP_SUBJECT = "group_subject";
 
     @Id
     private ObjectId id;
@@ -100,11 +101,14 @@ public class SubjectDbDTO implements Comparable<SubjectDbDTO>, Serializable {
     @Field(MONGO_FIELD_COMMENT)
     private String comment;
 
+    @Field(MONGO_FIELD_GROUP_SUBJECT)
+    private boolean groupSubject;
+
     @Field(MONGO_FIELD_PARTS_OF_DAYS_IN_TIMETABLES)
     private List<PreferredPartsOfDaysDbVO> preferredPartsOfDaysInTimetables;
 
     @Field(MONGO_FIELD_SCHOOL_ROOMS_TYPE)
-    private EnumSchoolRoomsTypes schoolRoomsType;
+    private List<EnumSchoolRoomsTypesDb> schoolRoomsTypes;
 
     @Field(MONGO_FIELD_DAY_BETWEEN_TIMESLOTS)
     private Integer daysBetweenTimeSlots;
@@ -116,7 +120,7 @@ public class SubjectDbDTO implements Comparable<SubjectDbDTO>, Serializable {
     public SubjectDbDTO(ObjectId clientId, String name, String customName, GradeDbDTO grade, GradeSerieDbVO gradeSerie,
                         BigDecimal coefficient, String color, String bgColor, Boolean foreignLanguage,
                         Integer maxMinutesPerDay, Integer minMinutesPerDay, Integer minutesPerWeek,
-                        Integer coursesFrequencyPerWeek, Boolean deleted, String comment, EnumSchoolRoomsTypes schoolRoomsType) {
+                        Integer coursesFrequencyPerWeek, Boolean deleted, String comment, List<EnumSchoolRoomsTypesDb> schoolRoomsTypes, boolean groupSubject) {
         this.clientId = clientId;
         this.name = name;
         this.customName = customName;
@@ -132,7 +136,28 @@ public class SubjectDbDTO implements Comparable<SubjectDbDTO>, Serializable {
         this.coursesFrequencyPerWeek = coursesFrequencyPerWeek;
         this.deleted = deleted;
         this.comment = comment;
-        this.schoolRoomsType = schoolRoomsType;
+        this.schoolRoomsTypes = schoolRoomsTypes;
+        this.groupSubject = groupSubject;
+    }
+
+    public void update(SubjectDbDTO subject) {
+        this.name = subject.getName();
+        this.customName = subject.getCustomName();
+        this.grade = subject.getGrade();
+        this.gradeSerie = subject.getGradeSerie();
+        this.coefficient = subject.getCoefficient();
+        this.color = subject.getColor();
+        this.bgColor = subject.getBgColor();
+        this.foreignLanguage = subject.isForeignLanguage();
+        this.maxMinutesPerDay = subject.getMaxMinutesPerDay();
+        this.minMinutesPerDay = subject.getMinMinutesPerDay();
+        this.minutesPerWeek = subject.getMinutesPerWeek();
+        this.coursesFrequencyPerWeek = subject.getCoursesFrequencyPerWeek();
+        this.comment = subject.getComment();
+        this.groupSubject = subject.isGroupSubject();
+        this.preferredPartsOfDaysInTimetables = subject.getPreferredPartsOfDaysInTimetables();
+        this.schoolRoomsTypes = subject.getSchoolRoomsTypes();
+        this.daysBetweenTimeSlots = subject.getDaysBetweenTimeSlots();
     }
 
     public ObjectId getId() {
@@ -323,12 +348,12 @@ public class SubjectDbDTO implements Comparable<SubjectDbDTO>, Serializable {
                 .compare(this, o);
     }
 
-    public EnumSchoolRoomsTypes getSchoolRoomsType() {
-        return schoolRoomsType;
+    public List<EnumSchoolRoomsTypesDb> getSchoolRoomsTypes() {
+        return schoolRoomsTypes;
     }
 
-    public void setSchoolRoomsType(EnumSchoolRoomsTypes schoolRoomsType) {
-        this.schoolRoomsType = schoolRoomsType;
+    public void setSchoolRoomsTypes(List<EnumSchoolRoomsTypesDb> schoolRoomsTypes) {
+        this.schoolRoomsTypes = schoolRoomsTypes;
     }
 
     public Integer getDaysBetweenTimeSlots() {
@@ -337,5 +362,13 @@ public class SubjectDbDTO implements Comparable<SubjectDbDTO>, Serializable {
 
     public void setDaysBetweenTimeSlots(Integer daysBetweenTimeSlots) {
         this.daysBetweenTimeSlots = daysBetweenTimeSlots;
+    }
+
+    public boolean isGroupSubject() {
+        return groupSubject;
+    }
+
+    public void setGroupSubject(boolean groupSubject) {
+        this.groupSubject = groupSubject;
     }
 }

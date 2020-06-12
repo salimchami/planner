@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static io.edukativ.myskoolin.infrastructure.subjects.SubjectDbDTO.MONGO_FIELD_MAX_MINUTES_PER_WEEK;
+
 /**
  * A Grade.
  */
@@ -63,6 +65,9 @@ public class GradeDbDTO implements Serializable, Comparable<GradeDbDTO> {
     @Field(MONGO_FIELD_TIMETABLE_OPTIONS)
     private TimeTableOptionsDbVO timeTableOptions;
 
+    @Field(MONGO_FIELD_MAX_MINUTES_PER_WEEK)
+    private Integer maxMinutesPerWeek;
+
     public GradeDbDTO() {
     }
 
@@ -72,7 +77,7 @@ public class GradeDbDTO implements Serializable, Comparable<GradeDbDTO> {
 
     public GradeDbDTO(ObjectId clientId, String name, Integer order, String diminutive,
                       EnumSchoolClassNotation notation, Integer maxMinutesPerDay, List<GradeSerieDbVO> series,
-                      TimeTableOptionsDbVO timeTableOptions) {
+                      TimeTableOptionsDbVO timeTableOptions, Integer maxMinutesPerWeek) {
         this.clientId = clientId;
         this.name = name;
         this.order = order;
@@ -81,12 +86,13 @@ public class GradeDbDTO implements Serializable, Comparable<GradeDbDTO> {
         this.series = series;
         this.notation = notation;
         this.timeTableOptions = timeTableOptions;
+        this.maxMinutesPerWeek = maxMinutesPerWeek;
     }
 
     public GradeDbDTO(ObjectId id, ObjectId clientId, String name, Integer order, String diminutive,
                       EnumSchoolClassNotation notation, Integer maxMinutesPerDay, List<GradeSerieDbVO> series,
-                      TimeTableOptionsDbVO timeTableOptions) {
-        this(clientId, name, order, diminutive, notation, maxMinutesPerDay, series, timeTableOptions);
+                      TimeTableOptionsDbVO timeTableOptions, Integer maxMinutesPerWeek) {
+        this(clientId, name, order, diminutive, notation, maxMinutesPerDay, series, timeTableOptions, maxMinutesPerWeek);
         this.id = id;
     }
 
@@ -223,5 +229,13 @@ public class GradeDbDTO implements Serializable, Comparable<GradeDbDTO> {
                 })
                 .findFirst();
         return grade.flatMap(value -> value.getSeries().stream().filter(gradeSerie -> gradeSerieName.equals(gradeSerie.getName())).findFirst());
+    }
+
+    public Integer getMaxMinutesPerWeek() {
+        return maxMinutesPerWeek;
+    }
+
+    public void setMaxMinutesPerWeek(Integer maxMinutesPerWeek) {
+        this.maxMinutesPerWeek = maxMinutesPerWeek;
     }
 }

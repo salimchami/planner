@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.schoolrooms;
 
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.SchoolClassTimeSlotDbVO;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -62,7 +62,7 @@ public class SchoolRoomDbDTO implements Serializable {
     private Integer seats;
 
     @Field(MONGO_FIELD_TYPE)
-    private EnumSchoolRoomsTypes type;
+    private EnumSchoolRoomsTypesDb type;
 
     @Field(MONGO_FIELD_SURFACE)
     private BigDecimal surface;
@@ -88,7 +88,7 @@ public class SchoolRoomDbDTO implements Serializable {
     }
 
     public SchoolRoomDbDTO(ObjectId id, ObjectId clientId, List<SchoolRoomDistanceDbVO> distances, List<SchoolClassTimeSlotDbVO> timetable,
-                           String name, Boolean closed, Integer seats, EnumSchoolRoomsTypes type, BigDecimal surface,
+                           String name, Boolean closed, Integer seats, EnumSchoolRoomsTypesDb type, BigDecimal surface,
                            String comment, String longitude, String latitude, Boolean deleted) {
         this.id = id;
         this.clientId = clientId;
@@ -199,11 +199,11 @@ public class SchoolRoomDbDTO implements Serializable {
         this.deleted = deleted;
     }
 
-    public EnumSchoolRoomsTypes getType() {
+    public EnumSchoolRoomsTypesDb getType() {
         return type;
     }
 
-    public void setType(EnumSchoolRoomsTypes type) {
+    public void setType(EnumSchoolRoomsTypesDb type) {
         this.type = type;
     }
 

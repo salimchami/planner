@@ -16,11 +16,13 @@ public interface GradeMapper {
 
     List<GradeDTO> dbDtosToDtos(List<GradeDbDTO> grades);
 
-    GradeDTO dbDtoToDto(GradeDbDTO grade);
+    GradeDTO map(GradeDbDTO grade);
 
     List<GradeDTO> modelsToDtos(List<Grade> grades);
 
     List<Grade> dbDtosToModels(List<GradeDbDTO> allNotDeleted);
 
     List<GradeDbDTO> dtosToDbDtos(List<GradeDTO> grades);
+
+    GradeDTO map(Grade grade);
 }

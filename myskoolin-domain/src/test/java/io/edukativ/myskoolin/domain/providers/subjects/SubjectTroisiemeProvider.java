@@ -26,7 +26,7 @@ public final class SubjectTroisiemeProvider {
                 GlobalProvider.Subjects.Troisieme.SUBJECT_TROISIEME_FRANCAIS_ID, GradeProvider.troisiemeGrade, "FRANCAIS", false,
                 60, 60 * 2, 60 * 3, 3,
                 Collections.emptyList(),
-                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0);
+                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
     /**
@@ -37,7 +37,7 @@ public final class SubjectTroisiemeProvider {
                 GlobalProvider.Subjects.Troisieme.SUBJECT_TROISIEME_FRANCAIS_EPI_ID, GradeProvider.troisiemeGrade, "Français - EPI", false,
                 60, 60, 60, 1,
                 Collections.emptyList(),
-                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0);
+                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
     private static Subject maths() {
@@ -45,7 +45,7 @@ public final class SubjectTroisiemeProvider {
                 GlobalProvider.Subjects.Troisieme.SUBJECT_TROISIEME_MATHS_ID, GradeProvider.troisiemeGrade, "MATHEMATIQUES", false,
                 60, 60 * 2, (int) (60 * 2.5), 3,
                 Collections.emptyList(),
-                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0);
+                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
     /**
@@ -56,7 +56,7 @@ public final class SubjectTroisiemeProvider {
                 GlobalProvider.Subjects.Troisieme.SUBJECT_TROISIEME_MATHS_EPI_ID, GradeProvider.troisiemeGrade, "MATHS - EPI", false,
                 60, 60, 60, 1,
                 Collections.emptyList(),
-                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0);
+                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
 
@@ -65,7 +65,7 @@ public final class SubjectTroisiemeProvider {
                 GlobalProvider.Subjects.Troisieme.SUBJECT_TROISIEME_HISTGEO_GEO_ID, GradeProvider.troisiemeGrade, "HISTOIRE GEOGRAPHIE", false,
                 60, 60, 60 * 2, 2,
                 Collections.emptyList(),
-                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0);
+                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
     private static Subject educationCivique() {
@@ -73,7 +73,7 @@ public final class SubjectTroisiemeProvider {
                 GlobalProvider.Subjects.Troisieme.SUBJECT_TROISIEME_EDUCCIV_ID, GradeProvider.troisiemeGrade, "ENSEIGNEMENT MORAL ET CIVIQUE", false,
                 60, 60, 60, 1,
                 Collections.emptyList(),
-                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0);
+                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
 
     }
 
@@ -82,7 +82,7 @@ public final class SubjectTroisiemeProvider {
                 GlobalProvider.Subjects.Troisieme.SUBJECT_TROISIEME_ANGLAIS_ID, GradeProvider.troisiemeGrade, "ANGLAIS", true,
                 60, 60 * 2, 60 * 3, 3,
                 Collections.emptyList(),
-                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0);
+                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
     private static Subject allemand() {
@@ -90,7 +90,7 @@ public final class SubjectTroisiemeProvider {
                 GlobalProvider.Subjects.Troisieme.SUBJECT_TROISIEME_ALLEMAND_ID, GradeProvider.troisiemeGrade, "ALLEMAND", true,
                 60, 60, 60 * 2, 2,
                 Collections.emptyList(),
-                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0);
+                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
     private static Subject svt() {
@@ -98,7 +98,7 @@ public final class SubjectTroisiemeProvider {
                 GlobalProvider.Subjects.Troisieme.SUBJECT_TROISIEME_SVT_ID, GradeProvider.troisiemeGrade, "SCIENCES DE LA VIE ET DE LA TERRE", false,
                 60, 60, 60, 1,
                 Collections.emptyList(),
-                Collections.singletonList(EnumSchoolRoomsTypes.SCIENCES), 1);
+                Collections.singletonList(EnumSchoolRoomsTypes.SCIENCES), 1, "");
     }
 
     private static Subject physique() {
@@ -106,7 +106,7 @@ public final class SubjectTroisiemeProvider {
                 GlobalProvider.Subjects.Troisieme.SUBJECT_TROISIEME_PHYSIQUE_ID, GradeProvider.troisiemeGrade, "PHYSIQUE-CHIMIE", false,
                 60, 60, 60, 1,
                 Collections.emptyList(),
-                Collections.singletonList(EnumSchoolRoomsTypes.SCIENCES), 1);
+                Collections.singletonList(EnumSchoolRoomsTypes.SCIENCES), 1, "");
     }
 
     private static Subject techno() {
@@ -118,7 +118,7 @@ public final class SubjectTroisiemeProvider {
                         new PreferredPartsOfDays(EnumDays.TUESDAY, EnumPartsOfDay.PM),
                         new PreferredPartsOfDays(EnumDays.FRIDAY, EnumPartsOfDay.PM)
                 ),
-                Collections.singletonList(EnumSchoolRoomsTypes.IT), 1);
+                Collections.singletonList(EnumSchoolRoomsTypes.IT), 1, "");
     }
 
     /**
@@ -129,7 +129,7 @@ public final class SubjectTroisiemeProvider {
                 GlobalProvider.Subjects.Troisieme.SUBJECT_TROISIEME_SCIENCES_EPI_ID, GradeProvider.troisiemeGrade, "Sciences - EPI", false,
                 (int) (60 * 1.5), (int) (60 * 1.5), (int) (60 * 1.5), 1,
                 Collections.emptyList(),
-                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0);
+                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
     private static Subject sport() {
@@ -141,7 +141,7 @@ public final class SubjectTroisiemeProvider {
                         new PreferredPartsOfDays(EnumDays.THURSDAY, EnumPartsOfDay.PM),
                         new PreferredPartsOfDays(EnumDays.FRIDAY, EnumPartsOfDay.PM)
                 ),
-                Collections.singletonList(EnumSchoolRoomsTypes.SPORT), 1);
+                Collections.singletonList(EnumSchoolRoomsTypes.SPORT), 1, "");
     }
 
     private static Subject dessin() {
@@ -149,7 +149,7 @@ public final class SubjectTroisiemeProvider {
                 GlobalProvider.Subjects.Troisieme.SUBJECT_TROISIEME_DESSIN_ID, GradeProvider.troisiemeGrade, "ARTS PLASTIQUES", false,
                 60, 60, 60, 1,
                 Collections.singletonList(new PreferredPartsOfDays(EnumDays.FRIDAY)),
-                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0);
+                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
     private static Subject musique() {
@@ -157,7 +157,7 @@ public final class SubjectTroisiemeProvider {
                 GlobalProvider.Subjects.Troisieme.SUBJECT_TROISIEME_MUSIQUE_ID, GradeProvider.troisiemeGrade, "EDUCATION MUSICALE", false,
                 60, 60, 60, 1,
                 Collections.emptyList(),
-                Collections.singletonList(EnumSchoolRoomsTypes.MUSIC), 0);
+                Collections.singletonList(EnumSchoolRoomsTypes.MUSIC), 0, "");
     }
 
     private static Subject latin() {
@@ -165,6 +165,6 @@ public final class SubjectTroisiemeProvider {
                 GlobalProvider.Subjects.Troisieme.SUBJECT_TROISIEME_LATIN_ID, GradeProvider.troisiemeGrade, "Latin", false,
                 60, 60, 60 * 2, 2,
                 Collections.emptyList(),
-                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0);
+                Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 }

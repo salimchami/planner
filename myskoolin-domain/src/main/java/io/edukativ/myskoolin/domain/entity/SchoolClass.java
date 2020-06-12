@@ -1,9 +1,6 @@
 package io.edukativ.myskoolin.domain.entity;
 
-import io.edukativ.myskoolin.domain.vo.EnumSchoolClassNotation;
-import io.edukativ.myskoolin.domain.vo.GradeSerie;
-import io.edukativ.myskoolin.domain.vo.TeachersBySubject;
-import io.edukativ.myskoolin.domain.vo.TimeSlot;
+import io.edukativ.myskoolin.domain.vo.*;
 import io.edukativ.myskoolin.domain.commons.exceptions.NotFoundException;
 
 import java.time.ZonedDateTime;
@@ -27,7 +24,7 @@ public class SchoolClass {
     private List<String> headTeachers;
     private Grade grade;
     private GradeSerie gradeSerie;
-    private List<TimeSlot> timetable;
+    private List<SchoolClassTimeSlot> timetable;
     private List<TimeSlot> dailyBook;
     private EnumSchoolClassNotation notation;
     private List<TeachersBySubject> teachersBySubjects;
@@ -35,7 +32,7 @@ public class SchoolClass {
     public SchoolClass() {
     }
 
-    public SchoolClass(String id, String clientId, ZonedDateTime coursesStartDate, ZonedDateTime coursesEndDate, List<ZonedDateTime> councilsDates, String customName, String name, Boolean deleted, List<String> headTeachers, Grade grade, GradeSerie gradeSerie, List<TimeSlot> timetable, List<TimeSlot> dailyBook, EnumSchoolClassNotation notation, List<TeachersBySubject> teachersBySubjects) {
+    public SchoolClass(String id, String clientId, ZonedDateTime coursesStartDate, ZonedDateTime coursesEndDate, List<ZonedDateTime> councilsDates, String customName, String name, Boolean deleted, List<String> headTeachers, Grade grade, GradeSerie gradeSerie, List<SchoolClassTimeSlot> timetable, List<TimeSlot> dailyBook, EnumSchoolClassNotation notation, List<TeachersBySubject> teachersBySubjects) {
         this.id = id;
         this.clientId = clientId;
         this.coursesStartDate = coursesStartDate;
@@ -147,14 +144,14 @@ public class SchoolClass {
         this.gradeSerie = gradeSerie;
     }
 
-    public List<TimeSlot> getTimetable() {
+    public List<SchoolClassTimeSlot> getTimetable() {
         if (this.timetable == null) {
             this.timetable = new ArrayList<>();
         }
         return timetable;
     }
 
-    public void setTimetable(List<TimeSlot> timetable) {
+    public void setTimetable(List<SchoolClassTimeSlot> timetable) {
         this.timetable = timetable;
     }
 

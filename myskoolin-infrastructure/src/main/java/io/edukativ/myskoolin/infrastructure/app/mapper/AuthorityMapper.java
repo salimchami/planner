@@ -11,5 +11,5 @@ public interface AuthorityMapper {
 
     Set<Authority> dbDtosToDomains(Set<AuthorityDbDTO> authority);
 
-    Authority dbDtoToDomain(AuthorityDbDTO authority);
+    Authority map(AuthorityDbDTO authority);
 }

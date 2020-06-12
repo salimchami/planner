@@ -1,14 +1,12 @@
 package io.edukativ.myskoolin.domain.entity;
 
+import io.edukativ.myskoolin.domain.commons.exceptions.NoGradeFoundException;
 import io.edukativ.myskoolin.domain.vo.EnumSchoolRoomsTypes;
 import io.edukativ.myskoolin.domain.vo.GradeSerie;
 import io.edukativ.myskoolin.domain.vo.PreferredPartsOfDays;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -21,7 +19,6 @@ public class Subject implements Comparable<Subject> {
     private String name;
     private String customName;
     private Grade grade;
-    // TODO
     private boolean groupSubject;
     private GradeSerie gradeSerie;
     private BigDecimal coefficient;
@@ -33,6 +30,7 @@ public class Subject implements Comparable<Subject> {
     private Integer minutesPerWeek;
     private Integer coursesFrequencyPerWeek;
     private Boolean deleted;
+    private String comment;
     private List<PreferredPartsOfDays> preferredPartsOfDaysInTimetables;
     private List<EnumSchoolRoomsTypes> schoolRoomsTypes;
     private Integer daysBetweenTimeSlots;
@@ -45,7 +43,7 @@ public class Subject implements Comparable<Subject> {
                    BigDecimal coefficient, String color, String bgColor,
                    Boolean foreignLanguage, Integer maxMinutesPerDay, Integer minMinutesPerDay,
                    Integer minutesPerWeek, Integer coursesFrequencyPerWeek, Boolean deleted,
-                   List<PreferredPartsOfDays> preferredPartsOfDaysInTimetables,
+                   String comment, List<PreferredPartsOfDays> preferredPartsOfDaysInTimetables,
                    List<EnumSchoolRoomsTypes> schoolRoomsTypes, Integer daysBetweenTimeSlots) {
         this.id = id;
         this.clientId = clientId;
@@ -62,6 +60,7 @@ public class Subject implements Comparable<Subject> {
         this.minutesPerWeek = minutesPerWeek;
         this.coursesFrequencyPerWeek = coursesFrequencyPerWeek;
         this.deleted = deleted;
+        this.comment = comment;
         this.preferredPartsOfDaysInTimetables = preferredPartsOfDaysInTimetables;
         this.schoolRoomsTypes = schoolRoomsTypes;
         this.daysBetweenTimeSlots = daysBetweenTimeSlots;
@@ -217,6 +216,22 @@ public class Subject implements Comparable<Subject> {
         this.daysBetweenTimeSlots = daysBetweenTimeSlots;
     }
 
+    public boolean isGroupSubject() {
+        return groupSubject;
+    }
+
+    public void setGroupSubject(boolean groupSubject) {
+        this.groupSubject = groupSubject;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -258,15 +273,29 @@ public class Subject implements Comparable<Subject> {
         return subjects.stream().filter(subject -> subject.getGrade().getId().equals(grade.getId())).collect(Collectors.toList());
     }
 
-    public boolean isGroupSubject() {
-        return groupSubject;
-    }
-
-    public void setGroupSubject(boolean groupSubject) {
-        this.groupSubject = groupSubject;
-    }
-
     public static Integer totalDurationPerWeek(List<Subject> subjects) {
         return subjects.stream().map(Subject::getMinutesPerWeek).mapToInt(Integer::intValue).sum();
+    }
+
+    public void findAndSetGradeIfPresent(List<Grade> grades) {
+        final Optional<Grade> optGrade = grades
+                .stream()
+                .filter(g -> g.getName().equals(grade.getName()))
+                .findFirst();
+        if(optGrade.isPresent()) {
+            this.setGrade(optGrade.get());
+        } else {
+            throw new NoGradeFoundException(String.format("No grade for subject %s", name));
+        }
+    }
+
+    public void findAndSetGradeSerieFromGrade() {
+        if (gradeSerie != null) {
+            Optional<GradeSerie> optGradeSerie = grade.getSeries()
+                    .stream()
+                    .filter(gs -> gs.getName().equals(gradeSerie.getName()))
+                    .findFirst();
+            optGradeSerie.ifPresent(this::setGradeSerie);
+        }
     }
 }

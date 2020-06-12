@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.subjects;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.domain.vo.EnumSchoolRoomsTypes;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeSerieVO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.PreferredPartsOfDaysVO;
@@ -32,10 +32,11 @@ public class SubjectDTO implements Comparable<SubjectDTO>, Serializable {
     private Integer minMinutesPerDay;
     private Integer minutesPerWeek;
     private Integer coursesFrequencyPerWeek;
+    private boolean groupSubject;
     private Boolean deleted;
     private String comment;
     private List<PreferredPartsOfDaysVO> preferredPartsOfDaysInTimetables;
-    private EnumSchoolRoomsTypes schoolRoomsType;
+    private List<EnumSchoolRoomsTypes> schoolRoomsTypes;
     private Integer daysBetweenTimeSlots;
 
     public ObjectId getId() {
@@ -174,12 +175,12 @@ public class SubjectDTO implements Comparable<SubjectDTO>, Serializable {
         this.preferredPartsOfDaysInTimetables = preferredPartsOfDaysInTimetables;
     }
 
-    public EnumSchoolRoomsTypes getSchoolRoomsType() {
-        return schoolRoomsType;
+    public List<EnumSchoolRoomsTypes> getSchoolRoomsTypes() {
+        return schoolRoomsTypes;
     }
 
-    public void setSchoolRoomsType(EnumSchoolRoomsTypes schoolRoomsType) {
-        this.schoolRoomsType = schoolRoomsType;
+    public void setSchoolRoomsTypes(List<EnumSchoolRoomsTypes> schoolRoomsTypes) {
+        this.schoolRoomsTypes = schoolRoomsTypes;
     }
 
     public Integer getDaysBetweenTimeSlots() {
@@ -232,5 +233,13 @@ public class SubjectDTO implements Comparable<SubjectDTO>, Serializable {
                 .thenComparing(SubjectDTO::getMinutesPerWeek)
                 .thenComparing(SubjectDTO::getCoursesFrequencyPerWeek)
                 .compare(this, o);
+    }
+
+    public boolean isGroupSubject() {
+        return groupSubject;
+    }
+
+    public void setGroupSubject(boolean groupSubject) {
+        this.groupSubject = groupSubject;
     }
 }

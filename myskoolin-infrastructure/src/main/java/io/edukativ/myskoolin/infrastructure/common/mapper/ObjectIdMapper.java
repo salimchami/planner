@@ -6,14 +6,14 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface ObjectIdMapper {
 
-    default ObjectId toObjectId(String id) {
+    default ObjectId map(String id) {
         if (id != null && !id.isEmpty()) {
             return new ObjectId(id);
         }
         return null;
     }
 
-    default String toString(ObjectId id) {
+    default String map(ObjectId id) {
         if (id != null) {
             return id.toString();
         }

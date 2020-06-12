@@ -6,10 +6,13 @@ import io.edukativ.myskoolin.domain.grades.GradeService;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoomAPI;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoomSPI;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoomService;
+import io.edukativ.myskoolin.domain.subjects.SubjectAPI;
 import io.edukativ.myskoolin.domain.subjects.SubjectSPI;
+import io.edukativ.myskoolin.domain.subjects.SubjectService;
 import io.edukativ.myskoolin.infrastructure.grades.GradeMapper;
 import io.edukativ.myskoolin.infrastructure.grades.GradeProvider;
 import io.edukativ.myskoolin.infrastructure.grades.GradeRepository;
+import io.edukativ.myskoolin.infrastructure.subjects.SubjectMapper;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectRepository;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomMapper;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomProvider;
@@ -19,8 +22,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SchoolRoomInjectionConfiguration {
+public class MyskoolinDomainInjectionConfiguration {
 
+    @Bean
+    public SubjectAPI subjectAPI(SubjectSPI subjectSPI, GradeSPI gradeSPI) {
+        return new SubjectService(subjectSPI, gradeSPI);
+    }
     @Bean
     public SchoolRoomAPI schoolRoomAPI(SchoolRoomSPI schoolRoomSPI) {
         return new SchoolRoomService(schoolRoomSPI);
@@ -42,7 +49,7 @@ public class SchoolRoomInjectionConfiguration {
     }
 
     @Bean
-    public SubjectSPI subjectSPI(SubjectRepository subjectRepository) {
-        return new SubjectProvider(subjectRepository);
+    public SubjectSPI subjectSPI(SubjectRepository subjectRepository, SubjectMapper subjectMapper) {
+        return new SubjectProvider(subjectRepository, subjectMapper);
     }
 }

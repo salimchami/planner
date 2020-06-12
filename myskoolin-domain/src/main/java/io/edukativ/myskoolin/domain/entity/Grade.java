@@ -163,18 +163,6 @@ public class Grade implements Comparable<Grade> {
         return timeTableOptions;
     }
 
-    public static Optional<GradeSerie> findGradeSerieInGrades(List<Grade> grades, String gradeSerieName) {
-        Optional<Grade> grade = grades.stream()
-                .filter(gradeFromList -> {
-                    Optional<GradeSerie> serie = gradeFromList.getSeries()
-                            .stream()
-                            .filter(gradeSerie -> gradeSerieName.equals(gradeSerie.getName())).findFirst();
-                    return serie.isPresent();
-                })
-                .findFirst();
-        return grade.flatMap(value -> value.getSeries().stream().filter(gradeSerie -> gradeSerieName.equals(gradeSerie.getName())).findFirst());
-    }
-
     public Integer getMaxMinutesPerWeek() {
         return maxMinutesPerWeek;
     }

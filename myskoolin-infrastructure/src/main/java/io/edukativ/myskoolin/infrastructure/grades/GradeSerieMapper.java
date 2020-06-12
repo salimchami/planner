@@ -10,7 +10,7 @@ public interface GradeSerieMapper {
 
     List<GradeSerieVO> dbDtosToDtos(List<GradeSerieDbVO> gradeSeries);
 
-    GradeSerieVO dbDtoToDto(GradeSerieDbVO gradeSerie);
+    GradeSerieVO map(GradeSerieDbVO gradeSerie);
 
     List<GradeSerieVO> modelToDtos(List<GradeSerie> gradesSeries);
 }

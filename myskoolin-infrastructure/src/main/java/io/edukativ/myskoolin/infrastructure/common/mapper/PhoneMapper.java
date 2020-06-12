@@ -7,8 +7,8 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface PhoneMapper {
 
-    PhoneDTO dbDtoToDto(PhoneDbVO phone);
+    PhoneDTO map(PhoneDbVO phone);
 
-    PhoneDbVO dtoToDbDto(PhoneDTO phone);
+    PhoneDbVO map(PhoneDTO phone);
 
 }

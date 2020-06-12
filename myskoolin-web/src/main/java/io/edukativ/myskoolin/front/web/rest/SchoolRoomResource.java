@@ -1,9 +1,9 @@
 package io.edukativ.myskoolin.front.web.rest;
 
 import io.edukativ.myskoolin.application.SchoolRoomApplication;
+import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDTO;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypes;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.micrometer.core.annotation.Timed;
@@ -154,8 +154,8 @@ class SchoolRoomResource {
     })
     public ResponseEntity<List<String>> schoolRoomsTypes() {
         return new ResponseEntity<>(
-            Arrays.stream(EnumSchoolRoomsTypes.values())
-                .map(EnumSchoolRoomsTypes::getCode)
+            Arrays.stream(EnumSchoolRoomsTypesDb.values())
+                .map(EnumSchoolRoomsTypesDb::getCode)
                 .collect(Collectors.toList()),
             HttpStatus.OK
         );

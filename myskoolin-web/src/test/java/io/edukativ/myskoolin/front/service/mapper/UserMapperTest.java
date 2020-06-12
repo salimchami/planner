@@ -34,7 +34,6 @@ public class UserMapperTest {
     private UserMapper userMapper;
     private UserDbDTO user;
     private UserDTO userDto;
-    private ObjectId clientId;
 
     @BeforeEach
     public void init() {
@@ -42,7 +41,7 @@ public class UserMapperTest {
         AuthorityMapper authorityMapper = mock(AuthorityMapper.class);
         ObjectIdMapper objectIdMapper = mock(ObjectIdMapper.class);
         userMapper = new UserMapper(addressMapper, authorityMapper, objectIdMapper);
-        clientId = new ObjectId("60a2d3827407395bcf9ef001");
+        ObjectId clientId = new ObjectId("60a2d3827407395bcf9ef001");
         user = new UserDbDTO.UserDbDTOBuilder()
             .clientId(clientId)
             .login(DEFAULT_LOGIN)

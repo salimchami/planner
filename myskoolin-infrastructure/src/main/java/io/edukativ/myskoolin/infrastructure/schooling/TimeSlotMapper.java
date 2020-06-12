@@ -8,8 +8,8 @@ import org.mapstruct.Mapper;
 })
 public interface TimeSlotMapper {
 
-    TimeSlotDTO dbDtoToDto(TimeSlotDbVO timeSlot);
+    TimeSlotVO dbDtoToDto(TimeSlotDbVO timeSlot);
 
-    TimeSlotDbVO dtoToDbDto(TimeSlotDTO timeSlot);
+    TimeSlotDbVO dtoToDbDto(TimeSlotVO timeSlot);
 
 }
