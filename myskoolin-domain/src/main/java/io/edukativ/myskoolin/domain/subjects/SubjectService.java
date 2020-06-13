@@ -24,7 +24,7 @@ public class SubjectService implements SubjectAPI {
         if (subject.getClientId() == null) {
             subject.setClientId(user.getClientId());
         }
-        final List<Grade> grades = gradeSPI.findAllNotDeletedByClientId(subject.getClientId());
+        final List<Grade> grades = gradeSPI.findNotDeletedByClientId(subject.getClientId());
         subject.findAndSetGradeIfPresent(grades);
         subject.findAndSetGradeSerieFromGrade();
         return subjectSPI.createSubject(subject);
@@ -32,7 +32,7 @@ public class SubjectService implements SubjectAPI {
 
     @Override
     public Subject updateSubject(Subject subject, User user) {
-        final List<Grade> grades = gradeSPI.findAllNotDeletedByClientId(subject.getClientId());
+        final List<Grade> grades = gradeSPI.findNotDeletedByClientId(subject.getClientId());
         subject.findAndSetGradeIfPresent(grades);
         subject.findAndSetGradeSerieFromGrade();
         return subjectSPI.updateSubject(subject);

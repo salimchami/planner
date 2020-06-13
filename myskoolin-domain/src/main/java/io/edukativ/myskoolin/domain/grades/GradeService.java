@@ -36,7 +36,7 @@ public class GradeService implements GradeAPI {
         if (currentUser.hasAuthority(AuthoritiesConstants.SCHOOLME_ADMIN)) {
             grades = gradeSPI.findAll();
         } else {
-            grades = gradeSPI.findAllNotDeletedByClientId(currentUser.getClientId());
+            grades = gradeSPI.findNotDeletedByClientId(currentUser.getClientId());
         }
         return grades
                 .stream()
