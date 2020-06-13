@@ -75,6 +75,8 @@ public class DatabaseConfiguration {
         converters.add(EnumSchoolRoomTypesToEnumConverter.INSTANCE);
         converters.add(EnumDaysToCodeConverter.INSTANCE);
         converters.add(EnumDaysToEnumConverter.INSTANCE);
+        converters.add(EnumPartsOfDayToCodeConverter.INSTANCE);
+        converters.add(EnumPartsOfDayToEnumConverter.INSTANCE);
         return new MongoCustomConversions(converters);
     }
 

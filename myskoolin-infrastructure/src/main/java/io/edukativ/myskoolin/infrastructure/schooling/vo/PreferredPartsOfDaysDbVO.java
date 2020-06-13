@@ -26,4 +26,12 @@ public class PreferredPartsOfDaysDbVO implements Serializable {
     public List<EnumPartsOfDay> getPartsOfDay() {
         return partsOfDay;
     }
+
+    public void setDay(EnumDays day) {
+        this.day = day;
+    }
+
+    public void setPartsOfDay(List<EnumPartsOfDay> partsOfDay) {
+        this.partsOfDay = partsOfDay;
+    }
 }

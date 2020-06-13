@@ -5,7 +5,6 @@ import io.edukativ.myskoolin.domain.entity.Subject;
 import io.edukativ.myskoolin.domain.entity.User;
 import io.edukativ.myskoolin.domain.subjects.SubjectAPI;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
-import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDTO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDbDTO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectMapper;
@@ -25,7 +24,7 @@ public class SubjectApplication {
     private final SubjectMapper subjectMapper;
     private final SubjectRepository subjectRepository;
 
-    public SubjectApplication(UserService userService, SubjectAPI subjectAPI, UserMapper userMapper,
+    public SubjectApplication(UserService userService, SubjectAPI subjectAPI,
                               SubjectMapper subjectMapper, SubjectRepository subjectRepository) {
         this.userService = userService;
         this.subjectAPI = subjectAPI;

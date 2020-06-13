@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.subjects;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.edukativ.myskoolin.domain.vo.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeSerieVO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.PreferredPartsOfDaysVO;
@@ -35,7 +35,7 @@ public class SubjectDTO implements Comparable<SubjectDTO>, Serializable {
     private Boolean deleted;
     private String comment;
     private List<PreferredPartsOfDaysVO> preferredPartsOfDaysInTimetables;
-    private List<EnumSchoolRoomsTypes> schoolRoomsTypes;
+    private List<EnumSchoolRoomsTypesDb> schoolRoomsTypes;
     private Integer daysBetweenTimeSlots;
 
     public String getId() {
@@ -174,11 +174,11 @@ public class SubjectDTO implements Comparable<SubjectDTO>, Serializable {
         this.preferredPartsOfDaysInTimetables = preferredPartsOfDaysInTimetables;
     }
 
-    public List<EnumSchoolRoomsTypes> getSchoolRoomsTypes() {
+    public List<EnumSchoolRoomsTypesDb> getSchoolRoomsTypes() {
         return schoolRoomsTypes;
     }
 
-    public void setSchoolRoomsTypes(List<EnumSchoolRoomsTypes> schoolRoomsTypes) {
+    public void setSchoolRoomsTypes(List<EnumSchoolRoomsTypesDb> schoolRoomsTypes) {
         this.schoolRoomsTypes = schoolRoomsTypes;
     }
 
