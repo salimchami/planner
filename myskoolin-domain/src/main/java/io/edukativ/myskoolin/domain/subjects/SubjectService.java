@@ -1,5 +1,6 @@
 package io.edukativ.myskoolin.domain.subjects;
 
+import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.domain.entity.Grade;
 import io.edukativ.myskoolin.domain.entity.Subject;
 import io.edukativ.myskoolin.domain.entity.User;
@@ -34,5 +35,23 @@ public class SubjectService implements SubjectAPI {
         subject.findAndSetGradeIfPresent(grades);
         subject.findAndSetGradeSerieFromGrade();
         return subjectSPI.updateSubject(subject);
+    }
+
+    @Override
+    public List<Subject> searchByName(String name, User user) {
+        if (user.hasAuthority(AuthoritiesConstants.SCHOOLME_ADMIN)) {
+            return subjectSPI.searchSubjects(name);
+        } else {
+            return subjectSPI.searchSubjects(user.getClientId(), name);
+        }
+    }
+
+    @Override
+    public List<Subject> subjectsByGradesId(List<String> gradesId, User user) {
+        if (user.hasAuthority(AuthoritiesConstants.SCHOOLME_ADMIN)) {
+            return subjectSPI.findByGradeContaining(gradesId);
+        } else {
+            return subjectSPI.findByGradeInAndClientId(gradesId, user.getClientId());
+        }
     }
 }

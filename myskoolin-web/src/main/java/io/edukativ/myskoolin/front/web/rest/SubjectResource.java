@@ -101,7 +101,7 @@ class SubjectResource {
     @PostMapping(value = "/by-grades")
     public ResponseEntity<List<SubjectDTO>> getSubjectsByGradesIds(@RequestBody List<String> gradesIds) {
         log.debug("REST request to get all searched Subjects");
-        List<SubjectDTO> subjects = subjectApplication.subjectsByGradesIds(gradesIds);
+        List<SubjectDTO> subjects = subjectApplication.subjectsByGradesId(gradesIds);
         return new ResponseEntity<>(subjects, HttpStatus.OK);
     }
 

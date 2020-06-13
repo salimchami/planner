@@ -1,10 +1,12 @@
 package io.edukativ.myskoolin.application.security;
 
+import io.edukativ.myskoolin.domain.entity.User;
 import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.exceptions.EmailAlreadyUsedException;
 import io.edukativ.myskoolin.infrastructure.app.exceptions.InvalidPasswordException;
 import io.edukativ.myskoolin.infrastructure.app.exceptions.UsernameAlreadyUsedException;
+import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;
 import io.edukativ.myskoolin.infrastructure.app.repository.AuthorityRepository;
 import io.edukativ.myskoolin.infrastructure.app.repository.search.UserSearchRepository;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
@@ -43,11 +45,14 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserSearchRepository userSearchRepository, AuthorityRepository authorityRepository) {
+    private final UserMapper userMapper;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserSearchRepository userSearchRepository, AuthorityRepository authorityRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userSearchRepository = userSearchRepository;
         this.authorityRepository = authorityRepository;
+        this.userMapper = userMapper;
     }
 
     public Optional<UserDbDTO> activateRegistration(String key) {
@@ -263,9 +268,14 @@ public class UserService {
         return userRepository.findOneByLogin(login);
     }
 
-    public UserDbDTO getCurrentUserWithAuthorities() {
+    public UserDbDTO currentUserWithAuthorities() {
         final Optional<UserDbDTO> userDbDTO = SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin);
         return userDbDTO.orElseThrow(() -> new CurrentUserNotFoundException("No current user found !"));
+    }
+
+    public User currentUser() {
+        UserDbDTO userDbDTO = currentUserWithAuthorities();
+        return userMapper.dbDtoToDomain(userDbDTO);
     }
 
     /**

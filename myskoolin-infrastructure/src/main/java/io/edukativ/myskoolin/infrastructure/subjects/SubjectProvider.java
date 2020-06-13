@@ -5,7 +5,9 @@ import io.edukativ.myskoolin.domain.subjects.SubjectSPI;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class SubjectProvider implements SubjectSPI {
@@ -39,5 +41,31 @@ public class SubjectProvider implements SubjectSPI {
             final SubjectDbDTO savedSubject = subjectRepository.save(dbSubject);
             return subjectMapper.dbDtoToDomain(savedSubject);
         }).orElseThrow();
+    }
+
+    @Override
+    public List<Subject> searchSubjects(String clientId, String name) {
+        final List<SubjectDbDTO> subjectDbDTOS = subjectRepository.searchSubjects(new ObjectId(clientId), name);
+        return subjectMapper.dbDtosToDomains(subjectDbDTOS);
+    }
+
+    @Override
+    public List<Subject> searchSubjects(String name) {
+        final List<SubjectDbDTO> subjectDbDTOS = subjectRepository.searchSubjects(name);
+        return subjectMapper.dbDtosToDomains(subjectDbDTOS);
+    }
+
+    @Override
+    public List<Subject> findByGradeContaining(List<String> gradesId) {
+        final List<SubjectDbDTO> subjects = subjectRepository.findByGradeContaining(gradesId
+                .stream().map(ObjectId::new).collect(Collectors.toList()));
+        return subjectMapper.dbDtosToDomains(subjects);
+    }
+
+    @Override
+    public List<Subject> findByGradeInAndClientId(List<String> gradesId, String clientId) {
+        final List<SubjectDbDTO> subjects = subjectRepository.findByGradeInAndClientId(gradesId
+                .stream().map(ObjectId::new).collect(Collectors.toList()), new ObjectId(clientId));
+        return subjectMapper.dbDtosToDomains(subjects);
     }
 }

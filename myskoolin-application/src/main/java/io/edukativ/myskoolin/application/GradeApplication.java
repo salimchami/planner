@@ -45,13 +45,13 @@ public class GradeApplication {
     }
 
     public List<GradeDTO> findGrades() {
-        UserDbDTO user = userService.getCurrentUserWithAuthorities();
-        final List<Grade> grades = gradeAPI.findGrades(userMapper.dbDtoToDomain(user));
+        User user = userService.currentUser();
+        final List<Grade> grades = gradeAPI.findGrades(user);
         return gradeMapper.modelsToDtos(grades);
     }
 
     public Optional<GradeDTO> findGradeByName(String name) {
-        UserDbDTO user = userService.getCurrentUserWithAuthorities();
+        UserDbDTO user = userService.currentUserWithAuthorities();
         Optional<GradeDbDTO> optDbGrade = gradeRepository.findOneByName(name, false, user.getClientId());
         return optDbGrade.map(dbGrade -> {
             final List<SubjectDbDTO> subjects = subjectRepository.findByGrade(dbGrade.getId(), false);
@@ -83,19 +83,18 @@ public class GradeApplication {
     }
 
     public Boolean isGradeAvailableByName(String name) {
-        UserDbDTO user = userService.getCurrentUserWithAuthorities();
+        UserDbDTO user = userService.currentUserWithAuthorities();
         return gradeRepository.findOneByName(name, false, user.getClientId()).isEmpty();
     }
 
     public Boolean isGradeDiminutiveAvailable(String diminutive) {
-        UserDbDTO user = userService.getCurrentUserWithAuthorities();
+        UserDbDTO user = userService.currentUserWithAuthorities();
         return gradeRepository.findOneByDiminutive(diminutive, false, user.getClientId()).isEmpty();
     }
 
     public List<GradeSerieVO> findAllSeries() {
-        UserDbDTO user = userService.getCurrentUserWithAuthorities();
-        final User currentUser = userMapper.dbDtoToDomain(user);
-        final List<GradeSerie> allGradesSeries = gradeAPI.findAllGradesSeries(currentUser);
+        User user = userService.currentUser();
+        final List<GradeSerie> allGradesSeries = gradeAPI.findAllGradesSeries(user);
         return gradeSerieMapper.modelToDtos(allGradesSeries);
     }
 }

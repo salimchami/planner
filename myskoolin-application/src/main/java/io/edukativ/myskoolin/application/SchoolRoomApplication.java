@@ -35,19 +35,19 @@ public class SchoolRoomApplication {
     }
 
     public List<SchoolRoomDTO> findSchoolRooms() {
-        UserDbDTO user = userService.getCurrentUserWithAuthorities();
+        UserDbDTO user = userService.currentUserWithAuthorities();
         final List<SchoolRoomDbDTO> schoolRooms = schoolRoomRepository.findByClientId(false, user.getClientId());
         return schoolRoomMapper.dbDtosToDtos(schoolRooms);
     }
 
     public Optional<SchoolRoomDTO> findOneByName(String name) {
-        UserDbDTO user = userService.getCurrentUserWithAuthorities();
+        UserDbDTO user = userService.currentUserWithAuthorities();
         final Optional<SchoolRoomDbDTO> optSchoolRoomDTO = schoolRoomRepository.findOneByName(name, false, user.getClientId());
         return optSchoolRoomDTO.map(schoolRoomMapper::dbDTOToDTO);
     }
 
     public SchoolRoomDTO createOrUpdateSchoolRoom(SchoolRoomDTO schoolRoomDTO) {
-        UserDbDTO user = userService.getCurrentUserWithAuthorities();
+        UserDbDTO user = userService.currentUserWithAuthorities();
         final SchoolRoom schoolRoom = schoolRoomMapper.dtoToDomain(schoolRoomDTO);
         Optional<SchoolRoom> optSavedSchoolRoom = schoolRoomAPI.createOrUpdateSchoolRoom(schoolRoom, userMapper.dbDtoToDomain(user));
         // FIXME: delete orElse(null)

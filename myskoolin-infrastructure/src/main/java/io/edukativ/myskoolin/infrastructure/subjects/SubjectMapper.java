@@ -32,4 +32,8 @@ public interface SubjectMapper {
     default EnumSchoolRoomsTypes dbToVo(EnumSchoolRoomsTypesDb type) {
         return EnumSchoolRoomsTypes.valueOf(type.name());
     }
+
+    List<SubjectDTO> domainsToDtos(List<Subject> subjects);
+
+    List<Subject> dbDtosToDomains(List<SubjectDbDTO> subjectDbDTOS);
 }

@@ -28,7 +28,7 @@ public class ClientApplication {
 
     public Optional<ClientDTO> currentClient() {
         try {
-            UserDbDTO user = userService.getCurrentUserWithAuthorities();
+            UserDbDTO user = userService.currentUserWithAuthorities();
             Optional<ClientDbDTO> client = clientRepository.findOneById(user.getClientId());
             return Optional.of(clientMapper.map(client.get()));
         } catch (CurrentUserNotFoundException e) {

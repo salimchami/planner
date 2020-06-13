@@ -2,6 +2,7 @@ package io.edukativ.myskoolin.application;
 
 import io.edukativ.myskoolin.application.security.UserService;
 import io.edukativ.myskoolin.domain.entity.Subject;
+import io.edukativ.myskoolin.domain.entity.User;
 import io.edukativ.myskoolin.domain.subjects.SubjectAPI;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;
@@ -21,7 +22,6 @@ public class SubjectApplication {
 
     private final UserService userService;
     private final SubjectAPI subjectAPI;
-    private final UserMapper userMapper;
     private final SubjectMapper subjectMapper;
     private final SubjectRepository subjectRepository;
 
@@ -29,41 +29,39 @@ public class SubjectApplication {
                               SubjectMapper subjectMapper, SubjectRepository subjectRepository) {
         this.userService = userService;
         this.subjectAPI = subjectAPI;
-        this.userMapper = userMapper;
         this.subjectMapper = subjectMapper;
         this.subjectRepository = subjectRepository;
     }
 
     public SubjectDTO createSubject(SubjectDTO subject) {
-        UserDbDTO userDbDTO = userService.getCurrentUserWithAuthorities();
+        User userDbDTO = userService.currentUser();
         Subject savedSubject = subjectAPI.createSubject(
-                subjectMapper.dtoToDomain(subject),
-                userMapper.dbDtoToDomain(userDbDTO)
-        );
+                subjectMapper.dtoToDomain(subject), userDbDTO);
         return subjectMapper.domainToDto(savedSubject);
     }
 
     public SubjectDTO updateSubject(SubjectDTO subject) {
-        UserDbDTO userDbDTO = userService.getCurrentUserWithAuthorities();
-        Subject savedSubject = subjectAPI.updateSubject(
-                subjectMapper.dtoToDomain(subject),
-                userMapper.dbDtoToDomain(userDbDTO)
-        );
+        User userDbDTO = userService.currentUser();
+        Subject savedSubject = subjectAPI.updateSubject(subjectMapper.dtoToDomain(subject), userDbDTO);
         return subjectMapper.domainToDto(savedSubject);
     }
 
     public List<SubjectDTO> findAll() {
-        UserDbDTO userDbDTO = userService.getCurrentUserWithAuthorities();
+        UserDbDTO userDbDTO = userService.currentUserWithAuthorities();
         final List<SubjectDbDTO> subjects = subjectRepository.findAllNotDeleted(userDbDTO.getClientId());
         return subjectMapper.dbDtosToDtos(subjects);
     }
 
     public List<SubjectDTO> searchByName(String name) {
-        return null;
+        final User user = userService.currentUser();
+        List<Subject> subjects = subjectAPI.searchByName(name, user);
+        return subjectMapper.domainsToDtos(subjects);
     }
 
-    public List<SubjectDTO> subjectsByGradesIds(List<String> gradesIds) {
-        return null;
+    public List<SubjectDTO> subjectsByGradesId(List<String> gradesId) {
+        final User user = userService.currentUser();
+        List<Subject> subjects = subjectAPI.subjectsByGradesId(gradesId, user);
+        return subjectMapper.domainsToDtos(subjects);
     }
 
     public Optional<SubjectDTO> findById(String id) {
