@@ -302,4 +302,8 @@ public class UserService {
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(AuthorityDbDTO::getName).collect(Collectors.toList());
     }
+
+    public boolean currentUserExists() {
+        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin).isPresent();
+    }
 }

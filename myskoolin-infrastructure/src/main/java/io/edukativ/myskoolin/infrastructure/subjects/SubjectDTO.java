@@ -5,7 +5,6 @@ import io.edukativ.myskoolin.domain.vo.EnumSchoolRoomsTypes;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeSerieVO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.PreferredPartsOfDaysVO;
-import org.bson.types.ObjectId;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -18,8 +17,8 @@ import java.util.Objects;
  */
 public class SubjectDTO implements Comparable<SubjectDTO>, Serializable {
 
-    private ObjectId id;
-    private ObjectId clientId;
+    private String id;
+    private String clientId;
     private String name;
     private String customName;
     private GradeDTO grade;
@@ -39,19 +38,19 @@ public class SubjectDTO implements Comparable<SubjectDTO>, Serializable {
     private List<EnumSchoolRoomsTypes> schoolRoomsTypes;
     private Integer daysBetweenTimeSlots;
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public ObjectId getClientId() {
+    public String getClientId() {
         return clientId;
     }
 
-    public void setClientId(ObjectId clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 

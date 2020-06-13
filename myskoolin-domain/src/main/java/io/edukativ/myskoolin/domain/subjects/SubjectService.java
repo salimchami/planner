@@ -7,6 +7,7 @@ import io.edukativ.myskoolin.domain.entity.User;
 import io.edukativ.myskoolin.domain.grades.GradeSPI;
 
 import java.util.List;
+import java.util.Optional;
 
 public class SubjectService implements SubjectAPI {
 
@@ -53,5 +54,14 @@ public class SubjectService implements SubjectAPI {
         } else {
             return subjectSPI.findByGradeInAndClientId(gradesId, user.getClientId());
         }
+    }
+
+    @Override
+    public void deleteById(String id) {
+        Optional<Subject> optSubject = subjectSPI.findById(id);
+        optSubject.ifPresent(subject -> {
+            subject.setDeleted(true);
+            subjectSPI.save(subject);
+        });
     }
 }

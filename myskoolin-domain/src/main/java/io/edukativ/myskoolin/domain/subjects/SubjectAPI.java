@@ -14,4 +14,6 @@ public interface SubjectAPI {
     List<Subject> searchByName(String name, User user);
 
     List<Subject> subjectsByGradesId(List<String> gradesId, User user);
+
+    void deleteById(String id);
 }

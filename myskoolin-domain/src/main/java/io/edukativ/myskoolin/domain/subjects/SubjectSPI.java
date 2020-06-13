@@ -3,6 +3,7 @@ package io.edukativ.myskoolin.domain.subjects;
 import io.edukativ.myskoolin.domain.entity.Subject;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SubjectSPI {
     Integer countByGrade(String gradeId);
@@ -18,4 +19,8 @@ public interface SubjectSPI {
     List<Subject> findByGradeContaining(List<String> gradesId);
 
     List<Subject> findByGradeInAndClientId(List<String> gradesId, String clientId);
+
+    Optional<Subject> findById(String id);
+
+    void save(Subject subject);
 }

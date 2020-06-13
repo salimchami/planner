@@ -68,4 +68,15 @@ public class SubjectProvider implements SubjectSPI {
                 .stream().map(ObjectId::new).collect(Collectors.toList()), new ObjectId(clientId));
         return subjectMapper.dbDtosToDomains(subjects);
     }
+
+    @Override
+    public Optional<Subject> findById(String id) {
+        final Optional<SubjectDbDTO> optSubject = subjectRepository.findById(id);
+        return optSubject.map(subjectMapper::dbDtoToDomain);
+    }
+
+    @Override
+    public void save(Subject subject) {
+        subjectRepository.save(subjectMapper.domainToDbDto(subject));
+    }
 }

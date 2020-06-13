@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Client, Subject} from '../../shared/model';
 import {ActivatedRoute} from '@angular/router';
 import {DatatableComponent} from '@swimlane/ngx-datatable';
@@ -40,11 +40,9 @@ export class SubjectListComponent implements OnInit, OnDestroy {
 
     updateFilter(event) {
         const val = event.target.value.toLowerCase();
-        const temp = this.tempFilter.filter((subject) => {
+        this.subjects = this.tempFilter.filter((subject) => {
             return subject.name.toLowerCase().indexOf(val) !== -1 || !val;
         });
-        this.subjects = temp;
         this.table.offset = 0;
     }
-
 }

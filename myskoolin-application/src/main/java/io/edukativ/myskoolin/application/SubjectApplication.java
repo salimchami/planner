@@ -65,10 +65,13 @@ public class SubjectApplication {
     }
 
     public Optional<SubjectDTO> findById(String id) {
-        return null;
+        final Optional<SubjectDbDTO> optSubject = subjectRepository.findById(id);
+        return optSubject.map(subjectMapper::dbDtoToDto);
     }
 
     public void delete(String id) {
-
+        if (userService.currentUserExists()) {
+            subjectAPI.deleteById(id);
+        }
     }
 }

@@ -36,7 +36,7 @@ export class SchoolClassService {
 
     query(req?: any): Observable<HttpResponse<SchoolClass[]>> {
         const options = createRequestOption(req);
-        return this.http.get<SchoolClass[]>(this.resourceUrl + '?timestamp=' + this.dateTimeHelper.timestamp(new Date()), {params: options, observe: 'response'})
+        return this.http.get<SchoolClass[]>(this.resourceUrl, {params: options, observe: 'response'})
             .pipe(map((res: HttpResponse<SchoolClass[]>) => this.convertArrayResponse(res)));
     }
 
