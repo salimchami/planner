@@ -4,7 +4,7 @@ import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import io.edukativ.myskoolin.infrastructure.commercial.PricingDbDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.TeacherDbDTO;
+import io.edukativ.myskoolin.infrastructure.teachers.TeacherDbDTO;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;

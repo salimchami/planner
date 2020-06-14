@@ -1,4 +1,4 @@
-package io.edukativ.myskoolin.infrastructure.schooling;
+package io.edukativ.myskoolin.infrastructure.common.dto;
 
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeSerieDbVO;

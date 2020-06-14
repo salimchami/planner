@@ -1,6 +1,5 @@
-package io.edukativ.myskoolin.infrastructure.schooling;
+package io.edukativ.myskoolin.infrastructure.students;
 
-import io.edukativ.myskoolin.infrastructure.schooling.StudentDbDTO;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

@@ -6,7 +6,7 @@ import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsFind
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.MigrationTempData;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev.util.DevDbMigrationsConstants;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.OptionDbDTO;
+import io.edukativ.myskoolin.infrastructure.common.dto.OptionDbDTO;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 

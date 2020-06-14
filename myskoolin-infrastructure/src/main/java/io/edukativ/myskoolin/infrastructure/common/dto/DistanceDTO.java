@@ -1,4 +1,4 @@
-package io.edukativ.myskoolin.infrastructure.schooling;
+package io.edukativ.myskoolin.infrastructure.common.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

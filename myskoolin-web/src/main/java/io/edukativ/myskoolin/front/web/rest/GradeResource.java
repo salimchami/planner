@@ -90,6 +90,10 @@ class GradeResource {
             .build();
     }
 
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE
+    })
     @Transactional
     @GetMapping(value = "/nameAvailable/{name}")
     public Boolean nameAvailable(@PathVariable String name) {
@@ -97,6 +101,10 @@ class GradeResource {
         return gradeApplication.isGradeAvailableByName(name);
     }
 
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE
+    })
     @Transactional
     @GetMapping(value = "/diminutiveAvailable/{diminutive}")
     public Boolean diminutiveAvailable(@PathVariable String diminutive) {
@@ -104,6 +112,10 @@ class GradeResource {
         return gradeApplication.isGradeDiminutiveAvailable(diminutive);
     }
 
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE
+    })
     @GetMapping(value = "/allSeries")
     public ResponseEntity<List<GradeSerieVO>> getAllGradesSeries() {
         log.debug("REST request to get all Grades");

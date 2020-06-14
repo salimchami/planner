@@ -5,10 +5,13 @@ package io.edukativ.myskoolin.domain.entity;
  */
 public class Address {
 
-    private final String name;
-    private final String postalCode;
-    private final String city;
-    private final String country;
+    private String name;
+    private String postalCode;
+    private String city;
+    private String country;
+
+    public Address() {
+    }
 
     public Address(String name, String postalCode, String city, String country) {
         this.name = name;

@@ -18,9 +18,9 @@ public class Teacher extends User {
 
     private ZonedDateTime employedDate;
     private Boolean substitute = false;
-    private List<User> substitutedTeachers;
+    private List<Teacher> substitutedTeachers;
     private List<Absence> absences;
-    private List<String> taughtSubjects;
+    private List<Subject> taughtSubjects;
     private List<TimeSlot> timetable;
     private ZonedDateTime exitDate;
     private List<Grade> grades;
@@ -29,8 +29,8 @@ public class Teacher extends User {
     }
 
     public Teacher(ZonedDateTime employedDate,
-                   Boolean substitute, List<User> substitutedTeachers, List<Absence> absences,
-                   List<String> taughtSubjects, List<TimeSlot> timetable,
+                   Boolean substitute, List<Teacher> substitutedTeachers, List<Absence> absences,
+                   List<Subject> taughtSubjects, List<TimeSlot> timetable,
                    ZonedDateTime exitDate,
                    List<Grade> grades) {
         this.employedDate = employedDate;
@@ -63,14 +63,14 @@ public class Teacher extends User {
         this.substitute = substitute;
     }
 
-    public List<User> getSubstitutedTeachers() {
+    public List<Teacher> getSubstitutedTeachers() {
         if (this.substitutedTeachers == null) {
             this.substitutedTeachers = new ArrayList<>();
         }
         return substitutedTeachers;
     }
 
-    public void setSubstitutedTeachers(List<User> substitutedTeachers) {
+    public void setSubstitutedTeachers(List<Teacher> substitutedTeachers) {
         this.substitutedTeachers = substitutedTeachers;
     }
 
@@ -85,14 +85,14 @@ public class Teacher extends User {
         this.absences = absences;
     }
 
-    public List<String> getTaughtSubjects() {
+    public List<Subject> getTaughtSubjects() {
         if (this.taughtSubjects == null) {
             this.taughtSubjects = new ArrayList<>();
         }
         return taughtSubjects;
     }
 
-    public void setTaughtSubjects(List<String> taughtSubjects) {
+    public void setTaughtSubjects(List<Subject> taughtSubjects) {
         this.taughtSubjects = taughtSubjects;
     }
 

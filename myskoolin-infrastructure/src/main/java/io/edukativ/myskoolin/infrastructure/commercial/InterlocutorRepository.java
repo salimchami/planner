@@ -1,6 +1,5 @@
-package io.edukativ.myskoolin.infrastructure.schooling;
+package io.edukativ.myskoolin.infrastructure.commercial;
 
-import io.edukativ.myskoolin.infrastructure.commercial.InterlocutorDbDTO;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

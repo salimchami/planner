@@ -1,9 +1,9 @@
 package io.edukativ.myskoolin.front.web.rest;
 
 import io.edukativ.myskoolin.infrastructure.commercial.PricingDTO;
-import io.edukativ.myskoolin.infrastructure.commercial.PricingMapper;
 import io.edukativ.myskoolin.infrastructure.commercial.PricingDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.PricingRepository;
+import io.edukativ.myskoolin.infrastructure.commercial.PricingMapper;
+import io.edukativ.myskoolin.infrastructure.commercial.PricingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -34,9 +34,6 @@ class PricingResource {
         this.pricingMapper = pricingMapper;
     }
 
-    /**
-     * GET  /pricings -> get all the pricings.
-     */
     @GetMapping(value = "/pricings", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PricingDTO> getAllPricings() {
         log.debug("REST request to get all Pricings");

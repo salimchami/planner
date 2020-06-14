@@ -1,4 +1,4 @@
-package io.edukativ.myskoolin.infrastructure.schooling;
+package io.edukativ.myskoolin.infrastructure.schoolclasses;
 
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolClassNotation;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;

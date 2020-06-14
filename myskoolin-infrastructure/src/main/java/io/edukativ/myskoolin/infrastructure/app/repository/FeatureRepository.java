@@ -1,4 +1,4 @@
-package io.edukativ.myskoolin.infrastructure.schooling;
+package io.edukativ.myskoolin.infrastructure.app.repository;
 
 import io.edukativ.myskoolin.infrastructure.app.dto.FeatureDbDTO;
 import org.springframework.data.mongodb.repository.MongoRepository;

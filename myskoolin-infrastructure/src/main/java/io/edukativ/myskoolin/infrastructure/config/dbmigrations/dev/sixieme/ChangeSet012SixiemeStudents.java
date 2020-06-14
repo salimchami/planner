@@ -12,7 +12,7 @@ import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsCons
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsFindUtils;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.MigrationTempData;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev.util.DevDbMigrationsConstants;
-import io.edukativ.myskoolin.infrastructure.schooling.StudentDbDTO;
+import io.edukativ.myskoolin.infrastructure.students.StudentDbDTO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;

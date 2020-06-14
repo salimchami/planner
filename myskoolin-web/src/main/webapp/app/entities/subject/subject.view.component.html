@@ -127,7 +127,11 @@
                                                         </tr>
                                                         <tr>
                                                             <th><span jhiTranslate="subject.view.schoolRoomsType"></span></th>
-                                                            <td>{{subject.schoolRoomsType?.code|translate}}</td>
+                                                            <td>
+                                                                <ul>
+                                                                    <li *ngFor="let schoolRoomType of subject.schoolRoomsTypes">{{schoolRoomType.code|translate}}</li>
+                                                                </ul>
+                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

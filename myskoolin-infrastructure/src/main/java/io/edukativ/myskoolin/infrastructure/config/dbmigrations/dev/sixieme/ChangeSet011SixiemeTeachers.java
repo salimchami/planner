@@ -10,7 +10,7 @@ import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsCons
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsFindUtils;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.MigrationTempData;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev.util.DevDbMigrationsConstants;
-import io.edukativ.myskoolin.infrastructure.schooling.TeacherDbDTO;
+import io.edukativ.myskoolin.infrastructure.teachers.TeacherDbDTO;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,7 +20,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 
-import static io.edukativ.myskoolin.infrastructure.schooling.TeacherDbDTO.MONGO_COLLECTION_NAME;
+import static io.edukativ.myskoolin.infrastructure.teachers.TeacherDbDTO.MONGO_COLLECTION_NAME;
 
 /**
  * Creates the initial database setup

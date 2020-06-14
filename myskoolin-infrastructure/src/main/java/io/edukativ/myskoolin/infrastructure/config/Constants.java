@@ -13,6 +13,11 @@ public final class Constants {
     public static final String ANONYMOUS_USER = "anonymoususer";
 
     public static final String APPLICATION_NAME = "myskoolin";
+
+    public static final int COUNTRY_RESOURCE_CITYNAME_MIN_LENGTH = 2;
+    public static final int TEACHER_NAME_FOR_SEARCH_MIN_LENGTH = 2;
+
+
     private Constants() {
     }
 }

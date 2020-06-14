@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.schooling.vo;
 
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.TeacherDbDTO;
+import io.edukativ.myskoolin.infrastructure.teachers.TeacherDbDTO;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;

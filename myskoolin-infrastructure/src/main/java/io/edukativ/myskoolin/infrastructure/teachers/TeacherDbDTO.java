@@ -1,4 +1,4 @@
-package io.edukativ.myskoolin.infrastructure.schooling;
+package io.edukativ.myskoolin.infrastructure.teachers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.edukativ.myskoolin.infrastructure.app.dto.AbstractUserDbDTO;
