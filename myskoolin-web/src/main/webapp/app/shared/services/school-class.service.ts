@@ -9,7 +9,6 @@ import {map} from 'rxjs/operators';
 import {DateTimeHelper} from '../services/utils/date-time-helper.service';
 
 export type EntityResponseType = HttpResponse<SchoolClass>;
-export type EntityResponseArrayType = HttpResponse<Array<SchoolClass>>;
 
 @Injectable()
 export class SchoolClassService {

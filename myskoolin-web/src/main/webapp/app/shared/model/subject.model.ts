@@ -32,17 +32,19 @@ export class Subject implements BaseEntity {
         public color?: string,
         public bgColor?: string,
         public preferredPartsOfDaysInTimetables?: Array<PreferredPartsOfDays>,
-        public schoolRoomsType?: any,
+        public schoolRoomsTypes?: Array<any>,
     ) {
     }
 
-    update(values: any, id?: any) {
+    update(values: any, clientId?: string, id?: any) {
         if (id != null && typeof id !== 'undefined') {
             this.id = id;
         } else {
             this.id = values.id;
         }
+
         this.name = values.name;
+        this.clientId = clientId;
         this.customName = values.customName;
         this.grade = values.grade;
         this.gradeSerie = values.gradeSerie;
@@ -55,6 +57,6 @@ export class Subject implements BaseEntity {
         this.color = values.color;
         this.bgColor = values.bgColor;
         this.preferredPartsOfDaysInTimetables = values.preferredPartsOfDaysInTimetables;
-        this.schoolRoomsType = values.schoolRoomsType;
+        this.schoolRoomsTypes = values.schoolRoomsTypes;
     }
 }

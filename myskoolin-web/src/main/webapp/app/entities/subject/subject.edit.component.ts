@@ -60,7 +60,8 @@ export class SubjectEditComponent implements OnInit, OnDestroy {
         this.schoolRoomsTypes = Object.assign([], APP_CONSTANTS.SCHOOL_ROOMS_TYPES);
         this.subject = new Subject();
         if (this.routeState === 'edit') {
-            this.subject.update({...this.route.snapshot.data['subject']});
+            const subject = this.route.snapshot.data['subject'];
+            this.subject.update({...subject}, subject.clientId, subject.id);
         } else {
             this.subject.bgColor = '';
             this.subject.color = '';
@@ -79,7 +80,7 @@ export class SubjectEditComponent implements OnInit, OnDestroy {
             maxMinutesPerDay: new FormControl(this.subject.maxMinutesPerDay),
             minutesPerWeek: new FormControl(this.subject.minutesPerWeek),
             coursesFrequencyPerWeek: new FormControl(this.subject.coursesFrequencyPerWeek),
-            schoolRoomsType: new FormControl(this.subject.schoolRoomsType, [Validators.required]),
+            schoolRoomsTypes: new FormControl(this.subject.schoolRoomsTypes || [], [Validators.required]),
         });
         this.client = this.route.snapshot.data['client'];
         this.subjects = this.route.snapshot.data['subjects'];
@@ -104,7 +105,7 @@ export class SubjectEditComponent implements OnInit, OnDestroy {
         this.principalService.identity().then((user) => {
             switch (this.routeState) {
                 case 'edit':
-                    this.subject.update(values, this.subject.id);
+                    this.subject.update(values, this.subject.id, this.subject.clientId);
                     this.update();
                     break;
                 case 'new':
@@ -135,6 +136,7 @@ export class SubjectEditComponent implements OnInit, OnDestroy {
     }
 
     private update() {
+        console.log(this.subject);
         this.subjectService.update(this.subject).subscribe(
             (res) => {
                 this.notificationService.addToast('subject.edit.form.toast-title',
@@ -160,7 +162,11 @@ export class SubjectEditComponent implements OnInit, OnDestroy {
     }
 
     compareSchoolRoomsTypes(roomType1, roomType2) {
-        return roomType1 === roomType2;
+        if (roomType1 && roomType2) {
+
+            return roomType1.code === roomType2.code;
+        }
+        return false;
     }
 
     isFormValid() {
@@ -196,7 +202,7 @@ export class SubjectEditComponent implements OnInit, OnDestroy {
             'hex', null);
     }
 
-    onChangeSchoolRoomsType() {
-
+    compareSchoolRoomsTypeFn(schoolRoomType1: any, schoolRoomType2: any): boolean {
+        return schoolRoomType1 && schoolRoomType2 && schoolRoomType1.code === schoolRoomType2.code;
     }
 }

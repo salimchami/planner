@@ -180,11 +180,13 @@
                             <div class="form-group row">
                                 <label for="schoolRoomsType" class="col-sm-4 col-form-label"><span jhiTranslate="subject.new.form.schoolRoomsType">schoolRoomsType</span> <span style="color: #c75b58;">*</span></label>
                                 <div class="col-sm-8">
-                                    <select (click)="resetMessages()" [compareWith]="compareSchoolRoomsTypes"
-                                            [formControlName]="'schoolRoomsType'" id="schoolRoomsType" class="form-control form-control-inverse">
-                                        <option id="schoolRoomsType-{{i}}" *ngFor="let schoolRoomsType of schoolRoomsTypes; let i = index"
-                                                [ngValue]="schoolRoomsType">{{schoolRoomsType.code|translate}}</option>
-                                    </select>
+                                    <mat-form-field id="schoolRoomsType" class="input-group">
+                                        <mat-select placeholder="{{'subject.new.form.school-room-type-placeholder'|translate}}" multiple
+                                                    [compareWith]="compareSchoolRoomsTypeFn"
+                                                    matInput formControlName="schoolRoomsTypes">
+                                            <mat-option *ngFor="let schoolRoomsType of schoolRoomsTypes" [value]="schoolRoomsType">{{schoolRoomsType.code | translate}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
                                     <div class="messages text-danger" *ngIf="subjectForm.controls.grade.invalid && (subjectForm.controls.grade.dirty || subjectForm.controls.grade.touched)">
                                         <span jhiTranslate="subject.new.form.grade-error"></span>
                                     </div>

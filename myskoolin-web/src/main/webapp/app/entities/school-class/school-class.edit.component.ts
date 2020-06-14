@@ -232,11 +232,11 @@ export class SchoolClassEditComponent implements OnInit, OnDestroy {
         this.location.back();
     }
 
-    compareGradesFn(grade1: Grade, grade2: Grade) {
-        return grade1.id === grade2.id;
+    compareGradesFn(grade1: Grade, grade2: Grade): boolean {
+        return grade1 && grade2 && grade1.id === grade2.id;
     }
 
-    compareGradeSeriesFn(gradeSerie1: GradeSerie, gradeSerie2: GradeSerie) {
+    compareGradeSeriesFn(gradeSerie1: GradeSerie, gradeSerie2: GradeSerie): boolean {
         return gradeSerie1.name === gradeSerie2.name;
     }
 
