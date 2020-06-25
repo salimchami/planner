@@ -18,7 +18,7 @@ public class TeacherApplication {
 
     private final UserService userService;
     private final TeacherRepository teacherRepository;
-    private TeacherMapper teacherMapper;
+    private final TeacherMapper teacherMapper;
 
     public TeacherApplication(UserService userService, TeacherRepository teacherRepository, TeacherMapper teacherMapper) {
         this.userService = userService;
@@ -51,7 +51,7 @@ public class TeacherApplication {
     }
 
     public Optional<TeacherDTO> findOneById(String id) {
-        return null;
+        return teacherRepository.findById(id).map(teacherMapper::dbDtoToDto);
     }
 
     public List<TeacherDTO> findOneByGrade(String gradeId) {
