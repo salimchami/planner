@@ -4,7 +4,10 @@ import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.domain.commons.AuthoritySPI;
 import io.edukativ.myskoolin.domain.commons.mailing.MyskoolinMailingSPI;
 import io.edukativ.myskoolin.domain.entity.Authority;
+import io.edukativ.myskoolin.domain.entity.User;
 import io.edukativ.myskoolin.domain.vo.Teacher;
+
+import java.util.List;
 
 public class TeacherService implements TeacherAPI {
 
@@ -24,7 +27,7 @@ public class TeacherService implements TeacherAPI {
     @Override
     public Teacher create(Teacher teacher, String encryptedRandomPassword, String baseUrl) {
         final Authority authority = authoritySPI.findByName(AuthoritiesConstants.TEACHERS);
-        if(!teacher.containsAuthority(authority)) {
+        if (!teacher.containsAuthority(authority)) {
             teacher.addAuthority(authority);
         }
         teacher.setPassword(encryptedRandomPassword);
@@ -32,5 +35,14 @@ public class TeacherService implements TeacherAPI {
         teacherMailingSPI.sendToCreatedTeacher(createdTeacher, baseUrl);
         myskoolinMailingSPI.notifyCreatedTeacher(createdTeacher);
         return createdTeacher;
+    }
+
+    @Override
+    public List<Teacher> searchByName(String name, User currentUser) {
+        if (currentUser.hasAuthority(AuthoritiesConstants.SCHOOLME_ADMIN)) {
+            return teacherSPI.searchTeachers(name);
+        } else {
+            return teacherSPI.searchTeachers(currentUser.getClientId(), name);
+        }
     }
 }

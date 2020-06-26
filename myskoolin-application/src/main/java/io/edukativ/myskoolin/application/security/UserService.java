@@ -8,7 +8,7 @@ import io.edukativ.myskoolin.infrastructure.app.exceptions.InvalidPasswordExcept
 import io.edukativ.myskoolin.infrastructure.app.exceptions.UsernameAlreadyUsedException;
 import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;
 import io.edukativ.myskoolin.infrastructure.app.repository.AuthorityRepository;
-import io.edukativ.myskoolin.infrastructure.app.repository.UserSearchRepository;
+import io.edukativ.myskoolin.infrastructure.app.repository.search.UserSearchRepository;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
 import io.edukativ.myskoolin.infrastructure.app.repository.UserRepository;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDTO;

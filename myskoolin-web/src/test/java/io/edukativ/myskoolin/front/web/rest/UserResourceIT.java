@@ -4,7 +4,7 @@ import io.edukativ.myskoolin.infrastructure.app.dto.UserDTO;
 import io.edukativ.myskoolin.front.MyskoolinApp;
 import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
-import io.edukativ.myskoolin.infrastructure.app.repository.UserSearchRepository;
+import io.edukativ.myskoolin.infrastructure.app.repository.search.UserSearchRepository;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.repository.UserRepository;
 import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;

@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.front.config;
 
-import io.edukativ.myskoolin.infrastructure.app.repository.UserSearchRepository;
+import io.edukativ.myskoolin.infrastructure.app.repository.search.UserSearchRepository;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Configuration;
 

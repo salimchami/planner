@@ -1,4 +1,4 @@
-package io.edukativ.myskoolin.infrastructure.app.repository;
+package io.edukativ.myskoolin.infrastructure.app.repository.search;
 
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;

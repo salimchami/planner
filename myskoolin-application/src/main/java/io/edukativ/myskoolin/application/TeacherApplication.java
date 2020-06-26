@@ -1,15 +1,15 @@
 package io.edukativ.myskoolin.application;
 
-import io.edukativ.myskoolin.application.security.UserService;
+import io.edukativ.myskoolin.domain.entity.User;
 import io.edukativ.myskoolin.domain.teachers.TeacherAPI;
 import io.edukativ.myskoolin.domain.vo.Teacher;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
-import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherDTO;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherDbDTO;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherMapper;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherRepository;
 import io.github.jhipster.security.RandomUtil;
+import org.bson.types.ObjectId;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,27 +21,28 @@ import java.util.Optional;
 @Transactional
 public class TeacherApplication {
 
-    private final UserService userService;
     private final TeacherRepository teacherRepository;
     private final TeacherMapper teacherMapper;
-    private final UserMapper userMapper;
     private final TeacherAPI teacherAPI;
     private final PasswordEncoder passwordEncoder;
+    private final User currentUser;
+    private final UserDbDTO currentUserWithAuthorities;
 
-    public TeacherApplication(UserService userService, TeacherRepository teacherRepository, TeacherMapper teacherMapper,
-                              UserMapper userMapper, TeacherAPI teacherAPI, PasswordEncoder passwordEncoder) {
-        this.userService = userService;
+    public TeacherApplication(TeacherRepository teacherRepository, TeacherMapper teacherMapper,
+                              TeacherAPI teacherAPI, PasswordEncoder passwordEncoder,
+                              User currentUser, UserDbDTO currentUserWithAuthorities) {
         this.teacherRepository = teacherRepository;
         this.teacherMapper = teacherMapper;
-        this.userMapper = userMapper;
         this.teacherAPI = teacherAPI;
         this.passwordEncoder = passwordEncoder;
+        this.currentUser = currentUser;
+        this.currentUserWithAuthorities = currentUserWithAuthorities;
     }
 
     public Optional<TeacherDTO> create(TeacherDTO teacherDTO, String baseUrl) {
         Teacher teacher = teacherMapper.dtoToDomain(teacherDTO);
-        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
-        Teacher createdTeacher = teacherAPI.create(teacher, encryptedPassword, baseUrl);
+        String encryptedRandomPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+        Teacher createdTeacher = teacherAPI.create(teacher, encryptedRandomPassword, baseUrl);
         if (createdTeacher != null) {
             return Optional.of(teacherMapper.domainToDto(createdTeacher));
         } else {
@@ -50,13 +51,13 @@ public class TeacherApplication {
     }
 
     public List<TeacherDTO> findAllByCurrentUserClient() {
-        final UserDbDTO user = userService.currentUserWithAuthorities();
-        final List<TeacherDbDTO> teachers = teacherRepository.findAllNotDeletedTeachers(user.getClientId());
+        final List<TeacherDbDTO> teachers = teacherRepository.findAllNotDeletedTeachers(currentUserWithAuthorities.getClientId());
         return teacherMapper.dbDtosToDtos(teachers);
     }
 
     public List<TeacherDTO> searchByName(String name) {
-        return null;
+        List<Teacher> teachers = teacherAPI.searchByName(name, currentUser);
+        return teacherMapper.domainsToDtos(teachers);
     }
 
     public Optional<TeacherDTO> findOneById(String id) {
@@ -65,7 +66,9 @@ public class TeacherApplication {
     }
 
     public List<TeacherDTO> findOneByGrade(String gradeId) {
-        return null;
+        final List<TeacherDbDTO> teachers =
+                teacherRepository.findNotDeletedTeachersByGradeId(new ObjectId(currentUser.getClientId()), new ObjectId(gradeId));
+        return teacherMapper.dbDtosToDtos(teachers);
     }
 
     public List<TeacherDTO> findByGradesIdsAndSubjectsIds(List<String> gradesIds, List<String> subjectsIds) {
