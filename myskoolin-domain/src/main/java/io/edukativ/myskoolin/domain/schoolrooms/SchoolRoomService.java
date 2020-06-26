@@ -19,7 +19,7 @@ public class SchoolRoomService implements SchoolRoomAPI {
         if (schoolRoom.getId() != null) {
             return updateSchoolRoom(schoolRoom, currentUser);
         } else {
-
+            schoolRoom.setClientId(currentUser.getClientId());
             schoolRoom.setDeleted(false);
             return Optional.of(schoolRoomSPI.persist(schoolRoom));
         }

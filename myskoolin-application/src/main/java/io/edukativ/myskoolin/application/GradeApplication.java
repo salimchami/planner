@@ -69,7 +69,9 @@ public class GradeApplication {
     }
 
     public List<GradeDTO> createGrades(List<GradeDTO> grades) {
+        final UserDbDTO currentUser = userService.currentUserWithAuthorities();
         final List<GradeDbDTO> gradesDbDTO = gradeMapper.dtosToDbDtos(grades);
+        gradesDbDTO.forEach(grade -> grade.setClientId(currentUser.getClientId()));
         final List<GradeDbDTO> savedGradesDbDTO = gradeRepository.saveAll(gradesDbDTO);
         return gradeMapper.dbDtosToDtos(savedGradesDbDTO);
     }
