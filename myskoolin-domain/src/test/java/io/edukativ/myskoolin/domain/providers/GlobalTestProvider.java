@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.domain.providers;
 
-public final class GlobalProvider {
+public final class GlobalTestProvider {
 
     public static final String CLIENT_ID = "60a2d3827407395bcf9ef001";
 

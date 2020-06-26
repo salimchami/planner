@@ -217,6 +217,9 @@ public class User {
     }
 
     public Set<Authority> getAuthorities() {
+        if (this.authorities == null) {
+            return new HashSet<>();
+        }
         return authorities;
     }
 
@@ -277,5 +280,13 @@ public class User {
 
     public boolean hasAuthority(String authority) {
         return this.getAuthorities().stream().anyMatch(auth -> auth.getName().equals(authority));
+    }
+
+    public boolean containsAuthority(Authority authority) {
+        return this.authorities.contains(authority);
+    }
+
+    public void addAuthority(Authority authority) {
+        this.authorities.add(authority);
     }
 }

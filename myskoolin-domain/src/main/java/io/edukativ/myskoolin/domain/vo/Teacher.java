@@ -8,7 +8,6 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -141,31 +140,4 @@ public class Teacher extends User {
     public int hashCode() {
         return Objects.hash(employedDate, substitute, timetable, grades);
     }
-
-    public static List<Teacher> teachersByTaughtSubjectsAndGrade(List<Teacher> allTeachers, List<Subject> scholClassSubjects, String gradeId) {
-        return allTeachers.stream()
-                .filter(teacher -> teacher.getGrades().stream().map(Grade::getId).collect(Collectors.toList()).contains(gradeId))
-                .filter(teacher -> scholClassSubjects.stream().map(Subject::getId).collect(Collectors.toList()).containsAll(teacher.getTaughtSubjects()))
-                .collect(Collectors.toList());
-    }
-
-    public static Optional<Teacher> searchForTeacher(List<Teacher> possibleTeachersForSubject, TimeSlot timeSlot) {
-        Optional<Teacher> optUser = Optional.empty();
-        for (Teacher teacherUser : possibleTeachersForSubject) {
-            if (teacherUser.getTimetable().isEmpty() || teacherUser.getTimetable()
-                    .stream().noneMatch(teacherTimeSlot -> teacherTimeSlot.isOverlapping(timeSlot))) {
-                optUser = Optional.of(teacherUser);
-                break;
-            }
-        }
-        return optUser;
-    }
-
-    public static List<Teacher> teachersBySubjects(List<Teacher> allTeachers, String subjectId) {
-        return allTeachers
-                .stream()
-                .filter(user -> user.taughtSubjects.contains(subjectId))
-                .collect(Collectors.toList());
-    }
-
 }

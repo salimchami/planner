@@ -3,6 +3,7 @@ package io.edukativ.myskoolin.front.web.rest;
 import io.edukativ.myskoolin.application.TeacherApplication;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.front.web.util.WebUtil;
+import io.edukativ.myskoolin.infrastructure.app.repository.UserRepository;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
 import io.edukativ.myskoolin.infrastructure.teachers.TaughtSubjectsSearch;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherDTO;
@@ -30,9 +31,11 @@ public class TeacherResource {
     private static final String TEACHER_ENTITY = "teacher";
 
     private final TeacherApplication teacherApplication;
+    private final UserRepository userRepository;
 
-    public TeacherResource(TeacherApplication teacherApplication) {
+    public TeacherResource(TeacherApplication teacherApplication, UserRepository userRepository) {
         this.teacherApplication = teacherApplication;
+        this.userRepository = userRepository;
     }
 
     @Secured({
@@ -42,6 +45,18 @@ public class TeacherResource {
     @ResponseBody
     @PostMapping
     public ResponseEntity<TeacherDTO> createTeacher(@RequestBody TeacherDTO teacher, HttpServletRequest request) throws URISyntaxException {
+        if (userRepository.findOneByLoginIgnoreCase(teacher.getLogin()).isPresent()) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert(Constants.APPLICATION_NAME, false,
+                    TEACHER_ENTITY, "loginAlreadyInUse", "Login already in use"))
+                .body(null);
+        } else if (userRepository.findOneByEmail(teacher.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert(Constants.APPLICATION_NAME, false,
+                    TEACHER_ENTITY, "emailAlreadyInUse", "Email already in use"))
+                .body(null);
+        }
+
         LOGGER.debug("REST request to save Teacher : {}", teacher);
         Optional<TeacherDTO> optCreatedTeacher = teacherApplication.create(teacher, WebUtil.baseUrl(request));
         if (optCreatedTeacher.isPresent()) {
@@ -95,7 +110,8 @@ public class TeacherResource {
     public ResponseEntity<String> downloadFile(@RequestParam(name = "userLogin") String userLogin) {
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityUpdateAlert(Constants.APPLICATION_NAME, false, TEACHER_ENTITY, "/photo is not yet implemented."))
+            .headers(HeaderUtil.createEntityUpdateAlert(Constants.APPLICATION_NAME, false,
+                TEACHER_ENTITY, "/photo is not yet implemented."))
             .build();
     }
 

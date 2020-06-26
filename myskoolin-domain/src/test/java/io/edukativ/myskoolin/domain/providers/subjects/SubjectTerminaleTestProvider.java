@@ -5,7 +5,7 @@ import io.edukativ.myskoolin.domain.entity.Subject;
 import java.util.Arrays;
 import java.util.List;
 
-public final class SubjectSecondeProvider {
+public final class SubjectTerminaleTestProvider {
 
     public static List<Subject> allSubjects() {
         return Arrays.asList(

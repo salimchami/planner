@@ -7,7 +7,7 @@ import io.edukativ.myskoolin.domain.vo.TimeSlot;
 
 import java.util.*;
 
-public class TimeSlotProvider {
+public class TimeSlotTestProvider {
 
 
     public static TimeSlot timeSlot(EnumDays day, int startHour, EnumPartsOfDay startPartsOfDay, int endHour, EnumPartsOfDay endPartsOfDay) {

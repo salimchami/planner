@@ -1,11 +1,16 @@
 package io.edukativ.myskoolin.application;
 
 import io.edukativ.myskoolin.application.security.UserService;
+import io.edukativ.myskoolin.domain.teachers.TeacherAPI;
+import io.edukativ.myskoolin.domain.vo.Teacher;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
+import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherDTO;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherDbDTO;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherMapper;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherRepository;
+import io.github.jhipster.security.RandomUtil;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,25 +24,29 @@ public class TeacherApplication {
     private final UserService userService;
     private final TeacherRepository teacherRepository;
     private final TeacherMapper teacherMapper;
+    private final UserMapper userMapper;
+    private final TeacherAPI teacherAPI;
+    private final PasswordEncoder passwordEncoder;
 
-    public TeacherApplication(UserService userService, TeacherRepository teacherRepository, TeacherMapper teacherMapper) {
+    public TeacherApplication(UserService userService, TeacherRepository teacherRepository, TeacherMapper teacherMapper,
+                              UserMapper userMapper, TeacherAPI teacherAPI, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.teacherRepository = teacherRepository;
         this.teacherMapper = teacherMapper;
+        this.userMapper = userMapper;
+        this.teacherAPI = teacherAPI;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<TeacherDTO> create(TeacherDTO teacher, String baseUrl) {
-        //        if (userRepository.findOneByLoginIgnoreCase(teacher.getLogin()).isPresent()) {
-//            return ResponseEntity.badRequest()
-//                .headers(HeaderUtil.createFailureAlert("userManagement", "userexists", "Login already in use"))
-//                .body(null);
-//        } else if (userRepository.findOneByEmail(teacher.getEmail()).isPresent()) {
-//            return ResponseEntity.badRequest()
-//                .headers(HeaderUtil.createFailureAlert("userManagement", "emailexists", "Email already in use"))
-//                .body(null);
-//        }
-
-        return null;
+    public Optional<TeacherDTO> create(TeacherDTO teacherDTO, String baseUrl) {
+        Teacher teacher = teacherMapper.dtoToDomain(teacherDTO);
+        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+        Teacher createdTeacher = teacherAPI.create(teacher, encryptedPassword, baseUrl);
+        if (createdTeacher != null) {
+            return Optional.of(teacherMapper.domainToDto(createdTeacher));
+        } else {
+            return Optional.empty();
+        }
     }
 
     public List<TeacherDTO> findAllByCurrentUserClient() {
@@ -51,7 +60,8 @@ public class TeacherApplication {
     }
 
     public Optional<TeacherDTO> findOneById(String id) {
-        return teacherRepository.findById(id).map(teacherMapper::dbDtoToDto);
+        final Optional<TeacherDbDTO> teachers = teacherRepository.findById(id);
+        return teachers.map(teacherMapper::dbDtoToDto);
     }
 
     public List<TeacherDTO> findOneByGrade(String gradeId) {

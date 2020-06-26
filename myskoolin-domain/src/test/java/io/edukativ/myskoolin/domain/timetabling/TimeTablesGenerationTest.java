@@ -1,10 +1,10 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
-import io.edukativ.myskoolin.domain.providers.GradeProvider;
-import io.edukativ.myskoolin.domain.providers.SchoolRoomProvider;
-import io.edukativ.myskoolin.domain.providers.UserProvider;
-import io.edukativ.myskoolin.domain.providers.schoolclasses.SchoolClassProvider;
-import io.edukativ.myskoolin.domain.providers.subjects.SubjectProvider;
+import io.edukativ.myskoolin.domain.providers.GradeTestProvider;
+import io.edukativ.myskoolin.domain.providers.SchoolRoomTestProvider;
+import io.edukativ.myskoolin.domain.providers.UserTestProvider;
+import io.edukativ.myskoolin.domain.providers.schoolclasses.SchoolClassTestProvider;
+import io.edukativ.myskoolin.domain.providers.subjects.SubjectTestProvider;
 import io.edukativ.myskoolin.domain.entity.*;
 import io.edukativ.myskoolin.domain.vo.Teacher;
 import io.edukativ.myskoolin.domain.vo.TimeTableOptions;
@@ -25,12 +25,12 @@ class TimeTablesGenerationTest {
 
     @BeforeEach
     void setUp() {
-        List<Grade> grades = GradeProvider.allGrades();
-        allSchoolRooms = SchoolRoomProvider.allSchoolRooms();
-        subjects = SubjectProvider.allSubjects();
-        teachers = UserProvider.teacherUsers(grades);
+        List<Grade> grades = GradeTestProvider.allGrades();
+        allSchoolRooms = SchoolRoomTestProvider.allSchoolRooms();
+        subjects = SubjectTestProvider.allSubjects();
+        teachers = UserTestProvider.teacherUsers(grades);
         clientTimeTableOptions = Client.defaultTimeTableOptions();
-        timeTableOptionsByGrade = GradeProvider.timeTableOptionsByGrade(clientTimeTableOptions);
+        timeTableOptionsByGrade = GradeTestProvider.timeTableOptionsByGrade(clientTimeTableOptions);
     }
 
     @RepeatedTest(50)
@@ -76,7 +76,7 @@ class TimeTablesGenerationTest {
     }
 
     private void given(int sixiemes, int cinquiemes, int quatriemes, int troisiemes) {
-        List<SchoolClass> schoolClasses = SchoolClassProvider.schoolClasses(teachers, sixiemes, cinquiemes, quatriemes, troisiemes);
+        List<SchoolClass> schoolClasses = SchoolClassTestProvider.schoolClasses(teachers, sixiemes, cinquiemes, quatriemes, troisiemes);
 //        sut = new TimeTablesGeneration(timeTableOptionsByGrade, schoolClasses, subjects, teachers, allSchoolRooms);
     }
 

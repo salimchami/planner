@@ -28,5 +28,5 @@ public interface AuthorityMapper {
         return authorities.stream().map(AuthorityDbDTO::getName).collect(Collectors.toSet());
     }
 
-    Authority map(AuthorityDbDTO authority);
+    Authority dbDtoToDomain(AuthorityDbDTO authority);
 }

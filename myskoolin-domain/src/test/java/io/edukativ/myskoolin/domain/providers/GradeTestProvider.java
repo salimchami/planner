@@ -9,31 +9,31 @@ import io.edukativ.myskoolin.domain.vo.TimeTableOptions;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public final class GradeProvider {
+public final class GradeTestProvider {
 
-    public static Grade sixiemeGrade = GradeProvider.grade(Client.defaultTimeTableOptions(),
-            GlobalProvider.Grades.GRADE_SIXIEME_ID, "SIXIEME", 7 * 60, 30 * 60);
+    public static Grade sixiemeGrade = GradeTestProvider.grade(Client.defaultTimeTableOptions(),
+            GlobalTestProvider.Grades.GRADE_SIXIEME_ID, "SIXIEME", 7 * 60, 30 * 60);
 
-    public static Grade cinquiemeGrade = GradeProvider.grade(Client.defaultTimeTableOptions(),
-            GlobalProvider.Grades.GRADE_CINQUIEME_ID, "CINQUIEME", 7 * 60, 30 * 60);
+    public static Grade cinquiemeGrade = GradeTestProvider.grade(Client.defaultTimeTableOptions(),
+            GlobalTestProvider.Grades.GRADE_CINQUIEME_ID, "CINQUIEME", 7 * 60, 30 * 60);
 
-    public static Grade quatriemeGrade = GradeProvider.grade(Client.defaultTimeTableOptions(),
-            GlobalProvider.Grades.GRADE_QUATRIEME_ID, "QUATRIEME", 7 * 60, 30 * 60);
+    public static Grade quatriemeGrade = GradeTestProvider.grade(Client.defaultTimeTableOptions(),
+            GlobalTestProvider.Grades.GRADE_QUATRIEME_ID, "QUATRIEME", 7 * 60, 30 * 60);
 
-    public static Grade troisiemeGrade = GradeProvider.grade(Client.defaultTimeTableOptions(),
-            GlobalProvider.Grades.GRADE_TROISIEME_ID, "TROISIEME", 7 * 60, 30 * 60);
+    public static Grade troisiemeGrade = GradeTestProvider.grade(Client.defaultTimeTableOptions(),
+            GlobalTestProvider.Grades.GRADE_TROISIEME_ID, "TROISIEME", 7 * 60, 30 * 60);
 
-    public static Grade secondeGrade = GradeProvider.grade(Client.defaultTimeTableOptions(),
-            GlobalProvider.Grades.GRADE_SECONDE_ID, "SECONDE", 8 * 60, 35 * 60);
+    public static Grade secondeGrade = GradeTestProvider.grade(Client.defaultTimeTableOptions(),
+            GlobalTestProvider.Grades.GRADE_SECONDE_ID, "SECONDE", 8 * 60, 35 * 60);
 
-    public static Grade premiereGrade = GradeProvider.grade(Client.defaultTimeTableOptions(),
-            GlobalProvider.Grades.GRADE_PREMIERE_ID, "PREMIERE", 8 * 60, 35 * 60);
+    public static Grade premiereGrade = GradeTestProvider.grade(Client.defaultTimeTableOptions(),
+            GlobalTestProvider.Grades.GRADE_PREMIERE_ID, "PREMIERE", 8 * 60, 35 * 60);
 
-    public static Grade terminaleGrade = GradeProvider.grade(Client.defaultTimeTableOptions(),
-            GlobalProvider.Grades.GRADE_TERMINALE_ID, "TERMINALE", 8 * 60, 35 * 60);
+    public static Grade terminaleGrade = GradeTestProvider.grade(Client.defaultTimeTableOptions(),
+            GlobalTestProvider.Grades.GRADE_TERMINALE_ID, "TERMINALE", 8 * 60, 35 * 60);
 
     public static Grade grade(TimeTableOptions timeTableOptions, String id, String name, Integer maxMinutesPerDay, Integer maxMinutesPerWeek) {
-        return new Grade(id, GlobalProvider.CLIENT_ID, name, 0, EnumSchoolClassNotation.QUARTER,
+        return new Grade(id, GlobalTestProvider.CLIENT_ID, name, 0, EnumSchoolClassNotation.QUARTER,
                 "", maxMinutesPerDay, maxMinutesPerWeek, false, Collections.emptyList(), timeTableOptions);
     }
 

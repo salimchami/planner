@@ -1,9 +1,9 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
-import io.edukativ.myskoolin.domain.providers.GradeProvider;
-import io.edukativ.myskoolin.domain.providers.SchoolRoomProvider;
-import io.edukativ.myskoolin.domain.providers.UserProvider;
-import io.edukativ.myskoolin.domain.providers.schoolclasses.SchoolClassProvider;
+import io.edukativ.myskoolin.domain.providers.GradeTestProvider;
+import io.edukativ.myskoolin.domain.providers.SchoolRoomTestProvider;
+import io.edukativ.myskoolin.domain.providers.UserTestProvider;
+import io.edukativ.myskoolin.domain.providers.schoolclasses.SchoolClassTestProvider;
 import io.edukativ.myskoolin.domain.entity.*;
 import io.edukativ.myskoolin.domain.vo.TimeSlot;
 import org.assertj.core.api.Assertions;
@@ -18,11 +18,11 @@ import java.util.stream.Stream;
 class SchoolResourcesNeedsTest {
 
     private static Stream<Arguments> needsTestMethodParam() {
-        List<Grade> grades = GradeProvider.allGrades();
+        List<Grade> grades = GradeTestProvider.allGrades();
 
         return Stream.of(
                 Arguments.of(1, 0, 0, 0,
-                        UserProvider.teacherUsers(grades), SchoolRoomProvider.allSchoolRooms(),
+                        UserTestProvider.teacherUsers(grades), SchoolRoomTestProvider.allSchoolRooms(),
                         true
 //                        new HashMap<EnumSchoolRoomsTypes, Integer>() {{
 //                            put(EnumSchoolRoomsTypes.NORMAL, 8);
@@ -58,7 +58,7 @@ class SchoolResourcesNeedsTest {
     void isResourcesSufficientTest(int sixiemeCount, int cinquiemeCount, int quatriemeCount, int troisiemeCount,
                                    List<User> teachersUsers, List<SchoolRoom> schoolRooms, boolean expectedSufficiency) {
         long totalRefWeekDuration = Client.defaultCoursesTimeSlots().stream().mapToLong(TimeSlot::durationInMinutes).sum();
-        Map<SchoolClass, List<Subject>> schoolClasses = SchoolClassProvider.schoolClassesWithSubjects(sixiemeCount, cinquiemeCount, quatriemeCount, troisiemeCount);
+        Map<SchoolClass, List<Subject>> schoolClasses = SchoolClassTestProvider.schoolClassesWithSubjects(sixiemeCount, cinquiemeCount, quatriemeCount, troisiemeCount);
         SchoolResourcesNeeds sut = new SchoolResourcesNeeds(schoolClasses, totalRefWeekDuration);
         boolean sufficient = sut.isResourcesSufficient(teachersUsers, schoolRooms);
         Assertions.assertThat(sufficient).isEqualTo(expectedSufficiency);

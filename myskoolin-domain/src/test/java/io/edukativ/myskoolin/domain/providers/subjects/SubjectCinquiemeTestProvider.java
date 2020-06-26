@@ -1,18 +1,18 @@
 package io.edukativ.myskoolin.domain.providers.subjects;
 
 import io.edukativ.myskoolin.domain.entity.Subject;
-import io.edukativ.myskoolin.domain.providers.GlobalProvider;
+import io.edukativ.myskoolin.domain.providers.GlobalTestProvider;
+import io.edukativ.myskoolin.domain.providers.GradeTestProvider;
 import io.edukativ.myskoolin.domain.vo.EnumDays;
 import io.edukativ.myskoolin.domain.vo.EnumPartsOfDay;
 import io.edukativ.myskoolin.domain.vo.EnumSchoolRoomsTypes;
 import io.edukativ.myskoolin.domain.vo.PreferredPartsOfDays;
-import io.edukativ.myskoolin.domain.providers.GradeProvider;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public final class SubjectQuatriemeProvider {
+public final class SubjectCinquiemeTestProvider {
 
     public static List<Subject> allSubjects() {
         return Arrays.asList(
@@ -22,8 +22,8 @@ public final class SubjectQuatriemeProvider {
     }
 
     private static Subject francais() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_FRANCAIS_ID, GradeProvider.quatriemeGrade, "FRANCAIS", false,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_FRANCAIS_ID, GradeTestProvider.cinquiemeGrade, "FRANCAIS", false,
                 60, 60 * 2, (int) (60 * 3.5), 3,
                 Collections.emptyList(),
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
@@ -33,16 +33,16 @@ public final class SubjectQuatriemeProvider {
      * enseignements pratiques interdisciplinaires - EPI - Francais
      */
     private static Subject francaisEpi() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_FRANCAIS_EPI_ID, GradeProvider.quatriemeGrade, "Français - EPI", false,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_FRANCAIS_EPI_ID, GradeTestProvider.cinquiemeGrade, "Français - EPI", false,
                 60, 60, 60, 1,
                 Collections.emptyList(),
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
     private static Subject maths() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_MATHS_ID, GradeProvider.quatriemeGrade, "MATHEMATIQUES", false,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_MATHS_ID, GradeTestProvider.cinquiemeGrade, "MATHEMATIQUES", false,
                 60, 60 * 2, (int) (60 * 2.5), 3,
                 Collections.emptyList(),
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
@@ -52,8 +52,8 @@ public final class SubjectQuatriemeProvider {
      * enseignements pratiques interdisciplinaires - EPI - Maths
      */
     private static Subject mathsEpi() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_MATHS_EPI_ID, GradeProvider.quatriemeGrade, "MATHS - EPI", false,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_MATHS_EPI_ID, GradeTestProvider.cinquiemeGrade, "MATHS - EPI", false,
                 60, 60, 60, 1,
                 Collections.emptyList(),
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
@@ -61,16 +61,16 @@ public final class SubjectQuatriemeProvider {
 
 
     private static Subject histoireGeo() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_HISTGEO_GEO_ID, GradeProvider.quatriemeGrade, "HISTOIRE GEOGRAPHIE", false,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_HISTGEO_GEO_ID, GradeTestProvider.cinquiemeGrade, "HISTOIRE GEOGRAPHIE", false,
                 60, 60, 60 * 2, 2,
                 Collections.emptyList(),
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
     private static Subject educationCivique() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_EDUCCIV_ID, GradeProvider.quatriemeGrade, "ENSEIGNEMENT MORAL ET CIVIQUE", false,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_EDUCCIV_ID, GradeTestProvider.cinquiemeGrade, "ENSEIGNEMENT MORAL ET CIVIQUE", false,
                 60, 60, 60, 1,
                 Collections.emptyList(),
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
@@ -78,40 +78,40 @@ public final class SubjectQuatriemeProvider {
     }
 
     private static Subject anglais() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_ANGLAIS_ID, GradeProvider.quatriemeGrade, "ANGLAIS", true,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_ANGLAIS_ID, GradeTestProvider.cinquiemeGrade, "ANGLAIS", true,
                 60, 60 * 2, 60 * 3, 3,
                 Collections.emptyList(),
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
     private static Subject allemand() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_ALLEMAND_ID, GradeProvider.quatriemeGrade, "ALLEMAND", true,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_ALLEMAND_ID, GradeTestProvider.cinquiemeGrade, "ALLEMAND", true,
                 60, 60, 60 * 2, 2,
                 Collections.emptyList(),
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
     private static Subject svt() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_SVT_ID, GradeProvider.quatriemeGrade, "SCIENCES DE LA VIE ET DE LA TERRE", false,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_SVT_ID, GradeTestProvider.cinquiemeGrade, "SCIENCES DE LA VIE ET DE LA TERRE", false,
                 60, 60, 60, 1,
                 Collections.emptyList(),
                 Collections.singletonList(EnumSchoolRoomsTypes.SCIENCES), 1, "");
     }
 
     private static Subject physique() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_PHYSIQUE_ID, GradeProvider.quatriemeGrade, "PHYSIQUE-CHIMIE", false,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_PHYSIQUE_ID, GradeTestProvider.cinquiemeGrade, "PHYSIQUE-CHIMIE", false,
                 60, 60, 60, 1,
                 Collections.emptyList(),
                 Collections.singletonList(EnumSchoolRoomsTypes.SCIENCES), 1, "");
     }
 
     private static Subject techno() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_TECHNOLOGIE_ID, GradeProvider.quatriemeGrade, "TECHNOLOGIE", false,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_TECHNOLOGIE_ID, GradeTestProvider.cinquiemeGrade, "TECHNOLOGIE", false,
                 60, 60, 60, 1,
                 Arrays.asList(
                         new PreferredPartsOfDays(EnumDays.MONDAY),
@@ -125,16 +125,16 @@ public final class SubjectQuatriemeProvider {
      * enseignements pratiques interdisciplinaires - EPI - Sciences
      */
     private static Subject sciencesEpi() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_SCIENCES_EPI_ID, GradeProvider.quatriemeGrade, "Sciences - EPI", false,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_SCIENCES_EPI_ID, GradeTestProvider.cinquiemeGrade, "Sciences - EPI", false,
                 (int) (60 * 1.5), (int) (60 * 1.5), (int) (60 * 1.5), 1,
                 Collections.emptyList(),
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
     private static Subject sport() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_SPORT_ID, GradeProvider.quatriemeGrade, "EDUCATION PHYSIQUE", false,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_SPORT_ID, GradeTestProvider.cinquiemeGrade, "EDUCATION PHYSIQUE", false,
                 (int) (60 * 1.5), (int) (60 * 1.5), 60 * 3, 2,
                 Arrays.asList(
                         new PreferredPartsOfDays(EnumDays.FRIDAY, EnumPartsOfDay.PM),
@@ -145,26 +145,27 @@ public final class SubjectQuatriemeProvider {
     }
 
     private static Subject dessin() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_DESSIN_ID, GradeProvider.quatriemeGrade, "ARTS PLASTIQUES", false,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_DESSIN_ID, GradeTestProvider.cinquiemeGrade, "ARTS PLASTIQUES", false,
                 60, 60, 60, 1,
                 Collections.singletonList(new PreferredPartsOfDays(EnumDays.FRIDAY)),
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
     private static Subject musique() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_MUSIQUE_ID, GradeProvider.quatriemeGrade, "EDUCATION MUSICALE", false,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_MUSIQUE_ID, GradeTestProvider.cinquiemeGrade, "EDUCATION MUSICALE", false,
                 60, 60, 60, 1,
                 Collections.emptyList(),
                 Collections.singletonList(EnumSchoolRoomsTypes.MUSIC), 0, "");
     }
 
     private static Subject latin() {
-        return SubjectProvider.subject(
-                GlobalProvider.Subjects.Quatrieme.SUBJECT_QUATRIEME_LATIN_ID, GradeProvider.quatriemeGrade, "Latin", false,
+        return SubjectTestProvider.subject(
+                GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_LATIN_ID, GradeTestProvider.cinquiemeGrade, "Latin", false,
                 60, 60, 60 * 2, 2,
                 Collections.emptyList(),
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
+
 }
