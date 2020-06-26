@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class TeacherProvider implements TeacherSPI {
@@ -42,5 +43,11 @@ public class TeacherProvider implements TeacherSPI {
     public List<Teacher> searchTeachers(String clientId, String name) {
         final List<TeacherDbDTO> teachers = teacherRepository.searchTeachers(new ObjectId(clientId), name);
         return teacherMapper.dbDtosToDomains(teachers);
+    }
+
+    @Override
+    public Optional<Teacher> findById(String id) {
+        final Optional<TeacherDbDTO> optTeacher = teacherRepository.findById(id);
+        return optTeacher.map(teacherMapper::dbDtoToDomain);
     }
 }

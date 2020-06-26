@@ -25,4 +25,10 @@ public class AuthorityProvider implements AuthoritySPI {
         final Optional<AuthorityDbDTO> optAuthority = authorityRepository.findById(authorityName);
         return optAuthority.map(authorityMapper::dbDtoToDomain).orElseThrow();
     }
+
+    @Override
+    public Optional<Authority> findById(String authorityName) {
+        final Optional<AuthorityDbDTO> optAuthority = authorityRepository.findById(authorityName);
+        return optAuthority.map(authorityMapper::dbDtoToDomain);
+    }
 }

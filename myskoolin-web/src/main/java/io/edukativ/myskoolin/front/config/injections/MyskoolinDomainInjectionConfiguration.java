@@ -71,8 +71,9 @@ public class MyskoolinDomainInjectionConfiguration {
 
     @Bean
     public TeacherAPI teacherAPI(TeacherSPI teacherSPI, AuthoritySPI authoritySPI,
-                                 TeacherMailingSPI teacherMailingSPI, MyskoolinMailingSPI myskoolinMailingSPI) {
-        return new TeacherService(teacherSPI, authoritySPI, teacherMailingSPI, myskoolinMailingSPI);
+                                 TeacherMailingSPI teacherMailingSPI, MyskoolinMailingSPI myskoolinMailingSPI,
+                                 MyskoolinLoggerSPI logger) {
+        return new TeacherService(teacherSPI, authoritySPI, teacherMailingSPI, myskoolinMailingSPI, logger);
     }
 
     @Bean

@@ -80,6 +80,9 @@ public class TeacherApplication {
     }
 
     public Optional<TeacherDTO> update(TeacherDTO teacherDTO, String baseUrl) {
-        return null;
+        final Teacher teacher = teacherMapper.dtoToDomain(teacherDTO);
+        User currentUser = userService.currentUser();
+        Optional<Teacher> updatedTeacher = teacherAPI.update(teacher, currentUser, baseUrl);
+        return updatedTeacher.map(teacherMapper::domainToDto);
     }
 }
