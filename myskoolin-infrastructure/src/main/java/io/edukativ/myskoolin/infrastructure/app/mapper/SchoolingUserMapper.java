@@ -5,9 +5,10 @@ import io.edukativ.myskoolin.infrastructure.app.dto.UserDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.common.mapper.AddressMapper;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = {
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR, uses = {
         ObjectIdMapper.class,
         AuthorityMapper.class,
         AddressMapper.class,

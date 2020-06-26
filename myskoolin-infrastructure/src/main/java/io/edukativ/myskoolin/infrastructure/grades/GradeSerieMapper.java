@@ -1,11 +1,12 @@
 package io.edukativ.myskoolin.infrastructure.grades;
 
 import io.edukativ.myskoolin.domain.vo.GradeSerie;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface GradeSerieMapper {
 
     List<GradeSerieVO> dbDtosToDtos(List<GradeSerieDbVO> gradeSeries);

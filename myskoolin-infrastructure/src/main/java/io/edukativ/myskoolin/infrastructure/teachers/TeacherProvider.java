@@ -12,19 +12,21 @@ import java.util.List;
 public class TeacherProvider implements TeacherSPI {
 
     private final TeacherMapper teacherMapper;
+    private final TeacherMapperImplemented teacherMapperImplemented;
     private final TeacherRepository teacherRepository;
     private final MyskoolinLoggerSPI logger;
 
-    public TeacherProvider(TeacherMapper teacherMapper, TeacherRepository teacherRepository,
+    public TeacherProvider(TeacherMapper teacherMapper, TeacherMapperImplemented teacherMapperImplemented, TeacherRepository teacherRepository,
                            MyskoolinLoggerSPI logger) {
         this.teacherMapper = teacherMapper;
+        this.teacherMapperImplemented = teacherMapperImplemented;
         this.teacherRepository = teacherRepository;
         this.logger = logger;
     }
 
     @Override
     public Teacher create(Teacher teacher) {
-        TeacherDbDTO teacherDbDTO = teacherMapper.domainToDbDto(teacher);
+        TeacherDbDTO teacherDbDTO = teacherMapperImplemented.domainToDbDto(teacher);
         TeacherDbDTO createdTeacher = teacherRepository.save(teacherDbDTO);
         logger.debug(TeacherProvider.class, String.format("Created Information for Teacher: %s", teacherDbDTO.toString()));
         return teacherMapper.dbDtoToDomain(createdTeacher);

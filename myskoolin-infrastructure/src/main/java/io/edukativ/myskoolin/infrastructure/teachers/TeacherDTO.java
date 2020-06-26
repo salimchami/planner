@@ -9,6 +9,7 @@ import io.edukativ.myskoolin.infrastructure.schooling.vo.SchoolClassTimeSlotVO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDTO;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,6 +68,10 @@ public class TeacherDTO extends UserDTO {
     }
 
     public List<TeacherDTO> getSubstitutedTeachers() {
+        if(substitutedTeachers == null) {
+            substitutedTeachers = new ArrayList<>();
+        }
+
         return substitutedTeachers;
     }
 
@@ -75,6 +80,9 @@ public class TeacherDTO extends UserDTO {
     }
 
     public List<AbsenceVO> getAbsences() {
+        if(absences == null) {
+            absences = new ArrayList<>();
+        }
         return absences;
     }
 
@@ -83,6 +91,9 @@ public class TeacherDTO extends UserDTO {
     }
 
     public List<SubjectDTO> getTaughtSubjects() {
+        if(taughtSubjects == null) {
+            taughtSubjects = new ArrayList<>();
+        }
         return taughtSubjects;
     }
 
@@ -91,6 +102,9 @@ public class TeacherDTO extends UserDTO {
     }
 
     public List<SchoolClassTimeSlotVO> getTimetable() {
+        if(timetable == null) {
+            timetable = new ArrayList<>();
+        }
         return timetable;
     }
 
@@ -155,6 +169,9 @@ public class TeacherDTO extends UserDTO {
     }
 
     public List<GradeDTO> getGrades() {
+        if(grades == null) {
+            grades = new ArrayList<>();
+        }
         return grades;
     }
 

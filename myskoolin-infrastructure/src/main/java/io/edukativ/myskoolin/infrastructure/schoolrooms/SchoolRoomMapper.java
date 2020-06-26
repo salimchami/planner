@@ -2,11 +2,12 @@ package io.edukativ.myskoolin.infrastructure.schoolrooms;
 
 import io.edukativ.myskoolin.domain.entity.SchoolRoom;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {ObjectIdMapper.class})
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR, uses = {ObjectIdMapper.class})
 public interface SchoolRoomMapper {
 
     SchoolRoomDTO dbDTOToDTO(SchoolRoomDbDTO schoolRoom);

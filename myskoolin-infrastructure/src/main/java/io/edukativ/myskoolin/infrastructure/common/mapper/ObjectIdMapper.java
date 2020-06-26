@@ -1,9 +1,10 @@
 package io.edukativ.myskoolin.infrastructure.common.mapper;
 
 import org.bson.types.ObjectId;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface ObjectIdMapper {
 
     default ObjectId map(String id) {

@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -240,18 +241,31 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
     }
 
     public List<TeacherDbDTO> getSubstitutedTeachers() {
+        if(substitutedTeachers == null) {
+            substitutedTeachers = new ArrayList<>();
+        }
+
         return substitutedTeachers;
     }
 
     public List<AbsenceDbVO> getAbsences() {
+        if(absences == null) {
+            absences = new ArrayList<>();
+        }
         return absences;
     }
 
     public List<SubjectDbDTO> getTaughtSubjects() {
+        if(taughtSubjects == null) {
+            taughtSubjects = new ArrayList<>();
+        }
         return taughtSubjects;
     }
 
     public List<SchoolClassTimeSlotDbVO> getTimetable() {
+        if(timetable == null) {
+            timetable = new ArrayList<>();
+        }
         return timetable;
     }
 
@@ -284,6 +298,9 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
     }
 
     public List<GradeDbDTO> getGrades() {
+        if(grades == null) {
+            grades = new ArrayList<>();
+        }
         return grades;
     }
 

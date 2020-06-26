@@ -1,7 +1,5 @@
 package io.edukativ.myskoolin.infrastructure.app.dto;
 
-import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
-import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.common.vo.AddressVO;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
 
@@ -11,6 +9,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -199,6 +198,9 @@ public class UserDTO {
     }
 
     public Set<String> getAuthorities() {
+        if(authorities == null) {
+            return new HashSet<>();
+        }
         return authorities;
     }
 

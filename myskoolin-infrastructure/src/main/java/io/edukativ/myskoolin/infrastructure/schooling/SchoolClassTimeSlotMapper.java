@@ -6,6 +6,7 @@ import io.edukativ.myskoolin.infrastructure.schooling.vo.SchoolClassTimeSlotVO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectMapper;
 import org.mapstruct.Mapper;
 
+import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {
         SubjectMapper.class,
@@ -23,4 +24,6 @@ public interface SchoolClassTimeSlotMapper {
     SchoolClassTimeSlotDbVO voToDbVo(SchoolClassTimeSlotVO schoolClassTimeSlot);
 
     SchoolClassTimeSlotDbVO domainToDbVo(SchoolClassTimeSlot schoolClassTimeSlot);
+
+    List<SchoolClassTimeSlotDbVO> domainsToDbVos(List<SchoolClassTimeSlot> timetable);
 }

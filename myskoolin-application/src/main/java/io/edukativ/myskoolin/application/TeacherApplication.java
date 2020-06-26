@@ -40,7 +40,8 @@ public class TeacherApplication {
     public Optional<TeacherDTO> create(TeacherDTO teacherDTO, String baseUrl) {
         Teacher teacher = teacherMapper.dtoToDomain(teacherDTO);
         String encryptedRandomPassword = passwordEncoder.encode(RandomUtil.generatePassword());
-        Teacher createdTeacher = teacherAPI.create(teacher, encryptedRandomPassword, baseUrl);
+        User currentUser = userService.currentUser();
+        Teacher createdTeacher = teacherAPI.create(teacher, encryptedRandomPassword, currentUser, baseUrl);
         if (createdTeacher != null) {
             return Optional.of(teacherMapper.domainToDto(createdTeacher));
         } else {
@@ -73,7 +74,9 @@ public class TeacherApplication {
     }
 
     public List<TeacherDTO> findByGradesIdsAndSubjectsIds(List<String> gradesIds, List<String> subjectsIds) {
-        return null;
+        UserDbDTO currentUser = userService.currentUserWithAuthorities();
+        final List<TeacherDbDTO> teachers = teacherRepository.findNotDeletedTeachersByGradesIdsAndSubjectsId(currentUser.getClientId(), gradesIds, subjectsIds);
+        return teacherMapper.dbDtosToDtos(teachers);
     }
 
     public Optional<TeacherDTO> update(TeacherDTO teacherDTO, String baseUrl) {

@@ -18,6 +18,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -404,6 +405,9 @@ public abstract class AbstractUserDbDTO extends AbstractAuditingEntity implement
     }
 
     public Set<AuthorityDbDTO> getAuthorities() {
+        if(this.authorities == null) {
+            return new HashSet<>();
+        }
         return authorities;
     }
 

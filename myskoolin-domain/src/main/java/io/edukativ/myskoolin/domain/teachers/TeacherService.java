@@ -25,12 +25,17 @@ public class TeacherService implements TeacherAPI {
     }
 
     @Override
-    public Teacher create(Teacher teacher, String encryptedRandomPassword, String baseUrl) {
+    public Teacher create(Teacher teacher, String encryptedRandomPassword, User currentUser, String baseUrl) {
         final Authority authority = authoritySPI.findByName(AuthoritiesConstants.TEACHERS);
         if (!teacher.containsAuthority(authority)) {
             teacher.addAuthority(authority);
         }
         teacher.setPassword(encryptedRandomPassword);
+        teacher.setDeleted(false);
+        teacher.setArchived(false);
+        teacher.setActivated(false);
+        teacher.setClientId(currentUser.getClientId());
+        teacher.setCreatedBy(currentUser.getId());
         Teacher createdTeacher = teacherSPI.create(teacher);
         teacherMailingSPI.sendToCreatedTeacher(createdTeacher, baseUrl);
         myskoolinMailingSPI.notifyCreatedTeacher(createdTeacher);

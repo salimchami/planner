@@ -4,6 +4,7 @@ import io.edukativ.myskoolin.domain.vo.EnumSchoolRoomsTypes;
 import io.edukativ.myskoolin.domain.vo.Teacher;
 import io.edukativ.myskoolin.infrastructure.app.mapper.AuthorityMapper;
 import io.edukativ.myskoolin.infrastructure.app.mapper.SchoolingUserMapper;
+import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
 import io.edukativ.myskoolin.infrastructure.common.mapper.AddressMapper;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
@@ -13,11 +14,13 @@ import io.edukativ.myskoolin.infrastructure.schooling.AbsenceMapper;
 import io.edukativ.myskoolin.infrastructure.schooling.InfirmaryStatisticsMapper;
 import io.edukativ.myskoolin.infrastructure.schooling.SchoolClassTimeSlotMapper;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectMapper;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
+import org.mapstruct.Named;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR, uses = {
         SchoolingUserMapper.class,
         AbsenceMapper.class,
         SubjectMapper.class,
@@ -28,19 +31,20 @@ import java.util.List;
         ObjectIdMapper.class,
         AuthorityMapper.class,
         AddressMapper.class,
-})
+}, config = UserMapper.class)
 public interface TeacherMapper {
 
     List<TeacherDTO> dbDtosToDtos(List<TeacherDbDTO> teachers);
 
     Teacher dtoToDomain(TeacherDTO teacher);
 
-    TeacherDTO domainToDto(Teacher savedTeacher);
+    TeacherDTO domainToDto(Teacher teacher);
 
-    TeacherDbDTO domainToDbDto(Teacher teacher);
+    List<TeacherDbDTO> domainsToDbDtos(List<Teacher> substitutedTeachers);
 
-    Teacher dbDtoToDomain(TeacherDbDTO savedTeacher);
+    Teacher dbDtoToDomain(TeacherDbDTO teacher);
 
+    @Named("dbToVo")
     default EnumSchoolRoomsTypes dbToVo(EnumSchoolRoomsTypesDb type) {
         return EnumSchoolRoomsTypes.valueOf(type.name());
     }

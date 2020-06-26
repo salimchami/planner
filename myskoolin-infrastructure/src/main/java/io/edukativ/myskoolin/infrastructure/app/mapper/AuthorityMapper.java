@@ -2,12 +2,13 @@ package io.edukativ.myskoolin.infrastructure.app.mapper;
 
 import io.edukativ.myskoolin.domain.entity.Authority;
 import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface AuthorityMapper {
 
     Set<Authority> dbDtosToDomains(Set<AuthorityDbDTO> authority);
@@ -29,4 +30,13 @@ public interface AuthorityMapper {
     }
 
     Authority dbDtoToDomain(AuthorityDbDTO authority);
+
+    default Set<AuthorityDbDTO> domainsToDbDtos(Set<Authority> authorities) {
+        return authorities
+                .stream()
+                .map(authority -> new AuthorityDbDTO(authority.getName()))
+                .collect(Collectors.toSet());
+    }
+
+    AuthorityDbDTO domainToDbDto(Authority authority);
 }

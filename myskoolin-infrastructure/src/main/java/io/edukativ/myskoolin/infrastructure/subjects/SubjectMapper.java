@@ -40,4 +40,6 @@ public interface SubjectMapper {
     List<Subject> dtosToDomains(List<SubjectDTO> subjectDbDTOS);
 
     SubjectDTO dbDtoToDto(SubjectDbDTO subject);
+
+    List<SubjectDbDTO> domainsToDbDtos(List<Subject> subjects);
 }

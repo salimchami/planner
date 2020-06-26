@@ -15,32 +15,22 @@ import java.util.stream.Collectors;
  */
 public class Teacher extends User {
 
+    private String comment;
     private ZonedDateTime employedDate;
-    private Boolean substitute = false;
+    private String familySituation;
+    private Boolean substitute;
     private List<Teacher> substitutedTeachers;
     private List<Absence> absences;
     private List<Subject> taughtSubjects;
-    private List<TimeSlot> timetable;
+    private List<SchoolClassTimeSlot> timetable;
+    private String proCellPhone;
+    private String proPhone;
+    private String proEmail;
+    private InfirmaryStatistics infirmaryStatistics;
+    private MedicalInfos medicalInfos;
     private ZonedDateTime exitDate;
+    private String exitReason;
     private List<Grade> grades;
-
-    public Teacher() {
-    }
-
-    public Teacher(ZonedDateTime employedDate,
-                   Boolean substitute, List<Teacher> substitutedTeachers, List<Absence> absences,
-                   List<Subject> taughtSubjects, List<TimeSlot> timetable,
-                   ZonedDateTime exitDate,
-                   List<Grade> grades) {
-        this.employedDate = employedDate;
-        this.substitute = substitute;
-        this.substitutedTeachers = substitutedTeachers;
-        this.absences = absences;
-        this.taughtSubjects = taughtSubjects;
-        this.timetable = timetable;
-        this.exitDate = exitDate;
-        this.grades = grades;
-    }
 
     public static List<Teacher> teachersByGrade(List<Teacher> teachers, Grade grade) {
         return teachers.stream().filter(teacher -> teacher.getGrades().contains(grade)).collect(Collectors.toList());
@@ -95,14 +85,14 @@ public class Teacher extends User {
         this.taughtSubjects = taughtSubjects;
     }
 
-    public List<TimeSlot> getTimetable() {
+    public List<SchoolClassTimeSlot> getTimetable() {
         if (this.timetable == null) {
             this.timetable = new ArrayList<>();
         }
         return timetable;
     }
 
-    public void setTimetable(List<TimeSlot> timetable) {
+    public void setTimetable(List<SchoolClassTimeSlot> timetable) {
         this.timetable = timetable;
     }
 
@@ -119,6 +109,70 @@ public class Teacher extends User {
             this.grades = new ArrayList<>();
         }
         return grades;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getFamilySituation() {
+        return familySituation;
+    }
+
+    public void setFamilySituation(String familySituation) {
+        this.familySituation = familySituation;
+    }
+
+    public String getProCellPhone() {
+        return proCellPhone;
+    }
+
+    public void setProCellPhone(String proCellPhone) {
+        this.proCellPhone = proCellPhone;
+    }
+
+    public String getProPhone() {
+        return proPhone;
+    }
+
+    public void setProPhone(String proPhone) {
+        this.proPhone = proPhone;
+    }
+
+    public String getProEmail() {
+        return proEmail;
+    }
+
+    public void setProEmail(String proEmail) {
+        this.proEmail = proEmail;
+    }
+
+    public InfirmaryStatistics getInfirmaryStatistics() {
+        return infirmaryStatistics;
+    }
+
+    public void setInfirmaryStatistics(InfirmaryStatistics infirmaryStatistics) {
+        this.infirmaryStatistics = infirmaryStatistics;
+    }
+
+    public MedicalInfos getMedicalInfos() {
+        return medicalInfos;
+    }
+
+    public void setMedicalInfos(MedicalInfos medicalInfos) {
+        this.medicalInfos = medicalInfos;
+    }
+
+    public String getExitReason() {
+        return exitReason;
+    }
+
+    public void setExitReason(String exitReason) {
+        this.exitReason = exitReason;
     }
 
     public void setGrades(List<Grade> grades) {

@@ -6,6 +6,7 @@ import io.edukativ.myskoolin.infrastructure.app.dto.UserDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.common.mapper.AddressMapper;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -105,6 +106,7 @@ public class UserMapper {
         user.setEmail(userDbDTO.getEmail());
         user.setActivated(userDbDTO.isActivated());
         user.setLangKey(userDbDTO.getLangKey());
+        user.setPassword(userDbDTO.getPassword());
         user.setImageUrl(userDbDTO.getImageUrl());
         user.setActivationKey(userDbDTO.getActivationKey());
         user.setResetKey(userDbDTO.getResetKey());
@@ -115,6 +117,30 @@ public class UserMapper {
         user.setDeleted(userDbDTO.isDeleted());
         user.setArchived(userDbDTO.isArchived());
         return user;
+    }
+
+    public UserDbDTO domainToDbDTO(User user) {
+        return new UserDbDTO.UserDbDTOBuilder()
+                .id(user.getId())
+                .login(user.getLogin())
+                .clientId(new ObjectId(user.getClientId()))
+                .gender(user.getGender())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .cellPhone(user.getCellPhone())
+                .homePhone(user.getHomePhone())
+                .nationality(user.getNationality())
+                .email(user.getEmail())
+                .langKey(user.getLangKey())
+                .password(user.getPassword())
+                .imageUrl(user.getImageUrl())
+                .activationKey(user.getActivationKey())
+                .resetKey(user.getResetKey())
+                .resetDate(user.getResetDate())
+                .authorities(authorityMapper.domainsToDbDtos(user.getAuthorities()))
+                .address(addressMapper.domainToDbDto(user.getAddress()))
+                .birthDate(user.getBirthDate())
+                .build();
     }
 
 }

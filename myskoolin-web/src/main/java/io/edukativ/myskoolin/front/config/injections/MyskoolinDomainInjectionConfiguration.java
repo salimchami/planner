@@ -31,6 +31,7 @@ import io.edukativ.myskoolin.infrastructure.subjects.SubjectMapper;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectProvider;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectRepository;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherMapper;
+import io.edukativ.myskoolin.infrastructure.teachers.TeacherMapperImplemented;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherProvider;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherRepository;
 import org.springframework.context.annotation.Bean;
@@ -91,8 +92,8 @@ public class MyskoolinDomainInjectionConfiguration {
 
     @Bean
     public TeacherSPI teacherSPI(TeacherMapper teacherMapper, TeacherRepository teacherRepository,
-                                 MyskoolinLoggerSPI myskoolinLogger) {
-        return new TeacherProvider(teacherMapper, teacherRepository, myskoolinLogger);
+                                 MyskoolinLoggerSPI myskoolinLogger, TeacherMapperImplemented teacherMapperImplemented) {
+        return new TeacherProvider(teacherMapper, teacherMapperImplemented, teacherRepository, myskoolinLogger);
     }
 
 }

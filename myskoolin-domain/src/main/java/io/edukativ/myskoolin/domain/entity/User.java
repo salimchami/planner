@@ -32,6 +32,7 @@ public class User {
     private ZonedDateTime birthDate;
     private boolean deleted;
     private boolean archived;
+    private String createdBy;
 
     /**
      * Default constructor.
@@ -259,6 +260,14 @@ public class User {
         this.archived = archived;
     }
 
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -289,4 +298,6 @@ public class User {
     public void addAuthority(Authority authority) {
         this.authorities.add(authority);
     }
+
+
 }
