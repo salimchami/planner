@@ -1,5 +1,6 @@
 package io.edukativ.myskoolin.application;
 
+import io.edukativ.myskoolin.application.security.UserService;
 import io.edukativ.myskoolin.domain.entity.User;
 import io.edukativ.myskoolin.domain.teachers.TeacherAPI;
 import io.edukativ.myskoolin.domain.vo.Teacher;
@@ -25,18 +26,15 @@ public class TeacherApplication {
     private final TeacherMapper teacherMapper;
     private final TeacherAPI teacherAPI;
     private final PasswordEncoder passwordEncoder;
-    private final User currentUser;
-    private final UserDbDTO currentUserWithAuthorities;
+    private final UserService userService;
 
     public TeacherApplication(TeacherRepository teacherRepository, TeacherMapper teacherMapper,
-                              TeacherAPI teacherAPI, PasswordEncoder passwordEncoder,
-                              User currentUser, UserDbDTO currentUserWithAuthorities) {
+                              TeacherAPI teacherAPI, PasswordEncoder passwordEncoder, UserService userService) {
         this.teacherRepository = teacherRepository;
         this.teacherMapper = teacherMapper;
         this.teacherAPI = teacherAPI;
         this.passwordEncoder = passwordEncoder;
-        this.currentUser = currentUser;
-        this.currentUserWithAuthorities = currentUserWithAuthorities;
+        this.userService = userService;
     }
 
     public Optional<TeacherDTO> create(TeacherDTO teacherDTO, String baseUrl) {
@@ -51,11 +49,13 @@ public class TeacherApplication {
     }
 
     public List<TeacherDTO> findAllByCurrentUserClient() {
+        UserDbDTO currentUserWithAuthorities = userService.currentUserWithAuthorities();
         final List<TeacherDbDTO> teachers = teacherRepository.findAllNotDeletedTeachers(currentUserWithAuthorities.getClientId());
         return teacherMapper.dbDtosToDtos(teachers);
     }
 
     public List<TeacherDTO> searchByName(String name) {
+        User currentUser = userService.currentUser();
         List<Teacher> teachers = teacherAPI.searchByName(name, currentUser);
         return teacherMapper.domainsToDtos(teachers);
     }
@@ -66,6 +66,7 @@ public class TeacherApplication {
     }
 
     public List<TeacherDTO> findOneByGrade(String gradeId) {
+        User currentUser = userService.currentUser();
         final List<TeacherDbDTO> teachers =
                 teacherRepository.findNotDeletedTeachersByGradeId(new ObjectId(currentUser.getClientId()), new ObjectId(gradeId));
         return teacherMapper.dbDtosToDtos(teachers);
