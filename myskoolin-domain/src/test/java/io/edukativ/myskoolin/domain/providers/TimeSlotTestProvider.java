@@ -18,12 +18,6 @@ public class TimeSlotTestProvider {
         );
     }
 
-    public static TimeSlot timeSlot(EnumDays day, int startHour, EnumPartsOfDay startPartsOfDay, int endHour, EnumPartsOfDay endPartsOfDay, boolean half) {
-        final TimeSlot timeSlot = timeSlot(day, startHour, startPartsOfDay, endHour, endPartsOfDay);
-        timeSlot.setHalf(half);
-        return timeSlot;
-    }
-
     public static List<TimeSlot> defaultDayRefTimeSlots(EnumDays day) {
         final EnumPartsOfDay pm = EnumPartsOfDay.PM;
         final EnumPartsOfDay am = EnumPartsOfDay.AM;

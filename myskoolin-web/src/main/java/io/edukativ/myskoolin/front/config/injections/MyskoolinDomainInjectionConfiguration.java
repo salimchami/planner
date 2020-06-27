@@ -19,6 +19,8 @@ import io.edukativ.myskoolin.domain.teachers.TeacherAPI;
 import io.edukativ.myskoolin.domain.teachers.TeacherMailingSPI;
 import io.edukativ.myskoolin.domain.teachers.TeacherSPI;
 import io.edukativ.myskoolin.domain.teachers.TeacherService;
+import io.edukativ.myskoolin.domain.timetabling.TimeTableGenerationAPI;
+import io.edukativ.myskoolin.domain.timetabling.TimeTablesGeneration;
 import io.edukativ.myskoolin.infrastructure.app.mapper.AuthorityMapper;
 import io.edukativ.myskoolin.infrastructure.app.providers.AuthorityProvider;
 import io.edukativ.myskoolin.infrastructure.app.repository.AuthorityRepository;
@@ -104,5 +106,10 @@ public class MyskoolinDomainInjectionConfiguration {
     @Bean
     public SchoolClassSPI schoolClassSPI(SchoolClassProvider schoolClassProvider) {
         return schoolClassProvider;
+    }
+
+    @Bean
+    public TimeTableGenerationAPI timeTableGenerationAPI() {
+        return new TimeTablesGeneration(solverManager, schoolClassSPI, scoreManager, timeTableSPI);
     }
 }

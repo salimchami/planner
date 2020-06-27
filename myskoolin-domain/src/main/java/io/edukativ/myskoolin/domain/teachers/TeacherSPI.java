@@ -12,4 +12,6 @@ public interface TeacherSPI {
     List<Teacher> searchTeachers(String clientId, String name);
 
     Optional<Teacher> findById(String id);
+
+    List<Teacher> findAllByClientId(String clientId);
 }

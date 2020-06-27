@@ -98,7 +98,7 @@ public class SchoolClassResource {
         Optional<SchoolClassDTO> optSchoolClass = schoolClassApplication.findOne(id);
         return optSchoolClass
             .map(schoolClass -> new ResponseEntity<>(schoolClass, HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            .orElse(new ResponseEntity<>(HttpStatus.NO_CONTENT));
     }
 
 //    @Secured({

@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.domain.delays;
 
-import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeSlot;
+import io.edukativ.myskoolin.domain.timetabling.Lesson;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Delay implements Serializable {
 
     private Instant arrivingTime;
-    private SchoolClassTimeSlot timeslot;
+    private Lesson timeslot;
 
     public Instant getArrivingTime() {
         return arrivingTime;
@@ -19,11 +19,11 @@ public class Delay implements Serializable {
         this.arrivingTime = arrivingTime;
     }
 
-    public SchoolClassTimeSlot getTimeslot() {
+    public Lesson getTimeslot() {
         return timeslot;
     }
 
-    public void setTimeslot(SchoolClassTimeSlot timeslot) {
+    public void setTimeslot(Lesson timeslot) {
         this.timeslot = timeslot;
     }
 

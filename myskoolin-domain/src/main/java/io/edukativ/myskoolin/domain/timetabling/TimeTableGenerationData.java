@@ -134,12 +134,12 @@ public class TimeTableGenerationData {
                 || firstTimeSlot.getStartTime().toLocalTime().isBefore(timeTableOptions.getCoursesStartTime().toLocalTime());
     }
 
-    public static int addedDurationForSubject(Subject subject, List<SchoolClassTimeSlot> timeSlots) {
-        return timeSlots.stream()
-                .filter(timeSlot -> timeSlot.getSubject().getId().equals(subject.getId()))
-                .reduce(0, (partialTotalminutes, timeSlot) ->
-                        partialTotalminutes + timeSlotDurationInMinutesWithHalf(timeSlot, LocalDateTime.now()), Integer::sum);
-    }
+//    public static int addedDurationForSubject(Subject subject, List<SchoolClassTimeSlot> timeSlots) {
+//        return timeSlots.stream()
+//                .filter(timeSlot -> timeSlot.getSubject().getId().equals(subject.getId()))
+//                .reduce(0, (partialTotalminutes, timeSlot) ->
+//                        partialTotalminutes + timeSlotDurationInMinutesWithHalf(timeSlot, LocalDateTime.now()), Integer::sum);
+//    }
 
     private static int timeSlotDurationInMinutesWithHalf(TimeSlot timeSlot, LocalDateTime now) {
         LocalDateTime startTime = LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(),
