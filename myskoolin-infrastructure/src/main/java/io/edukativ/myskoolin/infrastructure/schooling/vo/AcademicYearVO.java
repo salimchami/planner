@@ -14,6 +14,17 @@ public class AcademicYearVO implements Serializable {
     private ZonedDateTime startDateMax;
     private ZonedDateTime endDate;
 
+    public AcademicYearVO() {
+    }
+
+    public AcademicYearVO(AcademicYearVO year) {
+        this.startYear = year.getStartYear();
+        this.endYear = year.getEndYear();
+        this.startDateMin = year.getStartDateMin();
+        this.startDateMax = year.getStartDateMax();
+        this.endDate = year.getEndDate();
+    }
+
     public int getStartYear() {
         return startYear;
     }
@@ -52,14 +63,6 @@ public class AcademicYearVO implements Serializable {
 
     public void setEndDate(ZonedDateTime endDate) {
         this.endDate = endDate;
-    }
-
-    public AcademicYearVO(AcademicYearVO year) {
-        this.startYear = year.getStartYear();
-        this.endYear = year.getEndYear();
-        this.startDateMin = year.getStartDateMin();
-        this.startDateMax = year.getStartDateMax();
-        this.endDate = year.getEndDate();
     }
 
     @Override

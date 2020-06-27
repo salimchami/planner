@@ -22,10 +22,6 @@ public class SchoolingInfosVO implements Serializable {
     private List<SanctionVO> sanctions;
     private List<AbsenceVO> absences;
 
-    public SchoolingInfosVO(ZonedDateTime entryDate) {
-        this.entryDate = entryDate;
-    }
-
     public Boolean getIndividualizedReceptionPlan() {
         return individualizedReceptionPlan;
     }
