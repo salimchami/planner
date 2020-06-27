@@ -11,6 +11,7 @@ import io.edukativ.myskoolin.domain.schoolclasses.EnumSchoolClassNotation;
 import io.edukativ.myskoolin.domain.grades.GradeSerie;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
 import io.edukativ.myskoolin.domain.teachers.TeachersBySubject;
+import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -30,7 +31,7 @@ public final class SchoolClassTestProvider {
                 ZonedDateTime.of(coursesStartDateYear, coursesStartDateMonth, coursesStartDateDay, 8, 0, 0, 0, ZoneId.systemDefault()),
                 ZonedDateTime.of(coursesEndDateYear, coursesEndDateMonth, coursesEndDateDay, 8, 0, 0, 0, ZoneId.systemDefault()),
                 null, "", name,
-                false, null, grade, gradeSerie, new ArrayList<>(), null, EnumSchoolClassNotation.QUARTER, teachersBySubjects);
+                false, null, grade, gradeSerie, new SchoolClassTimeTable(), null, EnumSchoolClassNotation.QUARTER, teachersBySubjects);
     }
 
     public static SchoolClass schoolClass(String id, String name, Grade grade, GradeSerie gradeSerie,

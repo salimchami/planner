@@ -1,11 +1,11 @@
 package io.edukativ.myskoolin.domain.schoolclasses;
 
+import io.edukativ.myskoolin.domain.commons.exceptions.NotFoundException;
 import io.edukativ.myskoolin.domain.grades.Grade;
 import io.edukativ.myskoolin.domain.grades.GradeSerie;
 import io.edukativ.myskoolin.domain.teachers.TeachersBySubject;
-import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeSlot;
+import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
-import io.edukativ.myskoolin.domain.commons.exceptions.NotFoundException;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class SchoolClass {
     private List<String> headTeachers;
     private Grade grade;
     private GradeSerie gradeSerie;
-    private List<SchoolClassTimeSlot> timetable;
+    private SchoolClassTimeTable timetable;
     private List<TimeSlot> dailyBook;
     private EnumSchoolClassNotation notation;
     private List<TeachersBySubject> teachersBySubjects;
@@ -36,7 +36,7 @@ public class SchoolClass {
     public SchoolClass() {
     }
 
-    public SchoolClass(String id, String clientId, ZonedDateTime coursesStartDate, ZonedDateTime coursesEndDate, List<ZonedDateTime> councilsDates, String customName, String name, Boolean deleted, List<String> headTeachers, Grade grade, GradeSerie gradeSerie, List<SchoolClassTimeSlot> timetable, List<TimeSlot> dailyBook, EnumSchoolClassNotation notation, List<TeachersBySubject> teachersBySubjects) {
+    public SchoolClass(String id, String clientId, ZonedDateTime coursesStartDate, ZonedDateTime coursesEndDate, List<ZonedDateTime> councilsDates, String customName, String name, Boolean deleted, List<String> headTeachers, Grade grade, GradeSerie gradeSerie, SchoolClassTimeTable timetable, List<TimeSlot> dailyBook, EnumSchoolClassNotation notation, List<TeachersBySubject> teachersBySubjects) {
         this.id = id;
         this.clientId = clientId;
         this.coursesStartDate = coursesStartDate;
@@ -148,14 +148,11 @@ public class SchoolClass {
         this.gradeSerie = gradeSerie;
     }
 
-    public List<SchoolClassTimeSlot> getTimetable() {
-        if (this.timetable == null) {
-            this.timetable = new ArrayList<>();
-        }
+    public SchoolClassTimeTable getTimetable() {
         return timetable;
     }
 
-    public void setTimetable(List<SchoolClassTimeSlot> timetable) {
+    public void setTimetable(SchoolClassTimeTable timetable) {
         this.timetable = timetable;
     }
 

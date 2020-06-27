@@ -6,6 +6,9 @@ import io.edukativ.myskoolin.domain.commons.mailing.MyskoolinMailingSPI;
 import io.edukativ.myskoolin.domain.grades.GradeAPI;
 import io.edukativ.myskoolin.domain.grades.GradeSPI;
 import io.edukativ.myskoolin.domain.grades.GradeService;
+import io.edukativ.myskoolin.domain.schoolclasses.SchoolClassAPI;
+import io.edukativ.myskoolin.domain.schoolclasses.SchoolClassSPI;
+import io.edukativ.myskoolin.domain.schoolclasses.SchoolClassService;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoomAPI;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoomSPI;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoomService;
@@ -97,4 +100,8 @@ public class MyskoolinDomainInjectionConfiguration {
         return new TeacherProvider(teacherMapper, teacherMapperImplemented, teacherRepository, myskoolinLogger);
     }
 
+    @Bean
+    public SchoolClassAPI schoolClassAPI(SchoolClassSPI schoolClassSPI) {
+        return new SchoolClassService(schoolClassSPI);
+    }
 }

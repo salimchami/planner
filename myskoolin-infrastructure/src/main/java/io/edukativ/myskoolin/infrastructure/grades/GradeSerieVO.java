@@ -1,6 +1,8 @@
 package io.edukativ.myskoolin.infrastructure.grades;
 
-public class GradeSerieVO {
+import java.io.Serializable;
+
+public class GradeSerieVO implements Serializable {
 
     private String name;
     private String diminutive;

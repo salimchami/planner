@@ -1,8 +1,10 @@
-# myskoolin
+# ![Myskoolin](myskoolin-web/src/main/webapp/content/images/logo.png "Title")
 
 ![Java CI with Maven](https://github.com/salimchami/edukativ-myskoolin/workflows/Java%20CI%20with%20Maven/badge.svg)
 
 This application was generated using JHipster 6.9.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.9.0](https://www.jhipster.tech/documentation-archive/v6.9.0).
+
+Its architecture has converted to ports and adapters architecture (clean architecture - DDD). 
 
 ## Development
 

@@ -1,14 +1,14 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
-import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
-import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
-import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
+import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
+import io.edukativ.myskoolin.domain.subjects.Subject;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.util.Comparator.comparing;
 
@@ -63,71 +63,71 @@ public class TimeTableGenerationData {
     //########################################################################################################
     //########################################################################################################
     //########################################################################################################
+//
+//    public TimeTableValidation validation(TimeTableOptions timeTableOptions, List<SchoolRoom> schoolRooms) {
+//        boolean timeSlotsNotEmpty = !schoolClass.getTimetable().isEmpty();
+//        boolean allTimeSlotsHaveTeachers = validateTeachers();
+//        boolean allTimeSlotsHaveSchoolRooms = validateSchoolRooms(schoolRooms);
+//        boolean durationsOk = validateDurations();
+//        boolean notOutside = validateTimeSlotsLimits(timeTableOptions);
+//        boolean standardTimeslotsNotOverlapping = validateStandardTimeslots();
+//        boolean halfTimeslotsNotOverlapping = validateHalfTimeSlots();
+//        return new TimeTableValidation(schoolClass.getName(), durationsOk, notOutside, standardTimeslotsNotOverlapping,
+//                halfTimeslotsNotOverlapping, allTimeSlotsHaveSchoolRooms, allTimeSlotsHaveTeachers, timeSlotsNotEmpty, this.subjects, schoolClass.getTimetable());
+//    }
+//
+//    private boolean validateSchoolRooms(List<SchoolRoom> schoolRooms) {
+//        return schoolClass.getTimetable().stream().allMatch(timeSlot -> {
+//            Optional<SchoolRoom> timeSlotSchoolRoom = schoolRooms.stream().filter(schoolRoom -> schoolRoom.getId().equals(timeSlot.getSchoolRoomId())).findFirst();
+//            Optional<Subject> timeSlotSubject = subjects.stream().filter(subject -> subject.getId().equals(timeSlot.getSubject().getId())).findFirst();
+//            return timeSlotSchoolRoom.isPresent() && timeSlotSubject.isPresent() && timeSlotSubject.get().getSchoolRoomsTypes().contains(timeSlotSchoolRoom.get().getType());
+//        });
+//    }
+//
+//    private boolean validateTeachers() {
+//        return schoolClass.getTimetable().stream().allMatch(timeSlot -> timeSlot.getTeacherId() != null);
+//    }
 
-    public TimeTableValidation validation(TimeTableOptions timeTableOptions, List<SchoolRoom> schoolRooms) {
-        boolean timeSlotsNotEmpty = !schoolClass.getTimetable().isEmpty();
-        boolean allTimeSlotsHaveTeachers = validateTeachers();
-        boolean allTimeSlotsHaveSchoolRooms = validateSchoolRooms(schoolRooms);
-        boolean durationsOk = validateDurations();
-        boolean notOutside = validateTimeSlotsLimits(timeTableOptions);
-        boolean standardTimeslotsNotOverlapping = validateStandardTimeslots();
-        boolean halfTimeslotsNotOverlapping = validateHalfTimeSlots();
-        return new TimeTableValidation(schoolClass.getName(), durationsOk, notOutside, standardTimeslotsNotOverlapping,
-                halfTimeslotsNotOverlapping, allTimeSlotsHaveSchoolRooms, allTimeSlotsHaveTeachers, timeSlotsNotEmpty, this.subjects, schoolClass.getTimetable());
-    }
+//    private boolean validateHalfTimeSlots() {
+//        final List<TimeSlot> halfs = schoolClass.getTimetable().stream()
+//                .filter(TimeSlot::isHalf)
+//                .collect(Collectors.toList());
+//        for (TimeSlot timeSlot : halfs) {
+//            if (halfs.stream().filter(timeSlot1 -> timeSlot1.equals(timeSlot)).count() > 2) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//
+//    private boolean validateStandardTimeslots() {
+//        return schoolClass.getTimetable().stream()
+//                .filter(timeSlot -> !timeSlot.isHalf())
+//                .noneMatch(timeSlot -> timeSlot.isOverlapping(schoolClass.getTimetable()
+//                        .stream()
+//                        .filter(staticTimeSlot -> !staticTimeSlot.equals(timeSlot))
+//                        .collect(Collectors.toList()))
+//                );
+//    }
 
-    private boolean validateSchoolRooms(List<SchoolRoom> schoolRooms) {
-        return schoolClass.getTimetable().stream().allMatch(timeSlot -> {
-            Optional<SchoolRoom> timeSlotSchoolRoom = schoolRooms.stream().filter(schoolRoom -> schoolRoom.getId().equals(timeSlot.getSchoolRoomId())).findFirst();
-            Optional<Subject> timeSlotSubject = subjects.stream().filter(subject -> subject.getId().equals(timeSlot.getSubject().getId())).findFirst();
-            return timeSlotSchoolRoom.isPresent() && timeSlotSubject.isPresent() && timeSlotSubject.get().getSchoolRoomsTypes().contains(timeSlotSchoolRoom.get().getType());
-        });
-    }
+//    private boolean validateTimeSlotsLimits(TimeTableOptions timeTableOptions) {
+//        for (EnumDays day : refDays) {
+//            final List<TimeSlot> timeSlotsByDay = timeSlotsByDay(day);
+//            timeSlotsByDay.sort(comparing(TimeSlot::getStartTime));
+//            boolean outside = !timeSlotsByDay.isEmpty() && timeSlotsOutsideRefCoursesLimits(timeTableOptions, timeSlotsByDay.get(0), timeSlotsByDay.get(timeSlotsByDay.size() - 1));
+//            if (outside) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
-    private boolean validateTeachers() {
-        return schoolClass.getTimetable().stream().allMatch(timeSlot -> timeSlot.getTeacherId() != null);
-    }
-
-    private boolean validateHalfTimeSlots() {
-        final List<TimeSlot> halfs = schoolClass.getTimetable().stream()
-                .filter(TimeSlot::isHalf)
-                .collect(Collectors.toList());
-        for (TimeSlot timeSlot : halfs) {
-            if (halfs.stream().filter(timeSlot1 -> timeSlot1.equals(timeSlot)).count() > 2) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean validateStandardTimeslots() {
-        return schoolClass.getTimetable().stream()
-                .filter(timeSlot -> !timeSlot.isHalf())
-                .noneMatch(timeSlot -> timeSlot.isOverlapping(schoolClass.getTimetable()
-                        .stream()
-                        .filter(staticTimeSlot -> !staticTimeSlot.equals(timeSlot))
-                        .collect(Collectors.toList()))
-                );
-    }
-
-    private boolean validateTimeSlotsLimits(TimeTableOptions timeTableOptions) {
-        for (EnumDays day : refDays) {
-            final List<TimeSlot> timeSlotsByDay = timeSlotsByDay(day);
-            timeSlotsByDay.sort(comparing(TimeSlot::getStartTime));
-            boolean outside = !timeSlotsByDay.isEmpty() && timeSlotsOutsideRefCoursesLimits(timeTableOptions, timeSlotsByDay.get(0), timeSlotsByDay.get(timeSlotsByDay.size() - 1));
-            if (outside) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean validateDurations() {
-        return subjects.stream().allMatch(subject -> {
-            final int currentDurationInMinutes = addedDurationForSubject(subject, schoolClass.getTimetable());
-            return subject.getMinutesPerWeek().equals(currentDurationInMinutes);
-        });
-    }
+//    private boolean validateDurations() {
+//        return subjects.stream().allMatch(subject -> {
+//            final int currentDurationInMinutes = addedDurationForSubject(subject, schoolClass.getTimetable());
+//            return subject.getMinutesPerWeek().equals(currentDurationInMinutes);
+//        });
+//    }
 
     private boolean timeSlotsOutsideRefCoursesLimits(TimeTableOptions timeTableOptions, TimeSlot firstTimeSlot, TimeSlot lastTimeSlot) {
         return lastTimeSlot.getEndTime().toLocalTime().isAfter(timeTableOptions.getCoursesEndTime().toLocalTime())
@@ -151,16 +151,16 @@ public class TimeTableGenerationData {
         return Boolean.TRUE.equals(timeSlot.isHalf()) ? result / 2 : result;
     }
 
-    public List<TimeSlot> searchForHalfTimeSlots() {
-        return schoolClass.getTimetable().stream().filter(TimeSlot::isHalf).distinct().collect(Collectors.toList());
-    }
+//    public List<TimeSlot> searchForHalfTimeSlots() {
+//        return schoolClass.getTimetable().stream().filter(TimeSlot::isHalf).distinct().collect(Collectors.toList());
+//    }
+//
+//    public List<TimeSlot> timeSlotsByDay(EnumDays day) {
+//        return schoolClass.getTimetable().stream().filter(timeSlot -> timeSlot.getDay() == day).collect(Collectors.toList());
+//    }
 
-    public List<TimeSlot> timeSlotsByDay(EnumDays day) {
-        return schoolClass.getTimetable().stream().filter(timeSlot -> timeSlot.getDay() == day).collect(Collectors.toList());
-    }
-
-    public void reset() {
-        this.schoolClass.setTimetable(new ArrayList<>());
-        this.durationsValidations = new HashMap<>();
-    }
+//    public void reset() {
+//        this.schoolClass.setTimetable(new ArrayList<>());
+//        this.durationsValidations = new HashMap<>();
+//    }
 }

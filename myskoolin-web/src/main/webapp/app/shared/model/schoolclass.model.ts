@@ -26,7 +26,7 @@ export class SchoolClass implements BaseEntity {
         public coursesStartDate?: Date,
         public coursesEndDate?: Date,
         public councilsDates?: Array<Date>,
-        public headTeachers?: Array<Teacher>,
+        public headTeachers?: Array<string>,
         public grade?: Grade,
         public gradeSerie?: GradeSerie,
         public dailyBook?: Array<DailyBookTimeSlot>,

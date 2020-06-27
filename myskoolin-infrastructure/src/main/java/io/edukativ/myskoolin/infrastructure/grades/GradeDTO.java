@@ -4,9 +4,10 @@ import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolClassNotation
 import io.edukativ.myskoolin.infrastructure.timetabling.TimeTableOptionsVO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDTO;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GradeDTO {
+public class GradeDTO implements Serializable {
 
     private String id;
     private String clientId;

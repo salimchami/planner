@@ -1,26 +1,14 @@
 package io.edukativ.myskoolin.infrastructure.teachers;
 
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDbDTO;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class TeachersBySubjectDbVO implements Serializable {
-
-    public static final String MONGO_FIELD_TEACHER_USERS = "teachers_users";
+public class TeachersBySubjectVO implements Serializable {
 
     private SubjectDbDTO subject;
-    @Field(MONGO_FIELD_TEACHER_USERS)
     private List<TeacherDbDTO> teacherUsers;
-
-    public TeachersBySubjectDbVO() {
-    }
-
-    public TeachersBySubjectDbVO(SubjectDbDTO subject, List<TeacherDbDTO> teacherUsers) {
-        this.subject = subject;
-        this.teacherUsers = teacherUsers;
-    }
 
     public SubjectDbDTO getSubject() {
         return subject;

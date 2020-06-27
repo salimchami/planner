@@ -1,10 +1,12 @@
 package io.edukativ.myskoolin.front.web.rest;
 
 import io.edukativ.myskoolin.application.StudentApplication;
+import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.domain.commons.MyskoolinLoggerSPI;
 import io.edukativ.myskoolin.infrastructure.students.StudentDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,7 +75,14 @@ public class StudentResource {
 //        }
 //    }
 //
+
     @GetMapping
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE,
+        AuthoritiesConstants.INFIRMARY,
+        AuthoritiesConstants.TEACHERS,
+    })
     @Transactional(readOnly = true)
     public ResponseEntity<List<StudentDTO>> getAllStudents() {
         logger.debug("REST request to get a page of Students");
