@@ -1,5 +1,7 @@
 package io.edukativ.myskoolin.domain.vo;
 
+import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
+import io.edukativ.myskoolin.domain.entity.Authority;
 import io.edukativ.myskoolin.domain.entity.Grade;
 import io.edukativ.myskoolin.domain.entity.Subject;
 import io.edukativ.myskoolin.domain.entity.User;
@@ -193,5 +195,12 @@ public class Teacher extends User {
     @Override
     public int hashCode() {
         return Objects.hash(employedDate, substitute, timetable, grades);
+    }
+
+    public void checkTeacherAuthority(Authority teacherAuthority) {
+        if (getAuthorities().stream().noneMatch(authority -> AuthoritiesConstants.TEACHERS.equals(authority.getName()))) {
+            addAuthority(teacherAuthority);
+        }
+
     }
 }

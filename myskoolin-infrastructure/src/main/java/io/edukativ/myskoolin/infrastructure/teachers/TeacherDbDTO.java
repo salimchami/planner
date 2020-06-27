@@ -328,7 +328,6 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
         try {
             return new com.fasterxml.jackson.databind.ObjectMapper().writer().writeValueAsString(this);
         } catch (JsonProcessingException e) {
-
             return "Teacher{" +
                     "comment='" + comment + '\'' +
                     ", employedDate=" + employedDate +

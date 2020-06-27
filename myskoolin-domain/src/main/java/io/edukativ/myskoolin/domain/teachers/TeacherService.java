@@ -63,26 +63,21 @@ public class TeacherService implements TeacherAPI {
                 .map(Optional::get)
                 .map(dbTeacher -> {
                     dbTeacher.setAddress(teacher.getAddress());
-                    if (teacher.getAuthorities() != null) {
-                        Set<Authority> managedAuthorities = teacher.getAuthorities();
-                        managedAuthorities.clear();
-                        teacher.getAuthorities().stream()
-                                .map(authority -> authoritySPI.findById(authority.getName()))
-                                .filter(Optional::isPresent)
-                                .map(Optional::get)
-                                .forEach(managedAuthorities::add);
-                    }
+                    Set<Authority> managedAuthorities = teacher.getAuthorities();
+                    managedAuthorities.clear();
+                    teacher.getAuthorities().stream()
+                            .map(authority -> authoritySPI.findById(authority.getName()))
+                            .filter(Optional::isPresent)
+                            .map(Optional::get)
+                            .forEach(managedAuthorities::add);
+                    authoritySPI.findById(AuthoritiesConstants.TEACHERS)
+                            .ifPresent(teacher::checkTeacherAuthority);
                     dbTeacher.setBirthDate(teacher.getBirthDate());
                     dbTeacher.setCellPhone(teacher.getCellPhone());
-                    if (teacher.getEmail() != null) {
-                        dbTeacher.setEmail(teacher.getEmail().toLowerCase());
-                    }
                     dbTeacher.setFirstName(teacher.getFirstName());
                     dbTeacher.setHomePhone(teacher.getHomePhone());
-                    dbTeacher.setImageUrl(teacher.getImageUrl());
                     dbTeacher.setLangKey(teacher.getLangKey());
                     dbTeacher.setLastName(teacher.getLastName());
-                    dbTeacher.setLogin(teacher.getLogin());
                     dbTeacher.setNationality(teacher.getNationality());
                     dbTeacher.setGender(teacher.getGender());
                     dbTeacher.setComment(teacher.getComment());
