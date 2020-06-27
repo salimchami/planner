@@ -9,15 +9,15 @@ import org.mapstruct.Mapper;
 })
 public interface SchoolClassTimeTableMapper {
 
-    SchoolClassTimeTableVO dbVoToVo(SchoolClassTimeTableDbVO param);
+    SchoolClassTimeTableVO dbVoToVo(SchoolClassTimeTableDbDTO param);
 
-    SchoolClassTimeTable dbVoToDomain(SchoolClassTimeTableDbVO param);
+    SchoolClassTimeTable dbVoToDomain(SchoolClassTimeTableDbDTO param);
 
-    SchoolClassTimeTableDbVO voToDbVo(SchoolClassTimeTableVO param);
+    SchoolClassTimeTableDbDTO voToDbVo(SchoolClassTimeTableVO param);
 
     SchoolClassTimeTable voToDomain(SchoolClassTimeTableVO param);
 
-    SchoolClassTimeTableDbVO domainToDbVo(SchoolClassTimeTable param);
+    SchoolClassTimeTableDbDTO domainToDbVo(SchoolClassTimeTable param);
 
     SchoolClassTimeTableVO domainToVo(SchoolClassTimeTable param);
 

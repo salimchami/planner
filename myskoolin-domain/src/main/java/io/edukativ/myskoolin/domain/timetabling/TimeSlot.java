@@ -120,14 +120,15 @@ public class TimeSlot implements Comparable<TimeSlot> {
     //####################################################################################################
     //####################################################################################################
 
-//    public boolean hasSameTimes(TimeSlot timeSlot) {
-//        return this.startTime.equals(timeSlot.getStartTime()) || this.endTime.equals(timeSlot.getEndTime());
-//    }
-//
+    public boolean hasSameTimes(TimeSlot timeSlot) {
+        return this.startTime.equals(timeSlot.getStartTime()) || this.endTime.equals(timeSlot.getEndTime());
+    }
+
     public Long durationInMinutes() {
         return Duration.between(startTime.toLocalTime(), endTime.toLocalTime()).toMinutes();
     }
-//
+
+    //
 //    public boolean isOverlapping(EnumDays day, List<TimeSlot> staticTimeSlotsForDate) {
 //        if(this.day != day) {
 //            return false;
@@ -151,33 +152,34 @@ public class TimeSlot implements Comparable<TimeSlot> {
 //        return false;
 //    }
 //
-//    public boolean isOverlapping(TimeSlot timeSlot) {
-//        if(this.day != timeSlot.getDay()) {
-//            return false;
-//        }
-//        final boolean sameTimes = hasSameTimes(timeSlot);
-//        final boolean inside = isInside(timeSlot);
-//        final boolean including = isIncluding(timeSlot);
-//        final boolean standardOverlapping = standardOverlapping(timeSlot);
-//        return sameTimes || inside || including || standardOverlapping;
-//    }
-//
-//    private boolean standardOverlapping(TimeSlot timeSlot) {
-//        return this.startTime.toLocalTime().isBefore(timeSlot.getEndTime().toLocalTime())
-//                && this.endTime.toLocalTime().isAfter(timeSlot.getStartTime().toLocalTime());
-//    }
-//
-//    private boolean isIncluding(TimeSlot timeSlot) {
-//        return this.getStartTime().toLocalTime().isBefore(timeSlot.getStartTime().toLocalTime())
-//                && this.getEndTime().toLocalTime().isAfter(timeSlot.getEndTime().toLocalTime());
-//    }
-//
-//    private boolean isInside(TimeSlot timeSlot) {
-//        return this.getStartTime().toLocalTime().isAfter(timeSlot.getStartTime().toLocalTime())
-//                && this.getEndTime().toLocalTime().isBefore(timeSlot.getEndTime().toLocalTime());
-//    }
-//
-//    public boolean hasSamePartsOfTime(TimeSlot timeSlot) {
+    public boolean isOverlapping(TimeSlot timeSlot) {
+        if (this.day != timeSlot.getDay()) {
+            return false;
+        }
+        final boolean sameTimes = hasSameTimes(timeSlot);
+        final boolean inside = isInside(timeSlot);
+        final boolean including = isIncluding(timeSlot);
+        final boolean standardOverlapping = standardOverlapping(timeSlot);
+        return sameTimes || inside || including || standardOverlapping;
+    }
+
+    private boolean standardOverlapping(TimeSlot timeSlot) {
+        return this.startTime.toLocalTime().isBefore(timeSlot.getEndTime().toLocalTime())
+                && this.endTime.toLocalTime().isAfter(timeSlot.getStartTime().toLocalTime());
+    }
+
+    private boolean isIncluding(TimeSlot timeSlot) {
+        return this.getStartTime().toLocalTime().isBefore(timeSlot.getStartTime().toLocalTime())
+                && this.getEndTime().toLocalTime().isAfter(timeSlot.getEndTime().toLocalTime());
+    }
+
+    //
+    private boolean isInside(TimeSlot timeSlot) {
+        return this.getStartTime().toLocalTime().isAfter(timeSlot.getStartTime().toLocalTime())
+                && this.getEndTime().toLocalTime().isBefore(timeSlot.getEndTime().toLocalTime());
+    }
+
+    //    public boolean hasSamePartsOfTime(TimeSlot timeSlot) {
 //        return (this.getStartTime().getHour().equals(timeSlot.getStartTime().getHour())
 //                && this.getStartTime().getMinutes().equals(timeSlot.getStartTime().getMinutes()))
 //                ||

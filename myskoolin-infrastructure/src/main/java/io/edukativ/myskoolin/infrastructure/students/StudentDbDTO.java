@@ -14,7 +14,7 @@ import io.edukativ.myskoolin.infrastructure.orientation.OrientationDbVO;
 import io.edukativ.myskoolin.infrastructure.reports.ReportDbVO;
 import io.edukativ.myskoolin.infrastructure.residential.ResidentialSchoolDbVO;
 import io.edukativ.myskoolin.infrastructure.sanctions.SanctionDbVO;
-import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableDbVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableDbDTO;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -80,7 +80,7 @@ public class StudentDbDTO extends AbstractUserDbDTO {
     private ResidentialSchoolDbVO residentialSchool;
 
     @Field(MONGO_FIELD_TIMETABLE)
-    private SchoolClassTimeTableDbVO timetable;
+    private SchoolClassTimeTableDbDTO timetable;
 
     @Field(MONGO_FIELD_DAILY_BOOK)
     private List<DailyBookTimeSlotDbVO> dailyBook;
@@ -171,7 +171,7 @@ public class StudentDbDTO extends AbstractUserDbDTO {
         private MedicalInfosDbVO medicalInfos;
         private SchoolingInfosDbVO schoolingInfos;
         private ResidentialSchoolDbVO residentialSchool;
-        private SchoolClassTimeTableDbVO timetable;
+        private SchoolClassTimeTableDbDTO timetable;
         private List<DailyBookTimeSlotDbVO> dailyBook;
         private List<ContinuousAssessmentItemDbVO> continuousAssessment;
         private String schoolClassId;
@@ -221,7 +221,7 @@ public class StudentDbDTO extends AbstractUserDbDTO {
             return this;
         }
 
-        public StudentDbDTOBuilder timetable(SchoolClassTimeTableDbVO timetable) {
+        public StudentDbDTOBuilder timetable(SchoolClassTimeTableDbDTO timetable) {
             this.timetable = timetable;
             return this;
         }
@@ -307,7 +307,7 @@ public class StudentDbDTO extends AbstractUserDbDTO {
         return residentialSchool;
     }
 
-    public SchoolClassTimeTableDbVO getTimetable() {
+    public SchoolClassTimeTableDbDTO getTimetable() {
         return timetable;
     }
 

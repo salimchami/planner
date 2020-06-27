@@ -1,49 +1,46 @@
 package io.edukativ.myskoolin.domain.timetabling.constraints;
 
-import io.edukativ.myskoolin.domain.timetabling.constraints.hard.SchoolClassHardConstraintProvider;
-import io.edukativ.myskoolin.domain.timetabling.constraints.hard.SchoolRoomHardConstraintProvider;
-import io.edukativ.myskoolin.domain.timetabling.constraints.hard.TeacherHardConstraintProvider;
-import io.edukativ.myskoolin.domain.timetabling.constraints.soft.SchoolClassSoftConstraintProvider;
-import io.edukativ.myskoolin.domain.timetabling.constraints.soft.SchoolRoomSoftConstraintProvider;
-import io.edukativ.myskoolin.domain.timetabling.constraints.soft.TeacherSoftConstraintProvider;
 import org.optaplanner.core.api.score.stream.Constraint;
 import org.optaplanner.core.api.score.stream.ConstraintFactory;
 import org.optaplanner.core.api.score.stream.ConstraintProvider;
 
+import java.util.stream.Stream;
+
 public class TimeTableConstraintProvider implements ConstraintProvider {
 
-    private final SchoolClassHardConstraintProvider schoolClassHardConstraintProvider;
-    private final SchoolClassSoftConstraintProvider schoolClassSoftConstraintProvider;
-    private final SchoolRoomHardConstraintProvider schoolRoomHardConstraintProvider;
-    private final SchoolRoomSoftConstraintProvider schoolRoomSoftConstraintProvider;
-    private final TeacherHardConstraintProvider teacherHardConstraintProvider;
-    private final TeacherSoftConstraintProvider teacherSoftConstraintProvider;
+    private final TimeSlotConstraintProvider timeSlotConstraintProvider;
+    private final SchoolClassConstraintProvider schoolClassConstraintProvider;
+    private final SchoolRoomConstraintProvider schoolRoomConstraintProvider;
+    private final SubjectConstraintProvider subjectConstraintProvider;
+    private final TeacherConstraintProvider teacherConstraintProvider;
 
-    public TimeTableConstraintProvider(SchoolClassHardConstraintProvider schoolClassHardConstraintProvider,
-                                       SchoolClassSoftConstraintProvider schoolClassSoftConstraintProvider,
-                                       SchoolRoomHardConstraintProvider schoolRoomHardConstraintProvider,
-                                       SchoolRoomSoftConstraintProvider schoolRoomSoftConstraintProvider,
-                                       TeacherHardConstraintProvider teacherHardConstraintProvider,
-                                       TeacherSoftConstraintProvider teacherSoftConstraintProvider) {
-        this.schoolClassHardConstraintProvider = schoolClassHardConstraintProvider;
-        this.schoolClassSoftConstraintProvider = schoolClassSoftConstraintProvider;
-        this.schoolRoomHardConstraintProvider = schoolRoomHardConstraintProvider;
-        this.schoolRoomSoftConstraintProvider = schoolRoomSoftConstraintProvider;
-        this.teacherHardConstraintProvider = teacherHardConstraintProvider;
-        this.teacherSoftConstraintProvider = teacherSoftConstraintProvider;
+    public TimeTableConstraintProvider(TimeSlotConstraintProvider timeSlotConstraintProvider,
+                                       SchoolClassConstraintProvider schoolClassConstraintProvider,
+                                       SchoolRoomConstraintProvider schoolRoomConstraintProvider,
+                                       SubjectConstraintProvider subjectConstraintProvider,
+                                       TeacherConstraintProvider teacherConstraintProvider) {
+        this.timeSlotConstraintProvider = timeSlotConstraintProvider;
+        this.schoolClassConstraintProvider = schoolClassConstraintProvider;
+        this.schoolRoomConstraintProvider = schoolRoomConstraintProvider;
+        this.subjectConstraintProvider = subjectConstraintProvider;
+        this.teacherConstraintProvider = teacherConstraintProvider;
     }
 
     @Override
     public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
-        return new Constraint[]{
-                // Hard constraints
-                schoolRoomHardConstraintProvider.roomConflict(constraintFactory),
-                teacherHardConstraintProvider.teacherConflict(constraintFactory),
-                schoolClassHardConstraintProvider.studentGroupConflict(constraintFactory),
-                // Soft constraints
-                schoolRoomSoftConstraintProvider.teacherRoomStability(constraintFactory),
-                teacherSoftConstraintProvider.teacherTimeEfficiency(constraintFactory),
-                schoolClassSoftConstraintProvider.studentGroupSubjectVariety(constraintFactory)
+        return Stream.of(hardConstraints(constraintFactory), softConstraints(constraintFactory)).flatMap(Stream::of)
+                .toArray(Constraint[]::new);
+    }
+
+    private Constraint[] hardConstraints(ConstraintFactory constraintFactory) {
+        return new Constraint[] {
+            timeSlotConstraintProvider.timeSlotConflict(constraintFactory)
+        };
+    }
+
+    private Constraint[] softConstraints(ConstraintFactory constraintFactory) {
+        return new Constraint[] {
+
         };
     }
 }

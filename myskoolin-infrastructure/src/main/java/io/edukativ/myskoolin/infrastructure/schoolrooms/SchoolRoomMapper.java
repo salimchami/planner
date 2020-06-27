@@ -23,4 +23,7 @@ public interface SchoolRoomMapper {
     SchoolRoom dbDtoToDomain(SchoolRoomDbDTO schoolRoomDbDTO);
 
     SchoolRoomDbDTO domainToDbDto(SchoolRoom schoolRoom);
+
+    List<SchoolRoom> dbDtosToDomains(List<SchoolRoomDbDTO> schoolRooms);
+
 }
