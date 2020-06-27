@@ -3,7 +3,6 @@ package io.edukativ.myskoolin.front.web.rest;
 import io.edukativ.myskoolin.application.TimeTableApplication;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.domain.commons.MyskoolinLoggerSPI;
-import io.edukativ.myskoolin.infrastructure.schoolclasses.SchoolClassDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,10 +29,10 @@ class TimetableResource {
         AuthoritiesConstants.SCHOOL_LIFE,
     })
     @GetMapping(value = "/generate")
-    public ResponseEntity<List<SchoolClassDTO>> generateTimetablesFromScratch() {
+    public ResponseEntity<List<String>> generateTimetablesFromScratch() {
         logger.debug("generating timetables for all school classes");
-        List<SchoolClassDTO> schoolClasses = timeTableApplication.generateNewTimeTablesForSchoolClasses();
-        return ResponseEntity.ok(schoolClasses);
+        final List<String> timeTablesIds = timeTableApplication.generateNewTimeTablesForSchoolClasses();
+        return ResponseEntity.ok(timeTablesIds);
     }
 
     @Secured({
@@ -41,10 +40,10 @@ class TimetableResource {
         AuthoritiesConstants.SCHOOL_LIFE,
     })
     @GetMapping(value = "/generate/{id}")
-    public ResponseEntity<SchoolClassDTO> generateTimetableFromScratch(@PathVariable(name = "id") String id) {
+    public ResponseEntity<String> generateTimetableFromScratch(@PathVariable(name = "id") String id) {
         logger.debug("generating timetables for all school classes");
-        SchoolClassDTO schoolClass = timeTableApplication.generateNewTimeTablesForSchoolClass(id);
-        return ResponseEntity.ok(schoolClass);
+        final String timeTableId = timeTableApplication.generateNewTimeTablesForSchoolClass(id);
+        return ResponseEntity.ok(timeTableId);
     }
 
 }

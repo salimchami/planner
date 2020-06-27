@@ -4,7 +4,7 @@ import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolClassNotation
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
 import io.edukativ.myskoolin.infrastructure.dailybook.DailyBookTimeSlotDbVO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeSerieDbVO;
-import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableDbVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableDbDTO;
 import io.edukativ.myskoolin.infrastructure.teachers.TeachersBySubjectDbVO;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -82,7 +82,7 @@ public class SchoolClassDbDTO implements Serializable {
     private GradeSerieDbVO gradeSerie;
 
     @Field(MONGO_FIELD_TIMETABLE)
-    private SchoolClassTimeTableDbVO timetable;
+    private SchoolClassTimeTableDbDTO timetable;
 
     @Field(MONGO_FIELD_DAILY_BOOK)
     private List<DailyBookTimeSlotDbVO> dailyBook;
@@ -99,7 +99,7 @@ public class SchoolClassDbDTO implements Serializable {
     public SchoolClassDbDTO(ObjectId id, ObjectId clientId, ZonedDateTime coursesStartDate,
                             ZonedDateTime coursesEndDate, List<ZonedDateTime> councilsDates, String customName,
                             String name, Boolean deleted, List<ObjectId> headTeachers, GradeDbDTO grade,
-                            GradeSerieDbVO gradeSerie, SchoolClassTimeTableDbVO timetable, List<DailyBookTimeSlotDbVO> dailyBook,
+                            GradeSerieDbVO gradeSerie, SchoolClassTimeTableDbDTO timetable, List<DailyBookTimeSlotDbVO> dailyBook,
                             EnumSchoolClassNotation notation, List<TeachersBySubjectDbVO> teachersBySubjects) {
         this.id = id;
         this.clientId = clientId;
@@ -206,11 +206,11 @@ public class SchoolClassDbDTO implements Serializable {
         this.gradeSerie = gradeSerie;
     }
 
-    public SchoolClassTimeTableDbVO getTimetable() {
+    public SchoolClassTimeTableDbDTO getTimetable() {
         return timetable;
     }
 
-    public void setTimetable(SchoolClassTimeTableDbVO timetable) {
+    public void setTimetable(SchoolClassTimeTableDbDTO timetable) {
         this.timetable = timetable;
     }
 

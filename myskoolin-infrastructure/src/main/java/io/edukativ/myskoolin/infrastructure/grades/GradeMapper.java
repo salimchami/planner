@@ -4,6 +4,7 @@ import io.edukativ.myskoolin.domain.grades.Grade;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
 import io.edukativ.myskoolin.infrastructure.timetabling.TimeTableOptionsMapper;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public interface GradeMapper {
 
     List<GradeDTO> dbDtosToDtos(List<GradeDbDTO> grades);
 
+    @Mapping(target = "nbSubjects", ignore = true)
+    @Mapping(target = "subjects", ignore = true)
     GradeDTO map(GradeDbDTO grade);
 
     List<GradeDTO> modelsToDtos(List<Grade> grades);
