@@ -36,4 +36,12 @@ public class StudentApplication {
         Optional<StudentDbDTO> optStudent = studentRepository.findByIdAndClientId(currentUser.getClientId(), id);
         return optStudent.map(studentMapper::dbDtoToDto);
     }
+
+    public List<StudentDTO> searchByNamesLoginEmail(String search) {
+        return null;
+    }
+
+    public Optional<StudentDTO> findRespAccountByStudentLogin(String login) {
+        return null;
+    }
 }

@@ -75,11 +75,6 @@
                 "male": "Male",
                 "female": "Female"
             },
-            "genders": {
-                "mr": "Mr",
-                "mrs": "Mrs",
-                "miss": "Miss"
-            },
             "contact-reasons": {
                 "invoice": "My invoice",
                 "complaint": "Complaint",

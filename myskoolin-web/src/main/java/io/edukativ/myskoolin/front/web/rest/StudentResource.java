@@ -3,15 +3,13 @@ package io.edukativ.myskoolin.front.web.rest;
 import io.edukativ.myskoolin.application.StudentApplication;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.domain.commons.MyskoolinLoggerSPI;
+import io.edukativ.myskoolin.infrastructure.config.Constants;
 import io.edukativ.myskoolin.infrastructure.students.StudentDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -104,22 +102,35 @@ public class StudentResource {
             .map(student -> new ResponseEntity<>(student, HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NO_CONTENT));
     }
-//
-//    @GetMapping("/search/{search:" + DomainConstants.LOGIN_REGEX + "}")
-//    public ResponseEntity<List<StudentDTO>> searchStudent(@PathVariable String search) {
-//        log.debug("REST request to get User : {}", search);
-//        List<User> users = studentService.searchByNamesLoginEmail(search);
-//        List<StudentDTO> students = studentMapper.usersToStudentsDto(users);
-//        return Optional.of(students).map(student -> new ResponseEntity<>(student, HttpStatus.OK))
-//            .orElse(new ResponseEntity<>(HttpStatus.NO_CONTENT));
-//    }
-//
-//    @GetMapping(value = "/responsible/login")
-//    public ResponseEntity<UserDTO> getStudentResponsibleAccount(@RequestParam(value = "login", required = false) String login) {
-//        log.debug("REST request to get Student : {}");
-//        return studentService.findRespAccountByStudentLogin(login)
-//            .map(student -> new ResponseEntity<>(student, HttpStatus.OK))
-//            .orElse(new ResponseEntity<>(HttpStatus.NO_CONTENT));
-//    }
+
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE,
+        AuthoritiesConstants.INFIRMARY,
+        AuthoritiesConstants.TEACHERS,
+    })
+    @GetMapping("/search/{search:" + Constants.LOGIN_REGEX + "}")
+    public ResponseEntity<List<StudentDTO>> searchStudent(@PathVariable String search) {
+        logger.debug(String.format("REST request to get User : %s", search));
+        List<StudentDTO> students = studentApplication.searchByNamesLoginEmail(search);
+        if (!students.isEmpty()) {
+            return new ResponseEntity<>(students, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE,
+        AuthoritiesConstants.INFIRMARY,
+        AuthoritiesConstants.TEACHERS,
+    })
+    @GetMapping(value = "/responsible/login")
+    public ResponseEntity<StudentDTO> getStudentResponsibleAccount(@RequestParam(value = "login", required = false) String login) {
+        logger.debug(String.format("REST request to get Student : %s", login));
+        return studentApplication.findRespAccountByStudentLogin(login)
+            .map(student -> new ResponseEntity<>(student, HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NO_CONTENT));
+    }
 
 }

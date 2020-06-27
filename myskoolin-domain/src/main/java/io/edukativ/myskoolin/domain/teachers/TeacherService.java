@@ -61,7 +61,6 @@ public class TeacherService implements TeacherAPI {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .map(dbTeacher -> {
-                    dbTeacher.setAddress(teacher.getAddress());
                     Set<Authority> managedAuthorities = teacher.getAuthorities();
                     managedAuthorities.clear();
                     teacher.getAuthorities().stream()
@@ -71,6 +70,7 @@ public class TeacherService implements TeacherAPI {
                             .forEach(managedAuthorities::add);
                     authoritySPI.findById(AuthoritiesConstants.TEACHERS)
                             .ifPresent(teacher::checkTeacherAuthority);
+                    dbTeacher.setAddress(teacher.getAddress());
                     dbTeacher.setBirthDate(teacher.getBirthDate());
                     dbTeacher.setCellPhone(teacher.getCellPhone());
                     dbTeacher.setFirstName(teacher.getFirstName());
@@ -84,13 +84,10 @@ public class TeacherService implements TeacherAPI {
                     dbTeacher.setFamilySituation(teacher.getFamilySituation());
                     dbTeacher.setSubstitute(teacher.getSubstitute());
                     dbTeacher.setSubstitutedTeachers(teacher.getSubstitutedTeachers());
-                    dbTeacher.setAbsences(teacher.getAbsences());
                     dbTeacher.setTaughtSubjects(teacher.getTaughtSubjects());
-                    dbTeacher.setTimetable(teacher.getTimetable());
                     dbTeacher.setProCellPhone(teacher.getProCellPhone());
                     dbTeacher.setProPhone(teacher.getProPhone());
                     dbTeacher.setProEmail(teacher.getProEmail());
-                    dbTeacher.setInfirmaryStatistics(teacher.getInfirmaryStatistics());
                     dbTeacher.setMedicalInfos(teacher.getMedicalInfos());
                     dbTeacher.setExitDate(teacher.getExitDate());
                     dbTeacher.setExitReason(teacher.getExitReason());

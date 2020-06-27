@@ -4,5 +4,9 @@ ${AnsiColor.GREEN}|        |  |  |${AnsiColor.RED} |__ --||    <|  _  |  _  ||  
 ${AnsiColor.GREEN}|__|__|__|___  |${AnsiColor.RED} |_____||__|__|_____|_____||__|__||__|__|
 ${AnsiColor.GREEN}         |_____|${AnsiColor.RED}
 
-${AnsiColor.BRIGHT_BLUE}:: myskoolin made by jhipster 🤓  :: Running Spring Boot ${spring-boot.version} ::
+${AnsiColor.BRIGHT_BLUE}:: local back url : http://localhost:8080 ::
+:: local front url : http://localhost:9000 ::
+:: glowroot : http://localhost:4000 ::
+
+:: myskoolin made by jhipster 🤓  :: Running Spring Boot ${spring-boot.version} ::
 :: https://www.myskoolin.net :: https://www.jhipster.tech ::${AnsiColor.DEFAULT}

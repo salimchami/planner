@@ -72,14 +72,9 @@
         "constants": {
             "hour": "heure",
             "hours": "heures",
-            "sexes": {
+            "genders": {
                 "male": "Masculin",
                 "female": "Féminin"
-            },
-            "genders": {
-                "mr": "Mr",
-                "mrs": "Mme",
-                "miss": "Mlle"
             },
             "contact-reasons": {
                 "invoice": "Ma facture",
