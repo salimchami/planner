@@ -2,9 +2,10 @@ package io.edukativ.myskoolin.domain.subjects;
 
 import io.edukativ.myskoolin.domain.commons.exceptions.NoGradeFoundException;
 import io.edukativ.myskoolin.domain.grades.Grade;
-import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
 import io.edukativ.myskoolin.domain.grades.GradeSerie;
+import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
 import io.edukativ.myskoolin.domain.timetabling.PreferredPartsOfDays;
+import org.optaplanner.core.api.domain.lookup.PlanningId;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
  */
 public class Subject implements Comparable<Subject> {
 
+    @PlanningId
     private String id;
     private String clientId;
     private String name;

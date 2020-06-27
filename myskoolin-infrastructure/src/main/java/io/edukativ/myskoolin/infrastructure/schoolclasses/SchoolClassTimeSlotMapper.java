@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.schoolclasses;
 
-import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeSlot;
+import io.edukativ.myskoolin.domain.timetabling.Lesson;
 import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeSlotDbVO;
 import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeSlotVO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectMapper;
@@ -13,17 +13,17 @@ import java.util.List;
 })
 public interface SchoolClassTimeSlotMapper {
 
-    SchoolClassTimeSlot dbVoToDomain(SchoolClassTimeSlotDbVO schoolClassTimeSlot);
+    Lesson dbVoToDomain(SchoolClassTimeSlotDbVO schoolClassTimeSlot);
 
-    SchoolClassTimeSlot voToDomain(SchoolClassTimeSlotVO schoolClassTimeSlot);
+    Lesson voToDomain(SchoolClassTimeSlotVO schoolClassTimeSlot);
 
     SchoolClassTimeSlotVO dbVoToVo(SchoolClassTimeSlotDbVO schoolClassTimeSlot);
 
-    SchoolClassTimeSlotVO domainToVo(SchoolClassTimeSlot schoolClassTimeSlot);
+    SchoolClassTimeSlotVO domainToVo(Lesson lesson);
 
     SchoolClassTimeSlotDbVO voToDbVo(SchoolClassTimeSlotVO schoolClassTimeSlot);
 
-    SchoolClassTimeSlotDbVO domainToDbVo(SchoolClassTimeSlot schoolClassTimeSlot);
+    SchoolClassTimeSlotDbVO domainToDbVo(Lesson lesson);
 
-    List<SchoolClassTimeSlotDbVO> domainsToDbVos(List<SchoolClassTimeSlot> timetable);
+    List<SchoolClassTimeSlotDbVO> domainsToDbVos(List<Lesson> timetable);
 }

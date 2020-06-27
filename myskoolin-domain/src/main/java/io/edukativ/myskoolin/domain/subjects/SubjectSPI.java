@@ -21,4 +21,6 @@ public interface SubjectSPI {
     Optional<Subject> findById(String id);
 
     void save(Subject subject);
+
+    List<Subject> findAllByClientId(String clientId);
 }

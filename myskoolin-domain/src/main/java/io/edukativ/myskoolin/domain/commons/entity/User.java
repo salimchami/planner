@@ -1,5 +1,7 @@
 package io.edukativ.myskoolin.domain.commons.entity;
 
+import org.optaplanner.core.api.domain.lookup.PlanningId;
+
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -10,6 +12,7 @@ import java.util.Set;
  */
 public class User {
 
+    @PlanningId
     private String id;
     private String login;
     private String clientId;

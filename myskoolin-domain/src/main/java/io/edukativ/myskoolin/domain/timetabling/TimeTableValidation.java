@@ -15,11 +15,11 @@ public class TimeTableValidation {
     private boolean halfTimeslotsNotOverlapping;
     private boolean timeSlotsNotEmpty;
     private List<Subject> subjects;
-    private List<SchoolClassTimeSlot> timeSlots;
+    private List<Lesson> timeSlots;
 
     public TimeTableValidation(String schoolClassName, boolean durationOk, boolean notOutside, boolean standardTimeslotsNotOverlapping,
                                boolean halfTimeslotsNotOverlapping, boolean allTimeSlotsHaveSchoolRooms,
-                               boolean allTimeSlotsHaveTeachers, boolean timeSlotsNotEmpty, List<Subject> subjects, List<SchoolClassTimeSlot> timeSlots) {
+                               boolean allTimeSlotsHaveTeachers, boolean timeSlotsNotEmpty, List<Subject> subjects, List<Lesson> timeSlots) {
         this.schoolClassName = schoolClassName;
         this.durationOk = durationOk;
         this.notOutside = notOutside;
@@ -72,7 +72,7 @@ public class TimeTableValidation {
         return subjects;
     }
 
-    public List<SchoolClassTimeSlot> getTimeSlots() {
+    public List<Lesson> getTimeSlots() {
         return timeSlots;
     }
 
@@ -89,15 +89,15 @@ public class TimeTableValidation {
                 '}';
     }
 
-    public void subjectValidationToString() {
-        subjects.forEach(subject -> {
-            final int addedDurationForSubject = TimeTableGenerationData.addedDurationForSubject(subject, timeSlots);
-            if (addedDurationForSubject != subject.getMinutesPerWeek()) {
-                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!! Subject : " + subject.getName() + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                System.out.println("subject MinutesPerWeek : " + subject.getMinutesPerWeek());
-                System.out.println("timetable duration : " + addedDurationForSubject);
-                System.out.println("--------------------------------------------------------------------------------");
-            }
-        });
-    }
+//    public void subjectValidationToString() {
+//        subjects.forEach(subject -> {
+//            final int addedDurationForSubject = TimeTableGenerationData.addedDurationForSubject(subject, timeSlots);
+//            if (addedDurationForSubject != subject.getMinutesPerWeek()) {
+//                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!! Subject : " + subject.getName() + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//                System.out.println("subject MinutesPerWeek : " + subject.getMinutesPerWeek());
+//                System.out.println("timetable duration : " + addedDurationForSubject);
+//                System.out.println("--------------------------------------------------------------------------------");
+//            }
+//        });
+//    }
 }

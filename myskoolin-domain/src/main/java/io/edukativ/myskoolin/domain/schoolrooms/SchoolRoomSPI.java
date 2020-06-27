@@ -1,5 +1,6 @@
 package io.edukativ.myskoolin.domain.schoolrooms;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface SchoolRoomSPI {
@@ -9,4 +10,6 @@ public interface SchoolRoomSPI {
     SchoolRoom persist(SchoolRoom schoolRoom);
 
     Optional<SchoolRoom> findByName(String schoolRoomName, boolean deleted, String clientId);
+
+    List<SchoolRoom> findAllByClientId(String clientId);
 }

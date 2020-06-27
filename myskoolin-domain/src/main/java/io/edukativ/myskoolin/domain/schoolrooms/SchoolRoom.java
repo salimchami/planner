@@ -2,12 +2,12 @@ package io.edukativ.myskoolin.domain.schoolrooms;
 
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
+import org.optaplanner.core.api.domain.lookup.PlanningId;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
  */
 public class SchoolRoom {
 
+    @PlanningId
     private String id;
     private String clientId;
     private List<SchoolRoomDistance> distances;
@@ -182,16 +183,16 @@ public class SchoolRoom {
     // ################################################################################################
     // ################################################################################################
 
-    public static Optional<SchoolRoom> searchForSchoolRoom(List<SchoolRoom> possibleSchoolRoomsForSubject, TimeSlot timeSlot) {
-        Optional<SchoolRoom> optSchoolRoom = Optional.empty();
-        for (SchoolRoom schoolRoom : possibleSchoolRoomsForSubject) {
-            if (schoolRoom.getTimetable().isEmpty() || !timeSlot.isOverlapping(timeSlot.getDay(), schoolRoom.getTimetable())) {
-                optSchoolRoom = Optional.of(schoolRoom);
-                break;
-            }
-        }
-        return optSchoolRoom;
-    }
+//    public static Optional<SchoolRoom> searchForSchoolRoom(List<SchoolRoom> possibleSchoolRoomsForSubject, TimeSlot timeSlot) {
+//        Optional<SchoolRoom> optSchoolRoom = Optional.empty();
+//        for (SchoolRoom schoolRoom : possibleSchoolRoomsForSubject) {
+//            if (schoolRoom.getTimetable().isEmpty() || !timeSlot.isOverlapping(timeSlot.getDay(), schoolRoom.getTimetable())) {
+//                optSchoolRoom = Optional.of(schoolRoom);
+//                break;
+//            }
+//        }
+//        return optSchoolRoom;
+//    }
 
     public static List<SchoolRoom> schoolRoomsByType(List<SchoolRoom> schoolRooms, Subject subject) {
         return schoolRooms.stream().filter(schoolRoom -> subject.getSchoolRoomsTypes().contains(schoolRoom.getType())).collect(Collectors.toList());

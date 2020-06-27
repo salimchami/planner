@@ -8,7 +8,7 @@ import io.edukativ.myskoolin.domain.commons.entity.User;
 import io.edukativ.myskoolin.domain.absences.Absence;
 import io.edukativ.myskoolin.domain.medical.InfirmaryStatistics;
 import io.edukativ.myskoolin.domain.medical.MedicalInfos;
-import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeSlot;
+import io.edukativ.myskoolin.domain.timetabling.Lesson;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class Teacher extends User {
     private List<Teacher> substitutedTeachers;
     private List<Absence> absences;
     private List<Subject> taughtSubjects;
-    private List<SchoolClassTimeSlot> timetable;
+    private List<Lesson> timetable;
     private String proCellPhone;
     private String proPhone;
     private String proEmail;
@@ -91,14 +91,14 @@ public class Teacher extends User {
         this.taughtSubjects = taughtSubjects;
     }
 
-    public List<SchoolClassTimeSlot> getTimetable() {
+    public List<Lesson> getTimetable() {
         if (this.timetable == null) {
             this.timetable = new ArrayList<>();
         }
         return timetable;
     }
 
-    public void setTimetable(List<SchoolClassTimeSlot> timetable) {
+    public void setTimetable(List<Lesson> timetable) {
         this.timetable = timetable;
     }
 

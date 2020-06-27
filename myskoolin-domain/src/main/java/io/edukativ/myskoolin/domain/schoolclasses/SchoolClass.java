@@ -6,6 +6,7 @@ import io.edukativ.myskoolin.domain.grades.GradeSerie;
 import io.edukativ.myskoolin.domain.teachers.TeachersBySubject;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
+import org.optaplanner.core.api.domain.lookup.PlanningId;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.Objects;
  */
 public class SchoolClass {
 
+    @PlanningId
     private String id;
     private String clientId;
     private ZonedDateTime coursesStartDate;
