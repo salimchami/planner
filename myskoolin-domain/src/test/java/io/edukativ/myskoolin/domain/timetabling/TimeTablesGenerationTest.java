@@ -6,8 +6,7 @@ import io.edukativ.myskoolin.domain.providers.UserTestProvider;
 import io.edukativ.myskoolin.domain.providers.schoolclasses.SchoolClassTestProvider;
 import io.edukativ.myskoolin.domain.providers.subjects.SubjectTestProvider;
 import io.edukativ.myskoolin.domain.entity.*;
-import io.edukativ.myskoolin.domain.vo.Teacher;
-import io.edukativ.myskoolin.domain.vo.TimeTableOptions;
+import io.edukativ.myskoolin.domain.teachers.Teacher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 

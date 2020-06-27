@@ -1,9 +1,9 @@
 package io.edukativ.myskoolin.domain.providers;
 
-import io.edukativ.myskoolin.domain.vo.EnumDays;
-import io.edukativ.myskoolin.domain.vo.EnumPartsOfDay;
-import io.edukativ.myskoolin.domain.vo.Time;
-import io.edukativ.myskoolin.domain.vo.TimeSlot;
+import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
+import io.edukativ.myskoolin.domain.commons.vo.EnumPartsOfDay;
+import io.edukativ.myskoolin.domain.timetabling.Time;
+import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
 
 import java.util.*;
 

@@ -7,10 +7,10 @@ import io.edukativ.myskoolin.domain.entity.Subject;
 import io.edukativ.myskoolin.domain.providers.GlobalTestProvider;
 import io.edukativ.myskoolin.domain.providers.GradeTestProvider;
 import io.edukativ.myskoolin.domain.providers.subjects.*;
-import io.edukativ.myskoolin.domain.vo.EnumSchoolClassNotation;
-import io.edukativ.myskoolin.domain.vo.GradeSerie;
-import io.edukativ.myskoolin.domain.vo.Teacher;
-import io.edukativ.myskoolin.domain.vo.TeachersBySubject;
+import io.edukativ.myskoolin.domain.schoolclasses.EnumSchoolClassNotation;
+import io.edukativ.myskoolin.domain.grades.GradeSerie;
+import io.edukativ.myskoolin.domain.teachers.Teacher;
+import io.edukativ.myskoolin.domain.teachers.TeachersBySubject;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;

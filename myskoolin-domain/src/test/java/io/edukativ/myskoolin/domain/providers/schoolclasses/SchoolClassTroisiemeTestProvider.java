@@ -3,8 +3,8 @@ package io.edukativ.myskoolin.domain.providers.schoolclasses;
 import io.edukativ.myskoolin.domain.entity.Grade;
 import io.edukativ.myskoolin.domain.entity.SchoolClass;
 import io.edukativ.myskoolin.domain.providers.GlobalTestProvider;
-import io.edukativ.myskoolin.domain.vo.Teacher;
-import io.edukativ.myskoolin.domain.vo.TeachersBySubject;
+import io.edukativ.myskoolin.domain.teachers.Teacher;
+import io.edukativ.myskoolin.domain.teachers.TeachersBySubject;
 
 import java.util.Arrays;
 import java.util.List;

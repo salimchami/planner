@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.subjects;
 
 import io.edukativ.myskoolin.domain.entity.Subject;
-import io.edukativ.myskoolin.domain.vo.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
 import io.edukativ.myskoolin.infrastructure.grades.GradeMapper;

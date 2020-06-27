@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,6 +39,7 @@ public class StudentDbDTO extends AbstractUserDbDTO {
     public static final String MONGO_FIELD_DELAYS = "delays";
     public static final String MONGO_FIELD_REPORTS = "reports";
     public static final String MONGO_FIELD_ORIENTATION = "orientation";
+    public static final String MONGO_FIELD_ABSENCES = "absences";
 
     @Field(MONGO_FIELD_INFIRMARY_STATISTICS)
     private InfirmaryStatisticsDbVO infirmaryStatistics;
@@ -90,6 +92,9 @@ public class StudentDbDTO extends AbstractUserDbDTO {
     @Field(MONGO_FIELD_ORIENTATION)
     private OrientationDbVO orientation;
 
+    @Field(MONGO_FIELD_ABSENCES)
+    private List<AbsenceDbVO> absences;
+
     //?? originSchoolClass: String,
 
     /*
@@ -113,7 +118,7 @@ public class StudentDbDTO extends AbstractUserDbDTO {
      * */
 
     /*
-     * addiional time slots (timetable)
+     * additional time slots (timetable)
      *
      */
 
@@ -138,6 +143,7 @@ public class StudentDbDTO extends AbstractUserDbDTO {
         this.delays = builder.delays;
         this.reports = builder.reports;
         this.orientation = builder.orientation;
+        this.absences = builder.absences;
     }
 
     public void changeSchoolClassId(String schoolClassId) {
@@ -161,6 +167,7 @@ public class StudentDbDTO extends AbstractUserDbDTO {
         private List<SanctionDbVO> sanctions;
         private List<DelayDbVO> delays;
         private List<ReportDbVO> reports;
+        private List<AbsenceDbVO> absences;
         private OrientationDbVO orientation;
 
         public StudentDbDTOBuilder infirmaryStatistics(InfirmaryStatisticsDbVO infirmaryStatistics) {
@@ -243,6 +250,11 @@ public class StudentDbDTO extends AbstractUserDbDTO {
             return this;
         }
 
+        public StudentDbDTOBuilder absences(List<AbsenceDbVO> absences) {
+            this.absences = absences;
+            return this;
+        }
+
         @Override
         public StudentDbDTO build() {
             return new StudentDbDTO(this);
@@ -254,6 +266,9 @@ public class StudentDbDTO extends AbstractUserDbDTO {
     }
 
     public List<ResponsibleDbVO> getResponsibles() {
+        if(this.responsibles == null) {
+            return new ArrayList<>();
+        }
         return responsibles;
     }
 
@@ -286,11 +301,14 @@ public class StudentDbDTO extends AbstractUserDbDTO {
     }
 
     public List<DailyBookTimeSlotDbVO> getDailyBook() {
+        if(this.dailyBook == null) {
+            return new ArrayList<>();
+        }
         return dailyBook;
     }
 
     public List<ContinuousAssessmentItemDbVO> getContinuousAssessment() {
-        return continuousAssessment;
+        return Objects.requireNonNullElseGet(this.continuousAssessment, ArrayList::new);
     }
 
     public String getSchoolClassId() {
@@ -298,19 +316,35 @@ public class StudentDbDTO extends AbstractUserDbDTO {
     }
 
     public List<SanctionDbVO> getSanctions() {
+        if(this.sanctions == null) {
+            return new ArrayList<>();
+        }
         return sanctions;
     }
 
     public List<DelayDbVO> getDelays() {
+        if(this.delays == null) {
+            return new ArrayList<>();
+        }
         return delays;
     }
 
     public List<ReportDbVO> getReports() {
+        if(this.reports == null) {
+            return new ArrayList<>();
+        }
         return reports;
     }
 
     public OrientationDbVO getOrientation() {
         return orientation;
+    }
+
+    public List<AbsenceDbVO> getAbsences() {
+        if(this.absences == null) {
+            return new ArrayList<>();
+        }
+        return absences;
     }
 
     @Override

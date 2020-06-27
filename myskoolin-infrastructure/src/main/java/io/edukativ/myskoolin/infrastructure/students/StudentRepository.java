@@ -37,27 +37,11 @@ public interface StudentRepository extends MongoRepository<StudentDbDTO, String>
     List<StudentDbDTO> searchStudents(ObjectId clientId, String search);
 
     /**
-     * Find all students
-     *
-     * @return List of students
-     */
-    @Query("{'student' : {'$ne' : null}}")
-    List<StudentDbDTO> findAllStudents();
-
-    /**
      * Find all not deleted students
      *
      * @return List of not deleted students
      */
-    @Query("{ 'deleted': false, 'student' : {'$ne' : null}}")
-    List<StudentDbDTO> findAllNotDeletedStudents();
-
-    /**
-     * Find all not deleted students
-     *
-     * @return List of not deleted students
-     */
-    @Query("{ 'deleted': false, 'student' : {'$ne' : null}, 'clientId': ?0 }")
+    @Query("{ 'deleted': false, 'clientId': ?0 }")
     List<StudentDbDTO> findAllNotDeletedStudents(ObjectId clientId);
 
     /**

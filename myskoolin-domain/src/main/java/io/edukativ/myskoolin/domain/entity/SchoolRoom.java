@@ -1,8 +1,8 @@
 package io.edukativ.myskoolin.domain.entity;
 
-import io.edukativ.myskoolin.domain.vo.EnumSchoolRoomsTypes;
-import io.edukativ.myskoolin.domain.vo.TimeSlot;
-import io.edukativ.myskoolin.domain.vo.SchoolRoomDistance;
+import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
+import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoomDistance;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

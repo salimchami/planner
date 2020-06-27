@@ -3,8 +3,8 @@ package io.edukativ.myskoolin.domain.providers.subjects;
 import io.edukativ.myskoolin.domain.entity.Grade;
 import io.edukativ.myskoolin.domain.entity.Subject;
 import io.edukativ.myskoolin.domain.providers.GlobalTestProvider;
-import io.edukativ.myskoolin.domain.vo.EnumSchoolRoomsTypes;
-import io.edukativ.myskoolin.domain.vo.PreferredPartsOfDays;
+import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.domain.timetabling.PreferredPartsOfDays;
 
 import java.math.BigDecimal;
 import java.util.Collection;

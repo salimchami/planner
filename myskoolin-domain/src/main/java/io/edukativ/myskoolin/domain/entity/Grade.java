@@ -1,8 +1,8 @@
 package io.edukativ.myskoolin.domain.entity;
 
-import io.edukativ.myskoolin.domain.vo.EnumSchoolClassNotation;
-import io.edukativ.myskoolin.domain.vo.GradeSerie;
-import io.edukativ.myskoolin.domain.vo.TimeTableOptions;
+import io.edukativ.myskoolin.domain.schoolclasses.EnumSchoolClassNotation;
+import io.edukativ.myskoolin.domain.grades.GradeSerie;
+import io.edukativ.myskoolin.domain.timetabling.TimeTableOptions;
 
 import java.util.*;
 

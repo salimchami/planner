@@ -3,7 +3,7 @@ package io.edukativ.myskoolin.domain.providers;
 import io.edukativ.myskoolin.domain.commons.exceptions.NotFoundException;
 import io.edukativ.myskoolin.domain.entity.Grade;
 import io.edukativ.myskoolin.domain.entity.User;
-import io.edukativ.myskoolin.domain.vo.Teacher;
+import io.edukativ.myskoolin.domain.teachers.Teacher;
 
 import java.util.ArrayList;
 import java.util.Arrays;

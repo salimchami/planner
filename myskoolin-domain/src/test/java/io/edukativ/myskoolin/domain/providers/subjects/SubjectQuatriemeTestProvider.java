@@ -2,10 +2,10 @@ package io.edukativ.myskoolin.domain.providers.subjects;
 
 import io.edukativ.myskoolin.domain.entity.Subject;
 import io.edukativ.myskoolin.domain.providers.GlobalTestProvider;
-import io.edukativ.myskoolin.domain.vo.EnumDays;
-import io.edukativ.myskoolin.domain.vo.EnumPartsOfDay;
-import io.edukativ.myskoolin.domain.vo.EnumSchoolRoomsTypes;
-import io.edukativ.myskoolin.domain.vo.PreferredPartsOfDays;
+import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
+import io.edukativ.myskoolin.domain.commons.vo.EnumPartsOfDay;
+import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.domain.timetabling.PreferredPartsOfDays;
 import io.edukativ.myskoolin.domain.providers.GradeTestProvider;
 
 import java.util.Arrays;

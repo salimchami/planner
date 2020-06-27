@@ -3,10 +3,7 @@ package io.edukativ.myskoolin.domain.timetabling;
 import io.edukativ.myskoolin.domain.entity.SchoolClass;
 import io.edukativ.myskoolin.domain.entity.SchoolRoom;
 import io.edukativ.myskoolin.domain.entity.Subject;
-import io.edukativ.myskoolin.domain.vo.EnumDays;
-import io.edukativ.myskoolin.domain.vo.SchoolClassTimeSlot;
-import io.edukativ.myskoolin.domain.vo.TimeSlot;
-import io.edukativ.myskoolin.domain.vo.TimeTableOptions;
+import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;

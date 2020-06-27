@@ -2,7 +2,7 @@ package io.edukativ.myskoolin.infrastructure.teachers;
 
 import io.edukativ.myskoolin.domain.commons.MyskoolinLoggerSPI;
 import io.edukativ.myskoolin.domain.teachers.TeacherSPI;
-import io.edukativ.myskoolin.domain.vo.Teacher;
+import io.edukativ.myskoolin.domain.teachers.Teacher;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 

@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Daily book (cahier de texte) timeslot
@@ -50,6 +51,22 @@ public class DailyBookTimeSlotDbVO extends TimeSlotDbVO implements Serializable 
 
     public void setTargetDate(Instant targetDate) {
         this.targetDate = targetDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        DailyBookTimeSlotDbVO that = (DailyBookTimeSlotDbVO) o;
+        return Objects.equals(subject, that.subject) &&
+                Objects.equals(teachers, that.teachers) &&
+                Objects.equals(targetDate, that.targetDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), subject, teachers, targetDate);
     }
 
     //fixme: add option entity

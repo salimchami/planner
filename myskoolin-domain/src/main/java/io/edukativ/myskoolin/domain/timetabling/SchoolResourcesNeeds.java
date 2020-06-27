@@ -4,8 +4,8 @@ import io.edukativ.myskoolin.domain.entity.SchoolClass;
 import io.edukativ.myskoolin.domain.entity.SchoolRoom;
 import io.edukativ.myskoolin.domain.entity.Subject;
 import io.edukativ.myskoolin.domain.entity.User;
-import io.edukativ.myskoolin.domain.vo.EnumSchoolRoomsTypes;
-import io.edukativ.myskoolin.domain.vo.Teacher;
+import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.domain.teachers.Teacher;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

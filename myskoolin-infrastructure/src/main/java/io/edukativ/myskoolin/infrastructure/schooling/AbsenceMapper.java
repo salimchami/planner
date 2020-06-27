@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.schooling;
 
-import io.edukativ.myskoolin.domain.vo.Absence;
+import io.edukativ.myskoolin.domain.absences.Absence;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.AbsenceDbVO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.AbsenceVO;
 import org.mapstruct.InjectionStrategy;

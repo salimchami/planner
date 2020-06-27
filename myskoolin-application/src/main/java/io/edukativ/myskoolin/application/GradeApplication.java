@@ -4,7 +4,7 @@ import io.edukativ.myskoolin.application.security.UserService;
 import io.edukativ.myskoolin.domain.entity.Grade;
 import io.edukativ.myskoolin.domain.entity.User;
 import io.edukativ.myskoolin.domain.grades.GradeAPI;
-import io.edukativ.myskoolin.domain.vo.GradeSerie;
+import io.edukativ.myskoolin.domain.grades.GradeSerie;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;
 import io.edukativ.myskoolin.infrastructure.grades.*;

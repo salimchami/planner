@@ -6,7 +6,6 @@ import io.edukativ.myskoolin.domain.commons.MyskoolinLoggerSPI;
 import io.edukativ.myskoolin.domain.commons.mailing.MyskoolinMailingSPI;
 import io.edukativ.myskoolin.domain.entity.Authority;
 import io.edukativ.myskoolin.domain.entity.User;
-import io.edukativ.myskoolin.domain.vo.Teacher;
 
 import java.util.List;
 import java.util.Optional;

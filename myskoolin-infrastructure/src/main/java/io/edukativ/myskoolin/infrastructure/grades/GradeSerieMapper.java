@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.grades;
 
-import io.edukativ.myskoolin.domain.vo.GradeSerie;
+import io.edukativ.myskoolin.domain.grades.GradeSerie;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 

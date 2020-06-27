@@ -1,6 +1,11 @@
 package io.edukativ.myskoolin.domain.entity;
 
-import io.edukativ.myskoolin.domain.vo.*;
+import io.edukativ.myskoolin.domain.commercial.Contract;
+import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
+import io.edukativ.myskoolin.domain.commons.vo.EnumPartsOfDay;
+import io.edukativ.myskoolin.domain.timetabling.Time;
+import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
+import io.edukativ.myskoolin.domain.timetabling.TimeTableOptions;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;

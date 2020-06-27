@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.commercial;
 
 import io.edukativ.myskoolin.domain.commons.mailing.MyskoolinMailingSPI;
-import io.edukativ.myskoolin.domain.vo.Teacher;
+import io.edukativ.myskoolin.domain.teachers.Teacher;
 
 public class MyskoolinMailingProvider implements MyskoolinMailingSPI {
 

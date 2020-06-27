@@ -2,9 +2,9 @@ package io.edukativ.myskoolin.domain.providers;
 
 import io.edukativ.myskoolin.domain.entity.Client;
 import io.edukativ.myskoolin.domain.entity.Grade;
-import io.edukativ.myskoolin.domain.vo.EnumDays;
-import io.edukativ.myskoolin.domain.vo.EnumSchoolClassNotation;
-import io.edukativ.myskoolin.domain.vo.TimeTableOptions;
+import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
+import io.edukativ.myskoolin.domain.schoolclasses.EnumSchoolClassNotation;
+import io.edukativ.myskoolin.domain.timetabling.TimeTableOptions;
 
 import java.util.*;
 import java.util.stream.Collectors;

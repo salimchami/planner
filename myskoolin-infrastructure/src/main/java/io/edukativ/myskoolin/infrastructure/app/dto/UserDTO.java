@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -198,7 +199,7 @@ public class UserDTO {
     }
 
     public Set<String> getAuthorities() {
-        if(authorities == null) {
+        if (authorities == null) {
             return new HashSet<>();
         }
         return authorities;
@@ -281,5 +282,20 @@ public class UserDTO {
                 ", lastModifiedDate=" + lastModifiedDate +
                 ", authorities=" + authorities +
                 "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDTO userDTO = (UserDTO) o;
+        return Objects.equals(id, userDTO.id)
+                && Objects.equals(login, userDTO.login)
+                && Objects.equals(clientId, userDTO.clientId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -1,9 +1,9 @@
 package io.edukativ.myskoolin.domain.entity;
 
 import io.edukativ.myskoolin.domain.commons.exceptions.NoGradeFoundException;
-import io.edukativ.myskoolin.domain.vo.EnumSchoolRoomsTypes;
-import io.edukativ.myskoolin.domain.vo.GradeSerie;
-import io.edukativ.myskoolin.domain.vo.PreferredPartsOfDays;
+import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.domain.grades.GradeSerie;
+import io.edukativ.myskoolin.domain.timetabling.PreferredPartsOfDays;
 
 import java.math.BigDecimal;
 import java.util.*;

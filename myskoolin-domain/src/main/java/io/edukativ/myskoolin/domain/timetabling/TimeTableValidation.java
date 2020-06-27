@@ -1,8 +1,6 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
 import io.edukativ.myskoolin.domain.entity.Subject;
-import io.edukativ.myskoolin.domain.vo.SchoolClassTimeSlot;
-import io.edukativ.myskoolin.domain.vo.TimeSlot;
 
 import java.util.List;
 

@@ -10,7 +10,7 @@ import java.util.List;
 public class InfirmaryStatisticsVO implements Serializable {
 
     private List<ZonedDateTime> transitDates;
-    private List<DrugDbVO> drugs;
+    private List<DrugVO> drugs;
     private Integer transitsNumber = 0;
     private String comment;
 
@@ -22,11 +22,11 @@ public class InfirmaryStatisticsVO implements Serializable {
         this.transitDates = transitDates;
     }
 
-    public List<DrugDbVO> getDrugs() {
+    public List<DrugVO> getDrugs() {
         return drugs;
     }
 
-    public void setDrugs(List<DrugDbVO> drugs) {
+    public void setDrugs(List<DrugVO> drugs) {
         this.drugs = drugs;
     }
 

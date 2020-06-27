@@ -1,20 +1,30 @@
 package io.edukativ.myskoolin.front.web.rest;
 
+import io.edukativ.myskoolin.application.StudentApplication;
 import io.edukativ.myskoolin.domain.commons.MyskoolinLoggerSPI;
+import io.edukativ.myskoolin.infrastructure.students.StudentDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/students")
 public class StudentResource {
 
     private final MyskoolinLoggerSPI logger;
+    private StudentApplication studentApplication;
 
-    public StudentResource(MyskoolinLoggerSPI logger) {
+    public StudentResource(MyskoolinLoggerSPI logger, StudentApplication studentApplication) {
         this.logger = logger;
+        this.studentApplication = studentApplication;
     }
 
-//    private static final String STUDENT_ENTITY = "student";
+    //    private static final String STUDENT_ENTITY = "student";
 //
 //    @PostMapping
 //    @ResponseBody
@@ -63,13 +73,13 @@ public class StudentResource {
 //        }
 //    }
 //
-//    @GetMapping
-//    @Transactional(readOnly = true)
-//    public ResponseEntity<List<UserDTO>> getAllStudents() {
-//        log.debug("REST request to get a page of Students");
-//        List<UserDTO> students = studentService.findAllByCurrentUserClient();
-//        return new ResponseEntity<>(students, HttpStatus.OK);
-//    }
+    @GetMapping
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<StudentDTO>> getAllStudents() {
+        logger.debug("REST request to get a page of Students");
+        List<StudentDTO> students = studentApplication.findAll();
+        return new ResponseEntity<>(students, HttpStatus.OK);
+    }
 //
 //    @GetMapping(value = "/{id}")
 //    public ResponseEntity<StudentDTO> findStudent(@PathVariable(name = "id") String id) {

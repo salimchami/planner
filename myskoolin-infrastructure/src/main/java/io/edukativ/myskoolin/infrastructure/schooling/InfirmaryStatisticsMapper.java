@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.schooling;
 
-import io.edukativ.myskoolin.domain.vo.InfirmaryStatistics;
+import io.edukativ.myskoolin.domain.medical.InfirmaryStatistics;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.InfirmaryStatisticsDbVO;
 import io.edukativ.myskoolin.infrastructure.schooling.vo.InfirmaryStatisticsVO;
 import org.mapstruct.InjectionStrategy;

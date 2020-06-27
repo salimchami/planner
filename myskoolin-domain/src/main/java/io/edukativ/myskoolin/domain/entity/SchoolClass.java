@@ -1,6 +1,10 @@
 package io.edukativ.myskoolin.domain.entity;
 
-import io.edukativ.myskoolin.domain.vo.*;
+import io.edukativ.myskoolin.domain.grades.GradeSerie;
+import io.edukativ.myskoolin.domain.schoolclasses.EnumSchoolClassNotation;
+import io.edukativ.myskoolin.domain.teachers.TeachersBySubject;
+import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeSlot;
+import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
 import io.edukativ.myskoolin.domain.commons.exceptions.NotFoundException;
 
 import java.time.ZonedDateTime;

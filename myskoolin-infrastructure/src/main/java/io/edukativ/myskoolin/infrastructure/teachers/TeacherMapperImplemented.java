@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.teachers;
 
-import io.edukativ.myskoolin.domain.vo.Teacher;
+import io.edukativ.myskoolin.domain.teachers.Teacher;
 import io.edukativ.myskoolin.infrastructure.app.mapper.AuthorityMapper;
 import io.edukativ.myskoolin.infrastructure.common.mapper.AddressMapper;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;

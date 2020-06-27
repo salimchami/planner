@@ -1,7 +1,5 @@
 package io.edukativ.myskoolin.domain.teachers;
 
-import io.edukativ.myskoolin.domain.vo.Teacher;
-
 import java.util.List;
 import java.util.Optional;
 
