@@ -17,7 +17,7 @@ export class Teacher implements BaseEntity {
         public clientId?: string,
         public firstName?: string,
         public lastName?: string,
-        public sex?: string,
+        public gender?: string,
         public nationality?: string,
         public familySituation?: string, // ------
         public birthDate?: Date,
@@ -59,7 +59,7 @@ export class Teacher implements BaseEntity {
         this.login = teacherUserForm.controls.login.value;
         this.firstName = teacherUserForm.controls.firstName.value;
         this.lastName = teacherUserForm.controls.lastName.value;
-        this.sex = teacherUserForm.controls.sex.value;
+        this.gender = teacherUserForm.controls.gender.value;
         this.nationality = teacherUserForm.controls.nationality.value;
         this.birthDate = teacherUserForm.controls.birthDate.value;
         this.homePhone = teacherUserForm.controls.homePhone.value;

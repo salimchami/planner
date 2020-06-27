@@ -4,7 +4,6 @@ export class Interlocutor {
         public lastname?: string,
         public firstname?: string,
         public gender?: string,
-        public sex?: string,
         public position?: string,
         public phone?: string,
         public mobile?: string,

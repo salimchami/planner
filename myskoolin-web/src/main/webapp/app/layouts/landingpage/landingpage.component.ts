@@ -72,7 +72,7 @@ export class JhiLandingpageComponent implements AfterViewInit, OnInit, OnDestroy
             email: new FormControl('', [Validators.email, Validators.required]),
             schoolName: new FormControl('', [Validators.minLength(2), Validators.required]),
             message: new FormControl('', [Validators.required]),
-            sex: new FormControl('', Validators.required),
+            gender: new FormControl('', Validators.required),
             phone: new FormControl()
         });
 
@@ -138,16 +138,15 @@ export class JhiLandingpageComponent implements AfterViewInit, OnInit, OnDestroy
 
     sendContact(form) {
         const values = form.value;
-        const gender = Contact.genderFromSex(values.sex);
-        this.translateService.get(gender).subscribe((translatedGender) => {
-            this.contact = new Contact(values.name, values.email, values.message, values.contactReason,
-                values.sex, this.translateService.currentLang, values.phone, translatedGender, gender);
-            this.contactService.create(this.contact).subscribe(
-                (res) => {
-                    this.contactConfirmation = true;
-                    this.contactForm.reset();
-                });
-        });
+
+        this.contact = new Contact(values.name, values.email, values.message, values.contactReason,
+            this.translateService.currentLang, values.phone, values.gender);
+        this.contactService.create(this.contact).subscribe(
+            (res) => {
+                this.contactConfirmation = true;
+                this.contactForm.reset();
+            });
+
     }
 
     sendNewsletter(newsletterForm) {

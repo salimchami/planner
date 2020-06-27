@@ -8,10 +8,10 @@ import java.util.Arrays;
  */
 public enum EnumSex implements Serializable {
 
-    MALE("global.constants.sexes.male"),
-    FEMALE("global.constants.sexes.female");
+    MALE("global.constants.genders.male"),
+    FEMALE("global.constants.genders.female");
 
-    private String code;
+    private final String code;
 
     EnumSex(String code) {
         this.code = code;
@@ -22,7 +22,7 @@ public enum EnumSex implements Serializable {
     }
 
     public static EnumSex fromCode(String code) {
-        return Arrays.stream(EnumSex.values()).filter(sex -> sex.code.equals(code))
+        return Arrays.stream(EnumSex.values()).filter(gender -> gender.code.equals(code))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException(String.format("Unsupported code %s", code)));
 

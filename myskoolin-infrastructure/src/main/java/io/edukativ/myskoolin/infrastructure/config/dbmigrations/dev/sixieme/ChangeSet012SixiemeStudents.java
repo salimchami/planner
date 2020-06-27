@@ -191,7 +191,7 @@ public class ChangeSet012SixiemeStudents {
     }
 
     private void createStudentUser(MongoTemplate mongoTemplate, ObjectId id, String login, String firstName,
-                                   String lastName, String sex, CanteenRegistrationDbVO canteenRegistration,
+                                   String lastName, String gender, CanteenRegistrationDbVO canteenRegistration,
                                    MedicalInfosDbVO medicalInfos, SchoolingInfosDbVO schoolingInfos,
                                    ResidentialSchoolDbVO residentialSchool,
                                    ResponsibleDbVO resp1, ResponsibleDbVO resp2, ObjectId respId, String responsibleAccountLogin) {
@@ -208,7 +208,7 @@ public class ChangeSet012SixiemeStudents {
                     .password(passwordEncoder.encode(defaultPAssword))
                     .firstName(responsibleAccount.getFirstName())
                     .lastName(responsibleAccount.getLastName())
-                    .gender(responsibleAccount.getSex())
+                    .gender(responsibleAccount.getGender())
                     .birthDate(responsibleAccount.getBirthdate())
                     .address(responsibleAccount.getAddress())
                     .cellPhone(responsibleAccount.getCellPhone())
@@ -234,7 +234,7 @@ public class ChangeSet012SixiemeStudents {
                     .password(passwordEncoder.encode(defaultPAssword))
                     .firstName(firstName)
                     .lastName(lastName)
-                    .gender(sex)
+                    .gender(gender)
                     .birthDate(ZonedDateTime.of(1998, 2, 27, 0, 0, 0, 0, ZoneId.systemDefault()))
                     .address(new AddressDbVO("9, rue du capitaine ferber", "75020", "Paris", "France"))
                     .cellPhone(DEFAULT_PHONE)
@@ -251,8 +251,8 @@ public class ChangeSet012SixiemeStudents {
         }
     }
 
-    private ResponsibleDbVO createResponsible(String firstName, String lastName, EnumSex sex, String studentRelationship, String profession, boolean respAccount) {
-        return new ResponsibleDbVO(firstName, lastName, sex.getCode(), "Française", respAccount, "resp@schoolme.net",
+    private ResponsibleDbVO createResponsible(String firstName, String lastName, EnumSex gender, String studentRelationship, String profession, boolean respAccount) {
+        return new ResponsibleDbVO(firstName, lastName, gender.getCode(), "Française", respAccount, "resp@schoolme.net",
                 ZonedDateTime.of(1974, 8, 30, 0, 0, 0, 0, ZoneId.systemDefault()),
                 "secEmail@schoolme.net", "pro@schoolme.net",
                 new AddressDbVO("9 Rue du Capitaine Ferber", "92130", "Issy-les-Moulineaux", "France"),

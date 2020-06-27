@@ -3,7 +3,9 @@ package io.edukativ.myskoolin.infrastructure.app.providers;
 import io.edukativ.myskoolin.domain.commons.MyskoolinLoggerSPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MyskoolinLogger implements MyskoolinLoggerSPI {
 
     @Override

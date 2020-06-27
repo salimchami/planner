@@ -87,19 +87,20 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label"><span
-                                    jhiTranslate="teacher.new.form.sex">Gender</span> <span style="color: #c75b58;">*</span></label>
+                                    jhiTranslate="teacher.new.form.gender">Gender</span> <span style="color: #c75b58;">*</span></label>
                                 <div class="col-sm-8">
                                     <div class="form-radio">
-                                        <div class="radio radio-inline" *ngFor="let sex of sexes; let i = index">
-                                            <label id="teacherSex-{{i}}">
-                                                <input (click)="resetMessages()" type="radio" [value]="sex" [checked]="teacherUserForm.controls.sex.value === sex" formControlName="sex">
-                                                <i class="helper"></i>{{sex|translate}}
+                                        <div class="radio radio-inline" *ngFor="let gender of genders; let i = index">
+                                            <label id="teacherGender-{{i}}">
+                                                <input (click)="resetMessages()" type="radio"
+                                                       [value]="gender" [checked]="teacherUserForm.controls.gender.value === gender" formControlName="gender">
+                                                <i class="helper"></i>{{gender|translate}}
                                             </label>
                                         </div>
                                     </div>
                                     <div class="messages text-danger"
-                                         *ngIf="teacherUserForm.controls.sex.invalid && (teacherUserForm.controls.sex.dirty || teacherUserForm.controls.sex.touched)">
-                                        <span jhiTranslate="teacher.new.form.sex-error"></span></div>
+                                         *ngIf="teacherUserForm.controls.gender.invalid && (teacherUserForm.controls.gender.dirty || teacherUserForm.controls.gender.touched)">
+                                        <span jhiTranslate="teacher.new.form.gender-error"></span></div>
                                 </div>
                             </div>
                             <div class="form-group row">

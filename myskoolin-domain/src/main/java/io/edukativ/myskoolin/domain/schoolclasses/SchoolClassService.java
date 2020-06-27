@@ -12,12 +12,4 @@ public class SchoolClassService implements SchoolClassAPI {
         this.schoolClassSPI = schoolClassSPI;
     }
 
-    @Override
-    public List<SchoolClass> findAll(User currentUser) {
-        List<SchoolClass> schoolClasses = schoolClassSPI.findAllByClientId(currentUser.getClientId());
-
-// schoolClassesDTO.forEach(this::loadSchoolClassHeadTeachers);
-//        populateHeadTeachers(schoolClassesDTO);
-        return null;
-    }
 }

@@ -21,12 +21,12 @@ import io.edukativ.myskoolin.domain.teachers.TeacherSPI;
 import io.edukativ.myskoolin.domain.teachers.TeacherService;
 import io.edukativ.myskoolin.infrastructure.app.mapper.AuthorityMapper;
 import io.edukativ.myskoolin.infrastructure.app.providers.AuthorityProvider;
-import io.edukativ.myskoolin.infrastructure.app.providers.MyskoolinLogger;
 import io.edukativ.myskoolin.infrastructure.app.repository.AuthorityRepository;
 import io.edukativ.myskoolin.infrastructure.commercial.MyskoolinMailingProvider;
 import io.edukativ.myskoolin.infrastructure.grades.GradeMapper;
 import io.edukativ.myskoolin.infrastructure.grades.GradeProvider;
 import io.edukativ.myskoolin.infrastructure.grades.GradeRepository;
+import io.edukativ.myskoolin.infrastructure.schoolclasses.SchoolClassProvider;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomMapper;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomProvider;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomRepository;
@@ -47,6 +47,7 @@ public class MyskoolinDomainInjectionConfiguration {
     public SubjectAPI subjectAPI(SubjectSPI subjectSPI, GradeSPI gradeSPI) {
         return new SubjectService(subjectSPI, gradeSPI);
     }
+
     @Bean
     public SchoolRoomAPI schoolRoomAPI(SchoolRoomSPI schoolRoomSPI) {
         return new SchoolRoomService(schoolRoomSPI);
@@ -80,11 +81,6 @@ public class MyskoolinDomainInjectionConfiguration {
     }
 
     @Bean
-    public MyskoolinLoggerSPI myskoolinLoggerSPI() {
-        return new MyskoolinLogger();
-    }
-
-    @Bean
     public MyskoolinMailingSPI myskoolinMailingSPI() {
         return new MyskoolinMailingProvider();
     }
@@ -103,5 +99,10 @@ public class MyskoolinDomainInjectionConfiguration {
     @Bean
     public SchoolClassAPI schoolClassAPI(SchoolClassSPI schoolClassSPI) {
         return new SchoolClassService(schoolClassSPI);
+    }
+
+    @Bean
+    public SchoolClassSPI schoolClassSPI(SchoolClassProvider schoolClassProvider) {
+        return schoolClassProvider;
     }
 }

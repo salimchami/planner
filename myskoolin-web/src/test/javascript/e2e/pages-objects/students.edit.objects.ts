@@ -14,8 +14,8 @@ export class StudentsEditObjects {
     public login_Input = element(by.id('login'));
     public firstName_Input = element(by.id('firstName'));
     public lastName_Input = element(by.id('lastName'));
-    public studentSex_male_Radio = element(by.id('studentSex-0'));
-    public studentSex_female_Radio = element(by.id('studentSex-1'));
+    public studentGender_male_Radio = element(by.id('studentSex-0'));
+    public studentGender_female_Radio = element(by.id('studentSex-1'));
     public email_Input = element(by.id('email'));
     public cellPhone_Input = element(by.id('cellPhone'));
     public homePhone_Input = element(by.id('homePhone'));
@@ -253,19 +253,19 @@ export class StudentsEditObjects {
         return element(by.id('familySituation-' + (responsibleNumber - 1)));
     }
 
-    fillBasicInfos(login: string, firstName: string, lastName: string, sex: string, nationality: string, email: string,
+    fillBasicInfos(login: string, firstName: string, lastName: string, gender: string, nationality: string, email: string,
                    cellPhone: string, homePhone: string,
                    birthDate: string, addressName: string, postalCode: string, city: string,
                    country: string, comment: string) {
         this.login_Input.sendKeys(login);
         this.firstName_Input.sendKeys(firstName);
         this.lastName_Input.sendKeys(lastName);
-        switch (sex) {
+        switch (gender) {
             case 'male':
-                this.studentSex_male_Radio.click();
+                this.studentGender_male_Radio.click();
                 break;
             case 'female':
-                this.studentSex_female_Radio.click();
+                this.studentGender_female_Radio.click();
                 break;
         }
         this.nationality_Input.sendKeys(nationality);
@@ -308,7 +308,7 @@ export class StudentsEditObjects {
         }
     }
 
-    fillResponsible_firtPart(responsibleNumber: number, firstName: string, lastName: string, sex: string, nationality: string,
+    fillResponsible_firtPart(responsibleNumber: number, firstName: string, lastName: string, gender: string, nationality: string,
                              birthDate: string, address: string,
                              postalCode: string, city: string, country: string, phone: string, cellPhone: string, email: string,
                              secondaryEmail: string) {
@@ -316,7 +316,7 @@ export class StudentsEditObjects {
         this.getResponsibleNationality_Input(responsibleNumber).sendKeys(nationality);
         this.getResponsibleFirstName_Input(responsibleNumber).sendKeys(firstName);
         this.getResponsibleLastName_Input(responsibleNumber).sendKeys(lastName);
-        switch (sex) {
+        switch (gender) {
             case 'male':
                 this.getResponsibleSex_Male_Radio(responsibleNumber).click();
                 break;

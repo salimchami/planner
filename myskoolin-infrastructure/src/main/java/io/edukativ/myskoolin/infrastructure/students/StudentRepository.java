@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Spring Data MongoDB fr.wideapps.schoolme.repository for the User entity.
@@ -45,19 +46,11 @@ public interface StudentRepository extends MongoRepository<StudentDbDTO, String>
     List<StudentDbDTO> findAllNotDeletedStudents(ObjectId clientId);
 
     /**
-     * Find all not deleted students by ids
+     * Find all not deleted students
      *
      * @return List of not deleted students
      */
-    @Query("{ 'deleted': false, 'student' : {'$ne' : null}, '_id': {$in: ?0} }")
-    List<StudentDbDTO> findAllNotDeletedStudents(List<ObjectId> ids);
-
-    /**
-     * Find all students
-     *
-     * @return List of students
-     */
-    @Query("{ 'student' : {'$ne' : null}, 'clientId': ?0 }")
-    List<StudentDbDTO> findAllStudents(ObjectId clientId);
+    @Query("{ 'deleted': false, 'clientId': ?0, 'id': ?1 }")
+    Optional<StudentDbDTO> findByIdAndClientId(ObjectId clientId, String id);
 
 }

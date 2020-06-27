@@ -9,10 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing SchoolClass.
@@ -81,23 +83,23 @@ public class SchoolClassResource {
     public ResponseEntity<List<SchoolClassDTO>> findAllSchoolClasses() {
         logger.debug("REST request to get a page of school-classes");
         List<SchoolClassDTO> schoolClasses = schoolClassApplication.findAll();
-//        schoolClassesDTO.forEach(this::loadSchoolClassHeadTeachers);
-//        populateHeadTeachers(schoolClassesDTO);
         return new ResponseEntity<>(schoolClasses, HttpStatus.OK);
     }
 
-//    @GetMapping(value = "/school-classes/{id}")
-//    public ResponseEntity<SchoolClassDTO> findSchoolClass(@PathVariable String id) {
-//        log.debug("REST request to get SchoolClass : {}", id);
-//        Optional<SchoolClass> optSchoolClass = schoolClassService.findOneById(id);
-//        if (optSchoolClass.isPresent()) {
-//            SchoolClassDTO schoolClassDTO = schoolClassMapper.schoolClassToSchoolClassDTO(optSchoolClass.get());
-//            loadSchoolClassHeadTeachers(schoolClassDTO);
-//            loadSchoolClassStudents(schoolClassDTO);
-//            return new ResponseEntity<>(schoolClassDTO, HttpStatus.OK);
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
+    @GetMapping(value = "/{id}")
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE,
+        AuthoritiesConstants.INFIRMARY,
+        AuthoritiesConstants.TEACHERS,
+    })
+    public ResponseEntity<SchoolClassDTO> findSchoolClass(@PathVariable String id) {
+        logger.debug(String.format("REST request to get SchoolClass : %s", id));
+        Optional<SchoolClassDTO> optSchoolClass = schoolClassApplication.findOne(id);
+        return optSchoolClass
+            .map(schoolClass -> new ResponseEntity<>(schoolClass, HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
 //    @Secured({
 //        AuthoritiesConstants.ADMINISTRATION,

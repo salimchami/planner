@@ -17,7 +17,7 @@ public class ResponsibleDbVO implements Serializable {
 
     public static final String MONGO_FIELD_FIRST_NAME = "first_name";
     public static final String MONGO_FIELD_LAST_NAME = "last_name";
-    public static final String MONGO_FIELD_SEX = "sex";
+    public static final String MONGO_FIELD_GENDER = "gender";
     public static final String MONGO_FIELD_EMAIL = "email";
     public static final String MONGO_FIELD_BIRTH_DATE = "birth_date";
     public static final String MONGO_FIELD_SECONDARY_EMAIL = "secondary_email";
@@ -48,8 +48,8 @@ public class ResponsibleDbVO implements Serializable {
     @Field(MONGO_FIELD_LAST_NAME)
     private String lastName;
 
-    @Field(MONGO_FIELD_SEX)
-    private String sex;
+    @Field(MONGO_FIELD_GENDER)
+    private String gender;
 
     @Field(MONGO_FIELD_NATIONALITY)
     private String nationality;
@@ -103,10 +103,10 @@ public class ResponsibleDbVO implements Serializable {
     public ResponsibleDbVO() {
     }
 
-    public ResponsibleDbVO(String firstName, String lastName, String sex, String nationality, boolean respAccount, String email, ZonedDateTime birthdate, String secondaryEmail, String proEmail, AddressDbVO address, String phone, String cellPhone, String workPhone, String workCellPhone, String studentRelationship, String profession, String familySituation, Integer dependentChildren, String comment, Boolean parentsAssociation, String parentsAssociationPosition) {
+    public ResponsibleDbVO(String firstName, String lastName, String gender, String nationality, boolean respAccount, String email, ZonedDateTime birthdate, String secondaryEmail, String proEmail, AddressDbVO address, String phone, String cellPhone, String workPhone, String workCellPhone, String studentRelationship, String profession, String familySituation, Integer dependentChildren, String comment, Boolean parentsAssociation, String parentsAssociationPosition) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.sex = sex;
+        this.gender = gender;
         this.nationality = nationality;
         this.respAccount = respAccount;
         this.email = email;
@@ -143,12 +143,12 @@ public class ResponsibleDbVO implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getSex() {
-        return sex;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getEmail() {
@@ -287,7 +287,7 @@ public class ResponsibleDbVO implements Serializable {
             return "Responsible{" +
                     "firstName='" + firstName + '\'' +
                     ", lastName='" + lastName + '\'' +
-                    ", sex='" + sex + '\'' +
+                    ", gender='" + gender + '\'' +
                     ", email='" + email + '\'' +
                     ", nationality='" + nationality + '\'' +
                     ", birthDate=" + birthdate +
@@ -333,7 +333,7 @@ public class ResponsibleDbVO implements Serializable {
         return respAccount == that.respAccount &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
-                Objects.equals(sex, that.sex) &&
+                Objects.equals(gender, that.gender) &&
                 Objects.equals(nationality, that.nationality) &&
                 Objects.equals(email, that.email) &&
                 Objects.equals(birthdate, that.birthdate) &&
@@ -342,6 +342,6 @@ public class ResponsibleDbVO implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, sex, nationality, respAccount, email, birthdate, address);
+        return Objects.hash(firstName, lastName, gender, nationality, respAccount, email, birthdate, address);
     }
 }

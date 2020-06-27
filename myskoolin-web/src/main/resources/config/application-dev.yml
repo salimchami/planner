@@ -16,8 +16,8 @@
 logging:
   level:
     ROOT: INFO
-    io.github.jhipster: INFO
-    io.edukativ.schooling: INFO
+    io.github.jhipster: DEBUG
+    io.edukativ.schooling: DEBUG
 
 eureka:
   instance:

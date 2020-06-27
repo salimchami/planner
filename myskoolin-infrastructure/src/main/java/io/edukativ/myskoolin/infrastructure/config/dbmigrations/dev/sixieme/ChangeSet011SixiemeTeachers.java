@@ -89,7 +89,7 @@ public class ChangeSet011SixiemeTeachers {
         createTeacherUser(mongoTemplate, DevDbMigrationsConstants.SUBJECT_SIXIEME_MUSIC_ID, "khatia.buniatishvili", "Khatia", "BUNIATISHVILI", EnumSex.FEMALE.getCode());
     }
 
-    private void createTeacherUser(MongoTemplate mongoTemplate, ObjectId subjectId, String login, String firstName, String lastName, String sex) {
+    private void createTeacherUser(MongoTemplate mongoTemplate, ObjectId subjectId, String login, String firstName, String lastName, String gender) {
         TeacherDbDTO teacher = new TeacherDbDTO.TeacherDbDTOBuilder()
                 .comment("RAS")
                 .employedDate(ZonedDateTime.of(2018, 2, 27, 0, 0, 0, 0, ZoneId.systemDefault()))
@@ -104,7 +104,7 @@ public class ChangeSet011SixiemeTeachers {
                 .login(login)
                 .password(passwordEncoder.encode("admin"))
                 .clientId(DevDbMigrationsConstants.CLIENT_01_ID)
-                .gender(sex)
+                .gender(gender)
                 .firstName(firstName)
                 .lastName(lastName)
                 .cellPhone("00000000")

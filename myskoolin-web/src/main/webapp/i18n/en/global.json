@@ -2,7 +2,7 @@
     "global": {
         "yes": "yes",
         "no": "no",
-        "sex": {
+        "gender": {
             "male": "Masculin",
             "female": "Féminin"
         },

@@ -254,7 +254,7 @@
                                                     <ng-container *ngIf="!isLoading">
                                                         <mat-option *ngFor="let student of filteredStudents" [value]="student" (onSelectionChange)="onSearchStudentSelect(student)">
                                                             <span>{{ student.firstName }} {{ student.lastName }}</span>
-                                                            <small> | {{student.sex|translate}} {{student.birthDate|date: dateHelper.dateFormat()}}</small>
+                                                            <small> | {{student.gender|translate}} {{student.birthDate|date: dateHelper.dateFormat()}}</small>
                                                         </mat-option>
                                                     </ng-container>
                                                 </mat-autocomplete>
@@ -267,7 +267,7 @@
                                                 <th>#</th>
                                                 <th>firstName</th>
                                                 <th>lastName</th>
-                                                <th>sex</th>
+                                                <th>gender</th>
                                                 <th>birthdate</th>
                                                 <th>lastSchoolClass</th>
                                                 <th>actions</th>
@@ -278,7 +278,7 @@
                                                 <td>{{i + 1}}</td>
                                                 <td>{{student.firstName}}</td>
                                                 <td>{{student.lastName}}</td>
-                                                <td>{{student.sex|translate}}</td>
+                                                <td>{{student.gender|translate}}</td>
                                                 <td>{{student.birthDate|date: dateHelper.dateFormat()}}</td>
                                                 <td>{{student.schoolClass}}</td>
                                                 <td class="text-center">
@@ -383,7 +383,7 @@
                                             <th>#</th>
                                             <th>firstName</th>
                                             <th>lastName</th>
-                                            <th>sex</th>
+                                            <th>gender</th>
                                             <th>birthdate</th>
                                         </tr>
                                         </thead>
@@ -392,7 +392,7 @@
                                             <td>{{i + 1}}</td>
                                             <td>{{student.firstName}}</td>
                                             <td>{{student.lastName}}</td>
-                                            <td>{{student.sex|translate}}</td>
+                                            <td>{{student.gender|translate}}</td>
                                             <td>{{student.birthDate|date: dateHelper.dateFormat()}}</td>
                                         </tr>
                                         </tbody>

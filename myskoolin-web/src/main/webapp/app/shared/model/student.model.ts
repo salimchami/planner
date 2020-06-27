@@ -23,7 +23,7 @@ export class Student implements BaseEntity {
         public clientId?: string,
         public firstName?: string,
         public lastName?: string,
-        public sex?: string,
+        public gender?: string,
         public birthDate?: Date,
         public nationality?: string,
         public homePhone?: string,
@@ -57,6 +57,7 @@ export class Student implements BaseEntity {
         this.schoolingInfos.individualizedReceptionPlan = false;
         this.responsibles = [new Responsible(true)];
         this.medicalInfos = new MedicalInfos();
+        this.infirmaryStatistics = new InfirmaryStatistics();
         this.medicalInfos.healthInsurance = false;
         this.medicalInfos.complementaryHealthInsurance = false;
         this.medicalInfos.allergies = '';
@@ -73,7 +74,7 @@ export class Student implements BaseEntity {
         this.login = studentUserForm.controls.login.value;
         this.firstName = studentUserForm.controls.firstName.value;
         this.lastName = studentUserForm.controls.lastName.value;
-        this.sex = studentUserForm.controls.sex.value;
+        this.gender = studentUserForm.controls.gender.value;
         this.nationality = studentUserForm.controls.nationality.value;
         this.email = studentUserForm.controls.email.value;
         this.birthDate = studentUserForm.controls.birthDate.value.toDate();
@@ -114,7 +115,7 @@ export class Student implements BaseEntity {
             this.responsibles[index] = new Responsible(responsibleForm.respAccount);
             this.responsibles[index].firstName = responsibleForm.firstName;
             this.responsibles[index].lastName = responsibleForm.lastName;
-            this.responsibles[index].sex = responsibleForm.sex;
+            this.responsibles[index].gender = responsibleForm.gender;
             this.responsibles[index].birthdate = responsibleForm.birthDate.toDate();
             this.responsibles[index].address.name = responsibleForm.addressName;
             this.responsibles[index].nationality = responsibleForm.nationality;

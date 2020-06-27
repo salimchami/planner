@@ -15,6 +15,7 @@ import io.edukativ.myskoolin.infrastructure.sanctions.SanctionVO;
 import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableVO;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A Teacher.
@@ -175,5 +176,13 @@ public class StudentDTO extends UserDTO {
         this.orientation = orientation;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode());
+    }
 }

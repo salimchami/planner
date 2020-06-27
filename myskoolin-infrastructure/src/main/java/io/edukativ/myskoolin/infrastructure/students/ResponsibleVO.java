@@ -14,7 +14,7 @@ public class ResponsibleVO implements Serializable {
 
     private String firstName;
     private String lastName;
-    private String sex;
+    private String gender;
     private String nationality;
     private boolean respAccount;
     private String email;
@@ -50,12 +50,12 @@ public class ResponsibleVO implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getSex() {
-        return sex;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getEmail() {
@@ -194,7 +194,7 @@ public class ResponsibleVO implements Serializable {
             return "Responsible{" +
                     "firstName='" + firstName + '\'' +
                     ", lastName='" + lastName + '\'' +
-                    ", sex='" + sex + '\'' +
+                    ", gender='" + gender + '\'' +
                     ", email='" + email + '\'' +
                     ", nationality='" + nationality + '\'' +
                     ", birthDate=" + birthdate +
@@ -240,7 +240,7 @@ public class ResponsibleVO implements Serializable {
         return respAccount == that.respAccount &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
-                Objects.equals(sex, that.sex) &&
+                Objects.equals(gender, that.gender) &&
                 Objects.equals(nationality, that.nationality) &&
                 Objects.equals(email, that.email) &&
                 Objects.equals(birthdate, that.birthdate) &&
@@ -249,6 +249,6 @@ public class ResponsibleVO implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, sex, nationality, respAccount, email, birthdate, address);
+        return Objects.hash(firstName, lastName, gender, nationality, respAccount, email, birthdate, address);
     }
 }

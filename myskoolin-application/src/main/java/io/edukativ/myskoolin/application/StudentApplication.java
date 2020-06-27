@@ -9,6 +9,7 @@ import io.edukativ.myskoolin.infrastructure.students.StudentRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class StudentApplication {
@@ -28,5 +29,11 @@ public class StudentApplication {
         UserDbDTO currentUser = userService.currentUserWithAuthorities();
         final List<StudentDbDTO> students = studentRepository.findAllNotDeletedStudents(currentUser.getClientId());
         return studentMapper.dbDtosToDtos(students);
+    }
+
+    public Optional<StudentDTO> findOneById(String id) {
+        UserDbDTO currentUser = userService.currentUserWithAuthorities();
+        Optional<StudentDbDTO> optStudent = studentRepository.findByIdAndClientId(currentUser.getClientId(), id);
+        return optStudent.map(studentMapper::dbDtoToDto);
     }
 }

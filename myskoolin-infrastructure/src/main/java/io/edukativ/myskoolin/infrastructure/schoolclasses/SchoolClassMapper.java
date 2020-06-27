@@ -36,4 +36,6 @@ public interface SchoolClassMapper {
     List<SchoolClassDTO> domainsToDtos(List<SchoolClass> schoolClasses);
 
     List<SchoolClass> dbDtosToDomains(List<SchoolClassDbDTO> schoolClasses);
+
+    List<SchoolClassDTO> dbDtosToDtos(List<SchoolClassDbDTO> schoolClasses);
 }

@@ -92,7 +92,7 @@ export class TeacherEditComponent implements OnInit, OnDestroy {
             imageUrl: new FormControl(this.teacher.imageUrl),
             firstName: new FormControl(this.teacher.firstName, [Validators.required]),
             lastName: new FormControl(this.teacher.lastName, [Validators.required]),
-            sex: new FormControl(this.teacher.sex, [Validators.required]),
+            gender: new FormControl(this.teacher.gender, [Validators.required]),
             nationality: new FormControl(this.teacher.nationality, [Validators.required]),
             birthDate: new FormControl(this.teacher.birthDate, [Validators.required]),
             homePhone: new FormControl(this.teacher.homePhone),

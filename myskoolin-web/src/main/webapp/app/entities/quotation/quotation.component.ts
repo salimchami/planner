@@ -53,7 +53,7 @@ export class QuotationComponent implements AfterViewInit, OnInit, OnDestroy {
     sendQuotationRequest(form) {
         if (form.valid) {
             const values = form.value;
-            const interlocutor = new Interlocutor(values.lastname, values.firstname, '', values.sex, values.position, values.phone, values.mobile, values.email);
+            const interlocutor = new Interlocutor(values.lastname, values.firstname, values.gender, values.position, values.phone, values.mobile, values.email);
             this.subscription = new SchoolmeSubscription(this.selectedDate, values.schoolName, values.duns, values.address, values.website, values.phone, values.email
                 , this.translateService.currentLang, interlocutor);
             this.quotationService.create(this.subscription).subscribe(
@@ -88,7 +88,7 @@ export class QuotationComponent implements AfterViewInit, OnInit, OnDestroy {
             schoolEmail: new FormControl('', [Validators.email, Validators.required]),
             lastname: new FormControl('', [Validators.minLength(2), Validators.required]),
             firstname: new FormControl('', [Validators.required, Validators.minLength(2)]),
-            sex: new FormControl('', [Validators.required]),
+            gender: new FormControl('', [Validators.required]),
             position: new FormControl('', [Validators.required]),
             phone: new FormControl(),
             mobile: new FormControl(),

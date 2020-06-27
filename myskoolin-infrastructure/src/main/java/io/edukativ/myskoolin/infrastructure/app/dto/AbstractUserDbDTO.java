@@ -32,7 +32,7 @@ public abstract class AbstractUserDbDTO extends AbstractAuditingEntity implement
     public static final String MONGO_FIELD_LOGIN = "login";
     public static final String MONGO_FIELD_CLIENT_ID = "clientId";
     public static final String MONGO_FIELD_PASSWORD = "password";
-    public static final String MONGO_FIELD_GENDER = "sex";
+    public static final String MONGO_FIELD_GENDER = "gender";
     public static final String MONGO_FIELD_FIRST_NAME = "first_name";
     public static final String MONGO_FIELD_LAST_NAME = "last_name";
     public static final String MONGO_FIELD_CELL_PHONE = "cell_phone";

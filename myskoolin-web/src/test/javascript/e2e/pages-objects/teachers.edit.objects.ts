@@ -7,8 +7,8 @@ export class TeacherEditPageObjects {
     public login_Input = element(by.id('login'));
     public firstName_Input = element(by.id('firstName'));
     public lastName_Input = element(by.id('lastName'));
-    public teacherSex_male_Radio = element(by.id('teacherSex-0'));
-    public teacherSex_female_Radio = element(by.id('teacherSex-1'));
+    public teacherGender_male_Radio = element(by.id('teacherSex-0'));
+    public teacherGender_female_Radio = element(by.id('teacherSex-1'));
     public nationality_Input = element(by.id('nationality'));
     public birthDate_Input = element(by.id('birthDate'));
     public homePhone_Input = element(by.id('homePhone'));
@@ -27,7 +27,7 @@ export class TeacherEditPageObjects {
     public exitReason_Input = element(by.id('exitReason'));
     public comment_Textarea = element(by.id('comment'));
 
-    fillInfos(login: string, firstName: string, lastName: string, sex: string, nationality: string, birthDate: string,
+    fillInfos(login: string, firstName: string, lastName: string, gender: string, nationality: string, birthDate: string,
               homePhone: string, cellPhone: string, proPhone: string, proCellPhone: string, email: string,
               proEmail: string, addressName: string, postalCode: string, city: string, country: string,
               substitute: boolean, substitutedTeachers: Array<string>, grades: Array<string>, taughtSubjects: Array<string>, employedDate: string,
@@ -35,12 +35,12 @@ export class TeacherEditPageObjects {
         this.login_Input.sendKeys(login);
         this.firstName_Input.sendKeys(firstName);
         this.lastName_Input.sendKeys(lastName);
-        switch (sex) {
+        switch (gender) {
             case 'male':
-                this.teacherSex_male_Radio.click();
+                this.teacherGender_male_Radio.click();
                 break;
             case 'female':
-                this.teacherSex_female_Radio.click();
+                this.teacherGender_female_Radio.click();
                 break;
         }
         this.nationality_Input.sendKeys(nationality);

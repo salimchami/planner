@@ -8,7 +8,7 @@ export class Responsible implements BaseEntity {
         public id?: any,
         public firstName?: string,
         public lastName?: string,
-        public sex?: string,
+        public gender?: string,
         public birthdate?: Date,
         public nationality?: string,
         public email?: string,

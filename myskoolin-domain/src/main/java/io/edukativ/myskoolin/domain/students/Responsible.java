@@ -2,18 +2,17 @@ package io.edukativ.myskoolin.domain.students;
 
 import io.edukativ.myskoolin.domain.commons.entity.Address;
 
-import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
  * Student responsible.
  */
-public class Responsible implements Serializable {
+public class Responsible {
 
     private String firstName;
     private String lastName;
-    private String sex;
+    private String gender;
     private String nationality;
     private boolean respAccount;
     private String email;
@@ -49,12 +48,12 @@ public class Responsible implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getSex() {
-        return sex;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getEmail() {
@@ -190,7 +189,7 @@ public class Responsible implements Serializable {
         return "Responsible{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", sex='" + sex + '\'' +
+                ", gender='" + gender + '\'' +
                 ", nationality='" + nationality + '\'' +
                 ", respAccount=" + respAccount +
                 ", email='" + email + '\'' +
@@ -236,7 +235,7 @@ public class Responsible implements Serializable {
         return respAccount == that.respAccount &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
-                Objects.equals(sex, that.sex) &&
+                Objects.equals(gender, that.gender) &&
                 Objects.equals(nationality, that.nationality) &&
                 Objects.equals(email, that.email) &&
                 Objects.equals(birthdate, that.birthdate) &&
@@ -245,6 +244,6 @@ public class Responsible implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, sex, nationality, respAccount, email, birthdate, address);
+        return Objects.hash(firstName, lastName, gender, nationality, respAccount, email, birthdate, address);
     }
 }

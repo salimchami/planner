@@ -331,15 +331,15 @@
                                 jhiTranslate="landing.contact.form.gender">Gender</span> <span style="color: #c75b58;">*</span></label>
                             <div class="col-sm-9">
                                 <div class="form-radio">
-                                    <div class="radio radio-inline" *ngFor="let sex of sexes; let i = index">
+                                    <div class="radio radio-inline" *ngFor="let gender of genders; let i = index">
                                         <label>
-                                            <input (click)="resetMessages()" type="radio" [value]="sex" [checked]="i === 0" formControlName="sex">
-                                            <i class="helper"></i>{{sex|translate}}
+                                            <input (click)="resetMessages()" type="radio" [value]="gender" [checked]="i === 0" formControlName="gender">
+                                            <i class="helper"></i>{{gender|translate}}
                                         </label>
                                     </div>
                                 </div>
                                 <div class="messages text-danger"
-                                     *ngIf="contactForm.controls.sex.invalid && (contactForm.controls.sex.dirty || contactForm.controls.sex.touched)">
+                                     *ngIf="contactForm.controls.gender.invalid && (contactForm.controls.gender.dirty || contactForm.controls.gender.touched)">
                                     <span jhiTranslate="landing.contact.form.gender-error"></span></div>
                             </div>
                         </div>

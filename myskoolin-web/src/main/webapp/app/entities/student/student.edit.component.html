@@ -112,19 +112,19 @@
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-4 col-form-label"><span
-                                                jhiTranslate="student.new.form.sex">Gender</span> <span style="color: #c75b58;">*</span></label>
+                                                jhiTranslate="student.new.form.gender">Gender</span> <span style="color: #c75b58;">*</span></label>
                                             <div class="col-sm-8">
                                                 <div class="form-radio">
-                                                    <div class="radio radio-inline" *ngFor="let sex of sexes; let i = index">
+                                                    <div class="radio radio-inline" *ngFor="let gender of genders; let i = index">
                                                         <label id="studentSex-{{i}}">
-                                                            <input (click)="resetMessages()" type="radio" [value]="sex" [checked]="studentUserForm.controls.sex.value === sex" formControlName="sex">
-                                                            <i class="helper"></i>{{sex|translate}}
+                                                            <input (click)="resetMessages()" type="radio" [value]="gender" [checked]="studentUserForm.controls.gender.value === gender" formControlName="gender">
+                                                            <i class="helper"></i>{{gender|translate}}
                                                         </label>
                                                     </div>
                                                 </div>
                                                 <div class="messages text-danger"
-                                                     *ngIf="studentUserForm.controls.sex.invalid && (studentUserForm.controls.sex.dirty || studentUserForm.controls.sex.touched)">
-                                                    <span jhiTranslate="student.new.form.sex-error"></span></div>
+                                                     *ngIf="studentUserForm.controls.gender.invalid && (studentUserForm.controls.gender.dirty || studentUserForm.controls.gender.touched)">
+                                                    <span jhiTranslate="student.new.form.gender-error"></span></div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -525,23 +525,23 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label"><span
-                                                        jhiTranslate="student.new.form.responsible.sex">Gender</span>
+                                                        jhiTranslate="student.new.form.responsible.gender">Gender</span>
                                                         <span style="color: #c75b58;">*</span></label>
                                                     <div class="col-sm-8">
                                                         <div class="form-radio">
-                                                            <div class="radio radio-inline" *ngFor="let sex of sexes; let j = index">
-                                                                <label id="responsibleSexOption-{{i}}-{{j}}">
+                                                            <div class="radio radio-inline" *ngFor="let gender of genders; let j = index">
+                                                                <label id="responsibleGenderOption-{{i}}-{{j}}">
                                                                     <input (click)="resetMessages()" type="radio"
-                                                                           [value]="sex" [checked]="responsibleFormGroup.controls.sex.value === sex"
-                                                                           formControlName="sex">
-                                                                    <i class="helper"></i>{{sex|translate}}
+                                                                           [value]="gender" [checked]="responsibleFormGroup.controls.gender.value === gender"
+                                                                           formControlName="gender">
+                                                                    <i class="helper"></i>{{gender|translate}}
                                                                 </label>
                                                             </div>
                                                         </div>
                                                         <div class="messages text-danger"
-                                                             *ngIf="responsibleFormGroup.controls.sex.invalid && (responsibleFormGroup.controls.sex.dirty || responsibleFormGroup.controls.sex.touched)">
+                                                             *ngIf="responsibleFormGroup.controls.gender.invalid && (responsibleFormGroup.controls.gender.dirty || responsibleFormGroup.controls.gender.touched)">
                                                             <span
-                                                                jhiTranslate="student.new.form.responsible.sex-error"></span>
+                                                                jhiTranslate="student.new.form.responsible.gender-error"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1236,8 +1236,8 @@
                                         </li>
                                         <li>
                                             <i class="icofont icofont-stylish-right text-danger"></i>
-                                            <span jhiTranslate="student.new.form.sex"></span> :
-                                            <strong id="finalSex">{{studentUserForm.controls.sex.value|translate}}</strong>
+                                            <span jhiTranslate="student.new.form.gender"></span> :
+                                            <strong id="finalSex">{{studentUserForm.controls.gender.value|translate}}</strong>
                                         </li>
                                         <li>
                                             <i class="icofont icofont-stylish-right text-danger"></i>
@@ -1441,8 +1441,8 @@
                                                         </li>
                                                         <li>
                                                             <i class="icofont icofont-stylish-right text-danger"></i>
-                                                            <span jhiTranslate="student.new.form.responsible.sex"></span> :
-                                                            <strong id="finalResponsibleSex-{{i}}">{{responsibleFormGroup.controls.sex.value|translate}}</strong>
+                                                            <span jhiTranslate="student.new.form.responsible.gender"></span> :
+                                                            <strong id="finalResponsibleGender-{{i}}">{{responsibleFormGroup.controls.gender.value|translate}}</strong>
                                                         </li>
                                                         <li>
                                                             <i class="icofont icofont-stylish-right text-danger"></i>

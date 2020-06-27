@@ -12,7 +12,6 @@ public class InterlocutorDbDTO implements Serializable {
     public static final String MONGO_FIELD_LAST_NAME = "last_name";
     public static final String MONGO_FIELD_FIRST_NAME = "first_name";
     public static final String MONGO_FIELD_GENDER = "gender";
-    public static final String MONGO_FIELD_SEX = "sex";
     public static final String MONGO_FIELD_POSITION = "position";
     public static final String MONGO_FIELD_PHONE = "phone";
     public static final String MONGO_FIELD_MOBILE = "mobile";
@@ -26,9 +25,6 @@ public class InterlocutorDbDTO implements Serializable {
 
     @Field(MONGO_FIELD_GENDER)
     private String gender;
-
-    @Field(MONGO_FIELD_SEX)
-    private String sex;
 
     @Field(MONGO_FIELD_POSITION)
     private String position;
@@ -45,7 +41,7 @@ public class InterlocutorDbDTO implements Serializable {
     public InterlocutorDbDTO() {
     }
 
-    public InterlocutorDbDTO(String lastname, String firstname, String gender, String sex, String position, String phone, String mobile, String email) {
+    public InterlocutorDbDTO(String lastname, String firstname, String gender, String position, String phone, String mobile, String email) {
         this.lastname = lastname;
         this.firstname = firstname;
         this.gender = gender;
@@ -53,7 +49,6 @@ public class InterlocutorDbDTO implements Serializable {
         this.phone = phone;
         this.mobile = mobile;
         this.email = email;
-        this.sex = sex;
     }
 
     public String getLastname() {
@@ -112,11 +107,4 @@ public class InterlocutorDbDTO implements Serializable {
         this.email = email;
     }
 
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
 }

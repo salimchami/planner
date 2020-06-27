@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +20,7 @@ import java.util.List;
 public class StudentResource {
 
     private final MyskoolinLoggerSPI logger;
-    private StudentApplication studentApplication;
+    private final StudentApplication studentApplication;
 
     public StudentResource(MyskoolinLoggerSPI logger, StudentApplication studentApplication) {
         this.logger = logger;
@@ -89,14 +90,20 @@ public class StudentResource {
         List<StudentDTO> students = studentApplication.findAll();
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
-//
-//    @GetMapping(value = "/{id}")
-//    public ResponseEntity<StudentDTO> findStudent(@PathVariable(name = "id") String id) {
-//        log.debug("REST request to get Student : {}");
-//        return studentService.findOneById(id)
-//            .map(student -> new ResponseEntity<>(student, HttpStatus.OK))
-//            .orElse(new ResponseEntity<>(HttpStatus.NO_CONTENT));
-//    }
+
+    @GetMapping(value = "/{id}")
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE,
+        AuthoritiesConstants.INFIRMARY,
+        AuthoritiesConstants.TEACHERS,
+    })
+    public ResponseEntity<StudentDTO> findStudent(@PathVariable(name = "id") String id) {
+        logger.debug(String.format("REST request to get Student : %s", id));
+        return studentApplication.findOneById(id)
+            .map(student -> new ResponseEntity<>(student, HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NO_CONTENT));
+    }
 //
 //    @GetMapping("/search/{search:" + DomainConstants.LOGIN_REGEX + "}")
 //    public ResponseEntity<List<StudentDTO>> searchStudent(@PathVariable String search) {

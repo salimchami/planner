@@ -5,15 +5,10 @@ import io.edukativ.myskoolin.infrastructure.commercial.ContractDbDTO;
 import io.edukativ.myskoolin.infrastructure.commercial.InterlocutorDbDTO;
 import io.edukativ.myskoolin.infrastructure.commercial.PricingDbDTO;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumContactsBy;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumGender;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSex;
-import io.edukativ.myskoolin.infrastructure.common.vo.AddressDbVO;
-import io.edukativ.myskoolin.infrastructure.common.vo.EmailDbVO;
-import io.edukativ.myskoolin.infrastructure.common.vo.PhoneDbVO;
-import io.edukativ.myskoolin.infrastructure.common.vo.WebsiteDbVO;
+import io.edukativ.myskoolin.infrastructure.common.vo.*;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsConstants;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsFindUtils;
-import io.edukativ.myskoolin.infrastructure.common.vo.AcademicYearDbVO;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.math.BigDecimal;
@@ -51,6 +46,6 @@ public final class DevChangeSetsUtil {
             Collections.singletonList(new WebsiteDbVO("http://sdfgdsfgsdfg.com", "Site web principal")),
             "www.schoolme.net", false, "global.enums.surfaces.squareMeter",
             "global.enums.distances.meter",
-            new InterlocutorDbDTO("Linterlocuteur", "Jack", EnumGender.MR.getCode(), EnumSex.MALE.getCode(),"Proviseur adjoint", "0000000000", "0000000000", "linterlocuteur@victorhugolelycee.org"));
+            new InterlocutorDbDTO("Linterlocuteur", "Jack", EnumSex.MALE.getCode(), "Proviseur adjoint", "0000000000", "0000000000", "linterlocuteur@victorhugolelycee.org"));
     }
 }

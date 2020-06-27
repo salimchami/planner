@@ -1,7 +1,5 @@
 package io.edukativ.myskoolin.infrastructure.commercial;
 
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumGender;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumSex;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -22,9 +20,6 @@ public class ContactDbDTO implements Serializable {
 
     @Field("type")
     private String type;
-
-    @Field("sex")
-    private String sex;
 
     @Field("gender")
     private String gender;
@@ -69,22 +64,7 @@ public class ContactDbDTO implements Serializable {
         return gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-        if (this.sex == null) {
-            EnumGender currentGender = EnumGender.fromCode(gender);
-            switch (currentGender) {
-                case MISS:
-                case MRS:
-                    setSex(EnumSex.FEMALE.getCode());
-                    break;
-                case MR:
-                default:
-                    setSex(EnumSex.MALE.getCode());
-                    break;
-            }
-        }
-    }
+
 
     public String getName() {
         return name;
@@ -110,6 +90,10 @@ public class ContactDbDTO implements Serializable {
         this.message = message;
     }
 
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -133,7 +117,6 @@ public class ContactDbDTO implements Serializable {
                 "id=" + id +
                 ", type='" + type + "'" +
                 ", gender='" + gender + "'" +
-                ", sex='" + sex + "'" +
                 ", name='" + name + "'" +
                 ", email='" + email + "'" +
                 ", message='" + message + "'" +
@@ -172,23 +155,4 @@ public class ContactDbDTO implements Serializable {
         this.date = date;
     }
 
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-        if (this.gender == null) {
-            EnumSex currentSex = EnumSex.fromCode(sex);
-            switch (currentSex) {
-                case MALE:
-                    setGender(EnumGender.MR.getCode());
-                    break;
-                case FEMALE:
-                    setGender(EnumGender.MRS.getCode());
-                    break;
-            }
-        }
-
-    }
 }

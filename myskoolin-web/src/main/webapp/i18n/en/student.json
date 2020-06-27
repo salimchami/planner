@@ -14,7 +14,7 @@
                     "photo": "Photo",
                     "firstName": "Prénom",
                     "lastName": "Nom de famille",
-                    "sex": "Sexe",
+                    "gender": "Genre",
                     "imageUrl": "Photo"
                 }
             }
@@ -93,7 +93,7 @@
                 "email": "E-mail",
                 "email-placeholder": "E-mail de l'élève",
                 "email-error": "L'E-mail est obligatoire",
-                "sex": "Sexe",
+                "gender": "Genre",
                 "nationality": "Nationalité",
                 "nationality-placeholder": "Nationalité de l'élève",
                 "comment": "Commentaire",
@@ -169,8 +169,8 @@
                     "birthDate": "Date de naissance",
                     "birthDate-placeholder": "Date de naissance du responsable",
                     "remove": "Supprimer responsable numéro",
-                    "sex": "Sexe",
-                    "sex-error": "Le genre du responsable est obligatoire.",
+                    "gender": "Genre",
+                    "gender-error": "Le genre du responsable est obligatoire.",
                     "firstName": "Prénom",
                     "firstName-error": "Le prénom est obligatoire",
                     "firstName-placeholder": "Prénom du responsable",

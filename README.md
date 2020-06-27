@@ -1,4 +1,4 @@
-# ![Myskoolin](myskoolin-web/src/main/webapp/content/images/logo.png "Title")
+# ![Myskoolin](myskoolin-web/src/main/webapp/content/images/logo.png)
 
 ![Java CI with Maven](https://github.com/salimchami/edukativ-myskoolin/workflows/Java%20CI%20with%20Maven/badge.svg)
 
