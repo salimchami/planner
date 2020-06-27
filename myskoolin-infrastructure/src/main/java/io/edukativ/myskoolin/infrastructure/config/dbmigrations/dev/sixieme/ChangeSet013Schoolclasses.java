@@ -11,7 +11,7 @@ import io.edukativ.myskoolin.infrastructure.schoolclasses.SchoolClassDbDTO;
 import io.edukativ.myskoolin.infrastructure.students.StudentDbDTO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDbDTO;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.TeachersBySubjectDbVO;
+import io.edukativ.myskoolin.infrastructure.teachers.TeachersBySubjectDbVO;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.time.ZoneId;

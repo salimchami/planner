@@ -1,7 +1,18 @@
 package io.edukativ.myskoolin.infrastructure.students;
 
+import io.edukativ.myskoolin.infrastructure.absences.AbsenceVO;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.*;
+import io.edukativ.myskoolin.infrastructure.canteen.CanteenRegistrationVO;
+import io.edukativ.myskoolin.infrastructure.continuousassessment.ContinuousAssessmentItemVO;
+import io.edukativ.myskoolin.infrastructure.dailybook.DailyBookTimeSlotVO;
+import io.edukativ.myskoolin.infrastructure.delays.DelayVO;
+import io.edukativ.myskoolin.infrastructure.medical.InfirmaryStatisticsVO;
+import io.edukativ.myskoolin.infrastructure.medical.MedicalInfosVO;
+import io.edukativ.myskoolin.infrastructure.orientation.OrientationVO;
+import io.edukativ.myskoolin.infrastructure.reports.ReportVO;
+import io.edukativ.myskoolin.infrastructure.residential.ResidentialSchoolVO;
+import io.edukativ.myskoolin.infrastructure.sanctions.SanctionVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableVO;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package io.edukativ.myskoolin.infrastructure.grades;
 import com.google.common.collect.ComparisonChain;
 import io.edukativ.myskoolin.infrastructure.commercial.ClientDbDTO;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolClassNotation;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.TimeTableOptionsDbVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.TimeTableOptionsDbVO;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

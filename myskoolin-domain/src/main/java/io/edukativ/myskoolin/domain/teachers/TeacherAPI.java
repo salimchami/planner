@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.domain.teachers;
 
-import io.edukativ.myskoolin.domain.entity.User;
+import io.edukativ.myskoolin.domain.commons.entity.User;
 
 import java.util.List;
 import java.util.Optional;

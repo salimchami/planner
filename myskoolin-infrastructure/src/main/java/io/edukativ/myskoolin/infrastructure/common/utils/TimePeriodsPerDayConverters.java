@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.common.utils;
 
-import io.edukativ.myskoolin.infrastructure.schooling.vo.TimePeriodDbVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.TimePeriodDbVO;
 import org.springframework.core.convert.converter.Converter;
 
 import java.util.HashMap;

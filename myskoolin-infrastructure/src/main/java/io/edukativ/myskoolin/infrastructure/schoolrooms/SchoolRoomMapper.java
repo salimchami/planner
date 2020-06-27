@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.schoolrooms;
 
-import io.edukativ.myskoolin.domain.entity.SchoolRoom;
+import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;

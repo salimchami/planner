@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.domain.commons;
 
-import io.edukativ.myskoolin.domain.entity.Authority;
+import io.edukativ.myskoolin.domain.commons.entity.Authority;
 
 import java.util.Optional;
 

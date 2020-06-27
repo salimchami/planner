@@ -1,8 +1,7 @@
 package io.edukativ.myskoolin.domain.grades;
 
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
-import io.edukativ.myskoolin.domain.entity.Grade;
-import io.edukativ.myskoolin.domain.entity.User;
+import io.edukativ.myskoolin.domain.commons.entity.User;
 import io.edukativ.myskoolin.domain.subjects.SubjectSPI;
 
 import java.util.Collection;

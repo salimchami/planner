@@ -5,7 +5,7 @@ import io.edukativ.myskoolin.infrastructure.common.vo.AddressDbVO;
 import io.edukativ.myskoolin.infrastructure.common.vo.EmailDbVO;
 import io.edukativ.myskoolin.infrastructure.common.vo.PhoneDbVO;
 import io.edukativ.myskoolin.infrastructure.common.vo.WebsiteDbVO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.TimeTableOptionsDbVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.TimeTableOptionsDbVO;
 import org.bson.types.ObjectId;
 
 import java.time.ZonedDateTime;

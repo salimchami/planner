@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.domain.providers;
 
-import io.edukativ.myskoolin.domain.entity.Client;
-import io.edukativ.myskoolin.domain.entity.Grade;
+import io.edukativ.myskoolin.domain.commercial.Client;
+import io.edukativ.myskoolin.domain.grades.Grade;
 import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
 import io.edukativ.myskoolin.domain.schoolclasses.EnumSchoolClassNotation;
 import io.edukativ.myskoolin.domain.timetabling.TimeTableOptions;

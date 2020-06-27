@@ -1,8 +1,8 @@
 package io.edukativ.myskoolin.infrastructure.grades;
 
-import io.edukativ.myskoolin.domain.entity.Grade;
+import io.edukativ.myskoolin.domain.grades.Grade;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
-import io.edukativ.myskoolin.infrastructure.schooling.TimeTableOptionsMapper;
+import io.edukativ.myskoolin.infrastructure.timetabling.TimeTableOptionsMapper;
 import org.mapstruct.Mapper;
 
 import java.util.List;

@@ -2,10 +2,10 @@ package io.edukativ.myskoolin.infrastructure.schoolclasses;
 
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolClassNotation;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.DailyBookTimeSlotDbVO;
+import io.edukativ.myskoolin.infrastructure.dailybook.DailyBookTimeSlotDbVO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeSerieDbVO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.SchoolClassTimeTableDbVO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.TeachersBySubjectDbVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableDbVO;
+import io.edukativ.myskoolin.infrastructure.teachers.TeachersBySubjectDbVO;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

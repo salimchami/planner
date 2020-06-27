@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
-import io.edukativ.myskoolin.domain.entity.Subject;
+import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
 
 import java.util.Collections;

@@ -1,11 +1,15 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
+import io.edukativ.myskoolin.domain.commercial.Client;
+import io.edukativ.myskoolin.domain.grades.Grade;
 import io.edukativ.myskoolin.domain.providers.GradeTestProvider;
 import io.edukativ.myskoolin.domain.providers.SchoolRoomTestProvider;
 import io.edukativ.myskoolin.domain.providers.UserTestProvider;
 import io.edukativ.myskoolin.domain.providers.schoolclasses.SchoolClassTestProvider;
 import io.edukativ.myskoolin.domain.providers.subjects.SubjectTestProvider;
-import io.edukativ.myskoolin.domain.entity.*;
+import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
+import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
+import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;

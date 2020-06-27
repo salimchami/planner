@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.domain.students;
 
-import io.edukativ.myskoolin.domain.entity.Address;
+import io.edukativ.myskoolin.domain.commons.entity.Address;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;

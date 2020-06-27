@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.domain.reports;
 
 import io.edukativ.myskoolin.domain.commons.vo.EnumPeriod;
-import io.edukativ.myskoolin.domain.schooling.AcademicYear;
+import io.edukativ.myskoolin.domain.commons.vo.AcademicYear;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

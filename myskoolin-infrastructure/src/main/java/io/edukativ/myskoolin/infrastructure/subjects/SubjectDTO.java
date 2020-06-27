@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeSerieVO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.PreferredPartsOfDaysVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.PreferredPartsOfDaysVO;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

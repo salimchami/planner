@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.app.mapper;
 
-import io.edukativ.myskoolin.domain.entity.User;
+import io.edukativ.myskoolin.domain.commons.entity.User;
 import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;

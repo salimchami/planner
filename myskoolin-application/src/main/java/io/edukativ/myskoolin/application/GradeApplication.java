@@ -1,8 +1,8 @@
 package io.edukativ.myskoolin.application;
 
 import io.edukativ.myskoolin.application.security.UserService;
-import io.edukativ.myskoolin.domain.entity.Grade;
-import io.edukativ.myskoolin.domain.entity.User;
+import io.edukativ.myskoolin.domain.grades.Grade;
+import io.edukativ.myskoolin.domain.commons.entity.User;
 import io.edukativ.myskoolin.domain.grades.GradeAPI;
 import io.edukativ.myskoolin.domain.grades.GradeSerie;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;

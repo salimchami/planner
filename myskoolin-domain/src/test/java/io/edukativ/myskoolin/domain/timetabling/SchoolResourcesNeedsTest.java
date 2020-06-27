@@ -1,10 +1,15 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
+import io.edukativ.myskoolin.domain.commercial.Client;
+import io.edukativ.myskoolin.domain.commons.entity.User;
+import io.edukativ.myskoolin.domain.grades.Grade;
 import io.edukativ.myskoolin.domain.providers.GradeTestProvider;
 import io.edukativ.myskoolin.domain.providers.SchoolRoomTestProvider;
 import io.edukativ.myskoolin.domain.providers.UserTestProvider;
 import io.edukativ.myskoolin.domain.providers.schoolclasses.SchoolClassTestProvider;
-import io.edukativ.myskoolin.domain.entity.*;
+import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
+import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
+import io.edukativ.myskoolin.domain.subjects.Subject;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

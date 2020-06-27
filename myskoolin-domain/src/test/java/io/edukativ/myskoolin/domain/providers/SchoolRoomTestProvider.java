@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.domain.providers;
 
-import io.edukativ.myskoolin.domain.entity.SchoolRoom;
+import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
 import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
 

@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.domain.commercial;
 
-import io.edukativ.myskoolin.domain.schooling.AcademicYear;
+import io.edukativ.myskoolin.domain.commons.vo.AcademicYear;
 
 import java.time.ZonedDateTime;
 

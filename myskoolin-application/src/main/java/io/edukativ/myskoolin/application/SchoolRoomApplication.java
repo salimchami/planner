@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.application;
 
 import io.edukativ.myskoolin.application.security.UserService;
-import io.edukativ.myskoolin.domain.entity.SchoolRoom;
+import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoomAPI;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;

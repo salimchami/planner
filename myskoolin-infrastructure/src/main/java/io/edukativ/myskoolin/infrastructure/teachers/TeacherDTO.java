@@ -2,10 +2,10 @@ package io.edukativ.myskoolin.infrastructure.teachers;
 
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.AbsenceVO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.InfirmaryStatisticsVO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.MedicalInfosVO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.SchoolClassTimeSlotVO;
+import io.edukativ.myskoolin.infrastructure.absences.AbsenceVO;
+import io.edukativ.myskoolin.infrastructure.medical.InfirmaryStatisticsVO;
+import io.edukativ.myskoolin.infrastructure.medical.MedicalInfosVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeSlotVO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDTO;
 
 import java.time.ZonedDateTime;

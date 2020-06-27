@@ -1,8 +1,8 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
-import io.edukativ.myskoolin.domain.entity.SchoolClass;
-import io.edukativ.myskoolin.domain.entity.SchoolRoom;
-import io.edukativ.myskoolin.domain.entity.Subject;
+import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
+import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
+import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
 
 import java.time.LocalDateTime;

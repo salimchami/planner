@@ -1,7 +1,6 @@
 package io.edukativ.myskoolin.domain.grades;
 
-import io.edukativ.myskoolin.domain.entity.Grade;
-import io.edukativ.myskoolin.domain.entity.User;
+import io.edukativ.myskoolin.domain.commons.entity.User;
 
 import java.util.List;
 

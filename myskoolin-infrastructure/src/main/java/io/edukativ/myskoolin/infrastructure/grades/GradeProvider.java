@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.grades;
 
-import io.edukativ.myskoolin.domain.entity.Grade;
+import io.edukativ.myskoolin.domain.grades.Grade;
 import io.edukativ.myskoolin.domain.grades.GradeSPI;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;

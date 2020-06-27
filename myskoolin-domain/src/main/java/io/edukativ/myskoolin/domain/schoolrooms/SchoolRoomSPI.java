@@ -1,7 +1,5 @@
 package io.edukativ.myskoolin.domain.schoolrooms;
 
-import io.edukativ.myskoolin.domain.entity.SchoolRoom;
-
 import java.util.Optional;
 
 public interface SchoolRoomSPI {

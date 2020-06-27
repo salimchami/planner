@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.commercial;
 
 import io.edukativ.myskoolin.infrastructure.common.mapper.*;
-import io.edukativ.myskoolin.infrastructure.schooling.TimeTableOptionsMapper;
+import io.edukativ.myskoolin.infrastructure.timetabling.TimeTableOptionsMapper;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 

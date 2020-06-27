@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.domain.providers.subjects;
 
-import io.edukativ.myskoolin.domain.entity.Subject;
+import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.providers.GlobalTestProvider;
 import io.edukativ.myskoolin.domain.providers.GradeTestProvider;
 import io.edukativ.myskoolin.domain.commons.vo.EnumDays;

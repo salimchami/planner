@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.application;
 
 import io.edukativ.myskoolin.application.security.UserService;
-import io.edukativ.myskoolin.domain.entity.User;
+import io.edukativ.myskoolin.domain.commons.entity.User;
 import io.edukativ.myskoolin.domain.teachers.TeacherAPI;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;

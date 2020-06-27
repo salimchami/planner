@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeSerieDbVO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.PreferredPartsOfDaysDbVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.PreferredPartsOfDaysDbVO;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

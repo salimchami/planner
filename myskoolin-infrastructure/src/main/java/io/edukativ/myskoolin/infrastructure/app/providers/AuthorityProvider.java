@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.app.providers;
 
 import io.edukativ.myskoolin.domain.commons.AuthoritySPI;
-import io.edukativ.myskoolin.domain.entity.Authority;
+import io.edukativ.myskoolin.domain.commons.entity.Authority;
 import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.mapper.AuthorityMapper;
 import io.edukativ.myskoolin.infrastructure.app.repository.AuthorityRepository;

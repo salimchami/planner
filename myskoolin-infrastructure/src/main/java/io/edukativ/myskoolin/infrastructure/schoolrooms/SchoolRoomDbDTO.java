@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.schoolrooms;
 
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.SchoolClassTimeSlotDbVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeSlotDbVO;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

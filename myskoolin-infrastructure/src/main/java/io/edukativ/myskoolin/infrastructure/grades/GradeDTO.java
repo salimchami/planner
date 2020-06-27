@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.grades;
 
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolClassNotation;
-import io.edukativ.myskoolin.infrastructure.schooling.TimeTableOptionsVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.TimeTableOptionsVO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDTO;
 
 import java.util.List;

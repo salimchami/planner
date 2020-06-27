@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.common.mapper;
 
-import io.edukativ.myskoolin.domain.entity.Address;
+import io.edukativ.myskoolin.domain.commons.entity.Address;
 import io.edukativ.myskoolin.infrastructure.common.vo.AddressDbVO;
 import io.edukativ.myskoolin.infrastructure.common.vo.AddressVO;
 import org.mapstruct.InjectionStrategy;

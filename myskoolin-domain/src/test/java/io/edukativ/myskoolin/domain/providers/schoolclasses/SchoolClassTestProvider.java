@@ -1,9 +1,9 @@
 package io.edukativ.myskoolin.domain.providers.schoolclasses;
 
 import io.edukativ.myskoolin.domain.commons.exceptions.NotFoundException;
-import io.edukativ.myskoolin.domain.entity.Grade;
-import io.edukativ.myskoolin.domain.entity.SchoolClass;
-import io.edukativ.myskoolin.domain.entity.Subject;
+import io.edukativ.myskoolin.domain.grades.Grade;
+import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
+import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.providers.GlobalTestProvider;
 import io.edukativ.myskoolin.domain.providers.GradeTestProvider;
 import io.edukativ.myskoolin.domain.providers.subjects.*;

@@ -1,10 +1,10 @@
 package io.edukativ.myskoolin.domain.teachers;
 
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
-import io.edukativ.myskoolin.domain.entity.Authority;
-import io.edukativ.myskoolin.domain.entity.Grade;
-import io.edukativ.myskoolin.domain.entity.Subject;
-import io.edukativ.myskoolin.domain.entity.User;
+import io.edukativ.myskoolin.domain.commons.entity.Authority;
+import io.edukativ.myskoolin.domain.grades.Grade;
+import io.edukativ.myskoolin.domain.subjects.Subject;
+import io.edukativ.myskoolin.domain.commons.entity.User;
 import io.edukativ.myskoolin.domain.absences.Absence;
 import io.edukativ.myskoolin.domain.medical.InfirmaryStatistics;
 import io.edukativ.myskoolin.domain.medical.MedicalInfos;

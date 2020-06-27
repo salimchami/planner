@@ -1,9 +1,20 @@
 package io.edukativ.myskoolin.infrastructure.students;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.edukativ.myskoolin.infrastructure.absences.AbsenceDbVO;
 import io.edukativ.myskoolin.infrastructure.app.dto.AbstractUserDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.*;
+import io.edukativ.myskoolin.infrastructure.canteen.CanteenRegistrationDbVO;
+import io.edukativ.myskoolin.infrastructure.continuousassessment.ContinuousAssessmentItemDbVO;
+import io.edukativ.myskoolin.infrastructure.dailybook.DailyBookTimeSlotDbVO;
+import io.edukativ.myskoolin.infrastructure.delays.DelayDbVO;
+import io.edukativ.myskoolin.infrastructure.medical.InfirmaryStatisticsDbVO;
+import io.edukativ.myskoolin.infrastructure.medical.MedicalInfosDbVO;
+import io.edukativ.myskoolin.infrastructure.orientation.OrientationDbVO;
+import io.edukativ.myskoolin.infrastructure.reports.ReportDbVO;
+import io.edukativ.myskoolin.infrastructure.residential.ResidentialSchoolDbVO;
+import io.edukativ.myskoolin.infrastructure.sanctions.SanctionDbVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableDbVO;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;

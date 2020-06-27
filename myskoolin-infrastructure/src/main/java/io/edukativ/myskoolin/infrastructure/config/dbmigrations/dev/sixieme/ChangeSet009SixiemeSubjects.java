@@ -9,7 +9,7 @@ import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsFind
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.MigrationTempData;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev.util.DevDbMigrationsConstants;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.PreferredPartsOfDaysDbVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.PreferredPartsOfDaysDbVO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDbDTO;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;

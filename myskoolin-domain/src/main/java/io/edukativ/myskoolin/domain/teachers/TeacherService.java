@@ -4,8 +4,8 @@ import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.domain.commons.AuthoritySPI;
 import io.edukativ.myskoolin.domain.commons.MyskoolinLoggerSPI;
 import io.edukativ.myskoolin.domain.commons.mailing.MyskoolinMailingSPI;
-import io.edukativ.myskoolin.domain.entity.Authority;
-import io.edukativ.myskoolin.domain.entity.User;
+import io.edukativ.myskoolin.domain.commons.entity.Authority;
+import io.edukativ.myskoolin.domain.commons.entity.User;
 
 import java.util.List;
 import java.util.Optional;

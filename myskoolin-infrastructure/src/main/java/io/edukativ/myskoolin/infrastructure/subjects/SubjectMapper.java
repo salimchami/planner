@@ -1,12 +1,12 @@
 package io.edukativ.myskoolin.infrastructure.subjects;
 
-import io.edukativ.myskoolin.domain.entity.Subject;
+import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
 import io.edukativ.myskoolin.infrastructure.grades.GradeMapper;
 import io.edukativ.myskoolin.infrastructure.grades.GradeSerieMapper;
-import io.edukativ.myskoolin.infrastructure.schooling.PreferredPartsOfDaysMapper;
+import io.edukativ.myskoolin.infrastructure.timetabling.PreferredPartsOfDaysMapper;
 import org.mapstruct.Mapper;
 
 import java.util.List;

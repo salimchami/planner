@@ -13,7 +13,7 @@ import io.edukativ.myskoolin.infrastructure.common.vo.PhoneDbVO;
 import io.edukativ.myskoolin.infrastructure.common.vo.WebsiteDbVO;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsConstants;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsFindUtils;
-import io.edukativ.myskoolin.infrastructure.schooling.vo.AcademicYearDbVO;
+import io.edukativ.myskoolin.infrastructure.common.vo.AcademicYearDbVO;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.math.BigDecimal;

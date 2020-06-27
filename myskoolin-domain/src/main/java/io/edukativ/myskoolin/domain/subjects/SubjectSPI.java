@@ -1,7 +1,5 @@
 package io.edukativ.myskoolin.domain.subjects;
 
-import io.edukativ.myskoolin.domain.entity.Subject;
-
 import java.util.List;
 import java.util.Optional;
 

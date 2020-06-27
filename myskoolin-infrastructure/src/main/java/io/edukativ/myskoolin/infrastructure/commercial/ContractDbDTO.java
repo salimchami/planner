@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.commercial;
 
-import io.edukativ.myskoolin.infrastructure.schooling.vo.AcademicYearDbVO;
+import io.edukativ.myskoolin.infrastructure.common.vo.AcademicYearDbVO;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Field;
 

@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.app.mapper;
 
-import io.edukativ.myskoolin.domain.entity.Authority;
+import io.edukativ.myskoolin.domain.commons.entity.Authority;
 import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
