@@ -2,11 +2,10 @@ package io.edukativ.myskoolin.front.web.rest;
 
 import io.edukativ.myskoolin.application.SubjectApplication;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
+import io.edukativ.myskoolin.domain.commons.MyskoolinLoggerSPI;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDTO;
 import io.github.jhipster.web.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -22,11 +21,12 @@ import java.util.Optional;
 @RequestMapping("/api/subjects")
 class SubjectResource {
 
-    private final Logger log = LoggerFactory.getLogger(SubjectResource.class);
+    private final MyskoolinLoggerSPI logger;
     private final SubjectApplication subjectApplication;
     private final String entityName;
 
-    SubjectResource(SubjectApplication subjectApplication) {
+    SubjectResource(MyskoolinLoggerSPI logger, SubjectApplication subjectApplication) {
+        this.logger = logger;
         this.subjectApplication = subjectApplication;
         this.entityName = "subject";
     }
@@ -37,7 +37,7 @@ class SubjectResource {
     })
     @PostMapping
     public ResponseEntity<SubjectDTO> createSubject(@RequestBody SubjectDTO subject) {
-        log.debug("REST request to save Subject : {}", subject);
+        logger.debug(String.format("REST request to save Subject : %s", subject));
         if (subject.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(Constants.APPLICATION_NAME,
                 false, entityName, "", "A new subject cannot already have an ID")).body(null);
@@ -54,7 +54,7 @@ class SubjectResource {
     })
     @PutMapping
     public ResponseEntity<SubjectDTO> updateSubject(@RequestBody SubjectDTO subject) {
-        log.debug("REST request to update Subject : {}", subject);
+        logger.debug(String.format("REST request to update Subject : %s", subject));
         if (subject.getId() == null) {
             return createSubject(subject);
         }
@@ -74,7 +74,7 @@ class SubjectResource {
     })
     @GetMapping
     public ResponseEntity<List<SubjectDTO>> getAllSubjects() {
-        log.debug("REST request to get all Subjects");
+        logger.debug("REST request to get all Subjects");
         List<SubjectDTO> subjects = subjectApplication.findAll();
         return new ResponseEntity<>(subjects, HttpStatus.OK);
     }
@@ -87,7 +87,7 @@ class SubjectResource {
     })
     @GetMapping(value = "/search/{query}")
     public ResponseEntity<List<SubjectDTO>> getAllSearchedSubjects(@PathVariable("query") String query) {
-        log.debug("REST request to get all searched Subjects");
+        logger.debug("REST request to get all searched Subjects");
         List<SubjectDTO> subjects = subjectApplication.searchByName(query);
         return new ResponseEntity<>(subjects, HttpStatus.OK);
     }
@@ -100,7 +100,7 @@ class SubjectResource {
     })
     @PostMapping(value = "/by-grades")
     public ResponseEntity<List<SubjectDTO>> getSubjectsByGradesIds(@RequestBody List<String> gradesIds) {
-        log.debug("REST request to get all searched Subjects");
+        logger.debug("REST request to get all searched Subjects");
         List<SubjectDTO> subjects = subjectApplication.subjectsByGradesId(gradesIds);
         return new ResponseEntity<>(subjects, HttpStatus.OK);
     }
@@ -115,7 +115,7 @@ class SubjectResource {
     })
     @GetMapping(value = "/{id}")
     public ResponseEntity<SubjectDTO> getSubject(@PathVariable String id) {
-        log.debug("REST request to get Subject : {}", id);
+        logger.debug(String.format("REST request to get Subject : %s", id));
         Optional<SubjectDTO> optSubject = subjectApplication.findById(id);
         return optSubject
             .map(result -> new ResponseEntity<>(result, HttpStatus.OK))
@@ -128,7 +128,7 @@ class SubjectResource {
     })
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteSubject(@PathVariable String id) {
-        log.debug("REST request to delete Subject : {}", id);
+        logger.debug(String.format("REST request to delete Subject : %s", id));
         subjectApplication.delete(id);
         return ResponseEntity
             .accepted()

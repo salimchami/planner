@@ -2,14 +2,13 @@ package io.edukativ.myskoolin.front.web.rest;
 
 import io.edukativ.myskoolin.application.TeacherApplication;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
+import io.edukativ.myskoolin.domain.commons.MyskoolinLoggerSPI;
 import io.edukativ.myskoolin.front.web.util.WebUtil;
 import io.edukativ.myskoolin.infrastructure.app.repository.UserRepository;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
 import io.edukativ.myskoolin.infrastructure.teachers.TaughtSubjectsSearch;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherDTO;
 import io.github.jhipster.web.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,15 +26,16 @@ import java.util.Optional;
 @RequestMapping("/api/teachers")
 public class TeacherResource {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TeacherResource.class);
     private static final String TEACHER_ENTITY = "teacher";
 
     private final TeacherApplication teacherApplication;
     private final UserRepository userRepository;
+    private final MyskoolinLoggerSPI logger;
 
-    public TeacherResource(TeacherApplication teacherApplication, UserRepository userRepository) {
+    public TeacherResource(TeacherApplication teacherApplication, UserRepository userRepository, MyskoolinLoggerSPI logger) {
         this.teacherApplication = teacherApplication;
         this.userRepository = userRepository;
+        this.logger = logger;
     }
 
     @Secured({
@@ -57,7 +57,7 @@ public class TeacherResource {
                 .body(null);
         }
 
-        LOGGER.debug("REST request to save Teacher : {}", teacher);
+        logger.debug(String.format("REST request to save Teacher : %s", teacher));
         Optional<TeacherDTO> optCreatedTeacher = teacherApplication.create(teacher, WebUtil.baseUrl(request));
         if (optCreatedTeacher.isPresent()) {
             final TeacherDTO createdTeacher = optCreatedTeacher.get();
@@ -76,7 +76,7 @@ public class TeacherResource {
     })
     @PutMapping
     public ResponseEntity<TeacherDTO> updateTeacher(@RequestBody TeacherDTO teacherDTO, HttpServletRequest request) {
-        LOGGER.debug("REST request to update Teacher : {}", teacherDTO);
+        logger.debug(String.format("REST request to update Teacher : %s", teacherDTO));
         Optional<TeacherDTO> optTeacher = teacherApplication.update(teacherDTO, WebUtil.baseUrl(request));
         return optTeacher
             .map(teacher -> ResponseEntity.ok()
@@ -97,7 +97,7 @@ public class TeacherResource {
     @GetMapping
     @Transactional(readOnly = true)
     public ResponseEntity<List<TeacherDTO>> getAllTeachers() {
-        LOGGER.debug("REST request to get a page of teachers");
+        logger.debug("REST request to get a page of teachers");
         List<TeacherDTO> teachers = teacherApplication.findAllByCurrentUserClient();
         if (teachers.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -126,7 +126,7 @@ public class TeacherResource {
                                                           @NotNull
                                                           @Size(min = Constants.TEACHER_NAME_FOR_SEARCH_MIN_LENGTH)
                                                               String name) {
-        LOGGER.debug("REST request to get teachers by name : {}", name);
+        logger.debug(String.format("REST request to get teachers by name : %s", name));
         List<TeacherDTO> result = teacherApplication.searchByName(name);
         if (result.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -143,7 +143,7 @@ public class TeacherResource {
     })
     @GetMapping(value = "/{id}")
     public ResponseEntity<TeacherDTO> findTeacher(@PathVariable(name = "id") String id) {
-        LOGGER.debug("REST request to get Teacher : {}", id);
+        logger.debug(String.format("REST request to get Teacher : %s", id));
         Optional<TeacherDTO> optTeacher = teacherApplication.findOneById(id);
         return optTeacher
             .map(ResponseEntity::ok)
@@ -158,7 +158,7 @@ public class TeacherResource {
     })
     @GetMapping(value = "/byGrade/{gradeId}")
     public ResponseEntity<List<TeacherDTO>> findByGrade(@PathVariable(name = "gradeId") String gradeId) {
-        LOGGER.debug("REST request to get Teacher by grade id : {}", gradeId);
+        logger.debug(String.format("REST request to get Teacher by grade id : %s", gradeId));
         List<TeacherDTO> teachers = teacherApplication.findOneByGrade(gradeId);
         if (!teachers.isEmpty()) {
             return ResponseEntity.ok(teachers);
@@ -175,7 +175,7 @@ public class TeacherResource {
     @PostMapping(value = "/teachers/by-grades-and-subjects")
     public @ResponseBody
     ResponseEntity<List<TeacherDTO>> findByGradesIdsAndSubjectsIds(@RequestBody TaughtSubjectsSearch taughtSubjectsSearch) {
-        LOGGER.debug("REST request to get Teachers ByGradesIdsAndSubjectsIds : {} {}", taughtSubjectsSearch.getGradesIds(), taughtSubjectsSearch.getSubjectsIds());
+        logger.debug(String.format("REST request to get Teachers ByGradesIdsAndSubjectsIds : %s %s", taughtSubjectsSearch.getGradesIds(), taughtSubjectsSearch.getSubjectsIds()));
         List<TeacherDTO> teachers = teacherApplication.findByGradesIdsAndSubjectsIds(taughtSubjectsSearch.getGradesIds(), taughtSubjectsSearch.getSubjectsIds());
         if (!teachers.isEmpty()) {
             return ResponseEntity.ok(teachers);

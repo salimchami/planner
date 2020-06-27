@@ -1,14 +1,13 @@
 package io.edukativ.myskoolin.front.web.rest;
 
 import io.edukativ.myskoolin.application.SchoolRoomApplication;
+import io.edukativ.myskoolin.domain.commons.MyskoolinLoggerSPI;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDTO;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.micrometer.core.annotation.Timed;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +26,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 class SchoolRoomResource {
 
-    private final Logger log = LoggerFactory.getLogger(SchoolRoomResource.class);
-
+    private final MyskoolinLoggerSPI logger;
     private final SchoolRoomApplication schoolRoomApplication;
 
-    public SchoolRoomResource(SchoolRoomApplication schoolRoomApplication) {
+    public SchoolRoomResource(MyskoolinLoggerSPI logger, SchoolRoomApplication schoolRoomApplication) {
+        this.logger = logger;
         this.schoolRoomApplication = schoolRoomApplication;
     }
 
@@ -43,7 +42,7 @@ class SchoolRoomResource {
         AuthoritiesConstants.SCHOOL_LIFE
     })
     public ResponseEntity<SchoolRoomDTO> createSchoolRoom(@RequestBody SchoolRoomDTO schoolRoomDTO) throws URISyntaxException {
-        log.debug("REST request to create SchoolRoom : {}", schoolRoomDTO);
+        logger.debug(String.format("REST request to create SchoolRoom : %s", schoolRoomDTO));
         if (schoolRoomDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(Constants.APPLICATION_NAME, false,
                 SchoolRoomDTO.ENTITY_NAME, "", "A new schoolRoom cannot already have an ID")).body(null);
@@ -64,7 +63,7 @@ class SchoolRoomResource {
         AuthoritiesConstants.SCHOOL_LIFE
     })
     public ResponseEntity<SchoolRoomDTO> updateSchoolRoom(@RequestBody SchoolRoomDTO schoolRoomDTO) {
-        log.debug("REST request to update SchoolRoom : {}", schoolRoomDTO);
+        logger.debug(String.format("REST request to update SchoolRoom : %s", schoolRoomDTO));
         if (schoolRoomDTO.getClientId() == null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(Constants.APPLICATION_NAME,
                 false, SchoolRoomDTO.ENTITY_NAME, "", "The schoolRoom must have a client")).body(null);
@@ -89,7 +88,7 @@ class SchoolRoomResource {
     })
     @Timed
     public ResponseEntity<List<SchoolRoomDTO>> getAllSchoolRooms() {
-        log.debug("REST request to get all SchoolRooms");
+        logger.debug("REST request to get all SchoolRooms");
         List<SchoolRoomDTO> schoolRooms = schoolRoomApplication.findSchoolRooms();
         if (schoolRooms.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -107,7 +106,7 @@ class SchoolRoomResource {
         AuthoritiesConstants.SCHOOL_LIFE
     })
     public ResponseEntity<SchoolRoomDTO> getSchoolRoom(@PathVariable String name) {
-        log.debug("REST request to get SchoolRoom : {}", name);
+        logger.debug(String.format("REST request to get SchoolRoom : ", name));
         Optional<SchoolRoomDTO> schoolRoom = schoolRoomApplication.findOneByName(name);
         return schoolRoom
             .map(result -> new ResponseEntity<>(result, HttpStatus.OK))
@@ -124,7 +123,7 @@ class SchoolRoomResource {
     })
     @GetMapping(value = "/school-rooms/nameAvailable/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> getSchoolRoomByName(@PathVariable String name) {
-        log.debug("REST request to get SchoolRoom by name : {}", name);
+        logger.debug(String.format("REST request to get SchoolRoom by name : %s", name));
         Optional<SchoolRoomDTO> schoolRoom = schoolRoomApplication.findOneByName(name);
         return schoolRoom
             .map(result -> new ResponseEntity<>(true, HttpStatus.OK))
@@ -138,7 +137,7 @@ class SchoolRoomResource {
     })
     @DeleteMapping(value = "/school-rooms/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> deleteSchoolRoom(@PathVariable String id) {
-        log.debug("REST request to delete SchoolRoom : {}", id);
+        logger.debug(String.format("REST request to delete SchoolRoom : %s", id));
         schoolRoomApplication.deleteSchoolRoom(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(Constants.APPLICATION_NAME,
             false, SchoolRoomDTO.ENTITY_NAME, id)).build();

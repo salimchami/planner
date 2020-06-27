@@ -29,7 +29,7 @@ public class TeacherProvider implements TeacherSPI {
     public Teacher create(Teacher teacher) {
         TeacherDbDTO teacherDbDTO = teacherMapperImplemented.domainToDbDto(teacher);
         TeacherDbDTO createdTeacher = teacherRepository.save(teacherDbDTO);
-        logger.debug(TeacherProvider.class, String.format("Created Information for Teacher: %s", teacherDbDTO.toString()));
+        logger.debug(String.format("Created Information for Teacher: %s", teacherDbDTO.toString()));
         return teacherMapper.dbDtoToDomain(createdTeacher);
     }
 

@@ -96,7 +96,7 @@ public class TeacherService implements TeacherAPI {
                     dbTeacher.setExitDate(teacher.getExitDate());
                     dbTeacher.setExitReason(teacher.getExitReason());
                     dbTeacher.setGrades(teacher.getGrades());
-                    logger.debug(TeacherService.class, String.format("Changed Information for User: %s", dbTeacher));
+                    logger.debug(String.format("Changed Information for User: %s", dbTeacher));
                     return dbTeacher;
                 });
     }
