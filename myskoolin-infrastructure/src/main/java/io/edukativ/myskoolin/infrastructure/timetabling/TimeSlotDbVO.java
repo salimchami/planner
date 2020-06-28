@@ -126,7 +126,7 @@ public class TimeSlotDbVO implements Serializable {
         this.half = half;
     }
 
-    public TimeSlotDbVO(SchoolClassTimeSlotDbVO timeSlot) {
+    public TimeSlotDbVO(TimeSlotDbVO timeSlot) {
         this(timeSlot.getTitle(), timeSlot.getDay(), timeSlot.getStartTime(), timeSlot.getEndTime(), timeSlot.getBgColor(), timeSlot.getFontColorCssClass(), timeSlot.getAutoAlterable());
         this.secondTitle = timeSlot.getSecondTitle();
         this.comment = timeSlot.getComment();
@@ -362,7 +362,7 @@ public class TimeSlotDbVO implements Serializable {
         this.half = half;
     }
 
-    public boolean isOverlappingSchoolClassTimeSlots(EnumDays day, List<SchoolClassTimeSlotDbVO> schoolClassTimeSlots) {
+    public boolean isOverlappingSchoolClassTimeSlots(EnumDays day, List<TimeSlotDbVO> schoolClassTimeSlots) {
         return isOverlapping(day, schoolClassTimeSlots.stream().map(TimeSlotDbVO::new).collect(Collectors.toList()));
     }
 }

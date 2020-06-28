@@ -2,6 +2,7 @@ package io.edukativ.myskoolin.infrastructure.teachers;
 
 import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
+import io.edukativ.myskoolin.infrastructure.absences.AbsenceMapper;
 import io.edukativ.myskoolin.infrastructure.app.mapper.AuthorityMapper;
 import io.edukativ.myskoolin.infrastructure.app.mapper.SchoolingUserMapper;
 import io.edukativ.myskoolin.infrastructure.app.mapper.UserMapper;
@@ -9,11 +10,10 @@ import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
 import io.edukativ.myskoolin.infrastructure.common.mapper.AddressMapper;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
 import io.edukativ.myskoolin.infrastructure.grades.GradeMapper;
-import io.edukativ.myskoolin.infrastructure.medical.MedicalInfosMapper;
-import io.edukativ.myskoolin.infrastructure.absences.AbsenceMapper;
 import io.edukativ.myskoolin.infrastructure.medical.InfirmaryStatisticsMapper;
-import io.edukativ.myskoolin.infrastructure.schoolclasses.SchoolClassTimeSlotMapper;
+import io.edukativ.myskoolin.infrastructure.medical.MedicalInfosMapper;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectMapper;
+import io.edukativ.myskoolin.infrastructure.timetabling.LessonMapper;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
@@ -24,7 +24,7 @@ import java.util.List;
         SchoolingUserMapper.class,
         AbsenceMapper.class,
         SubjectMapper.class,
-        SchoolClassTimeSlotMapper.class,
+        LessonMapper.class,
         InfirmaryStatisticsMapper.class,
         MedicalInfosMapper.class,
         GradeMapper.class,

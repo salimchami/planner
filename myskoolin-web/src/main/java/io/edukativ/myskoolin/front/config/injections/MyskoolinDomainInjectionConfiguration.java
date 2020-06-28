@@ -19,26 +19,12 @@ import io.edukativ.myskoolin.domain.teachers.TeacherAPI;
 import io.edukativ.myskoolin.domain.teachers.TeacherMailingSPI;
 import io.edukativ.myskoolin.domain.teachers.TeacherSPI;
 import io.edukativ.myskoolin.domain.teachers.TeacherService;
+import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 import io.edukativ.myskoolin.domain.timetabling.TimeTableGenerationAPI;
+import io.edukativ.myskoolin.domain.timetabling.TimeTableSPI;
 import io.edukativ.myskoolin.domain.timetabling.TimeTablesGeneration;
-import io.edukativ.myskoolin.infrastructure.app.mapper.AuthorityMapper;
-import io.edukativ.myskoolin.infrastructure.app.providers.AuthorityProvider;
-import io.edukativ.myskoolin.infrastructure.app.repository.AuthorityRepository;
-import io.edukativ.myskoolin.infrastructure.commercial.MyskoolinMailingProvider;
-import io.edukativ.myskoolin.infrastructure.grades.GradeMapper;
-import io.edukativ.myskoolin.infrastructure.grades.GradeProvider;
-import io.edukativ.myskoolin.infrastructure.grades.GradeRepository;
-import io.edukativ.myskoolin.infrastructure.schoolclasses.SchoolClassProvider;
-import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomMapper;
-import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomProvider;
-import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomRepository;
-import io.edukativ.myskoolin.infrastructure.subjects.SubjectMapper;
-import io.edukativ.myskoolin.infrastructure.subjects.SubjectProvider;
-import io.edukativ.myskoolin.infrastructure.subjects.SubjectRepository;
-import io.edukativ.myskoolin.infrastructure.teachers.TeacherMapper;
-import io.edukativ.myskoolin.infrastructure.teachers.TeacherMapperImplemented;
-import io.edukativ.myskoolin.infrastructure.teachers.TeacherProvider;
-import io.edukativ.myskoolin.infrastructure.teachers.TeacherRepository;
+import org.optaplanner.core.api.score.ScoreManager;
+import org.optaplanner.core.api.solver.SolverManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -56,23 +42,8 @@ public class MyskoolinDomainInjectionConfiguration {
     }
 
     @Bean
-    public SchoolRoomSPI schoolRoomSPI(SchoolRoomRepository schoolRoomRepository, SchoolRoomMapper schoolRoomMapper) {
-        return new SchoolRoomProvider(schoolRoomRepository, schoolRoomMapper);
-    }
-
-    @Bean
-    public GradeAPI gradeApi(GradeSPI gradeSPI, SubjectSPI subjectSPI) {
+    public GradeAPI gradeAPI(GradeSPI gradeSPI, SubjectSPI subjectSPI) {
         return new GradeService(gradeSPI, subjectSPI);
-    }
-
-    @Bean
-    public GradeSPI gradeSPI(GradeRepository gradeRepository, GradeMapper gradeMapper) {
-        return new GradeProvider(gradeRepository, gradeMapper);
-    }
-
-    @Bean
-    public SubjectSPI subjectSPI(SubjectRepository subjectRepository, SubjectMapper subjectMapper) {
-        return new SubjectProvider(subjectRepository, subjectMapper);
     }
 
     @Bean
@@ -83,33 +54,15 @@ public class MyskoolinDomainInjectionConfiguration {
     }
 
     @Bean
-    public MyskoolinMailingSPI myskoolinMailingSPI() {
-        return new MyskoolinMailingProvider();
-    }
-
-    @Bean
-    public AuthoritySPI authoritySPI(AuthorityRepository authorityRepository, AuthorityMapper authorityMapper) {
-        return new AuthorityProvider(authorityRepository, authorityMapper);
-    }
-
-    @Bean
-    public TeacherSPI teacherSPI(TeacherMapper teacherMapper, TeacherRepository teacherRepository,
-                                 MyskoolinLoggerSPI myskoolinLogger, TeacherMapperImplemented teacherMapperImplemented) {
-        return new TeacherProvider(teacherMapper, teacherMapperImplemented, teacherRepository, myskoolinLogger);
-    }
-
-    @Bean
     public SchoolClassAPI schoolClassAPI(SchoolClassSPI schoolClassSPI) {
         return new SchoolClassService(schoolClassSPI);
     }
 
     @Bean
-    public SchoolClassSPI schoolClassSPI(SchoolClassProvider schoolClassProvider) {
-        return schoolClassProvider;
-    }
-
-    @Bean
-    public TimeTableGenerationAPI timeTableGenerationAPI() {
-        return new TimeTablesGeneration(solverManager, schoolClassSPI, scoreManager, timeTableSPI);
+    public TimeTableGenerationAPI timeTableGenerationAPI(SolverManager<SchoolClassTimeTable, String> solverManager,
+                                                         SchoolClassSPI schoolClassSPI,
+                                                         ScoreManager<SchoolClassTimeTable> scoreManager,
+                                                         TimeTableSPI timeTableSPI) {
+        return new TimeTablesGeneration(solverManager, scoreManager, schoolClassSPI, timeTableSPI);
     }
 }

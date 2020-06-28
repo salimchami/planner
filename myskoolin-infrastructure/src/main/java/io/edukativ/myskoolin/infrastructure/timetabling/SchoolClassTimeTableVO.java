@@ -9,23 +9,23 @@ import java.util.Objects;
 
 public class SchoolClassTimeTableVO implements Serializable {
 
-    private List<SchoolClassTimeSlotVO> staticTimeTable;
-    private List<SchoolClassTimeSlotVO> events;
+    private List<LessonVO> staticTimeTable;
+    private List<LessonVO> events;
     private Instant lastGenerationDate;
 
-    public List<SchoolClassTimeSlotVO> getStaticTimeTable() {
+    public List<LessonVO> getStaticTimeTable() {
         return staticTimeTable;
     }
 
-    public void setStaticTimeTable(List<SchoolClassTimeSlotVO> staticTimeTable) {
+    public void setStaticTimeTable(List<LessonVO> staticTimeTable) {
         this.staticTimeTable = staticTimeTable;
     }
 
-    public List<SchoolClassTimeSlotVO> getEvents() {
+    public List<LessonVO> getEvents() {
         return events;
     }
 
-    public void setEvents(List<SchoolClassTimeSlotVO> events) {
+    public void setEvents(List<LessonVO> events) {
         this.events = events;
     }
 

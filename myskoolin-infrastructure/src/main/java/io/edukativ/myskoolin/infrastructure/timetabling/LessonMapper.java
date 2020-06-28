@@ -9,6 +9,8 @@ import io.edukativ.myskoolin.infrastructure.subjects.SubjectMapper;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherMapper;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", uses = {
         ObjectIdMapper.class,
         SchoolRoomMapper.class,
@@ -30,4 +32,5 @@ public interface LessonMapper {
     Lesson voToDomain(LessonVO lesson);
 
 
+    List<LessonDbVO> domainsToDbVos(List<Lesson> timetable);
 }

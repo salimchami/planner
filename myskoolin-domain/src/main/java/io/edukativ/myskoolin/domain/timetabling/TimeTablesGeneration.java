@@ -22,7 +22,8 @@ public class TimeTablesGeneration implements TimeTableGenerationAPI {
     private final TimeTableSPI timeTableSPI;
 
     public TimeTablesGeneration(SolverManager<SchoolClassTimeTable, String> solverManager,
-                                SchoolClassSPI schoolClassSPI, ScoreManager<SchoolClassTimeTable> scoreManager,
+                                ScoreManager<SchoolClassTimeTable> scoreManager,
+                                SchoolClassSPI schoolClassSPI,
                                 TimeTableSPI timeTableSPI) {
         this.solverManager = solverManager;
         this.schoolClassSPI = schoolClassSPI;
