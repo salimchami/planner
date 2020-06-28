@@ -1,15 +1,15 @@
 package io.edukativ.myskoolin.infrastructure.teachers;
 
 import io.edukativ.myskoolin.domain.teachers.Teacher;
+import io.edukativ.myskoolin.infrastructure.absences.AbsenceMapper;
 import io.edukativ.myskoolin.infrastructure.app.mapper.AuthorityMapper;
 import io.edukativ.myskoolin.infrastructure.common.mapper.AddressMapper;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
 import io.edukativ.myskoolin.infrastructure.grades.GradeMapper;
-import io.edukativ.myskoolin.infrastructure.medical.MedicalInfosMapper;
-import io.edukativ.myskoolin.infrastructure.absences.AbsenceMapper;
 import io.edukativ.myskoolin.infrastructure.medical.InfirmaryStatisticsMapper;
-import io.edukativ.myskoolin.infrastructure.schoolclasses.SchoolClassTimeSlotMapper;
+import io.edukativ.myskoolin.infrastructure.medical.MedicalInfosMapper;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectMapper;
+import io.edukativ.myskoolin.infrastructure.timetabling.LessonMapper;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,7 +33,7 @@ public abstract class TeacherMapperImplemented {
     @Autowired
     private InfirmaryStatisticsMapper infirmaryStatisticsMapper;
     @Autowired
-    private SchoolClassTimeSlotMapper schoolClassTimeSlotMapper;
+    private LessonMapper lessonMapper;
     @Autowired
     private TeacherMapper teacherMapper;
 
@@ -48,7 +48,7 @@ public abstract class TeacherMapperImplemented {
                 .substitute(teacher.getSubstitute())
                 .absences(absenceMapper.domainsToDbVos(teacher.getAbsences()))
                 .taughtSubjects(subjectMapper.domainsToDbDtos(teacher.getTaughtSubjects()))
-                .timetable(schoolClassTimeSlotMapper.domainsToDbVos(teacher.getTimetable()))
+                .timetable(lessonMapper.domainsToDbVos(teacher.getTimetable()))
                 .exitDate(teacher.getExitDate())
                 .comment(teacher.getComment())
                 .familySituation(teacher.getFamilySituation())

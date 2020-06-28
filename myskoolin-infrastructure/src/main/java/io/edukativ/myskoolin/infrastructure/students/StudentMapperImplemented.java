@@ -4,12 +4,6 @@ import io.edukativ.myskoolin.domain.students.Student;
 import io.edukativ.myskoolin.infrastructure.app.mapper.AuthorityMapper;
 import io.edukativ.myskoolin.infrastructure.common.mapper.AddressMapper;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
-import io.edukativ.myskoolin.infrastructure.grades.GradeMapper;
-import io.edukativ.myskoolin.infrastructure.medical.MedicalInfosMapper;
-import io.edukativ.myskoolin.infrastructure.absences.AbsenceMapper;
-import io.edukativ.myskoolin.infrastructure.medical.InfirmaryStatisticsMapper;
-import io.edukativ.myskoolin.infrastructure.schoolclasses.SchoolClassTimeSlotMapper;
-import io.edukativ.myskoolin.infrastructure.subjects.SubjectMapper;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,18 +16,6 @@ public abstract class StudentMapperImplemented {
     private AuthorityMapper authorityMapper;
     @Autowired
     private AddressMapper addressMapper;
-    @Autowired
-    private AbsenceMapper absenceMapper;
-    @Autowired
-    private SubjectMapper subjectMapper;
-    @Autowired
-    private GradeMapper gradeMapper;
-    @Autowired
-    private MedicalInfosMapper medicalInfosMapper;
-    @Autowired
-    private InfirmaryStatisticsMapper infirmaryStatisticsMapper;
-    @Autowired
-    private SchoolClassTimeSlotMapper schoolClassTimeSlotMapper;
 
     public StudentDbDTO domainToDbDto(Student student) {
 

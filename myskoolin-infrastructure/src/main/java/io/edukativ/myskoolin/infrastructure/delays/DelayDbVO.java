@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.delays;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeSlotDbVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.LessonDbVO;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -10,7 +10,7 @@ import java.util.Objects;
 public class DelayDbVO implements Serializable {
 
     private Instant arrivingTime;
-    private SchoolClassTimeSlotDbVO timeslot;
+    private LessonDbVO lesson;
 
     public Instant getArrivingTime() {
         return arrivingTime;
@@ -20,12 +20,12 @@ public class DelayDbVO implements Serializable {
         this.arrivingTime = arrivingTime;
     }
 
-    public SchoolClassTimeSlotDbVO getTimeslot() {
-        return timeslot;
+    public LessonDbVO getLesson() {
+        return lesson;
     }
 
-    public void setTimeslot(SchoolClassTimeSlotDbVO timeslot) {
-        this.timeslot = timeslot;
+    public void setLesson(LessonDbVO lesson) {
+        this.lesson = lesson;
     }
 
     @Override
@@ -34,12 +34,12 @@ public class DelayDbVO implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         DelayDbVO delay = (DelayDbVO) o;
         return arrivingTime.equals(delay.arrivingTime) &&
-                Objects.equals(timeslot, delay.timeslot);
+                Objects.equals(lesson, delay.lesson);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(arrivingTime, timeslot);
+        return Objects.hash(arrivingTime, lesson);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class DelayDbVO implements Serializable {
 
             return "Delay{" +
                     "arrivingTime=" + arrivingTime +
-                    ", timeslot=" + timeslot +
+                    ", timeslot=" + lesson +
                     '}';
         }
     }
