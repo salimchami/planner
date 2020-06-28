@@ -65,29 +65,4 @@ public class MyskoolinDomainInjectionConfiguration {
                                                          TimeTableSPI timeTableSPI) {
         return new TimeTablesGeneration(solverManager, scoreManager, schoolClassSPI, timeTableSPI);
     }
-
-//    @Bean
-//    public SchoolClassConstraintProvider schoolClassConstraintProvider() {
-//        return new SchoolClassConstraintProvider();
-//    }
-//
-//    @Bean
-//    public TimeSlotConstraintProvider timeSlotConstraintProvider() {
-//        return new TimeSlotConstraintProvider();
-//    }
-//
-//    @Bean
-//    public SchoolRoomConstraintProvider schoolRoomConstraintProvider() {
-//        return new SchoolRoomConstraintProvider();
-//    }
-//
-//    @Bean
-//    public SubjectConstraintProvider subjectConstraintProvider() {
-//        return new SubjectConstraintProvider();
-//    }
-//
-//    @Bean
-//    public TeacherConstraintProvider teacherConstraintProvider() {
-//        return new TeacherConstraintProvider();
-//    }
 }
