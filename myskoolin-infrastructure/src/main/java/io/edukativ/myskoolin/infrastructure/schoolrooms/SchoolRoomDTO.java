@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.schoolrooms;
 
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
-import io.edukativ.myskoolin.infrastructure.timetabling.TimeSlotVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.LessonVO;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -21,7 +21,7 @@ public class SchoolRoomDTO implements Serializable {
 
     private List<SchoolRoomDistanceDTO> distances;
 
-    private List<TimeSlotVO> timetable;
+    private List<LessonVO> timetable;
 
     private String name;
 
@@ -69,11 +69,11 @@ public class SchoolRoomDTO implements Serializable {
         this.distances = distances;
     }
 
-    public List<TimeSlotVO> getTimetable() {
+    public List<LessonVO> getTimetable() {
         return timetable;
     }
 
-    public void setTimetable(List<TimeSlotVO> timetable) {
+    public void setTimetable(List<LessonVO> timetable) {
         this.timetable = timetable;
     }
 

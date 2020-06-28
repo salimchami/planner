@@ -32,6 +32,10 @@ public class TimeSlotDbVO implements Serializable {
     public static final String MONGO_FIELD_FONT_COLOR = "font_color_css_class";
     public static final String MONGO_FIELD_AUTO_ALTERABLE = "auto_alterable";
     public static final String MONGO_FIELD_HALF = "half";
+    private static final String MONGO_FIELD_ID = "id";
+
+    @Field(MONGO_FIELD_ID)
+    private String id;
 
     @NotNull
     @Field(MONGO_FIELD_TITLE)

@@ -14,6 +14,7 @@ import io.edukativ.myskoolin.infrastructure.absences.AbsenceMapper;
 import io.edukativ.myskoolin.infrastructure.medical.InfirmaryStatisticsMapper;
 import io.edukativ.myskoolin.infrastructure.schoolclasses.SchoolClassTimeSlotMapper;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectMapper;
+import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableMapper;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
@@ -25,6 +26,7 @@ import java.util.List;
         AbsenceMapper.class,
         SubjectMapper.class,
         SchoolClassTimeSlotMapper.class,
+        SchoolClassTimeTableMapper.class,
         InfirmaryStatisticsMapper.class,
         MedicalInfosMapper.class,
         GradeMapper.class,
