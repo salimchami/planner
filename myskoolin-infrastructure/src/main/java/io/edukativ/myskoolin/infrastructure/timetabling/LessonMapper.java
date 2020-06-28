@@ -1,6 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.timetabling;
 
 import io.edukativ.myskoolin.domain.timetabling.Lesson;
+import io.edukativ.myskoolin.infrastructure.app.mapper.AuthorityMapper;
 import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
 import io.edukativ.myskoolin.infrastructure.schoolclasses.SchoolClassMapper;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomMapper;
@@ -15,6 +16,7 @@ import org.mapstruct.Mapper;
         SubjectMapper.class,
         TimeSlotMapper.class,
         SchoolClassMapper.class,
+        AuthorityMapper.class,
 })
 public interface LessonMapper {
 
