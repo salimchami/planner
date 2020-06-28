@@ -60,8 +60,8 @@ public class MyskoolinDomainInjectionConfiguration {
 
     @Bean
     public TimeTableGenerationAPI timeTableGenerationAPI(SolverManager<SchoolClassTimeTable, String> solverManager,
-                                                         SchoolClassSPI schoolClassSPI,
                                                          ScoreManager<SchoolClassTimeTable> scoreManager,
+                                                         SchoolClassSPI schoolClassSPI,
                                                          TimeTableSPI timeTableSPI) {
         return new TimeTablesGeneration(solverManager, scoreManager, schoolClassSPI, timeTableSPI);
     }
