@@ -4,7 +4,7 @@ import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.PasswordChangeDTO;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDTO;
 import io.edukativ.myskoolin.application.security.UserService;
-import io.edukativ.myskoolin.front.MyskoolinApp;
+import io.edukativ.myskoolin.MyskoolinApp;
 import io.edukativ.myskoolin.infrastructure.app.repository.AuthorityRepository;
 import io.edukativ.myskoolin.infrastructure.config.Constants;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;

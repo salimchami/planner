@@ -5,13 +5,11 @@ import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
 import org.optaplanner.core.api.domain.entity.PlanningEntity;
-import org.optaplanner.core.api.domain.lookup.PlanningId;
 import org.optaplanner.core.api.domain.variable.PlanningVariable;
 
 @PlanningEntity
 public class Lesson {
 
-    @PlanningId
     private String id;
     @PlanningVariable(valueRangeProviderRefs = "schoolRoomRange")
     private SchoolRoom schoolRoom;
