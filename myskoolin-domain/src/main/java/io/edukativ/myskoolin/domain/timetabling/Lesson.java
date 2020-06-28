@@ -57,6 +57,30 @@ public class Lesson {
         return timeSlot;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setSchoolRoom(SchoolRoom schoolRoom) {
+        this.schoolRoom = schoolRoom;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public void setTimeSlot(TimeSlot timeSlot) {
+        this.timeSlot = timeSlot;
+    }
+
+    public void setSchoolClass(SchoolClass schoolClass) {
+        this.schoolClass = schoolClass;
+    }
+
     public SchoolClass getSchoolClass() {
         return schoolClass;
     }

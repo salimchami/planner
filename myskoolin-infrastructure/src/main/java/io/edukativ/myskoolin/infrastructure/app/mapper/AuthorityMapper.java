@@ -17,14 +17,14 @@ public interface AuthorityMapper {
         return authority.getName();
     }
 
-    //    default AuthorityDbDTO dtoToDbDto(String authorityName) {
-//
-//    }
-//
-//    default Authority dtoToDomain(String authorityName) {
-//
-//    }
-//
+    default AuthorityDbDTO dtoToDbDto(String authorityName) {
+        return new AuthorityDbDTO(authorityName);
+    }
+
+    default Authority dtoToDomain(String authorityName) {
+        return new Authority(authorityName);
+    }
+
     AuthorityDbDTO domainToDbDto(Authority authority);
 
     default String domainToDto(Authority authority) {

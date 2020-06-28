@@ -1,13 +1,13 @@
 package io.edukativ.myskoolin.infrastructure.teachers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.edukativ.myskoolin.infrastructure.absences.AbsenceDbVO;
 import io.edukativ.myskoolin.infrastructure.app.dto.AbstractUserDbDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
-import io.edukativ.myskoolin.infrastructure.absences.AbsenceDbVO;
 import io.edukativ.myskoolin.infrastructure.medical.InfirmaryStatisticsDbVO;
 import io.edukativ.myskoolin.infrastructure.medical.MedicalInfosDbVO;
-import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeSlotDbVO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDbDTO;
+import io.edukativ.myskoolin.infrastructure.timetabling.LessonDbVO;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -69,7 +69,7 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
     private List<SubjectDbDTO> taughtSubjects;
 
     @Field(MONGO_FIELD_TIMETABLE)
-    private List<SchoolClassTimeSlotDbVO> timetable;
+    private List<LessonDbVO> timetable;
 
     @Field(MONGO_FIELD_PRO_CELL_PHONE)
     private String proCellPhone;
@@ -128,7 +128,7 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
         private List<TeacherDbDTO> substitutedTeachers;
         private List<AbsenceDbVO> absences;
         private List<SubjectDbDTO> taughtSubjects;
-        private List<SchoolClassTimeSlotDbVO> timetable;
+        private List<LessonDbVO> timetable;
         private String proCellPhone;
         private String proPhone;
         private String proEmail;
@@ -173,7 +173,7 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
             return this;
         }
 
-        public TeacherDbDTOBuilder timetable(List<SchoolClassTimeSlotDbVO> timetable) {
+        public TeacherDbDTOBuilder timetable(List<LessonDbVO> timetable) {
             this.timetable = timetable;
             return this;
         }
@@ -262,7 +262,7 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
         return taughtSubjects;
     }
 
-    public List<SchoolClassTimeSlotDbVO> getTimetable() {
+    public List<LessonDbVO> getTimetable() {
         if(timetable == null) {
             timetable = new ArrayList<>();
         }
