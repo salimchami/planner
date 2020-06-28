@@ -63,12 +63,14 @@ public class TimeTablesGeneration implements TimeTableGenerationAPI {
     @Override
     public String solveForSchoolClass(String schoolClassId, String clientId, List<SchoolRoom> schoolRooms,
                                       List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses) {
-        SchoolClass schoolClass = schoolClassSPI.findById(schoolClassId);
-        String timeTableSolvingId = DateUtils.concatClientIdAndNowTimestamp(clientId);
-        solverManager.solveAndListen(timeTableSolvingId,
-                id -> new SchoolClassTimeTable(schoolClasses, schoolRooms, subjects, teachers),
-                schoolClassTimeTable -> saveTimeTable(schoolClass, schoolClassTimeTable));
-        return timeTableSolvingId;
+        Optional<SchoolClass> optSchoolClass = schoolClassSPI.findById(schoolClassId);
+        return optSchoolClass.map(schoolClass -> {
+            String timeTableSolvingId = DateUtils.concatClientIdAndNowTimestamp(clientId);
+            solverManager.solveAndListen(timeTableSolvingId,
+                    id -> new SchoolClassTimeTable(schoolClasses, schoolRooms, subjects, teachers),
+                    schoolClassTimeTable -> saveTimeTable(schoolClass, schoolClassTimeTable));
+            return timeTableSolvingId;
+        }).orElse(null);
     }
 
     @Override
