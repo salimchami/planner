@@ -11,6 +11,27 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface AuthorityMapper {
 
+    Authority dbDtoToDomain(AuthorityDbDTO authority);
+
+    default String dbDtoToDto(AuthorityDbDTO authority) {
+        return authority.getName();
+    }
+
+    //    default AuthorityDbDTO dtoToDbDto(String authorityName) {
+//
+//    }
+//
+//    default Authority dtoToDomain(String authorityName) {
+//
+//    }
+//
+    AuthorityDbDTO domainToDbDto(Authority authority);
+
+    default String domainToDto(Authority authority) {
+        return authority.getName();
+    }
+
+
     Set<Authority> dbDtosToDomains(Set<AuthorityDbDTO> authority);
 
     default Set<Authority> dtosToDomains(Set<String> authorities) {
@@ -29,7 +50,6 @@ public interface AuthorityMapper {
         return authorities.stream().map(AuthorityDbDTO::getName).collect(Collectors.toSet());
     }
 
-    Authority dbDtoToDomain(AuthorityDbDTO authority);
 
     default Set<AuthorityDbDTO> domainsToDbDtos(Set<Authority> authorities) {
         return authorities
@@ -38,5 +58,4 @@ public interface AuthorityMapper {
                 .collect(Collectors.toSet());
     }
 
-    AuthorityDbDTO domainToDbDto(Authority authority);
 }

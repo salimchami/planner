@@ -92,10 +92,6 @@ public class SchoolClassTimeTable {
                 '}';
     }
 
-    public SolverStatus getSolverStatus() {
-        return solverStatus;
-    }
-
     public void setSolverStatus(SolverStatus solverStatus) {
         this.solverStatus = solverStatus;
     }
@@ -107,4 +103,6 @@ public class SchoolClassTimeTable {
     public void setSchoolClass(SchoolClass schoolClass) {
         this.schoolClass = schoolClass;
     }
+
+
 }

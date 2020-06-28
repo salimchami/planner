@@ -1,8 +1,8 @@
 package io.edukativ.myskoolin.domain.providers;
 
-import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
-import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
+import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
+import io.edukativ.myskoolin.domain.timetabling.Lesson;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 public final class SchoolRoomTestProvider {
 
-    public static SchoolRoom schoolRoom(String id, List<TimeSlot> timetable, String name, int seats,
+    public static SchoolRoom schoolRoom(String id, List<Lesson> timetable, String name, int seats,
                                         EnumSchoolRoomsTypes schoolRoomsType) {
         return new SchoolRoom(id, GlobalTestProvider.CLIENT_ID, Collections.emptyList(), timetable,
                 name, false, seats, schoolRoomsType, BigDecimal.valueOf(65L), "RAS",

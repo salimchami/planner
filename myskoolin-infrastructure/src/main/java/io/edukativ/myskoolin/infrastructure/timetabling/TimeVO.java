@@ -4,7 +4,7 @@ import io.edukativ.myskoolin.infrastructure.common.enums.EnumPartsOfDay;
 
 import java.io.Serializable;
 
-public class TimeDTO implements Serializable {
+public class TimeVO implements Serializable {
 
     private Integer hour;
     private Integer minutes;

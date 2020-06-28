@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.timetabling;
 
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
+import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
 import io.edukativ.myskoolin.infrastructure.common.vo.TimeVO;
 
 import java.io.Serializable;
@@ -8,6 +8,7 @@ import java.time.ZonedDateTime;
 
 public class TimeSlotVO implements Serializable {
 
+    private String id;
     private String title;
     private String secondTitle;
     private String comment;
@@ -21,11 +22,13 @@ public class TimeSlotVO implements Serializable {
     private Boolean autoAlterable;
     private boolean half;
 
-    private String schoolRoomId;
-    private String schoolClassId;
-    private String subjectId;
-    private String teacherId;
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -121,37 +124,5 @@ public class TimeSlotVO implements Serializable {
 
     public void setHalf(boolean half) {
         this.half = half;
-    }
-
-    public String getSchoolRoomId() {
-        return schoolRoomId;
-    }
-
-    public void setSchoolRoomId(String schoolRoomId) {
-        this.schoolRoomId = schoolRoomId;
-    }
-
-    public String getSchoolClassId() {
-        return schoolClassId;
-    }
-
-    public void setSchoolClassId(String schoolClassId) {
-        this.schoolClassId = schoolClassId;
-    }
-
-    public String getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(String subjectId) {
-        this.subjectId = subjectId;
-    }
-
-    public String getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId;
     }
 }

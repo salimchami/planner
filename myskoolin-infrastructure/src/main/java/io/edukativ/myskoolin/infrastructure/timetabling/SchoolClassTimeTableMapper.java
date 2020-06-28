@@ -1,11 +1,14 @@
 package io.edukativ.myskoolin.infrastructure.timetabling;
 
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
-import io.edukativ.myskoolin.infrastructure.schoolclasses.SchoolClassTimeSlotMapper;
+import io.edukativ.myskoolin.infrastructure.common.mapper.ObjectIdMapper;
+import io.edukativ.myskoolin.infrastructure.schoolclasses.SchoolClassMapper;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {
-        SchoolClassTimeSlotMapper.class
+        LessonMapper.class,
+        ObjectIdMapper.class,
+        SchoolClassMapper.class,
 })
 public interface SchoolClassTimeTableMapper {
 

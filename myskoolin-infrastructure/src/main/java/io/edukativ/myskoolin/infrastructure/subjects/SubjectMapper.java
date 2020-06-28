@@ -15,7 +15,8 @@ import java.util.List;
         ObjectIdMapper.class,
         GradeMapper.class,
         GradeSerieMapper.class,
-        PreferredPartsOfDaysMapper.class
+        PreferredPartsOfDaysMapper.class,
+
 })
 public interface SubjectMapper {
 

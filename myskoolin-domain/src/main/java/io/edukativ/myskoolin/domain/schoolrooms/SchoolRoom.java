@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.domain.schoolrooms;
 
 import io.edukativ.myskoolin.domain.subjects.Subject;
-import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
+import io.edukativ.myskoolin.domain.timetabling.Lesson;
 import org.optaplanner.core.api.domain.lookup.PlanningId;
 
 import java.math.BigDecimal;
@@ -19,7 +19,7 @@ public class SchoolRoom {
     private String id;
     private String clientId;
     private List<SchoolRoomDistance> distances;
-    private List<TimeSlot> timetable;
+    private List<Lesson> timetable;
     private String name;
     private boolean closed;
     private Integer seats;
@@ -33,7 +33,7 @@ public class SchoolRoom {
     public SchoolRoom() {
     }
 
-    public SchoolRoom(String id, String clientId, List<SchoolRoomDistance> distances, List<TimeSlot> timetable,
+    public SchoolRoom(String id, String clientId, List<SchoolRoomDistance> distances, List<Lesson> timetable,
                       String name, Boolean closed, Integer seats, EnumSchoolRoomsTypes type, BigDecimal surface,
                       String comment, String longitude, String latitude, Boolean deleted) {
         this.id = id;
@@ -78,14 +78,14 @@ public class SchoolRoom {
         this.distances = distances;
     }
 
-    public List<TimeSlot> getTimetable() {
+    public List<Lesson> getTimetable() {
         if (this.timetable == null) {
             this.timetable = new ArrayList<>();
         }
         return timetable;
     }
 
-    public void setTimetable(List<TimeSlot> timetable) {
+    public void setTimetable(List<Lesson> timetable) {
         this.timetable = timetable;
     }
 
