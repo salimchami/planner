@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.front.service;
 
-import io.edukativ.myskoolin.front.MyskoolinApp;
+import io.edukativ.myskoolin.MyskoolinApp;
 import io.edukativ.myskoolin.infrastructure.app.dto.PersistentAuditEvent;
 import io.edukativ.myskoolin.infrastructure.app.repository.PersistenceAuditEventRepository;
 import io.github.jhipster.config.JHipsterProperties;

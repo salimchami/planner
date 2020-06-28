@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.front.web.rest;
 
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDTO;
-import io.edukativ.myskoolin.front.MyskoolinApp;
+import io.edukativ.myskoolin.MyskoolinApp;
 import io.edukativ.myskoolin.infrastructure.app.dto.AuthorityDbDTO;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.infrastructure.app.repository.search.UserSearchRepository;

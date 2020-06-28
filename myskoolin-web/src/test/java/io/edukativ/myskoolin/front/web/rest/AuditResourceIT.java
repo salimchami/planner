@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.front.web.rest;
 
-import io.edukativ.myskoolin.front.MyskoolinApp;
+import io.edukativ.myskoolin.MyskoolinApp;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.infrastructure.app.dto.PersistentAuditEvent;
 import io.edukativ.myskoolin.infrastructure.app.repository.PersistenceAuditEventRepository;

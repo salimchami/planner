@@ -58,7 +58,10 @@
             <artifactId>myskoolin-infrastructure</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.optaplanner</groupId>
+            <artifactId>optaplanner-spring-boot-starter</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.github.jhipster</groupId>
             <artifactId>jhipster-framework</artifactId>

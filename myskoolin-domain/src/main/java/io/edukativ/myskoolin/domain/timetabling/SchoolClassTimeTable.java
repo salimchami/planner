@@ -7,7 +7,7 @@ import io.edukativ.myskoolin.domain.teachers.Teacher;
 import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
 import org.optaplanner.core.api.domain.solution.PlanningScore;
 import org.optaplanner.core.api.domain.solution.PlanningSolution;
-import org.optaplanner.core.api.domain.solution.drools.ProblemFactCollectionProperty;
+import org.optaplanner.core.api.domain.solution.ProblemFactCollectionProperty;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.api.solver.SolverStatus;
@@ -92,8 +92,92 @@ public class SchoolClassTimeTable {
                 '}';
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
+    }
+
+    public List<Lesson> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Lesson> events) {
+        this.events = events;
+    }
+
+    public List<TimeSlot> getTimeSlots() {
+        return timeSlots;
+    }
+
+    public void setTimeSlots(List<TimeSlot> timeSlots) {
+        this.timeSlots = timeSlots;
+    }
+
+    public List<SchoolRoom> getSchoolRooms() {
+        return schoolRooms;
+    }
+
+    public void setSchoolRooms(List<SchoolRoom> schoolRooms) {
+        this.schoolRooms = schoolRooms;
+    }
+
+    public List<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
+    }
+
+    public List<Teacher> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(List<Teacher> teachers) {
+        this.teachers = teachers;
+    }
+
+    public List<SchoolClass> getSchoolClasses() {
+        return schoolClasses;
+    }
+
+    public void setSchoolClasses(List<SchoolClass> schoolClasses) {
+        this.schoolClasses = schoolClasses;
+    }
+
+    public HardSoftScore getScore() {
+        return score;
+    }
+
+    public void setScore(HardSoftScore score) {
+        this.score = score;
+    }
+
+    public SolverStatus getSolverStatus() {
+        return solverStatus;
+    }
+
     public void setSolverStatus(SolverStatus solverStatus) {
         this.solverStatus = solverStatus;
+    }
+
+    public Instant getLastGenerationDate() {
+        return lastGenerationDate;
+    }
+
+    public void setLastGenerationDate(Instant lastGenerationDate) {
+        this.lastGenerationDate = lastGenerationDate;
     }
 
     public SchoolClass getSchoolClass() {
@@ -103,6 +187,4 @@ public class SchoolClassTimeTable {
     public void setSchoolClass(SchoolClass schoolClass) {
         this.schoolClass = schoolClass;
     }
-
-
 }
