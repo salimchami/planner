@@ -81,6 +81,7 @@ public class SchoolClassDbDTO implements Serializable {
     @Field(MONGO_FIELD_GRADE_SERIE)
     private GradeSerieDbVO gradeSerie;
 
+    @DBRef
     @Field(MONGO_FIELD_TIMETABLE)
     private SchoolClassTimeTableDbDTO timetable;
 

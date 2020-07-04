@@ -28,9 +28,9 @@ spring:
       write-durations-as-timestamps: false
   data:
     mongodb:
-      host: localhost
-      port: 0
-      database: myskoolin
+        uri: mongodb://localhost:27017
+        database: myskoolin
+
     elasticsearch:
       properties:
         path:

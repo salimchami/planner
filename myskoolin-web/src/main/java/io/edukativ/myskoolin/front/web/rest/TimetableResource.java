@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.ExecutionException;
-
 @RequestMapping(value = "/api/timetables")
 @RestController
 class TimetableResource {
@@ -32,13 +30,8 @@ class TimetableResource {
     @GetMapping(value = "/solve")
     public ResponseEntity<Void> solveTimetablesFromScratch() {
         logger.debug("generating timetables for all school classes");
-        try {
-            timeTableApplication.solveNewTimeTablesForSchoolClasses();
-            return ResponseEntity.ok().build();
-        } catch (ExecutionException | InterruptedException e) {
-            logger.error("solving timetable error", e);
-            return ResponseEntity.unprocessableEntity().build();
-        }
+        timeTableApplication.solveNewTimeTablesForSchoolClasses();
+        return ResponseEntity.ok().build();
     }
 
     @Secured({
@@ -48,13 +41,8 @@ class TimetableResource {
     @GetMapping(value = "/solve/{id}")
     public ResponseEntity<Void> solveTimetableFromScratch(@PathVariable(name = "id") String id) {
         logger.debug("generating timetables for all school classes");
-        try {
-            timeTableApplication.solveNewTimeTablesForSchoolClass(id);
-            return ResponseEntity.ok().build();
-        } catch (ExecutionException | InterruptedException e) {
-            logger.error("solving timetable error", e);
-            return ResponseEntity.unprocessableEntity().build();
-        }
+        timeTableApplication.solveNewTimeTablesForSchoolClass(id);
+        return ResponseEntity.ok().build();
     }
 
     @Secured({

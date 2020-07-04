@@ -2,7 +2,9 @@ package io.edukativ.myskoolin.infrastructure.timetabling;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
-public class HardSoftScoreDbVO {
+import java.io.Serializable;
+
+public class HardSoftScoreDbVO implements Serializable {
 
     private static final String MONGO_FIELD_HARD_SCORE = "hard_score";
     private static final String MONGO_FIELD_SOFT_SCORE = "soft_score";
