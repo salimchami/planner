@@ -8,6 +8,6 @@ public interface SchoolClassSPI {
 
     Optional<SchoolClass> findById(String schoolClassId);
 
-    void saveTimeTable(SchoolClassTimeTable schoolClassTimeTable);
+    Optional<SchoolClass> saveTimeTable(SchoolClassTimeTable schoolClassTimeTable);
 
 }
