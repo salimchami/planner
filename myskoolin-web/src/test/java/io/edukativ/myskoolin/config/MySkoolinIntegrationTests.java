@@ -65,6 +65,12 @@ public class MySkoolinIntegrationTests implements InitializingBean {
 
         private static final String BASE_URL = "/api";
         public static final String TIMETABLES_BASE_URL = BASE_URL + "/timetables";
-        public static final String TIMETABLES_GENERATE_URL = TIMETABLES_BASE_URL + "/generate";
+        public static final String TIMETABLES_SOLVE_URL = TIMETABLES_BASE_URL + "/solve";
+        public static final String TIMETABLES_SOLVER_STATUS_URL = TIMETABLES_BASE_URL + "/solve/status";
+    }
+
+    public static class TestsFolders {
+
+        public static final String TIMETABLES_FOLDER = "timetables";
     }
 }

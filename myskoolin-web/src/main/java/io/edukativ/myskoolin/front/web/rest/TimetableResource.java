@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RequestMapping(value = "/api/timetables")
 @RestController
@@ -28,22 +29,39 @@ class TimetableResource {
         AuthoritiesConstants.ADMINISTRATION,
         AuthoritiesConstants.SCHOOL_LIFE,
     })
-    @GetMapping(value = "/generate")
+    @GetMapping(value = "/solve")
     public ResponseEntity<List<String>> generateTimetablesFromScratch() {
         logger.debug("generating timetables for all school classes");
-        final List<String> timeTablesIds = timeTableApplication.generateNewTimeTablesForSchoolClasses();
-        return ResponseEntity.ok(timeTablesIds);
+        try {
+            return ResponseEntity.ok(timeTableApplication.generateNewTimeTablesForSchoolClasses());
+        } catch (ExecutionException | InterruptedException e) {
+            logger.error("solving timetable error", e);
+            return ResponseEntity.unprocessableEntity().build();
+        }
     }
 
     @Secured({
         AuthoritiesConstants.ADMINISTRATION,
         AuthoritiesConstants.SCHOOL_LIFE,
     })
-    @GetMapping(value = "/generate/{id}")
+    @GetMapping(value = "/solve/{id}")
     public ResponseEntity<String> generateTimetableFromScratch(@PathVariable(name = "id") String id) {
         logger.debug("generating timetables for all school classes");
-        final String timeTableId = timeTableApplication.generateNewTimeTablesForSchoolClass(id);
-        return ResponseEntity.ok(timeTableId);
+        try {
+            return ResponseEntity.ok(timeTableApplication.generateNewTimeTablesForSchoolClass(id));
+        } catch (ExecutionException | InterruptedException e) {
+            logger.error("solving timetable error", e);
+            return ResponseEntity.unprocessableEntity().build();
+        }
+    }
+
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE,
+    })
+    @GetMapping(value = "/solve/status/{id}")
+    public ResponseEntity<String> solverStatus(@PathVariable(name = "id") String id) {
+        return ResponseEntity.ok(timeTableApplication.solverStatus(id));
     }
 
 }

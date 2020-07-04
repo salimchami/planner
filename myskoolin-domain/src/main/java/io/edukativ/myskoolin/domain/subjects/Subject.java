@@ -1,6 +1,6 @@
 package io.edukativ.myskoolin.domain.subjects;
 
-import io.edukativ.myskoolin.domain.commons.exceptions.NoGradeFoundException;
+import io.edukativ.myskoolin.domain.commons.exceptions.GradeNotFoundException;
 import io.edukativ.myskoolin.domain.grades.Grade;
 import io.edukativ.myskoolin.domain.grades.GradeSerie;
 import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
@@ -288,7 +288,7 @@ public class Subject implements Comparable<Subject> {
         if(optGrade.isPresent()) {
             this.setGrade(optGrade.get());
         } else {
-            throw new NoGradeFoundException(String.format("No grade for subject %s", name));
+            throw new GradeNotFoundException(String.format("No grade for subject %s", name));
         }
     }
 

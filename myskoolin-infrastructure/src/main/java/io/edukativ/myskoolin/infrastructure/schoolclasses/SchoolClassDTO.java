@@ -5,7 +5,7 @@ import io.edukativ.myskoolin.infrastructure.dailybook.DailyBookTimeSlotVO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeSerieVO;
 import io.edukativ.myskoolin.infrastructure.teachers.TeachersBySubjectVO;
-import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableDTO;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -27,7 +27,7 @@ public class SchoolClassDTO implements Serializable {
     private List<String> headTeachers;
     private GradeDTO grade;
     private GradeSerieVO gradeSerie;
-    private SchoolClassTimeTableVO timetable;
+    private SchoolClassTimeTableDTO timetable;
     private List<DailyBookTimeSlotVO> dailyBook;
     private EnumSchoolClassNotation notation = EnumSchoolClassNotation.QUARTER;
     private List<TeachersBySubjectVO> teachersBySubjects;
@@ -120,11 +120,11 @@ public class SchoolClassDTO implements Serializable {
         this.gradeSerie = gradeSerie;
     }
 
-    public SchoolClassTimeTableVO getTimetable() {
+    public SchoolClassTimeTableDTO getTimetable() {
         return timetable;
     }
 
-    public void setTimetable(SchoolClassTimeTableVO timetable) {
+    public void setTimetable(SchoolClassTimeTableDTO timetable) {
         this.timetable = timetable;
     }
 
