@@ -3,6 +3,7 @@ package io.edukativ.myskoolin.infrastructure.schoolclasses;
 import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
 import io.edukativ.myskoolin.domain.schoolclasses.SchoolClassSPI;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
+import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableMapper;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +15,12 @@ public class SchoolClassProvider implements SchoolClassSPI {
 
     private final SchoolClassRepository schoolClassRepository;
     private final SchoolClassMapper schoolClassMapper;
+    private final SchoolClassTimeTableMapper schoolClassTimeTableMapper;
 
-    public SchoolClassProvider(SchoolClassRepository schoolClassRepository, SchoolClassMapper schoolClassMapper) {
+    public SchoolClassProvider(SchoolClassRepository schoolClassRepository, SchoolClassMapper schoolClassMapper, SchoolClassTimeTableMapper schoolClassTimeTableMapper) {
         this.schoolClassRepository = schoolClassRepository;
         this.schoolClassMapper = schoolClassMapper;
+        this.schoolClassTimeTableMapper = schoolClassTimeTableMapper;
     }
 
     @Override
@@ -27,7 +30,12 @@ public class SchoolClassProvider implements SchoolClassSPI {
     }
 
     @Override
-    public void saveTimeTable(SchoolClassTimeTable schoolClassTimeTable) {
-
+    public Optional<SchoolClass> saveTimeTable(SchoolClassTimeTable schoolClassTimeTable) {
+        final Optional<SchoolClassDbDTO> optSchoolClass = schoolClassRepository.findById(new ObjectId(schoolClassTimeTable.getSchoolClass().getId()));
+        return optSchoolClass.map(schoolClassDbDTO -> {
+            schoolClassDbDTO.setTimetable(schoolClassTimeTableMapper.domainToDbVo(schoolClassTimeTable));
+            schoolClassRepository.save(schoolClassDbDTO);
+            return schoolClassMapper.dbDtoToDomain(schoolClassDbDTO);
+        });
     }
 }

@@ -98,6 +98,9 @@ public class DatabaseConfiguration {
         } else if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
             log.debug("--------------> Configuring Mongobee for DEV...");
             mongobee.setChangeLogsScanPackage(DEV_DB_MIGRATION_PACKAGE);
+        } else if (activeProfiles.contains("it")) {
+            log.debug("--------------> Configuring Mongobee for Integration Tests...");
+            mongobee.setChangeLogsScanPackage(DEV_DB_MIGRATION_PACKAGE);
         }
         return mongobee;
     }
