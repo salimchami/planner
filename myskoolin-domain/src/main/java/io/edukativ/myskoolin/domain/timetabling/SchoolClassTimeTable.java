@@ -13,6 +13,7 @@ import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.api.solver.SolverStatus;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -101,6 +102,9 @@ public class SchoolClassTimeTable {
     }
 
     public List<Lesson> getLessons() {
+        if(this.lessons == null) {
+            return new ArrayList<>();
+        }
         return lessons;
     }
 
