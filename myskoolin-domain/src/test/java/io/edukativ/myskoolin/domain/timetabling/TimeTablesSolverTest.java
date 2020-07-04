@@ -17,13 +17,13 @@ import org.junit.jupiter.api.RepeatedTest;
 import java.util.List;
 import java.util.Map;
 
-class TimeTablesGenerationTest {
+class TimeTablesSolverTest {
 
     private List<SchoolRoom> allSchoolRooms;
     private List<Subject> subjects;
     private List<Teacher> teachers;
     private Map<Grade, TimeTableOptions> timeTableOptionsByGrade;
-    private TimeTablesGeneration sut;
+    private TimeTablesSolver sut;
     private TimeTableOptions clientTimeTableOptions;
 
     @BeforeEach

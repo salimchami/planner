@@ -53,9 +53,13 @@ public class SchoolClassTimeTable {
     private SolverStatus solverStatus;
 
     private Instant lastGenerationDate;
+
     private SchoolClass schoolClass;
 
     public SchoolClassTimeTable() {
+        this.timeSlots = new ArrayList<>();
+        this.lessons = new ArrayList<>();
+        this.events = new ArrayList<>();
     }
 
     public SchoolClassTimeTable(List<SchoolClass> schoolClasses, List<SchoolRoom> schoolRooms, List<Subject> subjects, List<Teacher> teachers) {
@@ -63,6 +67,9 @@ public class SchoolClassTimeTable {
         this.schoolRooms = schoolRooms;
         this.subjects = subjects;
         this.teachers = teachers;
+        this.timeSlots = new ArrayList<>();
+        this.lessons = new ArrayList<>();
+        this.events = new ArrayList<>();
     }
 
     @Override

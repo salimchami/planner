@@ -1,17 +1,46 @@
 package io.edukativ.myskoolin.infrastructure.timetabling;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
+import org.optaplanner.core.api.solver.SolverStatus;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 
-public class SchoolClassTimeTableVO implements Serializable {
+public class SchoolClassTimeTableDTO implements Serializable {
 
+    public String id;
     private List<LessonVO> staticTimeTable;
     private List<LessonVO> events;
     private Instant lastGenerationDate;
+    private SolverStatus solverStatus;
+    private HardSoftScore score;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public SolverStatus getSolverStatus() {
+        return solverStatus;
+    }
+
+    public void setSolverStatus(SolverStatus solverStatus) {
+        this.solverStatus = solverStatus;
+    }
+
+    public HardSoftScore getScore() {
+        return score;
+    }
+
+    public void setScore(HardSoftScore score) {
+        this.score = score;
+    }
 
     public List<LessonVO> getStaticTimeTable() {
         return staticTimeTable;
@@ -45,7 +74,7 @@ public class SchoolClassTimeTableVO implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        SchoolClassTimeTableVO that = (SchoolClassTimeTableVO) o;
+        SchoolClassTimeTableDTO that = (SchoolClassTimeTableDTO) o;
         return staticTimeTable.equals(that.staticTimeTable) &&
                 Objects.equals(events, that.events) &&
                 Objects.equals(lastGenerationDate, that.lastGenerationDate);

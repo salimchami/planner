@@ -1,5 +1,6 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
+import io.edukativ.myskoolin.domain.commons.exceptions.SchoolClassNotFoundException;
 import io.edukativ.myskoolin.domain.commons.utils.DateUtils;
 import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
 import io.edukativ.myskoolin.domain.schoolclasses.SchoolClassSPI;
@@ -12,19 +13,22 @@ import org.optaplanner.core.api.solver.SolverStatus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
-public class TimeTablesGeneration implements TimeTableGenerationAPI {
+public class TimeTablesSolver implements TimeTableSolverAPI {
 
     private final SolverManager<SchoolClassTimeTable, String> solverManager;
     private final SchoolClassSPI schoolClassSPI;
     private final ScoreManager<SchoolClassTimeTable> scoreManager;
     private final TimeTableSPI timeTableSPI;
 
-    public TimeTablesGeneration(SolverManager<SchoolClassTimeTable, String> solverManager,
-                                ScoreManager<SchoolClassTimeTable> scoreManager,
-                                SchoolClassSPI schoolClassSPI,
-                                TimeTableSPI timeTableSPI) {
+    public TimeTablesSolver(SolverManager<SchoolClassTimeTable, String> solverManager,
+                            ScoreManager<SchoolClassTimeTable> scoreManager,
+                            SchoolClassSPI schoolClassSPI,
+                            TimeTableSPI timeTableSPI) {
         this.solverManager = solverManager;
         this.schoolClassSPI = schoolClassSPI;
         this.scoreManager = scoreManager;
@@ -33,20 +37,22 @@ public class TimeTablesGeneration implements TimeTableGenerationAPI {
 
     @Override
     public List<String> solveForAllSchoolClasses(String clientId, List<SchoolRoom> schoolRooms, List<Subject> subjects,
-                                                 List<Teacher> teachers, List<SchoolClass> schoolClasses) {
-        List<String> ids = new ArrayList<>();
-        schoolClasses.forEach(schoolClass ->
-                ids.add(this.solveForSchoolClass(schoolClass.getId(), clientId, schoolRooms, subjects, teachers, schoolClasses)));
-        return ids;
+                                                 List<Teacher> teachers, List<SchoolClass> schoolClasses) throws ExecutionException, InterruptedException {
+        List<String> schoolClassTimeTablesId = new ArrayList<>();
+        for (SchoolClass schoolClass : schoolClasses) {
+            schoolClassTimeTablesId.add(this.solveForSchoolClass(schoolClass.getId(),
+                    clientId, schoolRooms, subjects, teachers, schoolClasses));
+        }
+        return schoolClassTimeTablesId;
     }
 
     @Override
     public Optional<SchoolClassTimeTable> getTimeTable(String timeTableId) {
-        SolverStatus solverStatus = solverStatus(timeTableId);
+        String solverStatus = solverStatus(timeTableId);
         Optional<SchoolClassTimeTable> optTimeTable = timeTableSPI.findById(timeTableId);
         return optTimeTable.map(timeTable -> {
             scoreManager.updateScore(timeTable); // Sets the score
-            timeTable.setSolverStatus(solverStatus);
+            timeTable.setSolverStatus(SolverStatus.valueOf(solverStatus));
             return timeTable;
         });
     }
@@ -63,20 +69,27 @@ public class TimeTablesGeneration implements TimeTableGenerationAPI {
 
     @Override
     public String solveForSchoolClass(String schoolClassId, String clientId, List<SchoolRoom> schoolRooms,
-                                      List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses) {
+                                                    List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses) throws ExecutionException, InterruptedException {
         Optional<SchoolClass> optSchoolClass = schoolClassSPI.findById(schoolClassId);
-        return optSchoolClass.map(schoolClass -> {
+        final SchoolClassTimeTable schoolClassTimeTable = new SchoolClassTimeTable(schoolClasses, schoolRooms, subjects, teachers);
+        if (optSchoolClass.isPresent()) {
             String timeTableSolvingId = DateUtils.concatClientIdAndNowTimestamp(clientId);
             solverManager.solveAndListen(timeTableSolvingId,
-                    id -> new SchoolClassTimeTable(schoolClasses, schoolRooms, subjects, teachers),
-                    schoolClassTimeTable -> saveTimeTable(schoolClass, schoolClassTimeTable));
+                    id -> schoolClassTimeTable,
+                    savedSchoolClassTimeTable -> saveTimeTable(optSchoolClass.get(), schoolClassTimeTable));
             return timeTableSolvingId;
-        }).orElse(null);
+        }
+        throw new SchoolClassNotFoundException("no school class found : " + schoolClassId);
     }
 
     @Override
-    public SolverStatus solverStatus(String timeTableId) {
-        return solverManager.getSolverStatus(timeTableId);
+    public String solverStatus(String timeTableId) {
+        return solverManager.getSolverStatus(timeTableId).name();
+    }
+
+    @Override
+    public Map<String, SolverStatus> solverStatus(List<String> timeTableIds) {
+        return timeTableIds.stream().collect(Collectors.toMap(id -> id, solverManager::getSolverStatus));
     }
 
     private void saveTimeTable(SchoolClass schoolClass, SchoolClassTimeTable schoolClassTimeTable) {

@@ -6,24 +6,29 @@ import io.edukativ.myskoolin.infrastructure.schoolclasses.SchoolClassMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", uses = {
         LessonMapper.class,
         ObjectIdMapper.class,
+        TimeSlotMapper.class,
         SchoolClassMapper.class,
 })
 public interface SchoolClassTimeTableMapper {
 
-    SchoolClassTimeTableVO dbVoToVo(SchoolClassTimeTableDbDTO param);
+    SchoolClassTimeTableDTO dbVoToVo(SchoolClassTimeTableDbDTO param);
 
     @Mapping(target = "score", ignore = true)
     SchoolClassTimeTable dbVoToDomain(SchoolClassTimeTableDbDTO param);
 
-    SchoolClassTimeTableDbDTO voToDbVo(SchoolClassTimeTableVO param);
+    SchoolClassTimeTableDbDTO voToDbVo(SchoolClassTimeTableDTO param);
 
-    SchoolClassTimeTable voToDomain(SchoolClassTimeTableVO param);
+    SchoolClassTimeTable voToDomain(SchoolClassTimeTableDTO param);
 
     SchoolClassTimeTableDbDTO domainToDbVo(SchoolClassTimeTable param);
 
-    SchoolClassTimeTableVO domainToVo(SchoolClassTimeTable param);
+    @Mapping(source = "lessons", target = "staticTimeTable")
+    SchoolClassTimeTableDTO domainToVo(SchoolClassTimeTable param);
 
+    List<SchoolClassTimeTableDTO> domainsToVos(List<SchoolClassTimeTable> timeTables);
 }

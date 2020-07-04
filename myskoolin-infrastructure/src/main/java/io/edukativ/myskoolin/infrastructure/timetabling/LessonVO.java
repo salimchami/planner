@@ -5,7 +5,9 @@ import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDTO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDTO;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherDTO;
 
-public class LessonVO {
+import java.io.Serializable;
+
+public class LessonVO implements Serializable {
 
     private String id;
     private SchoolRoomDTO schoolRoom;

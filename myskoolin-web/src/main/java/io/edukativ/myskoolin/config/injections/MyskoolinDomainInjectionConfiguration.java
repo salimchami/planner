@@ -20,9 +20,9 @@ import io.edukativ.myskoolin.domain.teachers.TeacherMailingSPI;
 import io.edukativ.myskoolin.domain.teachers.TeacherSPI;
 import io.edukativ.myskoolin.domain.teachers.TeacherService;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
-import io.edukativ.myskoolin.domain.timetabling.TimeTableGenerationAPI;
+import io.edukativ.myskoolin.domain.timetabling.TimeTableSolverAPI;
 import io.edukativ.myskoolin.domain.timetabling.TimeTableSPI;
-import io.edukativ.myskoolin.domain.timetabling.TimeTablesGeneration;
+import io.edukativ.myskoolin.domain.timetabling.TimeTablesSolver;
 import org.optaplanner.core.api.score.ScoreManager;
 import org.optaplanner.core.api.solver.SolverManager;
 import org.springframework.context.annotation.Bean;
@@ -59,10 +59,10 @@ public class MyskoolinDomainInjectionConfiguration {
     }
 
     @Bean
-    public TimeTableGenerationAPI timeTableGenerationAPI(SolverManager<SchoolClassTimeTable, String> solverManager,
-                                                         ScoreManager<SchoolClassTimeTable> scoreManager,
-                                                         SchoolClassSPI schoolClassSPI,
-                                                         TimeTableSPI timeTableSPI) {
-        return new TimeTablesGeneration(solverManager, scoreManager, schoolClassSPI, timeTableSPI);
+    public TimeTableSolverAPI timeTableGenerationAPI(SolverManager<SchoolClassTimeTable, String> solverManager,
+                                                     ScoreManager<SchoolClassTimeTable> scoreManager,
+                                                     SchoolClassSPI schoolClassSPI,
+                                                     TimeTableSPI timeTableSPI) {
+        return new TimeTablesSolver(solverManager, scoreManager, schoolClassSPI, timeTableSPI);
     }
 }
