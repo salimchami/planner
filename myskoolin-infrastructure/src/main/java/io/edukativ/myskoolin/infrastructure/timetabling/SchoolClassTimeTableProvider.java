@@ -22,4 +22,10 @@ public class SchoolClassTimeTableProvider implements TimeTableSPI {
         final Optional<SchoolClassTimeTableDbDTO> optTimetable = schoolClassTimeTableRepository.findById(timeTableId);
         return optTimetable.map(schoolClassTimeTableMapper::dbVoToDomain);
     }
+
+    @Override
+    public void saveTimeTable(SchoolClassTimeTable schoolClassTimeTable) {
+        final SchoolClassTimeTableDbDTO schoolClassTimeTableDbDTO = schoolClassTimeTableMapper.domainToDbVo(schoolClassTimeTable);
+        schoolClassTimeTableRepository.save(schoolClassTimeTableDbDTO);
+    }
 }
