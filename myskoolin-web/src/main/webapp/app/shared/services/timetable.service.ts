@@ -22,7 +22,7 @@ export class TimetableService {
     generateTimetables(req?: any): Observable<HttpResponse<SchoolClass[]>> {
         const options = createRequestOption(req);
         return this.http.get<SchoolClass[]>(this.resourceUrl
-            // + '/generate?timestamp=' + this.dateTimeHelper.timestamp(new Date())
+            + '/solve?timestamp=' + this.dateTimeHelper.timestamp(new Date())
             ,
             {params: options, observe: 'response'})
             .pipe(map((res: HttpResponse<SchoolClass[]>) =>

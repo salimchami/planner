@@ -9,17 +9,14 @@ import org.optaplanner.core.api.solver.SolverStatus;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 
 public interface TimeTableSolverAPI {
 
     void solveForAllSchoolClasses(String clientId, List<SchoolRoom> schoolRooms,
-                                  List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses)
-            throws ExecutionException, InterruptedException;
+                                  List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses);
 
     void solveForSchoolClass(String schoolClassId, String clientId, List<SchoolRoom> schoolRooms,
-                             List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses)
-            throws ExecutionException, InterruptedException;
+                             List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses);
 
     Optional<SchoolClassTimeTable> timeTableById(String timeTableId);
 

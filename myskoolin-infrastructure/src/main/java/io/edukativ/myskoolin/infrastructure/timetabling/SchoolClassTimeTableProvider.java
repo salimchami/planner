@@ -24,8 +24,9 @@ public class SchoolClassTimeTableProvider implements TimeTableSPI {
     }
 
     @Override
-    public void saveTimeTable(SchoolClassTimeTable schoolClassTimeTable) {
+    public SchoolClassTimeTable saveTimeTable(SchoolClassTimeTable schoolClassTimeTable) {
         final SchoolClassTimeTableDbDTO schoolClassTimeTableDbDTO = schoolClassTimeTableMapper.domainToDbVo(schoolClassTimeTable);
-        schoolClassTimeTableRepository.save(schoolClassTimeTableDbDTO);
+        final SchoolClassTimeTableDbDTO savedTimeTable = schoolClassTimeTableRepository.save(schoolClassTimeTableDbDTO);
+        return schoolClassTimeTableMapper.dbVoToDomain(savedTimeTable);
     }
 }

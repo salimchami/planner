@@ -12,7 +12,6 @@ import org.optaplanner.core.api.solver.SolverStatus;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class TimeTablesSolver implements TimeTableSolverAPI {
@@ -34,7 +33,7 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
 
     @Override
     public void solveForAllSchoolClasses(String clientId, List<SchoolRoom> schoolRooms, List<Subject> subjects,
-                                         List<Teacher> teachers, List<SchoolClass> schoolClasses) throws ExecutionException, InterruptedException {
+                                         List<Teacher> teachers, List<SchoolClass> schoolClasses) {
         for (SchoolClass schoolClass : schoolClasses) {
             this.solveForSchoolClass(schoolClass.getId(),
                     clientId, schoolRooms, subjects, teachers, schoolClasses);
@@ -64,12 +63,16 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
 
     @Override
     public void solveForSchoolClass(String schoolClassId, String clientId, List<SchoolRoom> schoolRooms,
-                                    List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses) throws ExecutionException, InterruptedException {
+                                    List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses) {
         Optional<SchoolClass> optSchoolClass = schoolClassSPI.findById(schoolClassId);
-        final SchoolClassTimeTable schoolClassTimeTable = new SchoolClassTimeTable(schoolClasses, schoolRooms, subjects, teachers);
-        optSchoolClass.ifPresent(schoolClass -> solverManager.solveAndListen(schoolClassId,
-                id -> schoolClassTimeTable,
-                savedSchoolClassTimeTable -> saveTimeTable(schoolClass, schoolClassTimeTable)));
+        optSchoolClass.ifPresent(schoolClass -> {
+            final SchoolClassTimeTable schoolClassTimeTable = new SchoolClassTimeTable(schoolClasses, schoolRooms, subjects, teachers);
+            solverManager.solveAndListen(
+                    schoolClassId,
+                    id -> schoolClassTimeTable,
+                    savedSchoolClassTimeTable -> saveTimeTable(schoolClassId, schoolClassTimeTable)
+            );
+        });
     }
 
     @Override
@@ -82,9 +85,8 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
         return timeTableIds.stream().collect(Collectors.toMap(id -> id, solverManager::getSolverStatus));
     }
 
-    private void saveTimeTable(SchoolClass schoolClass, SchoolClassTimeTable schoolClassTimeTable) {
-        schoolClassTimeTable.setSchoolClass(schoolClass);
-        schoolClassSPI.saveTimeTable(schoolClassTimeTable);
-        timeTableSPI.saveTimeTable(schoolClassTimeTable);
+    private void saveTimeTable(String schoolClassId, SchoolClassTimeTable schoolClassTimeTable) {
+        final SchoolClassTimeTable savedSchoolClassTimeTable = timeTableSPI.saveTimeTable(schoolClassTimeTable);
+        schoolClassSPI.saveTimeTable(schoolClassId, savedSchoolClassTimeTable);
     }
 }

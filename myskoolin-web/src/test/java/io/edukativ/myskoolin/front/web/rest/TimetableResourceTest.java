@@ -4,6 +4,8 @@ import io.edukativ.myskoolin.config.MySkoolinIntegrationTests;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.optaplanner.core.api.solver.SolverStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import static io.edukativ.myskoolin.config.JsonReader.toExpectedJson;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -11,6 +13,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class TimetableResourceTest extends MySkoolinIntegrationTests {
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Test
     @Timeout(600_000)

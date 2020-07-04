@@ -30,8 +30,8 @@ public class SchoolClassProvider implements SchoolClassSPI {
     }
 
     @Override
-    public Optional<SchoolClass> saveTimeTable(SchoolClassTimeTable schoolClassTimeTable) {
-        final Optional<SchoolClassDbDTO> optSchoolClass = schoolClassRepository.findById(new ObjectId(schoolClassTimeTable.getSchoolClass().getId()));
+    public Optional<SchoolClass> saveTimeTable(String schoolClassId, SchoolClassTimeTable schoolClassTimeTable) {
+        final Optional<SchoolClassDbDTO> optSchoolClass = schoolClassRepository.findById(new ObjectId(schoolClassId));
         return optSchoolClass.map(schoolClassDbDTO -> {
             schoolClassDbDTO.setTimetable(schoolClassTimeTableMapper.domainToDbVo(schoolClassTimeTable));
             schoolClassRepository.save(schoolClassDbDTO);

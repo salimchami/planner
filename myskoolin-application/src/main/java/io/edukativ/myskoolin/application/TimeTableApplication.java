@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 
 @Component
 public class TimeTableApplication {
@@ -61,7 +60,7 @@ public class TimeTableApplication {
     }
 
     @Transactional
-    public void solveNewTimeTablesForSchoolClasses() throws ExecutionException, InterruptedException {
+    public void solveNewTimeTablesForSchoolClasses() {
         final UserDbDTO currentUser = userService.currentUserWithAuthorities();
         final ObjectId clientId = currentUser.getClientId();
         final List<SchoolRoomDbDTO> schoolRooms = schoolRoomRepository.findByClientId(false, clientId);
@@ -76,7 +75,7 @@ public class TimeTableApplication {
     }
 
     @Transactional
-    public void solveNewTimeTablesForSchoolClass(String id) throws ExecutionException, InterruptedException {
+    public void solveNewTimeTablesForSchoolClass(String id) {
         final UserDbDTO currentUser = userService.currentUserWithAuthorities();
         final ObjectId clientId = currentUser.getClientId();
         final List<SchoolRoomDbDTO> schoolRooms = schoolRoomRepository.findByClientId(false, clientId);
