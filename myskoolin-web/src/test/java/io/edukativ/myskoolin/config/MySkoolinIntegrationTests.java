@@ -19,7 +19,7 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = MyskoolinApp.class)
-@ActiveProfiles("it")
+@ActiveProfiles("dev")
 @AutoConfigureMockMvc
 public class MySkoolinIntegrationTests implements InitializingBean {
 
@@ -38,7 +38,7 @@ public class MySkoolinIntegrationTests implements InitializingBean {
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         endPointCaller = new EndPointCaller(mockMvc);
     }
 

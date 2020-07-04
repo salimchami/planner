@@ -1,7 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.timetabling;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.api.solver.SolverStatus;
 
 import java.io.Serializable;
@@ -11,12 +10,12 @@ import java.util.Objects;
 
 public class SchoolClassTimeTableDTO implements Serializable {
 
-    public String id;
+    private String id;
     private List<LessonVO> staticTimeTable;
     private List<LessonVO> events;
     private Instant lastGenerationDate;
     private SolverStatus solverStatus;
-    private HardSoftScore score;
+    private HardSoftScoreVO score;
 
     public String getId() {
         return id;
@@ -34,11 +33,11 @@ public class SchoolClassTimeTableDTO implements Serializable {
         this.solverStatus = solverStatus;
     }
 
-    public HardSoftScore getScore() {
+    public HardSoftScoreVO getScore() {
         return score;
     }
 
-    public void setScore(HardSoftScore score) {
+    public void setScore(HardSoftScoreVO score) {
         this.score = score;
     }
 

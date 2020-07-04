@@ -1,7 +1,5 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
-import io.edukativ.myskoolin.domain.commons.exceptions.SchoolClassNotFoundException;
-import io.edukativ.myskoolin.domain.commons.utils.DateUtils;
 import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
 import io.edukativ.myskoolin.domain.schoolclasses.SchoolClassSPI;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
@@ -11,7 +9,6 @@ import org.optaplanner.core.api.score.ScoreManager;
 import org.optaplanner.core.api.solver.SolverManager;
 import org.optaplanner.core.api.solver.SolverStatus;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -36,18 +33,16 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
     }
 
     @Override
-    public List<String> solveForAllSchoolClasses(String clientId, List<SchoolRoom> schoolRooms, List<Subject> subjects,
-                                                 List<Teacher> teachers, List<SchoolClass> schoolClasses) throws ExecutionException, InterruptedException {
-        List<String> schoolClassTimeTablesId = new ArrayList<>();
+    public void solveForAllSchoolClasses(String clientId, List<SchoolRoom> schoolRooms, List<Subject> subjects,
+                                         List<Teacher> teachers, List<SchoolClass> schoolClasses) throws ExecutionException, InterruptedException {
         for (SchoolClass schoolClass : schoolClasses) {
-            schoolClassTimeTablesId.add(this.solveForSchoolClass(schoolClass.getId(),
-                    clientId, schoolRooms, subjects, teachers, schoolClasses));
+            this.solveForSchoolClass(schoolClass.getId(),
+                    clientId, schoolRooms, subjects, teachers, schoolClasses);
         }
-        return schoolClassTimeTablesId;
     }
 
     @Override
-    public Optional<SchoolClassTimeTable> getTimeTable(String timeTableId) {
+    public Optional<SchoolClassTimeTable> timeTableById(String timeTableId) {
         String solverStatus = solverStatus(timeTableId);
         Optional<SchoolClassTimeTable> optTimeTable = timeTableSPI.findById(timeTableId);
         return optTimeTable.map(timeTable -> {
@@ -68,18 +63,13 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
     }
 
     @Override
-    public String solveForSchoolClass(String schoolClassId, String clientId, List<SchoolRoom> schoolRooms,
-                                                    List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses) throws ExecutionException, InterruptedException {
+    public void solveForSchoolClass(String schoolClassId, String clientId, List<SchoolRoom> schoolRooms,
+                                    List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses) throws ExecutionException, InterruptedException {
         Optional<SchoolClass> optSchoolClass = schoolClassSPI.findById(schoolClassId);
         final SchoolClassTimeTable schoolClassTimeTable = new SchoolClassTimeTable(schoolClasses, schoolRooms, subjects, teachers);
-        if (optSchoolClass.isPresent()) {
-            String timeTableSolvingId = DateUtils.concatClientIdAndNowTimestamp(clientId);
-            solverManager.solveAndListen(timeTableSolvingId,
-                    id -> schoolClassTimeTable,
-                    savedSchoolClassTimeTable -> saveTimeTable(optSchoolClass.get(), schoolClassTimeTable));
-            return timeTableSolvingId;
-        }
-        throw new SchoolClassNotFoundException("no school class found : " + schoolClassId);
+        optSchoolClass.ifPresent(schoolClass -> solverManager.solveAndListen(schoolClassId,
+                id -> schoolClassTimeTable,
+                savedSchoolClassTimeTable -> saveTimeTable(schoolClass, schoolClassTimeTable)));
     }
 
     @Override
@@ -95,5 +85,6 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
     private void saveTimeTable(SchoolClass schoolClass, SchoolClassTimeTable schoolClassTimeTable) {
         schoolClassTimeTable.setSchoolClass(schoolClass);
         schoolClassSPI.saveTimeTable(schoolClassTimeTable);
+        timeTableSPI.saveTimeTable(schoolClassTimeTable);
     }
 }

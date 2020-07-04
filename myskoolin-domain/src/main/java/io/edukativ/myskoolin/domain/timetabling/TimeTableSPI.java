@@ -5,4 +5,7 @@ import java.util.Optional;
 public interface TimeTableSPI {
 
     Optional<SchoolClassTimeTable> findById(String timeTableId);
+
+    void saveTimeTable(SchoolClassTimeTable schoolClassTimeTable);
+
 }

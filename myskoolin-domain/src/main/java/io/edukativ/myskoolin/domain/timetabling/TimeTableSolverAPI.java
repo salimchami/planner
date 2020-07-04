@@ -13,15 +13,15 @@ import java.util.concurrent.ExecutionException;
 
 public interface TimeTableSolverAPI {
 
-    List<String> solveForAllSchoolClasses(String clientId, List<SchoolRoom> schoolRooms,
-                                          List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses)
+    void solveForAllSchoolClasses(String clientId, List<SchoolRoom> schoolRooms,
+                                  List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses)
             throws ExecutionException, InterruptedException;
 
-    String solveForSchoolClass(String schoolClassId, String clientId, List<SchoolRoom> schoolRooms,
-                               List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses)
+    void solveForSchoolClass(String schoolClassId, String clientId, List<SchoolRoom> schoolRooms,
+                             List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses)
             throws ExecutionException, InterruptedException;
 
-    Optional<SchoolClassTimeTable> getTimeTable(String timeTableId);
+    Optional<SchoolClassTimeTable> timeTableById(String timeTableId);
 
     void stopSolving(String timeTableId);
 
