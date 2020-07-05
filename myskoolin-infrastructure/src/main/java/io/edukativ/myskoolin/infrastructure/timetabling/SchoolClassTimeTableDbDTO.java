@@ -15,7 +15,7 @@ public class SchoolClassTimeTableDbDTO implements Serializable {
 
     public static final String MONGO_FIELD_EVENTS = "events";
     public static final String MONGO_FIELD_LAST_GENERATION_DATE = "last_generation_date";
-    public static final String MONGO_FIELD_SCHOOL_CLASSES = "school_classes";
+    public static final String MONGO_FIELD_SCORES = "scores";
     public static final String MONGO_FIELD_LESSONS = "lessons";
     public static final String MONGO_FIELD_SOLVER_STATUS = "solver_status";
 
@@ -28,7 +28,7 @@ public class SchoolClassTimeTableDbDTO implements Serializable {
     @Field(MONGO_FIELD_EVENTS)
     private List<LessonDbVO> events;
 
-    @Field(MONGO_FIELD_SCHOOL_CLASSES)
+    @Field(MONGO_FIELD_SCORES)
     private HardSoftScoreDbVO score;
 
     @Field(MONGO_FIELD_SOLVER_STATUS)
