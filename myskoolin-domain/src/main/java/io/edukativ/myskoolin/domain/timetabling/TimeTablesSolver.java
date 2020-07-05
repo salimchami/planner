@@ -64,10 +64,9 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
     @Override
     public void solveForSchoolClass(String schoolClassId, String clientId, List<SchoolRoom> schoolRooms,
                                     List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses) {
-
         Optional<SchoolClass> optSchoolClass = schoolClassSPI.findById(schoolClassId);
         optSchoolClass.ifPresent(schoolClass -> {
-            final SchoolClassTimeTable schoolClassTimeTable = new SchoolClassTimeTable(schoolClasses, schoolRooms, subjects, teachers);
+            final SchoolClassTimeTable schoolClassTimeTable = new SchoolClassTimeTable(schoolClass, schoolClasses, schoolRooms, subjects, teachers);
             solverManager.solveAndListen(
                     schoolClassId,
                     id -> schoolClassTimeTable,
