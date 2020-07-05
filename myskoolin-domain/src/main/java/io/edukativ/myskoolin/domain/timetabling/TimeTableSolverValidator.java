@@ -12,14 +12,14 @@ import java.util.Map;
 
 import static java.util.Comparator.comparing;
 
-public class TimeTableGenerationData {
+public class TimeTableSolverValidator {
 
     private SchoolClass schoolClass;
     private List<EnumDays> refDays;
     private List<Subject> subjects;
     private Map<Subject, Integer> durationsValidations;
 
-    public TimeTableGenerationData(List<EnumDays> refDays, SchoolClass schoolClass, List<Subject> subjects) {
+    public TimeTableSolverValidator(List<EnumDays> refDays, SchoolClass schoolClass, List<Subject> subjects) {
         this.refDays = refDays;
         this.schoolClass = schoolClass;
         subjects.sort(comparing(Subject::getCoursesFrequencyPerWeek).reversed());

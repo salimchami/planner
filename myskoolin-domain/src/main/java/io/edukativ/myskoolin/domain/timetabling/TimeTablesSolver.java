@@ -70,7 +70,7 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
             solverManager.solveAndListen(
                     schoolClassId,
                     id -> schoolClassTimeTable,
-                    savedSchoolClassTimeTable -> saveTimeTable(schoolClassId, schoolClassTimeTable)
+                    solvedSchoolClassTimeTable -> saveTimeTable(schoolClassId, solvedSchoolClassTimeTable)
             );
         });
     }
@@ -86,7 +86,9 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
     }
 
     private void saveTimeTable(String schoolClassId, SchoolClassTimeTable schoolClassTimeTable) {
-        final SchoolClassTimeTable savedSchoolClassTimeTable = timeTableSPI.saveTimeTable(schoolClassTimeTable);
-        schoolClassSPI.saveTimeTable(schoolClassId, savedSchoolClassTimeTable);
+        if (schoolClassTimeTable.getScore().isFeasible()) {
+            final SchoolClassTimeTable savedSchoolClassTimeTable = timeTableSPI.saveTimeTable(schoolClassTimeTable);
+            schoolClassSPI.saveTimeTable(schoolClassId, savedSchoolClassTimeTable);
+        }
     }
 }
