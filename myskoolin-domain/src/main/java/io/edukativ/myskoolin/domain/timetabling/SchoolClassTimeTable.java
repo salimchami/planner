@@ -1,5 +1,6 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
+import io.edukativ.myskoolin.domain.commercial.Client;
 import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.subjects.Subject;
@@ -20,8 +21,6 @@ import java.util.Objects;
 @PlanningSolution
 public class SchoolClassTimeTable {
 
-    private String id;
-
     @PlanningEntityCollectionProperty
     private List<Lesson> lessons;
 
@@ -35,16 +34,16 @@ public class SchoolClassTimeTable {
     @ValueRangeProvider(id = "schoolRoomRange")
     private List<SchoolRoom> schoolRooms;
 
-    @ProblemFactCollectionProperty
-    @ValueRangeProvider(id = "subjectRange")
+//    @ProblemFactCollectionProperty
+//    @ValueRangeProvider(id = "subjectRange")
     private List<Subject> subjects;
 
-    @ProblemFactCollectionProperty
-    @ValueRangeProvider(id = "teacherRange")
+//    @ProblemFactCollectionProperty
+//    @ValueRangeProvider(id = "teacherRange")
     private List<Teacher> teachers;
 
-    @ProblemFactCollectionProperty
-    @ValueRangeProvider(id = "schoolClassRange")
+//    @ProblemFactCollectionProperty
+//    @ValueRangeProvider(id = "schoolClassRange")
     private List<SchoolClass> schoolClasses;
 
     @PlanningScore
@@ -65,7 +64,7 @@ public class SchoolClassTimeTable {
         this.schoolRooms = schoolRooms;
         this.subjects = subjects;
         this.teachers = teachers;
-        this.timeSlots = new ArrayList<>();
+        this.timeSlots = Client.defaultCoursesTimeSlots();
         this.lessons = new ArrayList<>();
         this.events = new ArrayList<>();
     }
@@ -96,14 +95,6 @@ public class SchoolClassTimeTable {
                 ", events=" + events +
                 ", lastGenerationDate=" + lastGenerationDate +
                 '}';
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public List<Lesson> getLessons() {

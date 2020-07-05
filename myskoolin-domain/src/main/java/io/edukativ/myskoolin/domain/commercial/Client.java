@@ -145,38 +145,43 @@ public class Client {
                 defaultCoursesTimeSlots(), defaultExtraActivities(), 30);
     }
 
-    private static void addPmExtraActivities(List<TimeSlot> courses, String courseTitle, String bgColor, String fontColorCssClass, EnumDays enumDays) {
-        courses.add(new TimeSlot(courseTitle, enumDays,
+    private static void addPmExtraActivities(List<TimeSlot> courses, String lessonTitle, String bgColor, String fontColorCssClass, EnumDays enumDays) {
+        courses.add(new TimeSlot(nextTimeSlotId(courses), lessonTitle, enumDays,
                 new Time(13, 0, 0, EnumPartsOfDay.PM),
                 new Time(18, 30, 0, EnumPartsOfDay.PM), bgColor, fontColorCssClass));
     }
 
-    private static void addPmCourses(List<TimeSlot> courses, String courseTitle, String bgColor, String fontColorCssClass, EnumDays enumDays) {
-        courses.add(new TimeSlot(courseTitle, enumDays,
+    private static Long nextTimeSlotId(List<TimeSlot> timeSlots) {
+        return timeSlots.stream().map(TimeSlot::getId).mapToLong(value -> value + 1).max().orElse(0);
+    }
+
+    private static void addPmCourses(List<TimeSlot> courses, String lessonTitle, String bgColor, String fontColorCssClass, EnumDays enumDays) {
+        courses.add(new TimeSlot(nextTimeSlotId(courses), lessonTitle, enumDays,
                 new Time(14, 0, 0, EnumPartsOfDay.PM),
                 new Time(15, 0, 0, EnumPartsOfDay.PM), bgColor, fontColorCssClass));
-        courses.add(new TimeSlot(courseTitle, enumDays,
+
+        courses.add(new TimeSlot(nextTimeSlotId(courses), lessonTitle, enumDays,
                 new Time(15, 0, 0, EnumPartsOfDay.PM),
                 new Time(16, 0, 0, EnumPartsOfDay.PM), bgColor, fontColorCssClass));
-        courses.add(new TimeSlot(courseTitle, enumDays,
+        courses.add(new TimeSlot(nextTimeSlotId(courses), lessonTitle, enumDays,
                 new Time(16, 0, 0, EnumPartsOfDay.PM),
                 new Time(17, 0, 0, EnumPartsOfDay.PM), bgColor, fontColorCssClass));
-        courses.add(new TimeSlot(courseTitle, enumDays,
+        courses.add(new TimeSlot(nextTimeSlotId(courses), lessonTitle, enumDays,
                 new Time(17, 0, 0, EnumPartsOfDay.PM),
                 new Time(18, 0, 0, EnumPartsOfDay.PM), bgColor, fontColorCssClass));
     }
 
-    private static void addAmCourses(List<TimeSlot> courses, String courseTitle, String bgColor, String fontColorCssClass, EnumDays enumDays) {
-        courses.add(new TimeSlot(courseTitle, enumDays,
+    private static void addAmCourses(List<TimeSlot> courses, String lessonTitle, String bgColor, String fontColorCssClass, EnumDays enumDays) {
+        courses.add(new TimeSlot(nextTimeSlotId(courses), lessonTitle, enumDays,
                 new Time(8, 0, 0, EnumPartsOfDay.AM),
                 new Time(9, 0, 0, EnumPartsOfDay.AM), bgColor, fontColorCssClass));
-        courses.add(new TimeSlot(courseTitle, enumDays,
+        courses.add(new TimeSlot(nextTimeSlotId(courses), lessonTitle, enumDays,
                 new Time(9, 0, 0, EnumPartsOfDay.AM),
                 new Time(10, 0, 0, EnumPartsOfDay.AM), bgColor, fontColorCssClass));
-        courses.add(new TimeSlot(courseTitle, enumDays,
+        courses.add(new TimeSlot(nextTimeSlotId(courses), lessonTitle, enumDays,
                 new Time(10, 0, 0, EnumPartsOfDay.AM),
                 new Time(11, 0, 0, EnumPartsOfDay.AM), bgColor, fontColorCssClass));
-        courses.add(new TimeSlot(courseTitle, enumDays,
+        courses.add(new TimeSlot(nextTimeSlotId(courses), lessonTitle, enumDays,
                 new Time(11, 0, 0, EnumPartsOfDay.AM),
                 new Time(12, 0, 0, EnumPartsOfDay.PM), bgColor, fontColorCssClass));
     }
