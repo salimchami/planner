@@ -1,6 +1,7 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
 import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
+import org.optaplanner.core.api.domain.lookup.PlanningId;
 
 import java.time.Duration;
 import java.time.ZonedDateTime;
@@ -10,6 +11,8 @@ import static java.util.Comparator.comparing;
 
 public class TimeSlot implements Comparable<TimeSlot> {
 
+    @PlanningId
+    private Long id;
     private String title;
     private String secondTitle;
     private String comment;
@@ -26,7 +29,8 @@ public class TimeSlot implements Comparable<TimeSlot> {
     public TimeSlot() {
     }
 
-    public TimeSlot(String courseTitle, EnumDays day, Time startTime, Time endTime, String bgColor, String fontColorCssClass) {
+    public TimeSlot(Long id, String courseTitle, EnumDays day, Time startTime, Time endTime, String bgColor, String fontColorCssClass) {
+        this.id = id;
         this.title = courseTitle;
         this.day = day;
         this.startTime = startTime;
@@ -273,5 +277,13 @@ public class TimeSlot implements Comparable<TimeSlot> {
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 '}';
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

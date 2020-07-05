@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public final class GradeTestProvider {
-
+    //FIXME : put the instantiation in a constructor because of timeslots ids
     public static Grade sixiemeGrade = GradeTestProvider.grade(Client.defaultTimeTableOptions(),
             GlobalTestProvider.Grades.GRADE_SIXIEME_ID, "SIXIEME", 7 * 60, 30 * 60);
 

@@ -1,13 +1,13 @@
 package io.edukativ.myskoolin.domain.teachers;
 
+import io.edukativ.myskoolin.domain.absences.Absence;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.domain.commons.entity.Authority;
-import io.edukativ.myskoolin.domain.grades.Grade;
-import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.commons.entity.User;
-import io.edukativ.myskoolin.domain.absences.Absence;
+import io.edukativ.myskoolin.domain.grades.Grade;
 import io.edukativ.myskoolin.domain.medical.InfirmaryStatistics;
 import io.edukativ.myskoolin.domain.medical.MedicalInfos;
+import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.timetabling.Lesson;
 
 import java.time.ZonedDateTime;
@@ -37,6 +37,9 @@ public class Teacher extends User {
     private ZonedDateTime exitDate;
     private String exitReason;
     private List<Grade> grades;
+
+    public Teacher() {
+    }
 
     public static List<Teacher> teachersByGrade(List<Teacher> teachers, Grade grade) {
         return teachers.stream().filter(teacher -> teacher.getGrades().contains(grade)).collect(Collectors.toList());

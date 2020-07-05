@@ -5,17 +5,19 @@ import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
 import org.optaplanner.core.api.domain.entity.PlanningEntity;
+import org.optaplanner.core.api.domain.lookup.PlanningId;
 import org.optaplanner.core.api.domain.variable.PlanningVariable;
 
 @PlanningEntity
 public class Lesson {
 
-    private String id;
+    @PlanningId
+    private Long id;
     @PlanningVariable(valueRangeProviderRefs = "schoolRoomRange")
     private SchoolRoom schoolRoom;
-    @PlanningVariable(valueRangeProviderRefs = "subjectRange")
+//    @PlanningVariable(valueRangeProviderRefs = "subjectRange")
     private Subject subject;
-    @PlanningVariable(valueRangeProviderRefs = "teacherRange")
+//    @PlanningVariable(valueRangeProviderRefs = "teacherRange")
     private Teacher teacher;
     @PlanningVariable(valueRangeProviderRefs = "timeSlotRange")
     private TimeSlot timeSlot;
@@ -26,7 +28,7 @@ public class Lesson {
     public Lesson() {
     }
 
-    public Lesson(String id, SchoolRoom schoolRoom, Subject subject, Teacher teacher, TimeSlot timeSlot, SchoolClass schoolClass) {
+    public Lesson(Long id, SchoolRoom schoolRoom, Subject subject, Teacher teacher, TimeSlot timeSlot, SchoolClass schoolClass) {
         this.id = id;
         this.schoolRoom = schoolRoom;
         this.subject = subject;
@@ -35,7 +37,7 @@ public class Lesson {
         this.schoolClass = schoolClass;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -55,7 +57,7 @@ public class Lesson {
         return timeSlot;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

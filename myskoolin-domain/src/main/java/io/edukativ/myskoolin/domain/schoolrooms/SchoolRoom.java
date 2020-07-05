@@ -17,6 +17,7 @@ public class SchoolRoom {
 
     @PlanningId
     private String id;
+
     private String clientId;
     private List<SchoolRoomDistance> distances;
     private List<Lesson> timetable;
