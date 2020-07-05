@@ -193,10 +193,12 @@ public class Teacher extends User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Teacher teacher = (Teacher) o;
-        return employedDate.equals(teacher.employedDate) &&
-                substitute.equals(teacher.substitute) &&
+
+        return Objects.equals(getId(), teacher.getId()) &&
+                Objects.equals(employedDate, teacher.employedDate) &&
+                Objects.equals(substitute, teacher.substitute) &&
                 Objects.equals(timetable, teacher.timetable) &&
-                grades.equals(teacher.grades);
+                Objects.equals(grades, teacher.grades);
     }
 
     @Override

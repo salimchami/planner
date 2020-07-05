@@ -34,16 +34,16 @@ public class SchoolClassTimeTable {
     @ValueRangeProvider(id = "schoolRoomRange")
     private List<SchoolRoom> schoolRooms;
 
-//    @ProblemFactCollectionProperty
-//    @ValueRangeProvider(id = "subjectRange")
+    @ProblemFactCollectionProperty
+    @ValueRangeProvider(id = "subjectRange")
     private List<Subject> subjects;
 
-//    @ProblemFactCollectionProperty
-//    @ValueRangeProvider(id = "teacherRange")
+    @ProblemFactCollectionProperty
+    @ValueRangeProvider(id = "teacherRange")
     private List<Teacher> teachers;
 
-//    @ProblemFactCollectionProperty
-//    @ValueRangeProvider(id = "schoolClassRange")
+    @ProblemFactCollectionProperty
+    @ValueRangeProvider(id = "schoolClassRange")
     private List<SchoolClass> schoolClasses;
 
     @PlanningScore
