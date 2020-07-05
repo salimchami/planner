@@ -45,6 +45,13 @@ public class TimeSlot implements Comparable<TimeSlot> {
         this.endTime = endTime;
     }
 
+    public TimeSlot(Long id, EnumDays day, Time startTime, Time endTime) {
+        this.id = id;
+        this.day = day;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     public String getTitle() {
         return title;
     }
