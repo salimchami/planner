@@ -61,15 +61,15 @@ public class TTSolverTest {
         constraintVerifier.verifyThat(TimeTableConstraintsProvider::teacherConflict)
                 .given(lesson1, lesson2)
                 .penalizesBy(expectedTeacherConflictPenalty);
-//        constraintVerifier.verifyThat(TimeTableConstraintsProvider::teacherRoomStability)
-//                .given(lesson1, lesson2)
-//                .penalizesBy(expectedTeacherRoomStabilityPenalty);
-//        constraintVerifier.verifyThat(TimeTableConstraintsProvider::teacherTimeEfficiency)
-//                .given(lesson1, lesson2)
-//                .penalizesBy(expectedTeacherTimeEfficiencyPenalty);
-//        constraintVerifier.verifyThat(TimeTableConstraintsProvider::timeSlotConflict)
-//                .given(lesson1, lesson2)
-//                .penalizesBy(expectedTimeSlotConflictPenalty);
+        constraintVerifier.verifyThat(TimeTableConstraintsProvider::teacherRoomStability)
+                .given(lesson1, lesson2)
+                .penalizesBy(expectedTeacherRoomStabilityPenalty);
+        constraintVerifier.verifyThat(TimeTableConstraintsProvider::teacherTimeEfficiency)
+                .given(lesson1, lesson2)
+                .rewardsWith(expectedTeacherTimeEfficiencyPenalty);
+        constraintVerifier.verifyThat(TimeTableConstraintsProvider::timeSlotConflict)
+                .given(lesson1, lesson2)
+                .penalizesBy(expectedTimeSlotConflictPenalty);
     }
 
 
@@ -77,37 +77,37 @@ public class TTSolverTest {
         prepareParams();
         return Stream.of(
                 Arguments.of("== schoolRoom, == subjects, == teacher, == timeSlot", schoolRoom1, schoolRoom1, subject1,
-                        subject1, teacher1, teacher1, timeSlot1, timeSlot1, schoolClass, 1, 1, 0, 1, 1, 1, 1),
+                        subject1, teacher1, teacher1, timeSlot1, timeSlot1, schoolClass, 1, 1, 0, 1, 0, 0, 4),
                 Arguments.of("== schoolRoom, == subjects, == teacher, <> timeSlot", schoolRoom1, schoolRoom1, subject1,
-                        subject1, teacher1, teacher1, timeSlot1, timeSlot2, schoolClass, 0, 0, 1, 0, 1, 1, 1),
+                        subject1, teacher1, teacher1, timeSlot1, timeSlot2, schoolClass, 0, 0, 1, 0, 0, 1, 2),
                 Arguments.of("== schoolRoom, == subjects, <> teacher, == timeSlot", schoolRoom1, schoolRoom1, subject1,
-                        subject1, teacher1, teacher2, timeSlot1, timeSlot1, schoolClass, 1, 1, 0, 0, 1, 1, 1),
+                        subject1, teacher1, teacher2, timeSlot1, timeSlot1, schoolClass, 1, 1, 0, 0, 0, 0, 4),
                 Arguments.of("== schoolRoom, == subjects, <> teacher, <> timeSlot", schoolRoom1, schoolRoom1, subject1,
-                        subject1, teacher1, teacher2, timeSlot1, timeSlot2, schoolClass, 0, 0, 1, 0, 1, 1, 1),
+                        subject1, teacher1, teacher2, timeSlot1, timeSlot2, schoolClass, 0, 0, 1, 0, 0, 0, 2),
                 Arguments.of("== schoolRoom, <> subjects, == teacher, == timeSlot", schoolRoom1, schoolRoom1, subject1,
-                        subject2, teacher1, teacher1, timeSlot1, timeSlot1, schoolClass, 1, 1, 0, 1, 1, 1, 1),
+                        subject2, teacher1, teacher1, timeSlot1, timeSlot1, schoolClass, 1, 1, 0, 1, 0, 0, 4),
                 Arguments.of("== schoolRoom, <> subjects, == teacher, <> timeSlot", schoolRoom1, schoolRoom1, subject1,
-                        subject2, teacher1, teacher1, timeSlot1, timeSlot2, schoolClass, 0, 0, 0, 0, 1, 1, 1),
+                        subject2, teacher1, teacher1, timeSlot1, timeSlot2, schoolClass, 0, 0, 0, 0, 0, 1, 2),
                 Arguments.of("== schoolRoom, <> subjects, <> teacher, == timeSlot", schoolRoom1, schoolRoom1, subject1,
-                        subject2, teacher1, teacher2, timeSlot1, timeSlot1, schoolClass, 1, 1, 0, 0, 1, 1, 1),
+                        subject2, teacher1, teacher2, timeSlot1, timeSlot1, schoolClass, 1, 1, 0, 0, 0, 0, 4),
                 Arguments.of("== schoolRoom, <> subjects, <> teacher, <> timeSlot", schoolRoom1, schoolRoom1, subject1,
-                        subject2, teacher1, teacher2, timeSlot1, timeSlot2, schoolClass, 0, 0, 0, 0, 1, 1, 1),
+                        subject2, teacher1, teacher2, timeSlot1, timeSlot2, schoolClass, 0, 0, 0, 0, 0, 0, 2),
                 Arguments.of("<> schoolRoom, == subjects, == teacher, == timeSlot", schoolRoom1, schoolRoom2, subject1,
-                        subject1, teacher1, teacher1, timeSlot1, timeSlot1, schoolClass, 0, 1, 0, 1, 1, 1, 1),
+                        subject1, teacher1, teacher1, timeSlot1, timeSlot1, schoolClass, 0, 1, 0, 1, 1, 0, 4),
                 Arguments.of("<> schoolRoom, == subjects, == teacher, <> timeSlot", schoolRoom1, schoolRoom2, subject1,
-                        subject1, teacher1, teacher1, timeSlot1, timeSlot2, schoolClass, 0, 0, 1, 0, 1, 1, 1),
+                        subject1, teacher1, teacher1, timeSlot1, timeSlot2, schoolClass, 0, 0, 1, 0, 1, 1, 2),
                 Arguments.of("<> schoolRoom, == subjects, <> teacher, == timeSlot", schoolRoom1, schoolRoom2, subject1,
-                        subject1, teacher1, teacher2, timeSlot1, timeSlot1, schoolClass, 0, 1, 0, 0, 1, 1, 1),
+                        subject1, teacher1, teacher2, timeSlot1, timeSlot1, schoolClass, 0, 1, 0, 0, 0, 0, 4),
                 Arguments.of("<> schoolRoom, == subjects, <> teacher, <> timeSlot", schoolRoom1, schoolRoom2, subject1,
-                        subject1, teacher1, teacher2, timeSlot1, timeSlot2, schoolClass, 0, 0, 1, 0, 1, 1, 1),
+                        subject1, teacher1, teacher2, timeSlot1, timeSlot2, schoolClass, 0, 0, 1, 0, 0, 0, 2),
                 Arguments.of("<> schoolRoom, <> subjects, == teacher, == timeSlot", schoolRoom1, schoolRoom2, subject1,
-                        subject2, teacher1, teacher1, timeSlot1, timeSlot1, schoolClass, 0, 1, 0, 1, 1, 1, 1),
+                        subject2, teacher1, teacher1, timeSlot1, timeSlot1, schoolClass, 0, 1, 0, 1, 1, 0, 4),
                 Arguments.of("<> schoolRoom, <> subjects, == teacher, <> timeSlot", schoolRoom1, schoolRoom2, subject1,
-                        subject2, teacher1, teacher1, timeSlot1, timeSlot2, schoolClass, 0, 0, 0, 0, 1, 1, 1),
+                        subject2, teacher1, teacher1, timeSlot1, timeSlot2, schoolClass, 0, 0, 0, 0, 1, 1, 2),
                 Arguments.of("<> schoolRoom, <> subjects, <> teacher, == timeSlot", schoolRoom1, schoolRoom2, subject1,
-                        subject2, teacher1, teacher2, timeSlot1, timeSlot1, schoolClass, 0, 1, 0, 0, 1, 1, 1),
+                        subject2, teacher1, teacher2, timeSlot1, timeSlot1, schoolClass, 0, 1, 0, 0, 0, 0, 4),
                 Arguments.of("<> schoolRoom, <> subjects, <> teacher, <> timeSlot", schoolRoom1, schoolRoom2, subject1,
-                        subject2, teacher1, teacher2, timeSlot1, timeSlot2, schoolClass, 0, 0, 0, 0, 1, 1, 1)
+                        subject2, teacher1, teacher2, timeSlot1, timeSlot2, schoolClass, 0, 0, 0, 0, 0, 0, 2)
         );
     }
 
