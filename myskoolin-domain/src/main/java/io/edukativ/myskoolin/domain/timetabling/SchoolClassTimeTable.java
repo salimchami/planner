@@ -17,9 +17,12 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @PlanningSolution
 public class SchoolClassTimeTable {
+
+    private String id;
 
     @PlanningEntityCollectionProperty
     private List<Lesson> lessons;
@@ -59,13 +62,17 @@ public class SchoolClassTimeTable {
         this.events = new ArrayList<>();
     }
 
-    public SchoolClassTimeTable(List<SchoolClass> schoolClasses, List<SchoolRoom> schoolRooms, List<Subject> subjects, List<Teacher> teachers) {
+    public SchoolClassTimeTable(SchoolClass schoolClass, List<SchoolClass> schoolClasses, List<SchoolRoom> schoolRooms, List<Subject> subjects, List<Teacher> teachers) {
+        this.id = schoolClass.getId();
         this.schoolClasses = schoolClasses;
         this.schoolRooms = schoolRooms;
         this.subjects = subjects;
         this.teachers = teachers;
         this.timeSlots = Client.defaultCoursesTimeSlots();
-        this.lessons = new ArrayList<>();
+        this.lessons = this.timeSlots
+                .stream()
+                .map(timeSlot -> new Lesson(timeSlot.getId(), null, null, null, timeSlot, schoolClass))
+                .collect(Collectors.toList());
         this.events = new ArrayList<>();
     }
 
@@ -180,4 +187,11 @@ public class SchoolClassTimeTable {
         this.lastGenerationDate = lastGenerationDate;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
