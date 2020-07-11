@@ -2,13 +2,15 @@ package io.edukativ.myskoolin.infrastructure.timetabling;
 
 public class HardSoftScoreVO {
 
+    private int initScore;
     private int hardScore;
     private int softScore;
 
     public HardSoftScoreVO() {
     }
 
-    public HardSoftScoreVO(int hardScore, int softScore) {
+    public HardSoftScoreVO(int initScore, int hardScore, int softScore) {
+        this.initScore = initScore;
         this.hardScore = hardScore;
         this.softScore = softScore;
     }
@@ -27,5 +29,13 @@ public class HardSoftScoreVO {
 
     public void setSoftScore(int softScore) {
         this.softScore = softScore;
+    }
+
+    public int getInitScore() {
+        return initScore;
+    }
+
+    public void setInitScore(int initScore) {
+        this.initScore = initScore;
     }
 }
