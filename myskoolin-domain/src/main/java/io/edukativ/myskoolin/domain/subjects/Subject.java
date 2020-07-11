@@ -207,7 +207,7 @@ public class Subject implements Comparable<Subject> {
         return schoolRoomsTypes;
     }
 
-    public void setSchoolRoomsType(List<EnumSchoolRoomsTypes> schoolRoomsTypes) {
+    public void setSchoolRoomsTypes(List<EnumSchoolRoomsTypes> schoolRoomsTypes) {
         this.schoolRoomsTypes = schoolRoomsTypes;
     }
 

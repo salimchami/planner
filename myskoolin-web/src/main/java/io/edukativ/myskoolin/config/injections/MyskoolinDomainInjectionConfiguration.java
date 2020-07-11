@@ -1,4 +1,4 @@
-package io.edukativ.myskoolin.front.config.injections;
+package io.edukativ.myskoolin.config.injections;
 
 import io.edukativ.myskoolin.domain.commons.AuthoritySPI;
 import io.edukativ.myskoolin.domain.commons.MyskoolinLoggerSPI;
@@ -23,6 +23,7 @@ import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 import io.edukativ.myskoolin.domain.timetabling.TimeTableSolverAPI;
 import io.edukativ.myskoolin.domain.timetabling.TimeTableSPI;
 import io.edukativ.myskoolin.domain.timetabling.TimeTablesSolver;
+import io.edukativ.myskoolin.infrastructure.app.providers.MyskoolinLogger;
 import org.optaplanner.core.api.score.ScoreManager;
 import org.optaplanner.core.api.solver.SolverManager;
 import org.springframework.context.annotation.Bean;
@@ -62,7 +63,7 @@ public class MyskoolinDomainInjectionConfiguration {
     public TimeTableSolverAPI timeTableGenerationAPI(SolverManager<SchoolClassTimeTable, String> solverManager,
                                                      ScoreManager<SchoolClassTimeTable> scoreManager,
                                                      SchoolClassSPI schoolClassSPI,
-                                                     TimeTableSPI timeTableSPI) {
-        return new TimeTablesSolver(solverManager, scoreManager, schoolClassSPI, timeTableSPI);
+                                                     TimeTableSPI timeTableSPI, MyskoolinLogger logger) {
+        return new TimeTablesSolver(solverManager, scoreManager, schoolClassSPI, timeTableSPI, logger);
     }
 }

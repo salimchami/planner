@@ -84,4 +84,9 @@ public class Lesson {
     public SchoolClass getSchoolClass() {
         return schoolClass;
     }
+
+
+    public boolean isOverlapping(TimeSlot timeSlot) {
+        return this.timeSlot.isOverlapping(timeSlot);
+    }
 }

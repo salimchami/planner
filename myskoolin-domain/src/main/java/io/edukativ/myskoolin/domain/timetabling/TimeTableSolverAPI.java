@@ -13,10 +13,10 @@ import java.util.Optional;
 public interface TimeTableSolverAPI {
 
     void solveForAllSchoolClasses(String clientId, List<SchoolRoom> schoolRooms,
-                                  List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses);
+                                  List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses, TimeTableOptions timeTableOptions);
 
     void solveForSchoolClass(String schoolClassId, String clientId, List<SchoolRoom> schoolRooms,
-                             List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses);
+                             List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses, TimeTableOptions timeTableOptions);
 
     Optional<SchoolClassTimeTable> timeTableById(String timeTableId);
 

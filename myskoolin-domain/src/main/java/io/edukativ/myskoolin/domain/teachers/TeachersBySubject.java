@@ -1,33 +1,35 @@
 package io.edukativ.myskoolin.domain.teachers;
 
+import io.edukativ.myskoolin.domain.subjects.Subject;
+
 import java.util.List;
 
 public class TeachersBySubject {
 
-    private String subjectId;
-    private List<String> teacherUserId;
+    private Subject subject;
+    private List<Teacher> teachers;
 
     public TeachersBySubject() {
     }
 
-    public TeachersBySubject(String subjectId, List<String> teacherUserId) {
-        this.subjectId = subjectId;
-        this.teacherUserId = teacherUserId;
+    public TeachersBySubject(Subject subject, List<Teacher> teachers) {
+        this.subject = subject;
+        this.teachers = teachers;
     }
 
-    public String getSubjectId() {
-        return subjectId;
+    public Subject getSubject() {
+        return subject;
     }
 
-    public void setSubjectId(String subjectId) {
-        this.subjectId = subjectId;
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
-    public List<String> getTeacherUserId() {
-        return teacherUserId;
+    public List<Teacher> getTeachers() {
+        return teachers;
     }
 
-    public void setTeacherUserId(List<String> teacherUserId) {
-        this.teacherUserId = teacherUserId;
+    public void setTeachers(List<Teacher> teachers) {
+        this.teachers = teachers;
     }
 }
