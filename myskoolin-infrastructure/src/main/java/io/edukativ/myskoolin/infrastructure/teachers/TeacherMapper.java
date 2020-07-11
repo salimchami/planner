@@ -54,4 +54,8 @@ public interface TeacherMapper {
     List<Teacher> dbDtosToDomains(List<TeacherDbDTO> teacherDbDTOS);
 
     TeacherDTO dbDtoToDto(TeacherDbDTO teacher);
+
+    List<Teacher> dtosToDomains(List<TeacherDTO> teachers);
+
+    List<TeacherDbDTO> dtosToDbDtos(List<TeacherDTO> teachers);
 }
