@@ -7,7 +7,6 @@ import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
 import io.edukativ.myskoolin.infrastructure.medical.InfirmaryStatisticsDbVO;
 import io.edukativ.myskoolin.infrastructure.medical.MedicalInfosDbVO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDbDTO;
-import io.edukativ.myskoolin.infrastructure.timetabling.LessonDbVO;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -34,7 +33,6 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
     public static final String MONGO_FIELD_SUBSTITUTED_TEACHERS = "substituted_teachers";
     public static final String MONGO_FIELD_ABSENCES = "absences";
     public static final String MONGO_FIELD_TAUGHT_SUBJECTS = "taught_subjects";
-    public static final String MONGO_FIELD_TIMETABLE = "timetable";
     public static final String MONGO_FIELD_PRO_CELL_PHONE = "pro_cell_phone";
     public static final String MONGO_FIELD_PRO_PHONE = "pro_phone";
     public static final String MONGO_FIELD_PRO_EMAIL = "pro_email";
@@ -67,9 +65,6 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
     @DBRef
     @Field(MONGO_FIELD_TAUGHT_SUBJECTS)
     private List<SubjectDbDTO> taughtSubjects;
-
-    @Field(MONGO_FIELD_TIMETABLE)
-    private List<LessonDbVO> timetable;
 
     @Field(MONGO_FIELD_PRO_CELL_PHONE)
     private String proCellPhone;
@@ -108,7 +103,6 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
         this.substitutedTeachers = builder.substitutedTeachers;
         this.absences = builder.absences;
         this.taughtSubjects = builder.taughtSubjects;
-        this.timetable = builder.timetable;
         this.proCellPhone = builder.proCellPhone;
         this.proPhone = builder.proPhone;
         this.proEmail = builder.proEmail;
@@ -128,7 +122,6 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
         private List<TeacherDbDTO> substitutedTeachers;
         private List<AbsenceDbVO> absences;
         private List<SubjectDbDTO> taughtSubjects;
-        private List<LessonDbVO> timetable;
         private String proCellPhone;
         private String proPhone;
         private String proEmail;
@@ -170,11 +163,6 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
 
         public TeacherDbDTOBuilder taughtSubjects(List<SubjectDbDTO> taughtSubjects) {
             this.taughtSubjects = taughtSubjects;
-            return this;
-        }
-
-        public TeacherDbDTOBuilder timetable(List<LessonDbVO> timetable) {
-            this.timetable = timetable;
             return this;
         }
 
@@ -262,13 +250,6 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
         return taughtSubjects;
     }
 
-    public List<LessonDbVO> getTimetable() {
-        if(timetable == null) {
-            timetable = new ArrayList<>();
-        }
-        return timetable;
-    }
-
     public String getProCellPhone() {
         return proCellPhone;
     }
@@ -312,7 +293,6 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
         return employedDate.equals(teacher.employedDate) &&
                 familySituation.equals(teacher.familySituation) &&
                 substitute.equals(teacher.substitute) &&
-                Objects.equals(timetable, teacher.timetable) &&
                 proCellPhone.equals(teacher.proCellPhone) &&
                 proEmail.equals(teacher.proEmail) &&
                 grades.equals(teacher.grades);
@@ -320,7 +300,7 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(employedDate, familySituation, substitute, timetable, proCellPhone, proEmail, grades);
+        return Objects.hash(employedDate, familySituation, substitute, proCellPhone, proEmail, grades);
     }
 
     @Override
@@ -336,7 +316,6 @@ public class TeacherDbDTO extends AbstractUserDbDTO {
                     ", substitutedTeachers=" + substitutedTeachers +
                     ", absences=" + absences +
                     ", taughtSubjects=" + taughtSubjects +
-                    ", timetable=" + timetable +
                     ", proCellPhone='" + proCellPhone + '\'' +
                     ", proPhone='" + proPhone + '\'' +
                     ", proEmail='" + proEmail + '\'' +

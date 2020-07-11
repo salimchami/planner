@@ -48,7 +48,6 @@ public abstract class TeacherMapperImplemented {
                 .substitute(teacher.getSubstitute())
                 .absences(absenceMapper.domainsToDbVos(teacher.getAbsences()))
                 .taughtSubjects(subjectMapper.domainsToDbDtos(teacher.getTaughtSubjects()))
-                .timetable(lessonMapper.domainsToDbVos(teacher.getTimetable()))
                 .exitDate(teacher.getExitDate())
                 .comment(teacher.getComment())
                 .familySituation(teacher.getFamilySituation())

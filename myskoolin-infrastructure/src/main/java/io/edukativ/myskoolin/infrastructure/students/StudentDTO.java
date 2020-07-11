@@ -12,7 +12,6 @@ import io.edukativ.myskoolin.infrastructure.orientation.OrientationVO;
 import io.edukativ.myskoolin.infrastructure.reports.ReportVO;
 import io.edukativ.myskoolin.infrastructure.residential.ResidentialSchoolVO;
 import io.edukativ.myskoolin.infrastructure.sanctions.SanctionVO;
-import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableDTO;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,7 +29,6 @@ public class StudentDTO extends UserDTO {
     private MedicalInfosVO medicalInfos;
     private SchoolingInfosVO schoolingInfos;
     private ResidentialSchoolVO residentialSchool;
-    private SchoolClassTimeTableDTO timetable;
     private List<DailyBookTimeSlotVO> dailyBook;
     private List<ContinuousAssessmentItemVO> continuousAssessment;
     private String schoolClassId;
@@ -102,14 +100,6 @@ public class StudentDTO extends UserDTO {
 
     public void setResidentialSchool(ResidentialSchoolVO residentialSchool) {
         this.residentialSchool = residentialSchool;
-    }
-
-    public SchoolClassTimeTableDTO getTimetable() {
-        return timetable;
-    }
-
-    public void setTimetable(SchoolClassTimeTableDTO timetable) {
-        this.timetable = timetable;
     }
 
     public List<DailyBookTimeSlotVO> getDailyBook() {

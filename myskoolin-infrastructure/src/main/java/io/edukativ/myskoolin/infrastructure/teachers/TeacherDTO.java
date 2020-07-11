@@ -6,7 +6,6 @@ import io.edukativ.myskoolin.infrastructure.grades.GradeDTO;
 import io.edukativ.myskoolin.infrastructure.medical.InfirmaryStatisticsVO;
 import io.edukativ.myskoolin.infrastructure.medical.MedicalInfosVO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDTO;
-import io.edukativ.myskoolin.infrastructure.timetabling.LessonVO;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ public class TeacherDTO extends UserDTO {
     //private Set<Option> taughtOptions;
     private List<AbsenceVO> absences;
     private List<SubjectDTO> taughtSubjects;
-    private List<LessonVO> timetable;
     private String proCellPhone;
     private String proPhone;
     private String proEmail;
@@ -99,17 +97,6 @@ public class TeacherDTO extends UserDTO {
 
     public void setTaughtSubjects(List<SubjectDTO> taughtSubjects) {
         this.taughtSubjects = taughtSubjects;
-    }
-
-    public List<LessonVO> getTimetable() {
-        if(timetable == null) {
-            timetable = new ArrayList<>();
-        }
-        return timetable;
-    }
-
-    public void setTimetable(List<LessonVO> timetable) {
-        this.timetable = timetable;
     }
 
     public String getProCellPhone() {

@@ -79,9 +79,6 @@ public class StudentDbDTO extends AbstractUserDbDTO {
     @Field(MONGO_FIELD_RESIDENTIAL_SCHOOL)
     private ResidentialSchoolDbVO residentialSchool;
 
-    @Field(MONGO_FIELD_TIMETABLE)
-    private SchoolClassTimeTableDbDTO timetable;
-
     @Field(MONGO_FIELD_DAILY_BOOK)
     private List<DailyBookTimeSlotDbVO> dailyBook;
 
@@ -146,7 +143,6 @@ public class StudentDbDTO extends AbstractUserDbDTO {
         this.medicalInfos = builder.medicalInfos;
         this.schoolingInfos = builder.schoolingInfos;
         this.residentialSchool = builder.residentialSchool;
-        this.timetable = builder.timetable;
         this.dailyBook = builder.dailyBook;
         this.continuousAssessment = builder.continuousAssessment;
         this.schoolClassId = builder.schoolClassId;
@@ -307,10 +303,6 @@ public class StudentDbDTO extends AbstractUserDbDTO {
         return residentialSchool;
     }
 
-    public SchoolClassTimeTableDbDTO getTimetable() {
-        return timetable;
-    }
-
     public List<DailyBookTimeSlotDbVO> getDailyBook() {
         if(this.dailyBook == null) {
             return new ArrayList<>();
@@ -391,7 +383,6 @@ public class StudentDbDTO extends AbstractUserDbDTO {
                     ", medicalInfos=" + medicalInfos +
                     ", schoolingInfos=" + schoolingInfos +
                     ", residentialSchool=" + residentialSchool +
-                    ", timetable=" + timetable +
                     ", dailyBook=" + dailyBook +
                     ", continuousAssessment=" + continuousAssessment +
                     ", schoolClassId" + schoolClassId + '\'' +
