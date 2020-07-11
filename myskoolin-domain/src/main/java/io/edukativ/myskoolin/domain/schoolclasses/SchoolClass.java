@@ -1,8 +1,8 @@
 package io.edukativ.myskoolin.domain.schoolclasses;
 
-import io.edukativ.myskoolin.domain.commons.exceptions.NotFoundException;
 import io.edukativ.myskoolin.domain.grades.Grade;
 import io.edukativ.myskoolin.domain.grades.GradeSerie;
+import io.edukativ.myskoolin.domain.teachers.Teacher;
 import io.edukativ.myskoolin.domain.teachers.TeachersBySubject;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
@@ -12,6 +12,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * A School Class.
@@ -217,11 +218,10 @@ public class SchoolClass {
                 '}';
     }
 
-    public List<String> getTeachersBySubject(String subjectId) {
+    public List<Teacher> getTeachersBySubject(String subjectId) {
         return this.teachersBySubjects.stream()
-                .filter(teachersBySubject -> teachersBySubject.getSubjectId().equals(subjectId))
-                .map(TeachersBySubject::getTeacherUserId)
-                .findFirst()
-                .orElseThrow(() -> new NotFoundException("no teacher found from subject id in school class configuration."));
+                .filter(teachersBySubject -> teachersBySubject.getSubject().getId().equals(subjectId))
+                .map(TeachersBySubject::getTeachers)
+                .flatMap(List::stream).collect(Collectors.toList());
     }
 }

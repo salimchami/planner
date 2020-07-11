@@ -3,8 +3,11 @@ package io.edukativ.myskoolin.domain.timetabling;
 import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
 import org.optaplanner.core.api.domain.lookup.PlanningId;
 
+import java.time.DayOfWeek;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import static java.util.Comparator.comparing;
@@ -292,5 +295,24 @@ public class TimeSlot implements Comparable<TimeSlot> {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean isOverlappingTimeSlots(EnumDays day, List<TimeSlot> timeSlots) {
+        return timeSlots.stream()
+                .filter(timeSlot -> timeSlot.day.equals(day))
+                .anyMatch(this::isOverlapping);
+    }
+
+    TimeSlot next(List<TimeSlot> timeSlots) {
+        return timeSlots.stream()
+                .sorted()
+                .filter(this::isBefore)
+                .findFirst().orElseThrow();
+    }
+
+    boolean isBefore(TimeSlot timeSlot) {
+        final Instant instant1 = this.getEndTime().toInstant(DayOfWeek.valueOf(this.getDay().name()));
+        final Instant instant2 = timeSlot.getStartTime().toInstant(DayOfWeek.valueOf(timeSlot.getDay().name()));
+        return !this.isOverlapping(timeSlot) && (instant1.equals(instant2) || instant1.isBefore(instant2));
     }
 }

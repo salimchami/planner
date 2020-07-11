@@ -156,4 +156,26 @@ public class TimeTableOptions {
     public List<EnumDays> refDays() {
         return coursesTimeSlots.stream().map(TimeSlot::getDay).distinct().collect(Collectors.toList());
     }
+
+    public Map<EnumDays, List<TimeSlot>> coursesTimeSlotsByDay() {
+        Map<EnumDays, List<TimeSlot>> clientCoursesTimeSlotsPerDay = new EnumMap<>(EnumDays.class);
+        Arrays.stream(EnumDays.values()).forEach(enumDays -> {
+            final List<TimeSlot> timeSlots = coursesTimeSlots
+                    .stream()
+                    .filter(timeSlot -> enumDays.equals(timeSlot.getDay()))
+                    .collect(Collectors.toList());
+            if (!timeSlots.isEmpty()) {
+                clientCoursesTimeSlotsPerDay.put(enumDays, timeSlots);
+            }
+        });
+        return clientCoursesTimeSlotsPerDay;
+    }
+
+    public TimeSlot firstWeekTimeSlot() {
+        return coursesTimeSlots.stream()
+                .filter(timeSlot -> timeSlot.getDay().equals(firstWeekDay))
+                .sorted()
+                .findFirst()
+                .orElseThrow();
+    }
 }

@@ -2,8 +2,8 @@ package io.edukativ.myskoolin.domain.timetabling;
 
 import io.edukativ.myskoolin.domain.commons.vo.EnumPartsOfDay;
 
-import java.time.Duration;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.temporal.ChronoField;
 import java.time.temporal.Temporal;
 import java.util.Comparator;
 import java.util.Objects;
@@ -115,5 +115,13 @@ public class Time implements Comparable<Time> {
     public Time addHours(int hours) {
         this.hour = this.hour + hours;
         return this;
+    }
+
+    public Instant toInstant(DayOfWeek day) {
+        return ZonedDateTime.now()
+                .with(ChronoField.DAY_OF_WEEK, day.getValue())
+                .with(ChronoField.MINUTE_OF_HOUR, Long.valueOf(minutes))
+                .with(ChronoField.SECOND_OF_MINUTE, Long.valueOf(seconds))
+                .with(ChronoField.HOUR_OF_DAY, Long.valueOf(hour)).toInstant();
     }
 }

@@ -1,6 +1,5 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
-import io.edukativ.myskoolin.domain.commercial.Client;
 import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.subjects.Subject;
@@ -17,7 +16,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @PlanningSolution
 public class SchoolClassTimeTable {
@@ -62,17 +60,15 @@ public class SchoolClassTimeTable {
         this.events = new ArrayList<>();
     }
 
-    public SchoolClassTimeTable(SchoolClass schoolClass, List<SchoolClass> schoolClasses, List<SchoolRoom> schoolRooms, List<Subject> subjects, List<Teacher> teachers) {
+    public SchoolClassTimeTable(SchoolClass schoolClass, List<SchoolClass> schoolClasses, List<SchoolRoom> schoolRooms,
+                                List<Subject> subjects, List<Teacher> teachers, List<Lesson> lessons, List<TimeSlot> timeSlots) {
         this.id = schoolClass.getId();
         this.schoolClasses = schoolClasses;
         this.schoolRooms = schoolRooms;
         this.subjects = subjects;
         this.teachers = teachers;
-        this.timeSlots = Client.defaultCoursesTimeSlots();
-        this.lessons = this.timeSlots
-                .stream()
-                .map(timeSlot -> new Lesson(timeSlot.getId(), null, null, null, timeSlot, schoolClass))
-                .collect(Collectors.toList());
+        this.timeSlots = timeSlots;
+        this.lessons = lessons;
         this.events = new ArrayList<>();
     }
 
