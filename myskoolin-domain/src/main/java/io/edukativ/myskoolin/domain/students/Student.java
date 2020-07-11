@@ -2,17 +2,16 @@ package io.edukativ.myskoolin.domain.students;
 
 import io.edukativ.myskoolin.domain.absences.Absence;
 import io.edukativ.myskoolin.domain.canteen.CanteenRegistration;
-import io.edukativ.myskoolin.domain.delays.Delay;
 import io.edukativ.myskoolin.domain.commons.entity.User;
+import io.edukativ.myskoolin.domain.continuousassessment.ContinuousAssessmentItem;
+import io.edukativ.myskoolin.domain.dailybook.DailyBookTimeSlot;
+import io.edukativ.myskoolin.domain.delays.Delay;
 import io.edukativ.myskoolin.domain.medical.InfirmaryStatistics;
 import io.edukativ.myskoolin.domain.medical.MedicalInfos;
 import io.edukativ.myskoolin.domain.orientation.Orientation;
 import io.edukativ.myskoolin.domain.reports.Report;
 import io.edukativ.myskoolin.domain.residential.ResidentialSchool;
 import io.edukativ.myskoolin.domain.sanctions.Sanction;
-import io.edukativ.myskoolin.domain.continuousassessment.ContinuousAssessmentItem;
-import io.edukativ.myskoolin.domain.dailybook.DailyBookTimeSlot;
-import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,7 +29,6 @@ public class Student extends User {
     private MedicalInfos medicalInfos;
     private SchoolingInfos schoolingInfos;
     private ResidentialSchool residentialSchool;
-    private SchoolClassTimeTable timetable;
     private List<DailyBookTimeSlot> dailyBook;
     private List<ContinuousAssessmentItem> continuousAssessment;
     private String schoolClassId;
@@ -102,14 +100,6 @@ public class Student extends User {
 
     public void setResidentialSchool(ResidentialSchool residentialSchool) {
         this.residentialSchool = residentialSchool;
-    }
-
-    public SchoolClassTimeTable getTimetable() {
-        return timetable;
-    }
-
-    public void setTimetable(SchoolClassTimeTable timetable) {
-        this.timetable = timetable;
     }
 
     public List<DailyBookTimeSlot> getDailyBook() {

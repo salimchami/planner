@@ -7,9 +7,7 @@ import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
 import io.edukativ.myskoolin.domain.teachers.TeachersBySubject;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class TimeTableFirstStepSolver {
 
@@ -46,14 +44,14 @@ public class TimeTableFirstStepSolver {
                 ).reversed())
         ;
         for (Subject subject : subjects) {
-            lessons.addAll(generateLessonsBySubject(subject, timeTableOptions, teachers, schoolRooms));
+            generateLessonsBySubject(subject, timeTableOptions, teachers, schoolRooms);
         }
         return lessons;
     }
 
-    private List<Lesson> generateLessonsBySubject(Subject subject, TimeTableOptions timeTableOptions, List<Teacher> teachers,
+    private void generateLessonsBySubject(Subject subject, TimeTableOptions timeTableOptions, List<Teacher> teachers,
                                                   List<SchoolRoom> schoolRooms) {
-        Integer totalDurationToGenerate = subject.getMinutesPerWeek();
+        long totalDurationToGenerate = subject.getMinutesPerWeek().longValue();
         long subjectTotalDuration = 0;
         while (subjectTotalDuration < totalDurationToGenerate) {
             final Long id = nextLessonId();
@@ -66,7 +64,6 @@ public class TimeTableFirstStepSolver {
             currentTimeSlot = currentTimeSlot.next(timeTableOptions.getCoursesTimeSlots());
             subjectTotalDuration = subjectTotalDuration(subject);
         }
-        return lessons;
     }
 
     private long subjectTotalDuration(Subject subject) {
@@ -94,7 +91,10 @@ public class TimeTableFirstStepSolver {
                 .orElseThrow();
     }
 
-    private Long nextLessonId() {
-        return lessons.stream().mapToLong(Lesson::getId).max().orElse(1);
+    Long nextLessonId() {
+        return lessons.stream()
+                .max(Comparator.comparing(Lesson::getId))
+                .map(lesson -> lesson.getId() + 1)
+                .orElse(1L);
     }
 }

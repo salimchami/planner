@@ -27,24 +27,19 @@ public class SchoolClassTimeTable {
 
     private List<Lesson> events;
 
-    @ProblemFactCollectionProperty
     @ValueRangeProvider(id = "timeSlotRange")
     private List<TimeSlot> timeSlots;
 
     @ProblemFactCollectionProperty
-    @ValueRangeProvider(id = "schoolRoomRange")
     private List<SchoolRoom> schoolRooms;
 
     @ProblemFactCollectionProperty
-    @ValueRangeProvider(id = "subjectRange")
     private List<Subject> subjects;
 
     @ProblemFactCollectionProperty
-    @ValueRangeProvider(id = "teacherRange")
     private List<Teacher> teachers;
 
     @ProblemFactCollectionProperty
-    @ValueRangeProvider(id = "schoolClassRange")
     private List<SchoolClass> schoolClasses;
 
     @PlanningScore

@@ -8,7 +8,6 @@ import io.edukativ.myskoolin.domain.grades.Grade;
 import io.edukativ.myskoolin.domain.medical.InfirmaryStatistics;
 import io.edukativ.myskoolin.domain.medical.MedicalInfos;
 import io.edukativ.myskoolin.domain.subjects.Subject;
-import io.edukativ.myskoolin.domain.timetabling.Lesson;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -28,7 +27,6 @@ public class Teacher extends User {
     private List<Teacher> substitutedTeachers;
     private List<Absence> absences;
     private List<Subject> taughtSubjects;
-    private List<Lesson> timetable;
     private String proCellPhone;
     private String proPhone;
     private String proEmail;
@@ -92,17 +90,6 @@ public class Teacher extends User {
 
     public void setTaughtSubjects(List<Subject> taughtSubjects) {
         this.taughtSubjects = taughtSubjects;
-    }
-
-    public List<Lesson> getTimetable() {
-        if (this.timetable == null) {
-            this.timetable = new ArrayList<>();
-        }
-        return timetable;
-    }
-
-    public void setTimetable(List<Lesson> timetable) {
-        this.timetable = timetable;
     }
 
     public ZonedDateTime getExitDate() {
@@ -197,13 +184,12 @@ public class Teacher extends User {
         return Objects.equals(getId(), teacher.getId()) &&
                 Objects.equals(employedDate, teacher.employedDate) &&
                 Objects.equals(substitute, teacher.substitute) &&
-                Objects.equals(timetable, teacher.timetable) &&
                 Objects.equals(grades, teacher.grades);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(employedDate, substitute, timetable, grades);
+        return Objects.hash(employedDate, substitute, grades);
     }
 
     public void checkTeacherAuthority(Authority teacherAuthority) {

@@ -13,11 +13,8 @@ public class Lesson {
 
     @PlanningId
     private Long id;
-    @PlanningVariable(valueRangeProviderRefs = "schoolRoomRange")
     private SchoolRoom schoolRoom;
-//    @PlanningVariable(valueRangeProviderRefs = "subjectRange")
     private Subject subject;
-//    @PlanningVariable(valueRangeProviderRefs = "teacherRange")
     private Teacher teacher;
     @PlanningVariable(valueRangeProviderRefs = "timeSlotRange")
     private TimeSlot timeSlot;
@@ -84,7 +81,6 @@ public class Lesson {
     public SchoolClass getSchoolClass() {
         return schoolClass;
     }
-
 
     public boolean isOverlapping(TimeSlot timeSlot) {
         return this.timeSlot.isOverlapping(timeSlot);

@@ -3,33 +3,35 @@ package io.edukativ.myskoolin.infrastructure.teachers;
 import io.edukativ.myskoolin.domain.teachers.TeachersBySubject;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectMapper;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface TeachersBySubjectMapper {
+public abstract class TeachersBySubjectMapper {
 
-    default TeachersBySubjectVO dbVoToVo(TeachersBySubjectDbVO teachersBySubject) {
-        SubjectMapper subjectMapper = Mappers.getMapper(SubjectMapper.class);
-        TeacherMapper teacherMapper = Mappers.getMapper(TeacherMapper.class);
+    @Autowired
+    private SubjectMapper subjectMapper;
+    @Autowired
+    private TeacherMapper teacherMapper;
+
+
+    public TeachersBySubjectVO dbVoToVo(TeachersBySubjectDbVO teachersBySubject) {
         return new TeachersBySubjectVO(
                 subjectMapper.dbDtoToDto(teachersBySubject.getSubject()),
                 teacherMapper.dbDtosToDtos(teachersBySubject.getTeachers())
         );
     }
 
-    default TeachersBySubject dbVoToDomain(TeachersBySubjectDbVO teachersBySubject) {
-        SubjectMapper subjectMapper = Mappers.getMapper(SubjectMapper.class);
-        TeacherMapper teacherMapper = Mappers.getMapper(TeacherMapper.class);
+    public TeachersBySubject dbVoToDomain(TeachersBySubjectDbVO teachersBySubject) {
+
         return new TeachersBySubject(subjectMapper.dbDtoToDomain(teachersBySubject.getSubject()),
                 teacherMapper.dbDtosToDomains(teachersBySubject.getTeachers()));
     }
 
-    default List<TeachersBySubject> dbVoToDomain(List<TeachersBySubjectDbVO> teachers) {
-        SubjectMapper subjectMapper = Mappers.getMapper(SubjectMapper.class);
-        TeacherMapper teacherMapper = Mappers.getMapper(TeacherMapper.class);
+    public List<TeachersBySubject> dbVoToDomain(List<TeachersBySubjectDbVO> teachers) {
+
         return teachers.stream()
                 .map(teachersBySubject -> new TeachersBySubject(
                         subjectMapper.dbDtoToDomain(teachersBySubject.getSubject()),
@@ -37,36 +39,32 @@ public interface TeachersBySubjectMapper {
                 )).collect(Collectors.toList());
     }
 
-    default TeachersBySubjectDbVO voToDbVo(TeachersBySubjectVO teachersBySubject) {
-        SubjectMapper subjectMapper = Mappers.getMapper(SubjectMapper.class);
-        TeacherMapper teacherMapper = Mappers.getMapper(TeacherMapper.class);
+    public TeachersBySubjectDbVO voToDbVo(TeachersBySubjectVO teachersBySubject) {
+
         return new TeachersBySubjectDbVO(
                 subjectMapper.dtoToDbDto(teachersBySubject.getSubject()),
                 teacherMapper.dtosToDbDtos(teachersBySubject.getTeachers())
         );
     }
 
-    default TeachersBySubject voToDomain(TeachersBySubjectVO teachersBySubject) {
-        SubjectMapper subjectMapper = Mappers.getMapper(SubjectMapper.class);
-        TeacherMapper teacherMapper = Mappers.getMapper(TeacherMapper.class);
+    public TeachersBySubject voToDomain(TeachersBySubjectVO teachersBySubject) {
+
         return new TeachersBySubject(
                 subjectMapper.dtoToDomain(teachersBySubject.getSubject()),
                 teacherMapper.dtosToDomains(teachersBySubject.getTeachers())
         );
     }
 
-    default TeachersBySubjectDbVO domainToDbVo(TeachersBySubject teachersBySubject) {
-        SubjectMapper subjectMapper = Mappers.getMapper(SubjectMapper.class);
-        TeacherMapper teacherMapper = Mappers.getMapper(TeacherMapper.class);
+    public TeachersBySubjectDbVO domainToDbVo(TeachersBySubject teachersBySubject) {
+
         return new TeachersBySubjectDbVO(
                 subjectMapper.domainToDbDto(teachersBySubject.getSubject()),
                 teacherMapper.domainsToDbDtos(teachersBySubject.getTeachers())
         );
     }
 
-    default TeachersBySubjectVO domainToVo(TeachersBySubject teachersBySubject) {
-        SubjectMapper subjectMapper = Mappers.getMapper(SubjectMapper.class);
-        TeacherMapper teacherMapper = Mappers.getMapper(TeacherMapper.class);
+    public TeachersBySubjectVO domainToVo(TeachersBySubject teachersBySubject) {
+
         return new TeachersBySubjectVO(
                 subjectMapper.domainToDto(teachersBySubject.getSubject()),
                 teacherMapper.domainsToDtos(teachersBySubject.getTeachers())
