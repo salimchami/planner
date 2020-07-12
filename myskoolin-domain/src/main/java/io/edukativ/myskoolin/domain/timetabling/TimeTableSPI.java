@@ -1,5 +1,6 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface TimeTableSPI {
@@ -8,4 +9,5 @@ public interface TimeTableSPI {
 
     SchoolClassTimeTable saveTimeTable(SchoolClassTimeTable schoolClassTimeTable);
 
+    List<SchoolClassTimeTable> findAllByClientId(String clientId);
 }

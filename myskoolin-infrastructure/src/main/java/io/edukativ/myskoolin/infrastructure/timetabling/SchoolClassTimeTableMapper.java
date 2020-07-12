@@ -18,7 +18,7 @@ import java.util.List;
 public interface SchoolClassTimeTableMapper {
 
     @Mapping(source = "lessons", target = "staticTimeTable")
-    SchoolClassTimeTableDTO dbVoToVo(SchoolClassTimeTableDbDTO param);
+    SchoolClassTimeTableDTO dbDtoToDto(SchoolClassTimeTableDbDTO param);
 
     @Mapping(target = "score", ignore = true)
     @Mapping(target = "schoolClasses", ignore = true)
@@ -26,10 +26,10 @@ public interface SchoolClassTimeTableMapper {
     @Mapping(target = "subjects", ignore = true)
     @Mapping(target = "schoolRooms", ignore = true)
     @Mapping(target = "timeSlots", ignore = true)
-    SchoolClassTimeTable dbVoToDomain(SchoolClassTimeTableDbDTO param);
+    SchoolClassTimeTable dbDtoToDomain(SchoolClassTimeTableDbDTO param);
 
     @Mapping(target = "lessons", source = "staticTimeTable")
-    SchoolClassTimeTableDbDTO voToDbVo(SchoolClassTimeTableDTO param);
+    SchoolClassTimeTableDbDTO dtoToDbDto(SchoolClassTimeTableDTO param);
 
     @Mapping(target = "score", ignore = true)
     @Mapping(target = "schoolClasses", ignore = true)
@@ -37,12 +37,14 @@ public interface SchoolClassTimeTableMapper {
     @Mapping(target = "subjects", ignore = true)
     @Mapping(target = "schoolRooms", ignore = true)
     @Mapping(target = "timeSlots", ignore = true)
-    SchoolClassTimeTable voToDomain(SchoolClassTimeTableDTO param);
+    SchoolClassTimeTable dtoToDomain(SchoolClassTimeTableDTO param);
 
-    SchoolClassTimeTableDbDTO domainToDbVo(SchoolClassTimeTable param);
+    SchoolClassTimeTableDbDTO domainToDbDto(SchoolClassTimeTable param);
 
     @Mapping(source = "lessons", target = "staticTimeTable")
-    SchoolClassTimeTableDTO domainToVo(SchoolClassTimeTable param);
+    SchoolClassTimeTableDTO domainToDto(SchoolClassTimeTable param);
 
-    List<SchoolClassTimeTableDTO> domainsToVos(List<SchoolClassTimeTable> timeTables);
+    List<SchoolClassTimeTableDTO> domainsToDtos(List<SchoolClassTimeTable> timeTables);
+
+    List<SchoolClassTimeTable> dbDtosToDomains(List<SchoolClassTimeTableDbDTO> timetables);
 }

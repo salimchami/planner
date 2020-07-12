@@ -42,17 +42,6 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
     }
 
     @Override
-    public Optional<SchoolClassTimeTable> timeTableById(String timeTableId) {
-        String solverStatus = solverStatus(timeTableId);
-        Optional<SchoolClassTimeTable> optTimeTable = timeTableSPI.findById(timeTableId);
-        return optTimeTable.map(timeTable -> {
-            scoreManager.updateScore(timeTable); // Sets the score
-            timeTable.setSolverStatus(SolverStatus.valueOf(solverStatus));
-            return timeTable;
-        });
-    }
-
-    @Override
     public void stopSolving(String timeTableId) {
         solverManager.terminateEarly(timeTableId);
     }
@@ -91,5 +80,27 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
         if (schoolClassTimeTable.getScore().isFeasible()) {
             timeTableSPI.saveTimeTable(schoolClassTimeTable);
         }
+    }
+
+    @Override
+    public List<SchoolClassTimeTable> timeTables(String clientId) {
+        List<SchoolClassTimeTable> timeTables = timeTableSPI.findAllByClientId(clientId);
+        return timeTables.stream().map(schoolClassTimeTable -> {
+            String solverStatus = solverStatus(schoolClassTimeTable.getId());
+            scoreManager.updateScore(schoolClassTimeTable); // Sets the score
+            schoolClassTimeTable.setSolverStatus(SolverStatus.valueOf(solverStatus));
+            return schoolClassTimeTable;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<SchoolClassTimeTable> timeTableById(String timeTableId) {
+        String solverStatus = solverStatus(timeTableId);
+        Optional<SchoolClassTimeTable> optTimeTable = timeTableSPI.findById(timeTableId);
+        return optTimeTable.map(timeTable -> {
+            scoreManager.updateScore(timeTable); // Sets the score
+            timeTable.setSolverStatus(SolverStatus.valueOf(solverStatus));
+            return timeTable;
+        });
     }
 }

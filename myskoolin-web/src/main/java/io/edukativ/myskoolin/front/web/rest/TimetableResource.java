@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping(value = "/api/timetables")
 @RestController
 class TimetableResource {
@@ -60,5 +62,14 @@ class TimetableResource {
         return timeTableApplication.timeTableById(id)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.noContent().build());
+    }
+
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE,
+    })
+    @GetMapping
+    public ResponseEntity<List<SchoolClassTimeTableDTO>> schoolClassTimeTables() {
+        return ResponseEntity.ok(timeTableApplication.timeTables());
     }
 }
