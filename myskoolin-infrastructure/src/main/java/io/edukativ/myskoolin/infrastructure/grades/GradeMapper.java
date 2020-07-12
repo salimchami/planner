@@ -19,17 +19,19 @@ public interface GradeMapper {
 
     @Mapping(target = "nbSubjects", ignore = true)
     @Mapping(target = "subjects", ignore = true)
-    GradeDTO map(GradeDbDTO grade);
+    GradeDTO dbDtoToDto(GradeDbDTO grade);
 
-    List<GradeDTO> modelsToDtos(List<Grade> grades);
+    List<GradeDTO> domainsToDtos(List<Grade> grades);
 
-    GradeDbDTO modelToDbDto(Grade grade);
+    GradeDbDTO domainToDbDto(Grade grade);
 
-    List<Grade> dbDtosToModels(List<GradeDbDTO> allNotDeleted);
+    List<Grade> dbDtosToDomains(List<GradeDbDTO> allNotDeleted);
 
     List<GradeDbDTO> dtosToDbDtos(List<GradeDTO> grades);
 
-    GradeDTO map(Grade grade);
+    GradeDTO domainToDto(Grade grade);
 
     List<GradeDbDTO> domainsToDbDtos(List<Grade> grades);
+
+    List<Grade> dtosToDomains(List<GradeDTO> grades);
 }

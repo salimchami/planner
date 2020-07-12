@@ -14,7 +14,7 @@ public abstract class TeachersBySubjectMapper {
     @Autowired
     private SubjectMapper subjectMapper;
     @Autowired
-    private TeacherMapper teacherMapper;
+    private TeacherMapperImplemented teacherMapper;
 
 
     public TeachersBySubjectVO dbVoToVo(TeachersBySubjectDbVO teachersBySubject) {
@@ -25,13 +25,11 @@ public abstract class TeachersBySubjectMapper {
     }
 
     public TeachersBySubject dbVoToDomain(TeachersBySubjectDbVO teachersBySubject) {
-
         return new TeachersBySubject(subjectMapper.dbDtoToDomain(teachersBySubject.getSubject()),
                 teacherMapper.dbDtosToDomains(teachersBySubject.getTeachers()));
     }
 
     public List<TeachersBySubject> dbVoToDomain(List<TeachersBySubjectDbVO> teachers) {
-
         return teachers.stream()
                 .map(teachersBySubject -> new TeachersBySubject(
                         subjectMapper.dbDtoToDomain(teachersBySubject.getSubject()),
@@ -40,7 +38,6 @@ public abstract class TeachersBySubjectMapper {
     }
 
     public TeachersBySubjectDbVO voToDbVo(TeachersBySubjectVO teachersBySubject) {
-
         return new TeachersBySubjectDbVO(
                 subjectMapper.dtoToDbDto(teachersBySubject.getSubject()),
                 teacherMapper.dtosToDbDtos(teachersBySubject.getTeachers())
@@ -48,7 +45,6 @@ public abstract class TeachersBySubjectMapper {
     }
 
     public TeachersBySubject voToDomain(TeachersBySubjectVO teachersBySubject) {
-
         return new TeachersBySubject(
                 subjectMapper.dtoToDomain(teachersBySubject.getSubject()),
                 teacherMapper.dtosToDomains(teachersBySubject.getTeachers())
@@ -56,7 +52,6 @@ public abstract class TeachersBySubjectMapper {
     }
 
     public TeachersBySubjectDbVO domainToDbVo(TeachersBySubject teachersBySubject) {
-
         return new TeachersBySubjectDbVO(
                 subjectMapper.domainToDbDto(teachersBySubject.getSubject()),
                 teacherMapper.domainsToDbDtos(teachersBySubject.getTeachers())
@@ -64,7 +59,6 @@ public abstract class TeachersBySubjectMapper {
     }
 
     public TeachersBySubjectVO domainToVo(TeachersBySubject teachersBySubject) {
-
         return new TeachersBySubjectVO(
                 subjectMapper.domainToDto(teachersBySubject.getSubject()),
                 teacherMapper.domainsToDtos(teachersBySubject.getTeachers())

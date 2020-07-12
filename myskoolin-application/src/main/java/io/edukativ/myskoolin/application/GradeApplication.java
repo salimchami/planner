@@ -47,7 +47,7 @@ public class GradeApplication {
     public List<GradeDTO> findGrades() {
         User user = userService.currentUser();
         final List<Grade> grades = gradeAPI.findGrades(user);
-        return gradeMapper.modelsToDtos(grades);
+        return gradeMapper.domainsToDtos(grades);
     }
 
     public Optional<GradeDTO> findGradeByName(String name) {
@@ -55,7 +55,7 @@ public class GradeApplication {
         Optional<GradeDbDTO> optDbGrade = gradeRepository.findOneByName(name, false, user.getClientId());
         return optDbGrade.map(dbGrade -> {
             final List<SubjectDbDTO> subjects = subjectRepository.findByGrade(dbGrade.getId(), false);
-            final GradeDTO grade = gradeMapper.map(dbGrade);
+            final GradeDTO grade = gradeMapper.dbDtoToDto(dbGrade);
             grade.setSubjects(subjectMapper.dbDtosToDtos(subjects));
             return grade;
         });

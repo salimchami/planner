@@ -46,7 +46,7 @@ public class ChangeSet013Schoolclasses {
                         ZonedDateTime.of(2019, 3, 22, 18, 30, 0, 0, ZoneId.systemDefault()),
                         ZonedDateTime.of(2019, 6, 22, 18, 30, 0, 0, ZoneId.systemDefault())
                 ), "6°1", "Sixième 1", false, Collections.emptyList(), grade, null,
-                null, Collections.emptyList(), EnumSchoolClassNotation.QUARTER, teachersBySubjects);
+                Collections.emptyList(), EnumSchoolClassNotation.QUARTER, teachersBySubjects);
         mongoTemplate.insert(schoolClass);
         MigrationTempData.schoolClasses.add(schoolClass);
 //        List<StudentDbDTO> allStudents = mongoTemplate.findAll(StudentDbDTO.class, MONGO_COLLECTION_NAME);
@@ -75,7 +75,7 @@ public class ChangeSet013Schoolclasses {
                         ZonedDateTime.of(2019, 3, 22, 18, 30, 0, 0, ZoneId.systemDefault()),
                         ZonedDateTime.of(2019, 6, 22, 18, 30, 0, 0, ZoneId.systemDefault())
                 ), "6°2", "Sixième 2", false, Collections.emptyList(), grade, null,
-                null, Collections.emptyList(), EnumSchoolClassNotation.QUARTER, teachersBySubjects);
+                Collections.emptyList(), EnumSchoolClassNotation.QUARTER, teachersBySubjects);
         mongoTemplate.insert(schoolClass);
         MigrationTempData.schoolClasses.add(schoolClass);
     }

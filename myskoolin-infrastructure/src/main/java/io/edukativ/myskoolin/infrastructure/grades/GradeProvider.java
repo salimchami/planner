@@ -21,12 +21,12 @@ public class GradeProvider implements GradeSPI {
     @Override
     public List<Grade> findNotDeletedByClientId(String clientId) {
         final List<GradeDbDTO> allNotDeleted = gradeRepository.findAllNotDeleted(new ObjectId(clientId));
-        return gradeMapper.dbDtosToModels(allNotDeleted);
+        return gradeMapper.dbDtosToDomains(allNotDeleted);
     }
 
     @Override
     public List<Grade> findAll() {
         final List<GradeDbDTO> all = gradeRepository.findAll();
-        return gradeMapper.dbDtosToModels(all);
+        return gradeMapper.dbDtosToDomains(all);
     }
 }
