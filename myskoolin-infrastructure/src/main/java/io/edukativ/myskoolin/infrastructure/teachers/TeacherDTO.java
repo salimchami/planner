@@ -7,6 +7,7 @@ import io.edukativ.myskoolin.infrastructure.medical.InfirmaryStatisticsVO;
 import io.edukativ.myskoolin.infrastructure.medical.MedicalInfosVO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDTO;
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * A Teacher.
  */
-public class TeacherDTO extends UserDTO {
+public class TeacherDTO extends UserDTO implements Serializable {
 
     private String comment;
     private ZonedDateTime employedDate;

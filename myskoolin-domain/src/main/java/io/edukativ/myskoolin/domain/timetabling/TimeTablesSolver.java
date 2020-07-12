@@ -73,11 +73,7 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
 
             final SchoolClassTimeTable schoolClassTimeTable = new SchoolClassTimeTable(schoolClass, schoolClasses,
                     schoolRooms, subjects, teachers, lessons, lessons.stream().map(Lesson::getTimeSlot).collect(Collectors.toList()));
-            solverManager.solveAndListen(
-                    schoolClassId,
-                    id -> schoolClassTimeTable,
-                    solvedSchoolClassTimeTable -> saveTimeTable(schoolClassId, solvedSchoolClassTimeTable)
-            );
+            solverManager.solveAndListen(schoolClassId, id -> schoolClassTimeTable, this::saveTimeTable);
         });
     }
 
@@ -91,10 +87,9 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
         return timeTableIds.stream().collect(Collectors.toMap(id -> id, solverManager::getSolverStatus));
     }
 
-    private void saveTimeTable(String schoolClassId, SchoolClassTimeTable schoolClassTimeTable) {
+    private void saveTimeTable(SchoolClassTimeTable schoolClassTimeTable) {
         if (schoolClassTimeTable.getScore().isFeasible()) {
-            final SchoolClassTimeTable savedSchoolClassTimeTable = timeTableSPI.saveTimeTable(schoolClassTimeTable);
-            schoolClassSPI.saveTimeTable(schoolClassId, savedSchoolClassTimeTable);
+            timeTableSPI.saveTimeTable(schoolClassTimeTable);
         }
     }
 }

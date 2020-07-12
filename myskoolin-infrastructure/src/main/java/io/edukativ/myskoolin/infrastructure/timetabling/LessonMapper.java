@@ -31,6 +31,5 @@ public interface LessonMapper {
     LessonDbVO voToDbVo(LessonVO lesson);
     Lesson voToDomain(LessonVO lesson);
 
-
     List<LessonDbVO> domainsToDbVos(List<Lesson> timetable);
 }
