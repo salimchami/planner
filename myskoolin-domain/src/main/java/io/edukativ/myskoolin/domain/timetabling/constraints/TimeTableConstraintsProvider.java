@@ -16,11 +16,11 @@ public class TimeTableConstraintsProvider implements ConstraintProvider {
         return new Constraint[] {
                 timeSlotConflict(constraintFactory),
                 roomConflict(constraintFactory),
-                teacherConflict(constraintFactory),
-                schoolClassConflict(constraintFactory),
-                teacherRoomStability(constraintFactory),
-                teacherTimeEfficiency(constraintFactory),
-                schoolClassSubjectVariety(constraintFactory)
+//                teacherConflict(constraintFactory),
+//                schoolClassConflict(constraintFactory),
+//                teacherRoomStability(constraintFactory),
+//                teacherTimeEfficiency(constraintFactory),
+//                schoolClassSubjectVariety(constraintFactory)
         };
     }
 
