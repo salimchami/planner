@@ -14,4 +14,10 @@ public interface InfirmaryStatisticsMapper {
     InfirmaryStatisticsDbVO voToDbVo(InfirmaryStatisticsVO infirmaryStatistics);
 
     InfirmaryStatisticsDbVO domainToDbVo(InfirmaryStatistics infirmaryStatistics);
+
+    InfirmaryStatistics dbVoToDomain(InfirmaryStatisticsDbVO infirmaryStatistics);
+
+    InfirmaryStatistics voToDomain(InfirmaryStatisticsVO infirmaryStatistics);
+
+    InfirmaryStatisticsVO domainToVo(InfirmaryStatistics infirmaryStatistics);
 }

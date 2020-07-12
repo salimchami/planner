@@ -44,7 +44,7 @@ public abstract class StudentMapperImplemented {
                 .resetKey(student.getResetKey())
                 .resetDate(student.getResetDate())
                 .authorities(authorityMapper.domainsToDbDtos(student.getAuthorities()))
-                .address(addressMapper.domainToDbDto(student.getAddress()))
+                .address(addressMapper.domainToDbVo(student.getAddress()))
                 .birthDate(student.getBirthDate())
                 .deleted(student.isDeleted())
                 .archived(student.isArchived())

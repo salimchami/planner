@@ -9,14 +9,18 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface AddressMapper {
 
-    AddressVO map(AddressDbVO address);
+    AddressDbVO voToDbVo(AddressVO address);
 
-    AddressDbVO map(AddressVO address);
-
-    default Address dbDtoToDomain(AddressDbVO address) {
+    default Address dbVoToDomain(AddressDbVO address) {
         return new Address(address.getName(),
                 address.getPostalCode(), address.getCity(), address.getCountry());
     }
 
-    AddressDbVO domainToDbDto(Address address);
+    AddressDbVO domainToDbVo(Address address);
+
+    AddressVO dbVoToVo(AddressDbVO address);
+
+    Address voToDomain(AddressVO address);
+
+    AddressVO domainToVo(Address address);
 }

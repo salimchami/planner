@@ -1,10 +1,9 @@
 package io.edukativ.myskoolin.infrastructure.schoolclasses;
 
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolClassNotation;
-import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
 import io.edukativ.myskoolin.infrastructure.dailybook.DailyBookTimeSlotDbVO;
+import io.edukativ.myskoolin.infrastructure.grades.GradeDbDTO;
 import io.edukativ.myskoolin.infrastructure.grades.GradeSerieDbVO;
-import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableDbDTO;
 import io.edukativ.myskoolin.infrastructure.teachers.TeachersBySubjectDbVO;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -81,10 +80,6 @@ public class SchoolClassDbDTO implements Serializable {
     @Field(MONGO_FIELD_GRADE_SERIE)
     private GradeSerieDbVO gradeSerie;
 
-    @DBRef
-    @Field(MONGO_FIELD_TIMETABLE)
-    private SchoolClassTimeTableDbDTO timetable;
-
     @Field(MONGO_FIELD_DAILY_BOOK)
     private List<DailyBookTimeSlotDbVO> dailyBook;
 
@@ -100,7 +95,7 @@ public class SchoolClassDbDTO implements Serializable {
     public SchoolClassDbDTO(ObjectId id, ObjectId clientId, ZonedDateTime coursesStartDate,
                             ZonedDateTime coursesEndDate, List<ZonedDateTime> councilsDates, String customName,
                             String name, Boolean deleted, List<ObjectId> headTeachers, GradeDbDTO grade,
-                            GradeSerieDbVO gradeSerie, SchoolClassTimeTableDbDTO timetable, List<DailyBookTimeSlotDbVO> dailyBook,
+                            GradeSerieDbVO gradeSerie, List<DailyBookTimeSlotDbVO> dailyBook,
                             EnumSchoolClassNotation notation, List<TeachersBySubjectDbVO> teachersBySubjects) {
         this.id = id;
         this.clientId = clientId;
@@ -113,7 +108,6 @@ public class SchoolClassDbDTO implements Serializable {
         this.headTeachers = headTeachers;
         this.grade = grade;
         this.gradeSerie = gradeSerie;
-        this.timetable = timetable;
         this.dailyBook = dailyBook;
         this.notation = notation;
         this.teachersBySubjects = teachersBySubjects;
@@ -205,14 +199,6 @@ public class SchoolClassDbDTO implements Serializable {
 
     public void setGradeSerie(GradeSerieDbVO gradeSerie) {
         this.gradeSerie = gradeSerie;
-    }
-
-    public SchoolClassTimeTableDbDTO getTimetable() {
-        return timetable;
-    }
-
-    public void setTimetable(SchoolClassTimeTableDbDTO timetable) {
-        this.timetable = timetable;
     }
 
     public EnumSchoolClassNotation getNotation() {

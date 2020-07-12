@@ -31,6 +31,8 @@ public class SchoolClassTimeTableProvider implements TimeTableSPI {
     public SchoolClassTimeTable saveTimeTable(SchoolClassTimeTable schoolClassTimeTable) {
         final SchoolClassTimeTableDbDTO schoolClassTimeTableDbDTO = schoolClassTimeTableMapper.domainToDbVo(schoolClassTimeTable);
         mapTeachers(schoolClassTimeTable, schoolClassTimeTableDbDTO);
+
+
         final SchoolClassTimeTableDbDTO savedTimeTable = schoolClassTimeTableRepository.save(schoolClassTimeTableDbDTO);
         return schoolClassTimeTableMapper.dbVoToDomain(savedTimeTable);
     }

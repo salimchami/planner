@@ -112,7 +112,7 @@ public class UserMapper {
         user.setResetKey(userDbDTO.getResetKey());
         user.setResetDate(userDbDTO.getResetDate());
         user.setAuthorities(authorityMapper.dbDtosToDomains(userDbDTO.getAuthorities()));
-        user.setAddress(addressMapper.dbDtoToDomain(userDbDTO.getAddress()));
+        user.setAddress(addressMapper.dbVoToDomain(userDbDTO.getAddress()));
         user.setBirthDate(userDbDTO.getBirthDate());
         user.setDeleted(userDbDTO.isDeleted());
         user.setArchived(userDbDTO.isArchived());
@@ -138,7 +138,7 @@ public class UserMapper {
                 .resetKey(user.getResetKey())
                 .resetDate(user.getResetDate())
                 .authorities(authorityMapper.domainsToDbDtos(user.getAuthorities()))
-                .address(addressMapper.domainToDbDto(user.getAddress()))
+                .address(addressMapper.domainToDbVo(user.getAddress()))
                 .birthDate(user.getBirthDate())
                 .build();
     }

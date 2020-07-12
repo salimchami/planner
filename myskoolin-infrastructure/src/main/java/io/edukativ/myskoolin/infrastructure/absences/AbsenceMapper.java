@@ -22,4 +22,12 @@ public interface AbsenceMapper {
     AbsenceDbVO domainToDbVo(Absence absence);
 
     List<AbsenceDbVO> domainsToDbVos(List<Absence> absences);
+
+    List<AbsenceVO> dbVosToVos(List<AbsenceDbVO> absences);
+
+    List<Absence> dbVosToDomains(List<AbsenceDbVO> absences);
+
+    List<Absence> vosToDomains(List<AbsenceVO> absences);
+
+    List<AbsenceVO> domainsToVos(List<Absence> absences);
 }
