@@ -1,10 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Time, Timeslot} from '../../model/sub';
 import {WEEKDAYS} from '../../../app.constants';
 import {JhiLanguageHelper} from '../..';
-import {Subject} from '../../model';
+import {Lesson, Subject, Timeslot} from '../../model';
 import {DateTimeHelper} from './date-time-helper.service';
-import {SchoolClassTimeSlot} from '../../model/sub/school-class-timeslot.model';
 import {DataHelper} from './data.helper';
 
 @Injectable()
@@ -122,15 +120,15 @@ export class CalendarHelper {
         return result;
     }
 
-    timetableValidations(staticTimeTable: Array<SchoolClassTimeSlot>, subjects: Array<Subject>) {
+    timetableValidations(lessons: Array<Lesson>, subjects: Array<Subject>) {
         const validations = [];
         subjects.forEach((subject) => {
-            const durationInMinutes = staticTimeTable
-                .filter((timeSlot) => {
-                    return timeSlot.subjectId === subject.id;
+            const durationInMinutes = lessons
+                .filter((lesson) => {
+                    return lesson.subject.id === subject.id;
                 })
-                .reduce((sum, timeSlot) => {
-                    return sum + this.timeSlotDurationInMinutes(timeSlot, new Date());
+                .reduce((sum, lesson) => {
+                    return sum + this.timeSlotDurationInMinutes(lesson.timeSlot, new Date());
                 }, 0);
             validations.push({
                 subject,
@@ -141,13 +139,13 @@ export class CalendarHelper {
         return validations;
     }
 
-    timeSlotDurationInMinutes(schoolClassTimeSlot: SchoolClassTimeSlot, now: Date): number {
+    timeSlotDurationInMinutes(timeSlot: Timeslot, now: Date): number {
         const startTime = new Date(now.getFullYear(), now.getMonth(), now.getDay(),
-            +schoolClassTimeSlot.startTime.hour, +schoolClassTimeSlot.startTime.minutes, +schoolClassTimeSlot.startTime.seconds);
+            +timeSlot.startTime.hour, +timeSlot.startTime.minutes, +timeSlot.startTime.seconds);
         const endTime = new Date(now.getFullYear(), now.getMonth(), now.getDay(),
-            +schoolClassTimeSlot.endTime.hour, +schoolClassTimeSlot.endTime.minutes, +schoolClassTimeSlot.endTime.seconds);
+            +timeSlot.endTime.hour, +timeSlot.endTime.minutes, +timeSlot.endTime.seconds);
         const result = (endTime.getTime() / 1000 / 60) - (startTime.getTime() / 1000 / 60);
-        return schoolClassTimeSlot.half ? result / 2 : result;
+        return timeSlot.half ? result / 2 : result;
     }
 
 }

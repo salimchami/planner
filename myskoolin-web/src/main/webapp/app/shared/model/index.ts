@@ -14,3 +14,6 @@ export * from './student.model';
 export * from './schoolclass.model';
 export * from './teacher.model';
 export * from './sub';
+export * from './lesson.model';
+export * from './sub/timeslot.model';
+export * from './school-class-timetable.model';

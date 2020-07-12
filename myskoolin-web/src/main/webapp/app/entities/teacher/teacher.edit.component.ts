@@ -166,13 +166,13 @@ export class TeacherEditComponent implements OnInit, OnDestroy {
     }
 
     private saveConfirmation() {
-        this.notificationService.addToast('teacher.new.form.toast-save-title',
+        this.notificationService.add('teacher.new.form.toast-save-title',
             'teacher.new.form.toast-save',
             'success');
     }
 
     private saveError() {
-        this.notificationService.addToast('teacher.new.form.toast-save-error-title',
+        this.notificationService.add('teacher.new.form.toast-save-error-title',
             'teacher.new.form.toast-save-error',
             'error');
     }

@@ -34,7 +34,7 @@ export class SchoolRoomViewComponent implements OnInit, OnDestroy {
     deleteSchoolRoom() {
         this.schoolRoomService.delete(this.schoolRoom.id).subscribe(
             (res) => {
-                this.notificationService.addToast('schoolRoom.delete.toast-title',
+                this.notificationService.add('schoolRoom.delete.toast-title',
                     'schoolRoom.delete.delete-successfull',
                     'success');
                 this.router.navigateByUrl('/school-rooms');

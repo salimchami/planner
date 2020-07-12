@@ -7,7 +7,7 @@ import {SchoolingInfos} from './sub/schooling.infos.model';
 import {Address} from './sub/address.model';
 import {ResidentialSchool} from './sub/residential.school.model';
 import {FormGroup} from '@angular/forms';
-import {SchoolClassTimetable} from './sub/school-class-timetable.model';
+import {SchoolClassTimetable} from './school-class-timetable.model';
 import {DailyBookTimeSlot} from './sub/daily-book-timeslot.model';
 import {ContinuousAssessmentItem} from './sub/continuous.assessment.model';
 import {Sanction} from './sub/sanction.model';

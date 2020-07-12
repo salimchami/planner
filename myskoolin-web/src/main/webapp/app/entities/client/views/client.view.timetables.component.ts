@@ -1,5 +1,5 @@
 import {Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild, TemplateRef} from '@angular/core';
-import {Client} from '../../../shared/model';
+import {Client, Timeslot} from '../../../shared/model';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {DateTimeHelper} from '../../../shared/services/utils/date-time-helper.service';

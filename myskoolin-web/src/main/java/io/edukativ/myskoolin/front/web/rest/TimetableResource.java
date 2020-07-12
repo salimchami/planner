@@ -6,10 +6,7 @@ import io.edukativ.myskoolin.domain.commons.MyskoolinLoggerSPI;
 import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(value = "/api/timetables")
 @RestController
@@ -27,7 +24,7 @@ class TimetableResource {
         AuthoritiesConstants.ADMINISTRATION,
         AuthoritiesConstants.SCHOOL_LIFE,
     })
-    @GetMapping(value = "/solve")
+    @PostMapping(value = "/solve")
     public ResponseEntity<Void> solveTimetablesFromScratch() {
         logger.debug("generating timetables for all school classes");
         timeTableApplication.solveNewTimeTablesForSchoolClasses();
@@ -38,7 +35,7 @@ class TimetableResource {
         AuthoritiesConstants.ADMINISTRATION,
         AuthoritiesConstants.SCHOOL_LIFE,
     })
-    @GetMapping(value = "/solve/{id}")
+    @PostMapping(value = "/solve/{id}")
     public ResponseEntity<Void> solveTimetableFromScratch(@PathVariable(name = "id") String id) {
         logger.debug("generating timetables for all school classes");
         timeTableApplication.solveNewTimeTablesForSchoolClass(id);

@@ -9,6 +9,7 @@ import {GradesResolver} from './../../shared/services/resolvers/grades.resolver'
 import {SubjectsResolver} from './../../shared/services/resolvers/subject.resolver';
 import {SchoolRoomsResolver} from '../../shared/services/resolvers/school-rooms.resolver';
 import {TeachersResolver} from '../../shared/services/resolvers/teachers.resolver';
+import {TimeTablesResolver} from '../../shared/services/resolvers/timetables.resolver';
 
 export const teacherRoute: Routes = [
     {
@@ -45,6 +46,7 @@ export const teacherRoute: Routes = [
                     subjects: SubjectsResolver,
                     schoolRooms: SchoolRoomsResolver,
                     teachers: TeachersResolver,
+                    timetables: TimeTablesResolver,
                 },
                 canActivate: [UserRouteAccessService],
             },
