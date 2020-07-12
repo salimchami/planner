@@ -57,7 +57,6 @@ public class MyskoolinLogger implements MyskoolinLoggerSPI {
     }
 
     private Class<?> callerClass() {
-        return StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE)
-                .getCallerClass();
+        return StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE).getCallerClass();
     }
 }

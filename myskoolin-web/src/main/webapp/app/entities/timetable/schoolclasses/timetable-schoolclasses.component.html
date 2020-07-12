@@ -76,11 +76,11 @@
                 [events]="schoolClassesStaticTimeSlots"
                 [eventTemplate]="eventTemplate"
                 [hourSegments]="2"
-                [dayStartHour]="+client.timeTableOptions.coursesStartTime.hour - 1"
-                [dayStartMinute]="+client.timeTableOptions.coursesStartTime.minutes"
-                [dayEndHour]="+client.timeTableOptions.coursesEndTime.hour + 1"
-                [dayEndMinute]="+client.timeTableOptions.coursesEndTime.minutes"
-                [weekStartsOn]="+client.timeTableOptions.firstWeekDay.position"
+                [dayStartHour]="+timetableOptions.coursesStartTime.hour - 1"
+                [dayStartMinute]="+timetableOptions.coursesStartTime.minutes"
+                [dayEndHour]="+timetableOptions.coursesEndTime.hour + 1"
+                [dayEndMinute]="+timetableOptions.coursesEndTime.minutes"
+                [weekStartsOn]="+timetableOptions.firstWeekDay.position"
             >
             </mwl-calendar-week-view>
             <ng-template #modalContent let-close="close">

@@ -7,16 +7,16 @@ import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 public interface HardSoftScoreMapper {
 
     default HardSoftScoreVO domainToVo(HardSoftScore score) {
-        return new HardSoftScoreVO(score.getInitScore(), score.getHardScore(), score.getSoftScore());
+        if (score != null) {
+            return new HardSoftScoreVO(score.getInitScore(), score.getHardScore(), score.getSoftScore());
+        }
+        return null;
     }
 
     default HardSoftScoreDbVO domainToDbVo(HardSoftScore score) {
         return new HardSoftScoreDbVO(score.getInitScore(), score.getHardScore(), score.getSoftScore());
     }
 
-    //    default HardSoftScore voToDomain(HardSoftScoreVO score) {
-//        return new HardSoftScore(score.getInitScore(), score.getHardScore(), score.getSoftScore());
-//    }
     default HardSoftScoreDbVO voToDbVo(HardSoftScoreVO score) {
         return new HardSoftScoreDbVO(score.getInitScore(), score.getHardScore(), score.getSoftScore());
     }
@@ -24,10 +24,5 @@ public interface HardSoftScoreMapper {
     default HardSoftScoreVO dbVoToVo(HardSoftScoreDbVO score) {
         return new HardSoftScoreVO(score.getInitScore(), score.getHardScore(), score.getSoftScore());
     }
-
-//    default HardSoftScore dbVoToDomain(HardSoftScoreDbVO score) {
-//        return new HardSoftScoreVO(score.getHardScore(), score.getSoftScore());
-//    }
-
 
 }

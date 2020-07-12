@@ -36,9 +36,9 @@ export class SchoolClassTimetableViewComponent implements OnInit, OnDestroy {
         this.schoolClass = this.route.snapshot.data['schoolClass'];
         const timeSlots: Array<Timeslot> = this.schoolClass.timetable.staticTimeTable.map((lesson) => lesson.timeSlot);
         if (this.schoolClass.timetable != null && typeof this.schoolClass.timetable !== 'undefined') {
-            this.schoolClassesStaticTimeSlots = this.calendarHelper.convertTimeSlotsToFullCalendarEvents(
-                this.client.timeTableOptions.firstWeekDay.name,
-                timeSlots, false);
+            // this.schoolClassesStaticTimeSlots = this.calendarHelper.convertTimeSlotsToFullCalendarEvents(
+            //     this.client.timeTableOptions.firstWeekDay.name,
+            //     timeSlots, false);
         }
     }
 

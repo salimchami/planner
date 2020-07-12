@@ -78,39 +78,27 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
 
     private void saveTimeTable(SchoolClassTimeTable schoolClassTimeTable) {
         if (schoolClassTimeTable.getScore().isFeasible()) {
+            logger.info(String.format("saving time table for school class %s", schoolClassTimeTable.getSchoolClass().getName()));
             timeTableSPI.saveTimeTable(schoolClassTimeTable);
         }
     }
 
     @Override
-    public List<SchoolClassTimeTable> timeTables(String clientId, List<SchoolRoom> schoolRooms, List<Subject> subjects,
-                                                 List<Teacher> teachers, List<SchoolClass> schoolClasses) {
+    public List<SchoolClassTimeTable> timeTables(String clientId) {
         List<SchoolClassTimeTable> timeTables = timeTableSPI.findAllByClientId(clientId);
         return timeTables.stream().map(schoolClassTimeTable -> {
-            schoolClassTimeTable.setSchoolRooms(schoolRooms);
-            schoolClassTimeTable.setSubjects(subjects);
-            schoolClassTimeTable.setTeachers(teachers);
-            schoolClassTimeTable.setSchoolClasses(schoolClasses);
             String solverStatus = solverStatus(schoolClassTimeTable.getId());
             schoolClassTimeTable.setSolverStatus(SolverStatus.valueOf(solverStatus));
-            scoreManager.updateScore(schoolClassTimeTable); // Sets the score
             return schoolClassTimeTable;
         }).collect(Collectors.toList());
     }
 
     @Override
-    public Optional<SchoolClassTimeTable> timeTableById(String timeTableId, List<SchoolRoom> schoolRooms,
-                                                        List<Subject> subjects, List<Teacher> teachers,
-                                                        List<SchoolClass> schoolClasses) {
+    public Optional<SchoolClassTimeTable> timeTableById(String timeTableId) {
         Optional<SchoolClassTimeTable> optTimeTable = timeTableSPI.findById(timeTableId);
         return optTimeTable.map(schoolClassTimeTable -> {
-            schoolClassTimeTable.setSchoolRooms(schoolRooms);
-            schoolClassTimeTable.setSubjects(subjects);
-            schoolClassTimeTable.setTeachers(teachers);
-            schoolClassTimeTable.setSchoolClasses(schoolClasses);
             String solverStatus = solverStatus(timeTableId);
             schoolClassTimeTable.setSolverStatus(SolverStatus.valueOf(solverStatus));
-            scoreManager.updateScore(schoolClassTimeTable); // Sets the score
             return schoolClassTimeTable;
         });
     }

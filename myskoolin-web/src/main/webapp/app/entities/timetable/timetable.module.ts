@@ -21,6 +21,7 @@ import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TimeTablesResolver} from '../../shared/services/resolvers/timetables.resolver';
+import {TimeTableOptionsResolver} from '../../shared/services/resolvers/timetableoptions.resolver';
 
 const ENTITY_STATES = [
     ...teacherRoute,
@@ -62,6 +63,7 @@ const ENTITY_STATES = [
     providers: [
         NotificationService,
         TimeTablesResolver,
+        TimeTableOptionsResolver,
     ],
     exports: [
         TimetableComponent,

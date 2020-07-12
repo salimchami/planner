@@ -57,12 +57,12 @@ export class GradeViewComponent implements OnInit, OnDestroy {
         this.client = this.route.snapshot.data['client'];
         this.grade = this.route.snapshot.data['grade'];
         this.grades = this.route.snapshot.data['grades'];
-        this.coursesTimeSlots = this.calendarHelper.convertTimeSlotsToFullCalendarEvents(
-            this.grade.timeTableOptions.firstWeekDay.name,
-            this.grade.timeTableOptions.coursesTimeSlots, true);
-        this.extraActivities = this.calendarHelper.convertTimeSlotsToFullCalendarEvents(
-            this.grade.timeTableOptions.firstWeekDay.name,
-            this.grade.timeTableOptions.extraActivities, true);
+        // this.coursesTimeSlots = this.calendarHelper.convertTimeSlotsToFullCalendarEvents(
+        //     this.grade.timeTableOptions.firstWeekDay.name,
+        //     this.grade.timeTableOptions.coursesTimeSlots, true);
+        // this.extraActivities = this.calendarHelper.convertTimeSlotsToFullCalendarEvents(
+        //     this.grade.timeTableOptions.firstWeekDay.name,
+        //     this.grade.timeTableOptions.extraActivities, true);
         this.events = [...this.coursesTimeSlots, ...this.extraActivities];
     }
 
