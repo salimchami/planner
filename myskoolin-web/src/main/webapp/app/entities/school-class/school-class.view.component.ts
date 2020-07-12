@@ -1,10 +1,11 @@
-import {Component, OnInit, OnDestroy, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SchoolClass} from '../../shared/model';
 import {Location} from '@angular/common';
 import {NotificationService} from '../../shared';
 import {DateTimeHelper} from '../../shared/services/utils/date-time-helper.service';
 import {SchoolClassService} from '../../shared/services/school-class.service';
+import {NotificationTypes} from '../../shared/notification/notification-types';
 
 @Component({
     encapsulation: ViewEncapsulation.None,
@@ -41,7 +42,7 @@ export class SchoolClassViewComponent implements OnInit, OnDestroy {
             (res) => {
                 this.notificationService.add('schoolClass.delete.toast-title',
                     'schoolClass.delete.delete-successful',
-                    'success');
+                    NotificationTypes.SUCCESS);
                 this.router.navigateByUrl('/school-classes');
             }, (err) => console.log(err));
     }

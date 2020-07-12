@@ -64,12 +64,13 @@ import {TeacherService} from './shared/services/teacher.service';
 import {TeacherResolver} from './shared/services/resolvers/teacher.resolver';
 import {SchoolClassResolver} from './shared/services/resolvers/school-class.resolver';
 import {CalendarHelper} from './shared/services/utils/calendar-helper.service';
-import {CalendarModule, DateAdapter} from 'angular-calendar';
+import {CalendarModule} from 'angular-calendar';
 import {Ng7MatBreadcrumbModule} from 'ng7-mat-breadcrumb';
 import {PricingsResolver} from './shared/services/resolvers/pricings.resolver';
 import {PricingService} from './shared/services/pricing.service';
 import {TimetableService} from './shared/services/timetable.service';
 import {DataHelper} from './shared/services/utils/data.helper';
+import {ToastrModule} from 'ngx-toastr';
 
 const APP_STATES = [
     ...navbarRoute,
@@ -95,6 +96,7 @@ const APP_STATES = [
         NgxDatatableModule,
         CalendarModule,
         NgcCookieConsentModule.forRoot(COOKIE_CONSENT_CONFIG),
+        ToastrModule.forRoot()
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [

@@ -87,12 +87,12 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
                                                  List<Teacher> teachers, List<SchoolClass> schoolClasses) {
         List<SchoolClassTimeTable> timeTables = timeTableSPI.findAllByClientId(clientId);
         return timeTables.stream().map(schoolClassTimeTable -> {
-            String solverStatus = solverStatus(schoolClassTimeTable.getId());
-            schoolClassTimeTable.setSolverStatus(SolverStatus.valueOf(solverStatus));
             schoolClassTimeTable.setSchoolRooms(schoolRooms);
             schoolClassTimeTable.setSubjects(subjects);
             schoolClassTimeTable.setTeachers(teachers);
             schoolClassTimeTable.setSchoolClasses(schoolClasses);
+            String solverStatus = solverStatus(schoolClassTimeTable.getId());
+            schoolClassTimeTable.setSolverStatus(SolverStatus.valueOf(solverStatus));
             scoreManager.updateScore(schoolClassTimeTable); // Sets the score
             return schoolClassTimeTable;
         }).collect(Collectors.toList());
@@ -102,14 +102,14 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
     public Optional<SchoolClassTimeTable> timeTableById(String timeTableId, List<SchoolRoom> schoolRooms,
                                                         List<Subject> subjects, List<Teacher> teachers,
                                                         List<SchoolClass> schoolClasses) {
-        String solverStatus = solverStatus(timeTableId);
         Optional<SchoolClassTimeTable> optTimeTable = timeTableSPI.findById(timeTableId);
         return optTimeTable.map(schoolClassTimeTable -> {
-            schoolClassTimeTable.setSolverStatus(SolverStatus.valueOf(solverStatus));
             schoolClassTimeTable.setSchoolRooms(schoolRooms);
             schoolClassTimeTable.setSubjects(subjects);
             schoolClassTimeTable.setTeachers(teachers);
             schoolClassTimeTable.setSchoolClasses(schoolClasses);
+            String solverStatus = solverStatus(timeTableId);
+            schoolClassTimeTable.setSolverStatus(SolverStatus.valueOf(solverStatus));
             scoreManager.updateScore(schoolClassTimeTable); // Sets the score
             return schoolClassTimeTable;
         });

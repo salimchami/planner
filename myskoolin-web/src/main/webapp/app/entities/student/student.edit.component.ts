@@ -1,9 +1,4 @@
-import {
-    Component,
-    OnInit,
-    OnDestroy,
-    ViewEncapsulation,
-} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {Client, Student} from '../../shared/model';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -17,6 +12,7 @@ import {WeekDay} from '../../shared/model/sub/week-day.model';
 import {DateTimeHelper} from '../../shared/services/utils/date-time-helper.service';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {NotificationTypes} from '../../shared/notification/notification-types';
 
 @Component({
     encapsulation: ViewEncapsulation.None,
@@ -144,18 +140,30 @@ export class StudentEditComponent implements OnInit, OnDestroy {
         this.isComplementaryHealthInsuranceEnabled = !this.student.medicalInfos.complementaryHealthInsurance;
         this.studentMedicalInfosForm = new FormGroup({
             healthInsurance: new FormControl(this.student.medicalInfos.healthInsurance),
-            healthInsuranceName: new FormControl({value: this.student.medicalInfos.healthInsuranceName, disabled: this.isHealthInsuranceEnabled}),
-            healthInsuranceReference: new FormControl({value: this.student.medicalInfos.healthInsuranceReference, disabled: this.isHealthInsuranceEnabled}),
-            healthInsuranceContact: new FormControl({value: this.student.medicalInfos.healthInsuranceContact, disabled: this.isHealthInsuranceEnabled}),
+            healthInsuranceName: new FormControl({
+                value: this.student.medicalInfos.healthInsuranceName,
+                disabled: this.isHealthInsuranceEnabled
+            }),
+            healthInsuranceReference: new FormControl({
+                value: this.student.medicalInfos.healthInsuranceReference,
+                disabled: this.isHealthInsuranceEnabled
+            }),
+            healthInsuranceContact: new FormControl({
+                value: this.student.medicalInfos.healthInsuranceContact,
+                disabled: this.isHealthInsuranceEnabled
+            }),
             complementaryHealthInsurance: new FormControl(this.student.medicalInfos.complementaryHealthInsurance),
             complementaryHealthInsuranceName: new FormControl({
-                value: this.student.medicalInfos.complementaryHealthInsuranceName, disabled: this.isComplementaryHealthInsuranceEnabled
+                value: this.student.medicalInfos.complementaryHealthInsuranceName,
+                disabled: this.isComplementaryHealthInsuranceEnabled
             }),
             complementaryHealthInsuranceReference: new FormControl({
-                value: this.student.medicalInfos.complementaryHealthInsuranceReference, disabled: this.isComplementaryHealthInsuranceEnabled
+                value: this.student.medicalInfos.complementaryHealthInsuranceReference,
+                disabled: this.isComplementaryHealthInsuranceEnabled
             }),
             complementaryHealthInsuranceContact: new FormControl({
-                value: this.student.medicalInfos.complementaryHealthInsuranceContact, disabled: this.isComplementaryHealthInsuranceEnabled
+                value: this.student.medicalInfos.complementaryHealthInsuranceContact,
+                disabled: this.isComplementaryHealthInsuranceEnabled
             }),
             knownDiseases: new FormControl(this.student.medicalInfos.knownDiseases),
             allergies: new FormControl(this.student.medicalInfos.allergies),
@@ -163,9 +171,18 @@ export class StudentEditComponent implements OnInit, OnDestroy {
         });
         this.studentCanteenForm = new FormGroup({
             recorded: new FormControl(this.student.canteenRegistration.recorded),
-            breakfast: new FormControl({value: this.student.canteenRegistration.breakfast, disabled: this.isCanteenRecordedEnabled}),
-            lunch: new FormControl({value: this.student.canteenRegistration.lunch, disabled: this.isCanteenRecordedEnabled}),
-            dinner: new FormControl({value: this.student.canteenRegistration.dinner, disabled: this.isCanteenRecordedEnabled}),
+            breakfast: new FormControl({
+                value: this.student.canteenRegistration.breakfast,
+                disabled: this.isCanteenRecordedEnabled
+            }),
+            lunch: new FormControl({
+                value: this.student.canteenRegistration.lunch,
+                disabled: this.isCanteenRecordedEnabled
+            }),
+            dinner: new FormControl({
+                value: this.student.canteenRegistration.dinner,
+                disabled: this.isCanteenRecordedEnabled
+            }),
             weekDays: this.fb.array(this.student.canteenRegistration.weekDays),
             subscriptionPeriodStart: new FormControl(this.student.canteenRegistration.subscriptionPeriodStart),
             subscriptionPeriodEnd: new FormControl(this.student.canteenRegistration.subscriptionPeriodEnd)
@@ -258,13 +275,13 @@ export class StudentEditComponent implements OnInit, OnDestroy {
     private saveConfirmation() {
         this.notificationService.add('toast-save-title',
             'toast-save',
-            'success');
+            NotificationTypes.SUCCESS);
     }
 
     private saveError() {
         this.notificationService.add('toast-save-error-title',
             'toast-save-error',
-            'error');
+            NotificationTypes.ERROR);
     }
 
     goBack() {
