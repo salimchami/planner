@@ -59,6 +59,7 @@ public class SchoolClassTimeTable {
 
     public SchoolClassTimeTable(String clientId, SchoolClass schoolClass, List<SchoolClass> schoolClasses, List<SchoolRoom> schoolRooms,
                                 List<Subject> subjects, List<Teacher> teachers, List<Lesson> lessons, List<TimeSlot> timeSlots) {
+        this.clientId = clientId;
         this.id = schoolClass.getId();
         this.schoolClass = schoolClass;
         this.schoolClasses = schoolClasses;
