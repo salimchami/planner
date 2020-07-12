@@ -44,6 +44,8 @@ public interface TeacherMapper {
 
     Teacher dbDtoToDomain(TeacherDbDTO teacher);
 
+    TeacherDbDTO domainToDbDto(Teacher teacher);
+
     @Named("dbToVo")
     default EnumSchoolRoomsTypes dbToVo(EnumSchoolRoomsTypesDb type) {
         return EnumSchoolRoomsTypes.valueOf(type.name());

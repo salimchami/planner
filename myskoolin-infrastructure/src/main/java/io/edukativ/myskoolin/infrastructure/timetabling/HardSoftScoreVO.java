@@ -1,6 +1,8 @@
 package io.edukativ.myskoolin.infrastructure.timetabling;
 
-public class HardSoftScoreVO {
+import java.io.Serializable;
+
+public class HardSoftScoreVO implements Serializable {
 
     private int initScore;
     private int hardScore;

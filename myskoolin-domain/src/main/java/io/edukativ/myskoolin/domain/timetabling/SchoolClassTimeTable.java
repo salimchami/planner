@@ -49,6 +49,8 @@ public class SchoolClassTimeTable {
 
     private Instant lastGenerationDate;
 
+    private SchoolClass schoolClass;
+
     public SchoolClassTimeTable() {
         this.timeSlots = new ArrayList<>();
         this.lessons = new ArrayList<>();
@@ -58,6 +60,7 @@ public class SchoolClassTimeTable {
     public SchoolClassTimeTable(SchoolClass schoolClass, List<SchoolClass> schoolClasses, List<SchoolRoom> schoolRooms,
                                 List<Subject> subjects, List<Teacher> teachers, List<Lesson> lessons, List<TimeSlot> timeSlots) {
         this.id = schoolClass.getId();
+        this.schoolClass = schoolClass;
         this.schoolClasses = schoolClasses;
         this.schoolRooms = schoolRooms;
         this.subjects = subjects;
@@ -184,5 +187,13 @@ public class SchoolClassTimeTable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public SchoolClass getSchoolClass() {
+        return schoolClass;
+    }
+
+    public void setSchoolClass(SchoolClass schoolClass) {
+        this.schoolClass = schoolClass;
     }
 }
