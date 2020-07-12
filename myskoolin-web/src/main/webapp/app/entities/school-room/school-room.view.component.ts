@@ -1,9 +1,10 @@
-import {Component, OnInit, OnDestroy, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {SchoolRoomService} from '../../shared/services/school-room.service';
 import {Client, SchoolRoom} from '../../shared/model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationService} from '../../shared';
 import {Location} from '@angular/common';
+import {NotificationTypes} from '../../shared/notification/notification-types';
 
 @Component({
     encapsulation: ViewEncapsulation.None,
@@ -36,7 +37,7 @@ export class SchoolRoomViewComponent implements OnInit, OnDestroy {
             (res) => {
                 this.notificationService.add('schoolRoom.delete.toast-title',
                     'schoolRoom.delete.delete-successfull',
-                    'success');
+                    NotificationTypes.SUCCESS);
                 this.router.navigateByUrl('/school-rooms');
             }, (err) => console.log(err));
     }

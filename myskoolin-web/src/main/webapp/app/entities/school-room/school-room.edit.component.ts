@@ -1,12 +1,12 @@
-import {Component, OnInit, OnDestroy, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {APP_CONSTANTS} from '../../app.constants';
-import {Client, Distance, SchoolRoom} from '../../shared/model';
+import {Client, SchoolRoom} from '../../shared/model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {SchoolRoomService} from '../../shared/services/school-room.service';
 import {NotificationService, Principal} from '../../shared';
-import {SchoolRoomDistance} from '../../shared/model';
 import {Location} from '@angular/common';
+import {NotificationTypes} from '../../shared/notification/notification-types';
 
 @Component({
     encapsulation: ViewEncapsulation.None,
@@ -137,7 +137,7 @@ export class SchoolRoomEditComponent implements OnInit, OnDestroy {
                 this.creationError = true;
                 this.notificationService.add('schoolRoom.new.form.toast-title',
                     'schoolRoom.new.form.name-already-exists',
-                    'error');
+                    NotificationTypes.ERROR);
                 this.creationErrorMsg = '';
             } else {
                 // const distances = values.distances.map((d) => {
@@ -150,7 +150,7 @@ export class SchoolRoomEditComponent implements OnInit, OnDestroy {
                         if (this.schoolRoom.id == null) {
                             this.notificationService.add('Error',
                                 'Id is null !!',
-                                'error');
+                                NotificationTypes.ERROR);
 
                         } else {
                             this.update();
@@ -162,7 +162,7 @@ export class SchoolRoomEditComponent implements OnInit, OnDestroy {
                         if (this.schoolRoom.id != null) {
                             this.notificationService.add('Error',
                                 'id exists...',
-                                'error');
+                                NotificationTypes.ERROR);
 
                         } else {
                             this.create();
@@ -179,7 +179,7 @@ export class SchoolRoomEditComponent implements OnInit, OnDestroy {
             (res) => {
                 this.notificationService.add('schoolRoom.new.form.toast-title',
                     'schoolRoom.new.form.creation-successfull',
-                    'success');
+                    NotificationTypes.SUCCESS);
                 this.router.navigateByUrl('/school-rooms');
             }, (err) => console.log(err));
     }
@@ -189,7 +189,7 @@ export class SchoolRoomEditComponent implements OnInit, OnDestroy {
             (res) => {
                 this.notificationService.add('schoolRoom.edit.form.toast-title',
                     'schoolRoom.edit.form.update-successfull',
-                    'success');
+                    NotificationTypes.SUCCESS);
                 this.router.navigateByUrl('/school-rooms');
             }, (err) => console.log(err));
     }

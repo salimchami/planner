@@ -1,10 +1,11 @@
-import {Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DateTimeHelper} from '../../shared/services/utils/date-time-helper.service';
 import {Client, SchoolClass, SchoolClassTimetable} from '../../shared/model';
 import {TimetableService} from '../../shared/services/timetable.service';
 import {NotificationService} from '../../shared';
 import {TimetableSchoolClassesComponent} from '../timetable/schoolclasses/timetable-schoolclasses.component';
+import {NotificationTypes} from '../../shared/notification/notification-types';
 
 @Component({
     encapsulation: ViewEncapsulation.None,
@@ -52,13 +53,13 @@ export class TimetableListComponent implements OnInit, OnDestroy {
     private generateConfirmation() {
         this.notificationService.add('client.new.form.toast-generation-title',
             'client.new.form.toast-generation',
-            'success');
+            NotificationTypes.SUCCESS);
     }
 
     private saveError() {
         this.notificationService.add('client.new.form.toast-generation-error-title',
             'client.new.form.toast-generation-error',
-            'error');
+            NotificationTypes.ERROR);
     }
 
     calculateGeneratedTimetablesPourcent() {

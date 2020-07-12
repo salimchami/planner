@@ -1,9 +1,4 @@
-import {
-    Component,
-    OnInit,
-    OnDestroy,
-    ViewEncapsulation,
-} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {Client, Grade, Subject} from '../../shared/model';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -13,6 +8,7 @@ import {SubjectService} from '../../shared/services/subject.service';
 import {GradeSerie} from '../../shared/model/grade-serie.model';
 import {ColorPickerService} from 'ngx-color-picker';
 import {APP_CONSTANTS} from '../../app.constants';
+import {NotificationTypes} from '../../shared/notification/notification-types';
 
 @Component({
     encapsulation: ViewEncapsulation.None,
@@ -112,7 +108,7 @@ export class SubjectEditComponent implements OnInit, OnDestroy {
                     if (!!this.subjects.filter((subject) => subject.name === form.value.name).length) {
                         this.notificationService.add('subject.new.form.error-toast-title',
                             'subject.new.form.form-name-error',
-                            'error');
+                            NotificationTypes.ERROR);
                     } else {
                         this.subject = new Subject(null, user.clientId, values.name, values.customName,
                             values.grade, values.gradeSerie, values.coefficient,
@@ -130,7 +126,7 @@ export class SubjectEditComponent implements OnInit, OnDestroy {
             (res) => {
                 this.notificationService.add('subject.new.form.toast-title',
                     'subject.new.form.creation-successfull',
-                    'success');
+                    NotificationTypes.SUCCESS);
                 this.router.navigateByUrl('/subjects');
             }, (err) => console.log(err));
     }
@@ -141,7 +137,7 @@ export class SubjectEditComponent implements OnInit, OnDestroy {
             (res) => {
                 this.notificationService.add('subject.edit.form.toast-title',
                     'subject.edit.form.update-successfull',
-                    'success');
+                    NotificationTypes.SUCCESS);
                 this.router.navigateByUrl('/subjects');
             }, (err) => console.log(err));
     }

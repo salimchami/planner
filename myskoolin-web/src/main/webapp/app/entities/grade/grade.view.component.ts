@@ -1,14 +1,14 @@
-import {Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild, TemplateRef} from '@angular/core';
-import {Client} from '../../shared/model';
+import {Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Client, Grade} from '../../shared/model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationService} from '../../shared';
 import {Location} from '@angular/common';
-import {Grade} from '../../shared/model';
 import {GradeService} from '../../shared/services/grade.service';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {CalendarView} from 'angular-calendar';
 import {CalendarHelper} from '../../shared/services/utils/calendar-helper.service';
 import {DateTimeHelper} from '../../shared/services/utils/date-time-helper.service';
+import {NotificationTypes} from '../../shared/notification/notification-types';
 
 @Component({
     encapsulation: ViewEncapsulation.None,
@@ -74,7 +74,7 @@ export class GradeViewComponent implements OnInit, OnDestroy {
             (res) => {
                 this.notificationService.add('grade.delete.toast-title',
                     'grade.delete.delete-successfull',
-                    'success');
+                    NotificationTypes.SUCCESS);
                 this.router.navigateByUrl('/grades');
             }, (err) => console.log(err));
     }

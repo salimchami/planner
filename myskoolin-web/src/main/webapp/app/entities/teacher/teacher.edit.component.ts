@@ -1,9 +1,4 @@
-import {
-    Component,
-    OnInit,
-    OnDestroy,
-    ViewEncapsulation,
-} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {Grade, Subject, Teacher} from '../../shared/model';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -17,6 +12,7 @@ import {DateTimeHelper} from '../../shared/services/utils/date-time-helper.servi
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {SubjectService} from '../../shared/services/subject.service';
+import {NotificationTypes} from '../../shared/notification/notification-types';
 
 @Component({
     encapsulation: ViewEncapsulation.None,
@@ -168,13 +164,13 @@ export class TeacherEditComponent implements OnInit, OnDestroy {
     private saveConfirmation() {
         this.notificationService.add('teacher.new.form.toast-save-title',
             'teacher.new.form.toast-save',
-            'success');
+            NotificationTypes.SUCCESS);
     }
 
     private saveError() {
         this.notificationService.add('teacher.new.form.toast-save-error-title',
             'teacher.new.form.toast-save-error',
-            'error');
+            NotificationTypes.ERROR);
     }
 
     goBack() {

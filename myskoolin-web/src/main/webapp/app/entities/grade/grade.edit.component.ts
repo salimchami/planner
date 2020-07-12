@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {Client, Grade} from '../../shared/model';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -9,6 +9,7 @@ import {APP_CONSTANTS} from '../../app.constants';
 import {GradeSerie} from '../../shared/model/grade-serie.model';
 import {DateTimeHelper} from '../../shared/services/utils/date-time-helper.service';
 import {ArraysHelper} from '../../shared/services/utils/table.helper';
+import {NotificationTypes} from '../../shared/notification/notification-types';
 
 @Component({
     encapsulation: ViewEncapsulation.None,
@@ -142,7 +143,7 @@ export class GradeEditComponent implements OnInit, OnDestroy {
                     } else {
                         this.notificationService.add('grade.new.form.error-toast-title',
                             'grade.new.form.form-error',
-                            'error');
+                            NotificationTypes.ERROR);
                     }
                     break;
                 case 'new':
@@ -152,7 +153,7 @@ export class GradeEditComponent implements OnInit, OnDestroy {
                     } else {
                         this.notificationService.add('grade.new.form.error-toast-title',
                             'grade.new.form.form-error',
-                            'error');
+                            NotificationTypes.ERROR);
                     }
                     break;
             }
@@ -164,7 +165,7 @@ export class GradeEditComponent implements OnInit, OnDestroy {
             (res) => {
                 this.notificationService.add('grade.new.form.toast-title',
                     'grade.new.form.creation-successfull',
-                    'success');
+                    NotificationTypes.SUCCESS);
                 this.router.navigateByUrl('/grades');
             }, (err) => console.log(err));
     }
@@ -174,7 +175,7 @@ export class GradeEditComponent implements OnInit, OnDestroy {
             (res) => {
                 this.notificationService.add('grade.edit.form.toast-title',
                     'grade.edit.form.update-successfull',
-                    'success');
+                    NotificationTypes.SUCCESS);
                 this.router.navigateByUrl('/grades');
             }, (err) => console.log(err));
     }

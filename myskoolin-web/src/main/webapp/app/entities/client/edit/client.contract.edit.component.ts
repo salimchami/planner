@@ -1,11 +1,12 @@
-import {Component, OnInit, OnDestroy, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {Client} from '../../../shared/model';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {NotificationService, Principal} from '../../../shared';
 import {ClientService} from '../../../shared/services/client.service';
 import {Pricing} from 'app/shared/model/pricing.model';
+import {NotificationTypes} from '../../../shared/notification/notification-types';
 
 @Component({
     encapsulation: ViewEncapsulation.None,
@@ -77,13 +78,13 @@ export class ClientContractEditComponent implements OnInit, OnDestroy {
     private saveConfirmation() {
         this.notificationService.add('client.new.form.toast-save-title',
             'client.new.form.toast-save',
-            'success');
+            NotificationTypes.SUCCESS);
     }
 
     private saveError() {
         this.notificationService.add('client.new.form.toast-save-error-title',
             'client.new.form.toast-save-error',
-            'error');
+            NotificationTypes.ERROR);
     }
 
     goBack() {

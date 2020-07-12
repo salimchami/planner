@@ -1,11 +1,11 @@
-import {Component, OnInit, OnDestroy, ViewEncapsulation} from '@angular/core';
-import {Client} from '../../shared/model';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Client, Subject} from '../../shared/model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationService} from '../../shared';
 import {Location} from '@angular/common';
-import {Subject} from '../../shared/model';
 import {SubjectService} from '../../shared/services/subject.service';
 import {DataHelper} from '../../shared/services/utils/data.helper';
+import {NotificationTypes} from '../../shared/notification/notification-types';
 
 @Component({
     encapsulation: ViewEncapsulation.None,
@@ -44,7 +44,7 @@ export class SubjectViewComponent implements OnInit, OnDestroy {
             (res) => {
                 this.notificationService.add('subject.delete.toast-title',
                     'subject.delete.delete-successfull',
-                    'success');
+                    NotificationTypes.SUCCESS);
                 this.router.navigateByUrl('/subjects');
             }, (err) => console.log(err));
     }

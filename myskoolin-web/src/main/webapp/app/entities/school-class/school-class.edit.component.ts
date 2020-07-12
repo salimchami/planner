@@ -1,9 +1,4 @@
-import {
-    Component,
-    OnInit,
-    OnDestroy,
-    ViewEncapsulation,
-} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {Grade, SchoolClass, Student, Teacher} from '../../shared/model';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -11,7 +6,7 @@ import {Location} from '@angular/common';
 import {NotificationService, Principal} from '../../shared';
 import {SchoolClassService} from '../../shared/services/school-class.service';
 import {APP_CONSTANTS} from '../../app.constants';
-import {JhiDateUtils, JhiLanguageService} from 'ng-jhipster';
+import {JhiLanguageService} from 'ng-jhipster';
 import {DateTimeHelper} from '../../shared/services/utils/date-time-helper.service';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
@@ -19,9 +14,9 @@ import {GradeSerie} from '../../shared/model/grade-serie.model';
 import {TeacherService} from '../../shared/services/teacher.service';
 import {debounceTime, finalize, switchMap, tap} from 'rxjs/operators';
 import {StudentService} from '../../shared/services/student.service';
-import {Observable, of} from 'rxjs';
-import {empty} from 'rxjs/internal/Observer';
+import {of} from 'rxjs';
 import {HttpResponse} from '@angular/common/http';
+import {NotificationTypes} from '../../shared/notification/notification-types';
 
 @Component({
     encapsulation: ViewEncapsulation.None,
@@ -219,13 +214,13 @@ export class SchoolClassEditComponent implements OnInit, OnDestroy {
     private saveConfirmation() {
         this.notificationService.add('schoolClass.new.form.toast-save-title',
             'schoolClass.new.form.toast-save',
-            'success');
+            NotificationTypes.SUCCESS);
     }
 
     private saveError() {
         this.notificationService.add('schoolClass.new.form.toast-save-error-title',
             'schoolClass.new.form.toast-save-error',
-            'error');
+            NotificationTypes.ERROR);
     }
 
     goBack() {
