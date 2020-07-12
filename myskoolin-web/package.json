@@ -73,7 +73,7 @@
     "ngx-cookieconsent": "2.0.0",
     "ngx-infinite-scroll": "7.1.0",
     "ngx-perfect-scrollbar": "7.2.1",
-    "ngx-toastr": "9.2.0",
+    "ngx-toastr": "10.2.0",
     "ngx-webstorage": "3.0.2",
     "reflect-metadata": "0.1.10",
     "rxjs": "6.3.3",
