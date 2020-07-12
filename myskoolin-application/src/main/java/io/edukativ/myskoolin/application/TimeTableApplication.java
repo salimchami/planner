@@ -104,7 +104,17 @@ public class TimeTableApplication {
     }
 
     public Optional<SchoolClassTimeTableDTO> timeTableById(String schoolClassTimeTableId) {
-        final Optional<SchoolClassTimeTable> schoolClassTimeTable = timeTableSolverAPI.timeTableById(schoolClassTimeTableId);
+        final UserDbDTO currentUser = userService.currentUserWithAuthorities();
+        final ObjectId clientId = currentUser.getClientId();
+        final List<SchoolRoomDbDTO> schoolRooms = schoolRoomRepository.findByClientId(false, clientId);
+        final List<SubjectDbDTO> subjects = subjectRepository.findAllNotDeleted(clientId);
+        final List<TeacherDbDTO> teachers = teacherRepository.findAllNotDeletedTeachers(clientId);
+        final List<SchoolClassDbDTO> schoolClasses = schoolClassRepository.findAllNotDeletedSchoolClasses(clientId);
+        final Optional<SchoolClassTimeTable> schoolClassTimeTable = timeTableSolverAPI.timeTableById(schoolClassTimeTableId,
+                schoolRoomMapper.dbDtosToDomains(schoolRooms),
+                subjectMapper.dbDtosToDomains(subjects),
+                teacherMapper.dbDtosToDomains(teachers),
+                schoolClassMapper.dbDtosToDomains(schoolClasses));
         return schoolClassTimeTable
                 .map(schoolClassTimeTableMapper::domainToDto);
     }
@@ -112,7 +122,15 @@ public class TimeTableApplication {
     public List<SchoolClassTimeTableDTO> timeTables() {
         final UserDbDTO currentUser = userService.currentUserWithAuthorities();
         final ObjectId clientId = currentUser.getClientId();
-        final List<SchoolClassTimeTable> schoolClassTimeTables = timeTableSolverAPI.timeTables(clientId.toString());
+        final List<SchoolRoomDbDTO> schoolRooms = schoolRoomRepository.findByClientId(false, clientId);
+        final List<SubjectDbDTO> subjects = subjectRepository.findAllNotDeleted(clientId);
+        final List<TeacherDbDTO> teachers = teacherRepository.findAllNotDeletedTeachers(clientId);
+        final List<SchoolClassDbDTO> schoolClasses = schoolClassRepository.findAllNotDeletedSchoolClasses(clientId);
+        final List<SchoolClassTimeTable> schoolClassTimeTables = timeTableSolverAPI.timeTables(clientId.toString(),
+                schoolRoomMapper.dbDtosToDomains(schoolRooms),
+                subjectMapper.dbDtosToDomains(subjects),
+                teacherMapper.dbDtosToDomains(teachers),
+                schoolClassMapper.dbDtosToDomains(schoolClasses));
         return schoolClassTimeTableMapper.domainsToDtos(schoolClassTimeTables);
     }
 }
