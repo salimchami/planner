@@ -1,5 +1,5 @@
 import {CalendarHelper} from 'app/shared/services/utils/calendar-helper.service';
-import {SchoolClassTimeSlot} from 'app/shared/model/sub/school-class-timeslot.model';
+
 import {Time} from 'app/shared/model';
 
 fdescribe('Calendar Helper Tests', function() {
@@ -95,14 +95,14 @@ fdescribe('Calendar Helper Tests', function() {
         });
     });
 
-    describe('timeSlotDurationInMinutes - valid', function() {
-        it.only('should return week from monday', function() {
-            const schoolClassTimeSlot = new SchoolClassTimeSlot();
-            schoolClassTimeSlot.subjectId = '1';
-            schoolClassTimeSlot.startTime = new Time('14', '0', '0', 'PM');
-            schoolClassTimeSlot.endTime = new Time('15', '0', '0', 'PM');
-            const durationInMinutes = calendarHelper.timeSlotDurationInMinutes(schoolClassTimeSlot, new Date(2020, 1, 20, 14, 0, 0, 0));
-            expect(durationInMinutes).toStrictEqual(60);
-        });
-    });
+    // describe('timeSlotDurationInMinutes - valid', function() {
+    //     it.only('should return week from monday', function() {
+    //         const schoolClassTimeSlot = new SchoolClassTimeSlot();
+    //         schoolClassTimeSlot.subjectId = '1';
+    //         schoolClassTimeSlot.startTime = new Time('14', '0', '0', 'PM');
+    //         schoolClassTimeSlot.endTime = new Time('15', '0', '0', 'PM');
+    //         const durationInMinutes = calendarHelper.timeSlotDurationInMinutes(schoolClassTimeSlot, new Date(2020, 1, 20, 14, 0, 0, 0));
+    //         expect(durationInMinutes).toStrictEqual(60);
+    //     });
+    // });
 });
