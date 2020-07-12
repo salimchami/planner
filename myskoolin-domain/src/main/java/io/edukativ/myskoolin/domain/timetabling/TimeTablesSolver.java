@@ -60,7 +60,7 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
             TimeTableFirstStepSolver firstStepSolver = new TimeTableFirstStepSolver(schoolRooms, subjects, teachers, schoolClass, timeTableOptions, logger);
             final List<Lesson> lessons = firstStepSolver.generateFirstStepTimeTable();
 
-            final SchoolClassTimeTable schoolClassTimeTable = new SchoolClassTimeTable(schoolClass, schoolClasses,
+            final SchoolClassTimeTable schoolClassTimeTable = new SchoolClassTimeTable(clientId, schoolClass, schoolClasses,
                     schoolRooms, subjects, teachers, lessons, lessons.stream().map(Lesson::getTimeSlot).collect(Collectors.toList()));
             solverManager.solveAndListen(schoolClassId, id -> schoolClassTimeTable, this::saveTimeTable);
         });

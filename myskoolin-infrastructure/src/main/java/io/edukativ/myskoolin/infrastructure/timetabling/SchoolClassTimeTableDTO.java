@@ -12,6 +12,7 @@ import java.util.Objects;
 public class SchoolClassTimeTableDTO implements Serializable {
 
     private String id;
+    private String clientId;
     private List<LessonVO> staticTimeTable;
     private List<LessonVO> events;
     private Instant lastGenerationDate;
@@ -106,5 +107,13 @@ public class SchoolClassTimeTableDTO implements Serializable {
 
     public void setSchoolClass(SchoolClassDTO schoolClass) {
         this.schoolClass = schoolClass;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 }

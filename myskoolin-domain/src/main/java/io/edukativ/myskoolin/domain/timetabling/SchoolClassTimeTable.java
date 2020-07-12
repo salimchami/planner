@@ -21,7 +21,7 @@ import java.util.Objects;
 public class SchoolClassTimeTable {
 
     private String id;
-
+    private String clientId;
     @PlanningEntityCollectionProperty
     private List<Lesson> lessons;
 
@@ -57,7 +57,7 @@ public class SchoolClassTimeTable {
         this.events = new ArrayList<>();
     }
 
-    public SchoolClassTimeTable(SchoolClass schoolClass, List<SchoolClass> schoolClasses, List<SchoolRoom> schoolRooms,
+    public SchoolClassTimeTable(String clientId, SchoolClass schoolClass, List<SchoolClass> schoolClasses, List<SchoolRoom> schoolRooms,
                                 List<Subject> subjects, List<Teacher> teachers, List<Lesson> lessons, List<TimeSlot> timeSlots) {
         this.id = schoolClass.getId();
         this.schoolClass = schoolClass;
@@ -99,7 +99,7 @@ public class SchoolClassTimeTable {
     }
 
     public List<Lesson> getLessons() {
-        if(this.lessons == null) {
+        if (this.lessons == null) {
             return new ArrayList<>();
         }
         return lessons;
@@ -195,5 +195,13 @@ public class SchoolClassTimeTable {
 
     public void setSchoolClass(SchoolClass schoolClass) {
         this.schoolClass = schoolClass;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 }

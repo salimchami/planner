@@ -38,6 +38,7 @@ export class TimetableSchoolClassesComponent implements OnInit, OnDestroy {
     timetableValidations: Array<any>;
     schoolRooms: Array<SchoolRoom>;
     teachers: Array<Teacher>;
+    timetables: Array<SchoolClassTimetable>;
 
     constructor(
         private route: ActivatedRoute,
@@ -50,6 +51,7 @@ export class TimetableSchoolClassesComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.schoolClassesStaticTimeSlots = [];
         this.timetableValidations = [];
+        this.timetables = this.route.snapshot.data['timetables'];
         this.client = this.route.snapshot.data['client'];
         this.subjects = this.route.snapshot.data['subjects'];
         this.schoolClasses = this.route.snapshot.data['schoolClasses'];
@@ -67,6 +69,7 @@ export class TimetableSchoolClassesComponent implements OnInit, OnDestroy {
     }
 
     schoolClassChange(schoolClass: SchoolClass) {
+        this.schoolClassTimeTable = this.timetables.find((timetable) => timetable.schoolClass.id === schoolClass.id);
         const timeSlots: Array<Timeslot> = this.schoolClassTimeTable.staticTimeTable.map((lesson) => lesson.timeSlot);
         if (this.schoolClassTimeTable != null && typeof this.schoolClassTimeTable !== 'undefined') {
             this.schoolClassesStaticTimeSlots = this.calendarHelper.convertTimeSlotsToFullCalendarEvents(
