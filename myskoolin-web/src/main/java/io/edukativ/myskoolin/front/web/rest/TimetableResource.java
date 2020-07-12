@@ -27,7 +27,7 @@ class TimetableResource {
         AuthoritiesConstants.SCHOOL_LIFE,
     })
     @PostMapping(value = "/solve")
-    public ResponseEntity<Void> solveTimetablesFromScratch() {
+        public ResponseEntity<Void> solveTimetablesFromScratch() {
         logger.debug("generating timetables for all school classes");
         timeTableApplication.solveNewTimeTablesForSchoolClasses();
         return ResponseEntity.ok().build();

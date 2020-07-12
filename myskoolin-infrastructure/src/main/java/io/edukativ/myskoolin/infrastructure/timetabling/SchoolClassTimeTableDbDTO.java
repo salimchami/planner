@@ -1,6 +1,7 @@
 package io.edukativ.myskoolin.infrastructure.timetabling;
 
 import io.edukativ.myskoolin.infrastructure.schoolclasses.SchoolClassDbDTO;
+import org.bson.types.ObjectId;
 import org.optaplanner.core.api.solver.SolverStatus;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -25,6 +26,7 @@ public class SchoolClassTimeTableDbDTO implements Serializable {
     @Id
     private String id;
 
+    private ObjectId clientId;
     @Field(MONGO_FIELD_LESSONS)
     private List<LessonDbVO> lessons;
 
@@ -104,5 +106,13 @@ public class SchoolClassTimeTableDbDTO implements Serializable {
 
     public void setSchoolClass(SchoolClassDbDTO schoolClass) {
         this.schoolClass = schoolClass;
+    }
+
+    public ObjectId getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(ObjectId clientId) {
+        this.clientId = clientId;
     }
 }

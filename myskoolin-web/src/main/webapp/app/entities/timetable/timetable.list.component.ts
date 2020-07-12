@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DateTimeHelper} from '../../shared/services/utils/date-time-helper.service';
-import {Client, SchoolClass} from '../../shared/model';
+import {Client, SchoolClass, SchoolClassTimetable} from '../../shared/model';
 import {TimetableService} from '../../shared/services/timetable.service';
 import {NotificationService} from '../../shared';
 import {TimetableSchoolClassesComponent} from '../timetable/schoolclasses/timetable-schoolclasses.component';
@@ -16,6 +16,7 @@ import {TimetableSchoolClassesComponent} from '../timetable/schoolclasses/timeta
 })
 export class TimetableListComponent implements OnInit, OnDestroy {
     schoolClasses: Array<SchoolClass>;
+    timetables: Array<SchoolClassTimetable>;
     generatedTimetablesPourcent: number;
     client: Client;
     generatedTimetablesLength: number;
@@ -31,11 +32,10 @@ export class TimetableListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.timetables = this.route.snapshot.data['timetables'];
         this.schoolClasses = this.route.snapshot.data['schoolClasses'];
         this.client = this.route.snapshot.data['client'];
-        this.generatedTimetablesLength = this.schoolClasses
-            .filter((schoolClass) => schoolClass.timetable != null && typeof schoolClass.timetable !== 'undefined')
-            .map((schoolClass) => schoolClass.timetable.staticTimeTable).length;
+        this.generatedTimetablesLength = this.timetables.length;
         this.generatedTimetablesPourcent = this.calculateGeneratedTimetablesPourcent();
     }
 
@@ -44,9 +44,7 @@ export class TimetableListComponent implements OnInit, OnDestroy {
 
     generate() {
         this.timetableService.generateTimetables().subscribe((response) => {
-            if (response.status === 200) {
-                this.generateConfirmation();
-            }
+            this.generateConfirmation();
             // add polling
         });
     }
@@ -68,19 +66,13 @@ export class TimetableListComponent implements OnInit, OnDestroy {
     }
 
     maxTimeTablesGenerationDate() {
-        const schoolClassTimetables = this.schoolClasses
-            .filter((schoolClass) => schoolClass.timetable != null && typeof schoolClass.timetable !== 'undefined')
-            .map((schoolClass) => schoolClass.timetable);
-        const sortedSchoolClassTimetables = schoolClassTimetables
+        const sortedSchoolClassTimetables = this.timetables
             .filter((timetable) => typeof timetable.lastGenerationDate !== 'undefined')
             .sort((a, b) => (b.lastGenerationDate > a.lastGenerationDate) ? 1 : -1);
         return sortedSchoolClassTimetables[0].lastGenerationDate;
     }
 
     lastGenerationDateExists() {
-        return !!this.schoolClasses
-            .filter((schoolClass) => typeof schoolClass.timetable !== 'undefined'
-                && schoolClass.timetable != null && typeof schoolClass.timetable.lastGenerationDate !== 'undefined')
-            .map((schoolClass) => schoolClass.timetable.staticTimeTable).length;
+        return !!this.timetables.map((timetable) => timetable.staticTimeTable).length;
     }
 }
