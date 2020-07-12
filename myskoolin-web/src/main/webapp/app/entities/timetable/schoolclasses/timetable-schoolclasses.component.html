@@ -126,12 +126,12 @@
                      [container]="'body'"
                 >
                     <ng-template #popTitle class="text-center">
-                        <strong> {{dateTimeHelper.twoDigitTimeFormat(weekEvent?.event?.timeSlot?.startTime.hour, weekEvent?.event?.timeSlot?.startTime.minutes)}} - {{dateTimeHelper.twoDigitTimeFormat(weekEvent?.event?.timeSlot?.endTime.hour, weekEvent?.event?.timeSlot?.endTime.minutes)}}</strong>
+                        <strong> {{dateTimeHelper.twoDigitTimeFormat(weekEvent?.event?.lesson?.timeSlot?.startTime.hour, weekEvent?.event?.lesson?.timeSlot?.startTime.minutes)}} - {{dateTimeHelper.twoDigitTimeFormat(weekEvent?.event?.lesson?.timeSlot?.endTime.hour, weekEvent?.event?.lesson?.timeSlot?.endTime.minutes)}}</strong>
                     </ng-template>
                     <ng-template #popContent let-event="event">
-                        <div><span jhiTranslate="timetable.list.tabs.schoolClasses.timeslot-subject"></span> : <strong><span class="float-right">{{weekEvent.event.timeSlot.title}}</span></strong></div>
-                        <div><span jhiTranslate="timetable.list.tabs.schoolClasses.timeslot-schoolroom"></span> : <span class="float-right schoolRoom-timeSlot">{{schoolRoomNameFromLesson(weekEvent.event.timeSlot)}}</span></div>
-                        <div><span jhiTranslate="timetable.list.tabs.schoolClasses.timeslot-teacher"></span> : <span class="float-right teacher-timeSlot">{{teacherFullNameFromTimeSlot(weekEvent.event.timeSlot)}}</span></div>
+                        <div><span jhiTranslate="timetable.list.tabs.schoolClasses.timeslot-subject"></span> : <strong><span class="float-right">{{weekEvent.event.lesson.timeSlot.title}}</span></strong></div>
+                        <div><span jhiTranslate="timetable.list.tabs.schoolClasses.timeslot-schoolroom"></span> : <span class="float-right schoolRoom-timeSlot">{{schoolRoomNameFromLesson(weekEvent.event.lesson)}}</span></div>
+                        <div><span jhiTranslate="timetable.list.tabs.schoolClasses.timeslot-teacher"></span> : <span class="float-right teacher-timeSlot">{{teacherFullNameFromLesson(weekEvent.event.lesson)}}</span></div>
                     </ng-template>
                     <mwl-calendar-event-actions [event]="weekEvent.event">
                     </mwl-calendar-event-actions>
@@ -142,11 +142,11 @@
             </ng-template>
             <ng-template #eventTitleTemplate let-event="event">
                 <div [style.color]="event['fontColor']">
-                    <strong> {{dateTimeHelper.twoDigitTimeFormat(event.timeSlot?.startTime.hour, event.timeSlot?.startTime.minutes)}} - {{dateTimeHelper.twoDigitTimeFormat(event.timeSlot?.endTime.hour, event.timeSlot?.endTime.minutes)}} <span class="float-right schoolRoom-timeSlot">{{schoolRoomNameFromLesson(event.timeSlot)}}</span></strong>
+                    <strong> {{dateTimeHelper.twoDigitTimeFormat(event.lesson?.timeSlot?.startTime.hour, event.lesson?.timeSlot?.startTime.minutes)}} - {{dateTimeHelper.twoDigitTimeFormat(event.lesson?.timeSlot?.endTime.hour, event.lesson?.timeSlot?.endTime.minutes)}} <span class="float-right schoolRoom-timeSlot">{{schoolRoomNameFromLesson(event.lesson)}}</span></strong>
                     <br />
-                    <span class="text-center">{{event.timeSlot.title}}</span>
+                    <span class="text-center">{{event.lesson.timeSlot.title}}</span>
                     <br />
-                    <span class="float-right teacher-timeSlot">{{teacherFullNameFromTimeSlot(event.timeSlot)}}</span>
+                    <span class="float-right teacher-timeSlot">{{teacherFullNameFromLesson(event.lesson)}}</span>
                 </div>
             </ng-template>
         </div>
