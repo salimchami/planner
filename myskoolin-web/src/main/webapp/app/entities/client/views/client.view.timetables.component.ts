@@ -36,12 +36,12 @@ export class ClientViewTimetablesComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.client = this.route.snapshot.data['client'];
-        this.coursesTimeSlots = this.calendarHelper.convertTimeSlotsToFullCalendarEvents(
-            this.client.timeTableOptions.firstWeekDay.name,
-            this.client.timeTableOptions.coursesTimeSlots, true);
-        this.extraActivities = this.calendarHelper.convertTimeSlotsToFullCalendarEvents(
-            this.client.timeTableOptions.firstWeekDay.name,
-            this.client.timeTableOptions.extraActivities, true);
+        // this.coursesTimeSlots = this.calendarHelper.convertTimeSlotsToFullCalendarEvents(
+        //     this.client.timeTableOptions.firstWeekDay.name,
+        //     this.client.timeTableOptions.coursesTimeSlots, true);
+        // this.extraActivities = this.calendarHelper.convertTimeSlotsToFullCalendarEvents(
+        //     this.client.timeTableOptions.firstWeekDay.name,
+        //     this.client.timeTableOptions.extraActivities, true);
         this.events = [...this.coursesTimeSlots, ...this.extraActivities];
     }
 

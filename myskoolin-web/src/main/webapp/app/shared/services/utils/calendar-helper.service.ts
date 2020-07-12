@@ -17,49 +17,51 @@ export class CalendarHelper {
         return '#3B4650';
     }
 
-    populateUniqueHalfTimeSlots(timeSlots: Array<Timeslot>) {
-        const halfTimeSlots = timeSlots.filter((timeSlot) => timeSlot.half);
-        const groupedHalfTimeSlots = DataHelper.arrayGroupBy(halfTimeSlots, (timeslot: Timeslot) => {
-            return [timeslot.day, timeslot.startTime.hour, timeslot.endTime.hour];
+    populateUniqueHalfTimeSlots(lessons: Array<Lesson>) {
+        const halfTimeSlots = lessons.filter((lesson) => lesson.timeSlot.half);
+        const groupedHalfLessonTimeSlots = DataHelper.arrayGroupBy(halfTimeSlots, (lesson: Lesson) => {
+            return [lesson.timeSlot.day, lesson.timeSlot.startTime.hour, lesson.timeSlot.endTime.hour];
         });
-        for (const groupedHalfTimeSlot of groupedHalfTimeSlots) {
-            if (groupedHalfTimeSlot.length !== 2) {
-                const timeSlotToCopy: Timeslot = Object.assign({}, groupedHalfTimeSlot[0]);
+        for (const groupedHalfLessonTimeSlot of groupedHalfLessonTimeSlots) {
+            if (groupedHalfLessonTimeSlot.length !== 2) {
+                const lessonToCopy: Lesson = Object.assign({}, groupedHalfLessonTimeSlot[0]);
                 const timeSlotToAdd = new Timeslot('', '', false,
-                    timeSlotToCopy.startTime, timeSlotToCopy.endTime, '', '',
-                    timeSlotToCopy.day, timeSlotToCopy.date, false, true);
-                timeSlots.push(timeSlotToAdd);
+                    lessonToCopy.timeSlot.startTime, lessonToCopy.timeSlot.endTime, '', '',
+                    lessonToCopy.timeSlot.day, lessonToCopy.timeSlot.date, false, true);
+                const lessonToAdd = new Lesson(groupedHalfLessonTimeSlot.id, groupedHalfLessonTimeSlot.schoolRoom, groupedHalfLessonTimeSlot.subject,
+                    groupedHalfLessonTimeSlot.teacher, timeSlotToAdd, groupedHalfLessonTimeSlot.schoolClass);
+                lessons.push(lessonToAdd);
             }
         }
-        return timeSlots;
+        return lessons;
     }
 
-    convertTimeSlotsToFullCalendarEvents(clientFirstDayName: string, timeSlots: Array<Timeslot>, translate: boolean): Array<any> {
-        timeSlots = this.populateUniqueHalfTimeSlots(timeSlots);
-        return timeSlots.map((timeSlot: Timeslot, index) => {
-            timeSlot.date = this.dateBasedOnTodayAndClientFirstDayFor(timeSlot.day.name, clientFirstDayName, new Date());
-            const start: Date = new Date(timeSlot.date.getFullYear(), timeSlot.date.getMonth(), timeSlot.date.getDate(),
-                +timeSlot.startTime.hour, +timeSlot.startTime.minutes, +timeSlot.startTime.seconds);
-            const end: Date = new Date(timeSlot.date.getFullYear(), timeSlot.date.getMonth(), timeSlot.date.getDate(),
-                +timeSlot.endTime.hour, +timeSlot.endTime.minutes, +timeSlot.endTime.seconds);
+    convertTimeSlotsToFullCalendarEvents(clientFirstDayName: string, lessons: Array<Lesson>, translate: boolean): Array<any> {
+        lessons = this.populateUniqueHalfTimeSlots(lessons);
+        return lessons.map((lesson: Lesson, index) => {
+            lesson.timeSlot.date = this.dateBasedOnTodayAndClientFirstDayFor(lesson.timeSlot.day, clientFirstDayName, new Date());
+            const start: Date = new Date(lesson.timeSlot.date.getFullYear(), lesson.timeSlot.date.getMonth(), lesson.timeSlot.date.getDate(),
+                +lesson.timeSlot.startTime.hour, +lesson.timeSlot.startTime.minutes, +lesson.timeSlot.startTime.seconds);
+            const end: Date = new Date(lesson.timeSlot.date.getFullYear(), lesson.timeSlot.date.getMonth(), lesson.timeSlot.date.getDate(),
+                +lesson.timeSlot.endTime.hour, +lesson.timeSlot.endTime.minutes, +lesson.timeSlot.endTime.seconds);
             let eventTile = '';
             if (translate) {
-                this.languageHelper.translate(timeSlot.title).subscribe((title) => {
+                this.languageHelper.translate(lesson.timeSlot.title).subscribe((title) => {
                     eventTile = title;
                 });
             } else {
-                eventTile = timeSlot.title;
+                eventTile = lesson.timeSlot.title;
             }
             return {
                 title: eventTile,
-                timeSlot,
+                lesson,
                 start,
                 end,
-                color: {primary: this.defaultEventBorderColor(), secondary: timeSlot.bgColor},
+                color: {primary: this.defaultEventBorderColor(), secondary: lesson.timeSlot.bgColor},
                 meta: {
                     id: index
                 },
-                fontColor: timeSlot.fontColorCssClass,
+                fontColor: lesson.timeSlot.fontColorCssClass,
                 resizable: undefined
             };
         });

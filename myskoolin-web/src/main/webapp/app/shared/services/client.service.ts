@@ -3,7 +3,8 @@ import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SERVER_API_URL} from '../../app.constants';
 import {Client} from '../model';
-import {ClientContractRequest} from 'app/shared/model/client-contract-request.model';
+import {ClientContractRequest} from '../../shared/model/client-contract-request.model';
+import {TimeTableOptions} from '../../shared/model/sub/time-table-options.model';
 
 export type EntityResponseType = HttpResponse<Client>;
 export type ContractRequestEntityResponseType = HttpResponse<ClientContractRequest>;
@@ -34,5 +35,9 @@ export class ClientService {
     updateContract(client: ClientContractRequest): Observable<ContractRequestEntityResponseType>  {
         const clientCopy = this.convert(client);
         return this.http.post<ClientContractRequest>('api/clientConf/contract', clientCopy, {observe: 'response'});
+    }
+
+    getTimeTableOptions(): Observable<HttpResponse<TimeTableOptions>> {
+        return this.http.get<TimeTableOptions>('api/clients/timetable-options', {observe: 'response'});
     }
 }

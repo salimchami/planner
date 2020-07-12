@@ -3,6 +3,7 @@ package io.edukativ.myskoolin.front.web.rest;
 import io.edukativ.myskoolin.application.ClientApplication;
 import io.edukativ.myskoolin.infrastructure.commercial.ClientDTO;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
+import io.edukativ.myskoolin.infrastructure.timetabling.TimeTableOptionsVO;
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/clients")
 @RestController
 class ClientResource {
 
@@ -62,10 +63,21 @@ class ClientResource {
 //    }
 
     @Timed
-    @GetMapping(value = "/clients/current")
+    @GetMapping(value = "/current")
     @Secured(AuthoritiesConstants.ADMINISTRATION)
     public ResponseEntity<ClientDTO> getCurrentClient() {
         return clientApplication.currentClient()
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @Timed
+    @GetMapping(value = "/timetable-options")
+    @Secured(AuthoritiesConstants.ADMINISTRATION)
+    public ResponseEntity<TimeTableOptionsVO> getTimeTableOptions() {
+        return clientApplication.timeTableOptions()
             .map(result -> new ResponseEntity<>(
                 result,
                 HttpStatus.OK))

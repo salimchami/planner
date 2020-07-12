@@ -18,9 +18,6 @@ public interface TimeTableSolverAPI {
     void solveForSchoolClass(String schoolClassId, String clientId, List<SchoolRoom> schoolRooms,
                              List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses, TimeTableOptions timeTableOptions);
 
-    Optional<SchoolClassTimeTable> timeTableById(String timeTableId, List<SchoolRoom> schoolRooms, List<Subject> subjects,
-                                                 List<Teacher> teachers, List<SchoolClass> schoolClasses);
-
     void stopSolving(String timeTableId);
 
     void stopSolving(List<String> timeTableIds);
@@ -29,5 +26,7 @@ public interface TimeTableSolverAPI {
 
     Map<String, SolverStatus> solverStatus(List<String> timeTableId);
 
-    List<SchoolClassTimeTable> timeTables(String clientId, List<SchoolRoom> schoolRooms, List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses);
+    Optional<SchoolClassTimeTable> timeTableById(String timeTableId);
+
+    List<SchoolClassTimeTable> timeTables(String clientId);
 }
