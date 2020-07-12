@@ -27,4 +27,6 @@ public interface TimeTableSolverAPI {
     String solverStatus(String timeTableId);
 
     Map<String, SolverStatus> solverStatus(List<String> timeTableId);
+
+    List<SchoolClassTimeTable> timeTables(String clientId);
 }

@@ -47,6 +47,7 @@ export class TimetableListComponent implements OnInit, OnDestroy {
             if (response.status === 200) {
                 this.generateConfirmation();
             }
+            // add polling
         });
     }
 
