@@ -92,7 +92,7 @@ export class TimetableSchoolClassesComponent implements OnInit, OnDestroy {
         }
     }
 
-    teacherFullNameFromTimeSlot(lesson: Lesson) {
+    teacherFullNameFromLesson(lesson: Lesson) {
         if (lesson.teacher) {
             const teachers = this.teachers.filter((teacher) => lesson.teacher.id === teacher.id);
             if (!!teachers.length) {

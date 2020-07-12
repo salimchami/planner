@@ -1,6 +1,7 @@
 package io.edukativ.myskoolin.front.web.rest;
 
 import io.edukativ.myskoolin.config.MySkoolinIntegrationTests;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.optaplanner.core.api.solver.SolverStatus;
@@ -19,6 +20,7 @@ class TimetableResourceTest extends MySkoolinIntegrationTests {
 
     @Test
     @Timeout(600_000)
+    @Disabled
     void generateTimetableFromScratch() throws Exception {
         String schoolClassId = "1002d38a7407395bcf9ef411";
         endPointCaller.authenticateAndPerform(
