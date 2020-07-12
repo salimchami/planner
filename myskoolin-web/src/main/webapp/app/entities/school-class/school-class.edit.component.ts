@@ -217,13 +217,13 @@ export class SchoolClassEditComponent implements OnInit, OnDestroy {
     }
 
     private saveConfirmation() {
-        this.notificationService.addToast('schoolClass.new.form.toast-save-title',
+        this.notificationService.add('schoolClass.new.form.toast-save-title',
             'schoolClass.new.form.toast-save',
             'success');
     }
 
     private saveError() {
-        this.notificationService.addToast('schoolClass.new.form.toast-save-error-title',
+        this.notificationService.add('schoolClass.new.form.toast-save-error-title',
             'schoolClass.new.form.toast-save-error',
             'error');
     }

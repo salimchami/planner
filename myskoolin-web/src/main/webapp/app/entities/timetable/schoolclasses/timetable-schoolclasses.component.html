@@ -53,8 +53,8 @@
                         <tbody>
                             <tr *ngFor="let validation of timetableValidations">
                                 <td>{{validation.subject.name}}</td>
-                                <td *ngIf="validation.valid"><i class="mdi mdi-check-bold mdi-24px text-success"></i></td>
-                                <td *ngIf="!validation.valid"><i class="mdi mdi-alert-circle mdi-24px text-danger"></i></td>
+                                <td *ngIf="validation.valid"><em class="mdi mdi-check-bold mdi-24px text-success"></em></td>
+                                <td *ngIf="!validation.valid"><em class="mdi mdi-alert-circle mdi-24px text-danger"></em></td>
                                 <td>{{validation.subject.minMinutesPerDay}}</td>
                                 <td>{{validation.subject.maxMinutesPerDay}}</td>
                                 <td>{{validation.subject.coursesFrequencyPerWeek}}</td>
@@ -130,7 +130,7 @@
                     </ng-template>
                     <ng-template #popContent let-event="event">
                         <div><span jhiTranslate="timetable.list.tabs.schoolClasses.timeslot-subject"></span> : <strong><span class="float-right">{{weekEvent.event.timeSlot.title}}</span></strong></div>
-                        <div><span jhiTranslate="timetable.list.tabs.schoolClasses.timeslot-schoolroom"></span> : <span class="float-right schoolRoom-timeSlot">{{schoolRoomNameFromTimeSlot(weekEvent.event.timeSlot)}}</span></div>
+                        <div><span jhiTranslate="timetable.list.tabs.schoolClasses.timeslot-schoolroom"></span> : <span class="float-right schoolRoom-timeSlot">{{schoolRoomNameFromLesson(weekEvent.event.timeSlot)}}</span></div>
                         <div><span jhiTranslate="timetable.list.tabs.schoolClasses.timeslot-teacher"></span> : <span class="float-right teacher-timeSlot">{{teacherFullNameFromTimeSlot(weekEvent.event.timeSlot)}}</span></div>
                     </ng-template>
                     <mwl-calendar-event-actions [event]="weekEvent.event">
@@ -142,7 +142,7 @@
             </ng-template>
             <ng-template #eventTitleTemplate let-event="event">
                 <div [style.color]="event['fontColor']">
-                    <strong> {{dateTimeHelper.twoDigitTimeFormat(event.timeSlot?.startTime.hour, event.timeSlot?.startTime.minutes)}} - {{dateTimeHelper.twoDigitTimeFormat(event.timeSlot?.endTime.hour, event.timeSlot?.endTime.minutes)}} <span class="float-right schoolRoom-timeSlot">{{schoolRoomNameFromTimeSlot(event.timeSlot)}}</span></strong>
+                    <strong> {{dateTimeHelper.twoDigitTimeFormat(event.timeSlot?.startTime.hour, event.timeSlot?.startTime.minutes)}} - {{dateTimeHelper.twoDigitTimeFormat(event.timeSlot?.endTime.hour, event.timeSlot?.endTime.minutes)}} <span class="float-right schoolRoom-timeSlot">{{schoolRoomNameFromLesson(event.timeSlot)}}</span></strong>
                     <br />
                     <span class="text-center">{{event.timeSlot.title}}</span>
                     <br />

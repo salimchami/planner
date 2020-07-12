@@ -256,13 +256,13 @@ export class StudentEditComponent implements OnInit, OnDestroy {
     }
 
     private saveConfirmation() {
-        this.notificationService.addToast('toast-save-title',
+        this.notificationService.add('toast-save-title',
             'toast-save',
             'success');
     }
 
     private saveError() {
-        this.notificationService.addToast('toast-save-error-title',
+        this.notificationService.add('toast-save-error-title',
             'toast-save-error',
             'error');
     }

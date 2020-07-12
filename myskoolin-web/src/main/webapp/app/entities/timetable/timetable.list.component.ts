@@ -44,26 +44,21 @@ export class TimetableListComponent implements OnInit, OnDestroy {
 
     generate() {
         this.timetableService.generateTimetables().subscribe((response) => {
-            this.schoolClasses = response.body;
-            this.router.navigate(['/timetables']).then((r) => {
-                this.saveConfirmation();
-                if (!!this.child.grades.length) {
-                    this.child.gradeChange(this.child.grades[0]);
-                    this.child.schoolClassChange(this.schoolClasses[0]);
-                }
-            });
+            if (response.status === 200) {
+                this.generateConfirmation();
+            }
         });
     }
 
-    private saveConfirmation() {
-        this.notificationService.addToast('client.new.form.toast-save-title',
-            'client.new.form.toast-save',
+    private generateConfirmation() {
+        this.notificationService.add('client.new.form.toast-generation-title',
+            'client.new.form.toast-generation',
             'success');
     }
 
     private saveError() {
-        this.notificationService.addToast('client.new.form.toast-save-error-title',
-            'client.new.form.toast-save-error',
+        this.notificationService.add('client.new.form.toast-generation-error-title',
+            'client.new.form.toast-generation-error',
             'error');
     }
 

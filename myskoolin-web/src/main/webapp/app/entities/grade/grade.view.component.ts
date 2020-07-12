@@ -72,7 +72,7 @@ export class GradeViewComponent implements OnInit, OnDestroy {
     deleteSchoolRoom() {
         this.gradeService.delete(this.grade.id).subscribe(
             (res) => {
-                this.notificationService.addToast('grade.delete.toast-title',
+                this.notificationService.add('grade.delete.toast-title',
                     'grade.delete.delete-successfull',
                     'success');
                 this.router.navigateByUrl('/grades');

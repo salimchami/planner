@@ -136,6 +136,22 @@ public class TimeSlotDbVO implements Serializable {
 
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public boolean isHalf() {
+        return half;
+    }
+
+    public void setHalf(boolean half) {
+        this.half = half;
+    }
+
     public String getTitle() {
         return title;
     }

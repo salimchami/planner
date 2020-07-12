@@ -140,7 +140,7 @@ export class GradeEditComponent implements OnInit, OnDestroy {
                         this.grade = this.grade.update(this.grade.id, values.name, values.order, values.notation, values.diminutive, values.maxMinutesPerDay, series, null);
                         this.update();
                     } else {
-                        this.notificationService.addToast('grade.new.form.error-toast-title',
+                        this.notificationService.add('grade.new.form.error-toast-title',
                             'grade.new.form.form-error',
                             'error');
                     }
@@ -150,7 +150,7 @@ export class GradeEditComponent implements OnInit, OnDestroy {
                         this.grade = new Grade(user.clientId, values.name, values.order, values.notation, values.diminutive, values.maxMinutesPerDay, series, null);
                         this.create();
                     } else {
-                        this.notificationService.addToast('grade.new.form.error-toast-title',
+                        this.notificationService.add('grade.new.form.error-toast-title',
                             'grade.new.form.form-error',
                             'error');
                     }
@@ -162,7 +162,7 @@ export class GradeEditComponent implements OnInit, OnDestroy {
     private create() {
         this.gradeService.create(this.grades, this.grade).subscribe(
             (res) => {
-                this.notificationService.addToast('grade.new.form.toast-title',
+                this.notificationService.add('grade.new.form.toast-title',
                     'grade.new.form.creation-successfull',
                     'success');
                 this.router.navigateByUrl('/grades');
@@ -172,7 +172,7 @@ export class GradeEditComponent implements OnInit, OnDestroy {
     private update() {
         this.gradeService.update(this.grades, this.grade).subscribe(
             (res) => {
-                this.notificationService.addToast('grade.edit.form.toast-title',
+                this.notificationService.add('grade.edit.form.toast-title',
                     'grade.edit.form.update-successfull',
                     'success');
                 this.router.navigateByUrl('/grades');

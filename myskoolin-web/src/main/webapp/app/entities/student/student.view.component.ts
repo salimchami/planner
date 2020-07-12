@@ -40,7 +40,7 @@ export class StudentViewComponent implements OnInit, OnDestroy {
     deleteStudent() {
         this.studentService.delete(this.student.id).subscribe(
             (res) => {
-                this.notificationService.addToast('student.delete.toast-title',
+                this.notificationService.add('student.delete.toast-title',
                     'student.delete.delete-successful',
                     'success');
                 this.router.navigateByUrl('/students');

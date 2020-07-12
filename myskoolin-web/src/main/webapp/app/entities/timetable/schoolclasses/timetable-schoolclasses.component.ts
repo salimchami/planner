@@ -1,11 +1,11 @@
 import {Component, OnInit, OnDestroy, ViewChild, TemplateRef} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Client, Grade, SchoolClass, SchoolRoom, Subject, Teacher} from '../../../shared/model';
-import {SchoolClassTimeSlot} from '../../../shared/model/sub/school-class-timeslot.model';
+import {Client, Grade, Lesson, SchoolClass, SchoolRoom, Subject, Teacher, Timeslot} from '../../../shared/model';
 import {CalendarHelper} from '../../../shared/services/utils/calendar-helper.service';
-import {SchoolClassTimetable} from '../../../shared/model/sub/school-class-timetable.model';
+import {SchoolClassTimetable} from '../../../shared/model/school-class-timetable.model';
 import {CalendarView} from 'angular-calendar';
 import {DateTimeHelper} from '../../../shared/services/utils/date-time-helper.service';
+import {TimetableService} from '../../../shared/services/timetable.service';
 
 @Component({
     selector: 'jhi-timetables-schoolclasses',
@@ -43,6 +43,7 @@ export class TimetableSchoolClassesComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private calendarHelper: CalendarHelper,
         private dateTimeHelper: DateTimeHelper,
+        private timetableService: TimetableService,
     ) {
     }
 
@@ -66,11 +67,11 @@ export class TimetableSchoolClassesComponent implements OnInit, OnDestroy {
     }
 
     schoolClassChange(schoolClass: SchoolClass) {
-        this.schoolClassTimeTable = schoolClass.timetable;
+        const timeSlots: Array<Timeslot> = this.schoolClassTimeTable.staticTimeTable.map((lesson) => lesson.timeSlot);
         if (this.schoolClassTimeTable != null && typeof this.schoolClassTimeTable !== 'undefined') {
             this.schoolClassesStaticTimeSlots = this.calendarHelper.convertTimeSlotsToFullCalendarEvents(
                 this.client.timeTableOptions.firstWeekDay.name,
-                this.schoolClassTimeTable.staticTimeTable, false);
+                timeSlots, false);
             this.timetableValidations = this.calendarHelper.timetableValidations(this.schoolClassTimeTable.staticTimeTable, this.subjects);
         }
     }
@@ -79,25 +80,16 @@ export class TimetableSchoolClassesComponent implements OnInit, OnDestroy {
         return this.timetableValidations.reduce((sum, next) => sum && next.valid, true);
     }
 
-    consoleLog() {
-        console.log('##################################################################################');
-        console.log(this.timetableValidations);
-    }
-
-    schoolRoomNameFromTimeSlot(timeSlot: SchoolClassTimeSlot) {
-        const schoolRooms = this.schoolRooms.filter((schoolRoom) => schoolRoom.id === timeSlot.schoolRoomId);
+    schoolRoomNameFromLesson(lesson: Lesson) {
+        const schoolRooms = this.schoolRooms.filter((schoolRoom) => schoolRoom.id === lesson.schoolRoom.id);
         if (!!schoolRooms.length) {
             return schoolRooms[0].name;
         }
     }
 
-    onEventClick($event: MouseEvent) {
-        console.log('event click ! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    }
-
-    teacherFullNameFromTimeSlot(timeSlot: SchoolClassTimeSlot) {
-        if (timeSlot.teachersIds) {
-            const teachers = this.teachers.filter((teacher) => timeSlot.teachersIds.includes(teacher.id));
+    teacherFullNameFromTimeSlot(lesson: Lesson) {
+        if (lesson.teacher) {
+            const teachers = this.teachers.filter((teacher) => lesson.teacher.id === teacher.id);
             if (!!teachers.length) {
                 return teachers[0].firstName + ' ' + teachers[0].lastName;
             }

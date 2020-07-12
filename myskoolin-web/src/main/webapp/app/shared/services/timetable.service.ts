@@ -5,9 +5,7 @@ import {SERVER_API_URL} from '../../app.constants';
 
 import {createRequestOption} from './utils/request-util';
 import {map} from 'rxjs/operators';
-import {SchoolClassTimetable} from 'app/shared/model/sub/school-class-timetable.model';
-import {SchoolClass} from '../model/';
-import {DateTimeHelper} from './../services/utils/date-time-helper.service';
+import {SchoolClassTimetable} from 'app/shared/model/school-class-timetable.model';
 
 export type EntityResponseType = HttpResponse<SchoolClassTimetable>;
 
@@ -16,22 +14,30 @@ export class TimetableService {
 
     private resourceUrl = SERVER_API_URL + 'api/timetables';
 
-    constructor(private http: HttpClient, private dateTimeHelper: DateTimeHelper) {
+    constructor(private http: HttpClient) {
     }
 
-    generateTimetables(req?: any): Observable<HttpResponse<SchoolClass[]>> {
+    generateTimetables(req?: any): Observable<HttpResponse<any>> {
         const options = createRequestOption(req);
-        return this.http.get<SchoolClass[]>(this.resourceUrl
-            + '/solve?timestamp=' + this.dateTimeHelper.timestamp(new Date())
-            ,
+        return this.http.post(this.resourceUrl + '/solve?timestamp=',
             {params: options, observe: 'response'})
-            .pipe(map((res: HttpResponse<SchoolClass[]>) =>
-                this.convertArrayResponse(res)));
+            .pipe(map((res: HttpResponse<any>) => res));
     }
 
-    private convertArrayResponse(res: HttpResponse<SchoolClass[]>): HttpResponse<SchoolClass[]> {
-        const jsonResponse: SchoolClass[] = res.body;
-        const body: SchoolClass[] = [];
+    solverStatus(schoolClassId: string): Observable<HttpResponse<string>> {
+        return this.http.get<string>(`${this.resourceUrl}/solve/status/${schoolClassId}`, {observe: 'response'})
+            .pipe(map((res: HttpResponse<string>) => res));
+    }
+
+    query(req?: any): Observable<HttpResponse<SchoolClassTimetable[]>> {
+        const options = createRequestOption(req);
+        return this.http.get<SchoolClassTimetable[]>(this.resourceUrl, {params: options, observe: 'response'})
+            .pipe(map((res: HttpResponse<SchoolClassTimetable[]>) => this.convertArrayResponse(res)));
+    }
+
+    private convertArrayResponse(res: HttpResponse<SchoolClassTimetable[]>): HttpResponse<SchoolClassTimetable[]> {
+        const jsonResponse: SchoolClassTimetable[] = res.body;
+        const body: SchoolClassTimetable[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
@@ -41,19 +47,8 @@ export class TimetableService {
     /**
      * Convert a returned JSON object to Timetable.
      */
-    private convertItemFromServer(schoolClass: SchoolClass): SchoolClass {
-        return Object.assign({}, schoolClass);
-    }
-
-    /**
-     * Convert a Timetable to a JSON which can be sent to the server.
-     */
-    private convert(schoolClass: SchoolClass): SchoolClass {
-        return Object.assign({}, schoolClass);
-    }
-
-    private convertArray(schoolClasses: Array<SchoolClass>): Array<SchoolClass> {
-        return Object.assign([], schoolClasses);
+    private convertItemFromServer(schoolClassTimeTable: SchoolClassTimetable): SchoolClassTimetable {
+        return Object.assign({}, schoolClassTimeTable);
     }
 
 }

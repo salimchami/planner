@@ -42,7 +42,7 @@ export class SubjectViewComponent implements OnInit, OnDestroy {
     deleteSchoolRoom() {
         this.subjectService.delete(this.subject.id).subscribe(
             (res) => {
-                this.notificationService.addToast('subject.delete.toast-title',
+                this.notificationService.add('subject.delete.toast-title',
                     'subject.delete.delete-successfull',
                     'success');
                 this.router.navigateByUrl('/subjects');

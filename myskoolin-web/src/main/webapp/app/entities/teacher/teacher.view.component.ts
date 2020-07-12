@@ -38,7 +38,7 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
     deleteTeacher() {
         this.teacherService.delete(this.teacher.id).subscribe(
             (res) => {
-                this.notificationService.addToast('teacher.delete.toast-title',
+                this.notificationService.add('teacher.delete.toast-title',
                     'teacher.delete.delete-successful',
                     'success');
                 this.router.navigateByUrl('/teachers');

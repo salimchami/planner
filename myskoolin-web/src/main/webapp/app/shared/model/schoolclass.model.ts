@@ -5,7 +5,7 @@ import {DailyBookTimeSlot} from './sub/daily-book-timeslot.model';
 import {Teacher} from './teacher.model';
 import {FormGroup} from '@angular/forms';
 import {Student} from './student.model';
-import {SchoolClassTimetable} from './sub/school-class-timetable.model';
+import {SchoolClassTimetable} from './school-class-timetable.model';
 import {User} from './user.model';
 import {Subject} from './subject.model';
 

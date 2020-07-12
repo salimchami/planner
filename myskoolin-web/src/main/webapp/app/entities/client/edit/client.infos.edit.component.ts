@@ -90,13 +90,13 @@ export class ClientInfosEditComponent implements OnInit, OnDestroy {
     }
 
     private saveConfirmation() {
-        this.notificationService.addToast('client.new.form.toast-save-title',
+        this.notificationService.add('client.new.form.toast-save-title',
             'client.new.form.toast-save',
             'success');
     }
 
     private saveError() {
-        this.notificationService.addToast('client.new.form.toast-save-error-title',
+        this.notificationService.add('client.new.form.toast-save-error-title',
             'client.new.form.toast-save-error',
             'error');
     }

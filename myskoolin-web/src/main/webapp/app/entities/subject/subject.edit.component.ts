@@ -110,7 +110,7 @@ export class SubjectEditComponent implements OnInit, OnDestroy {
                     break;
                 case 'new':
                     if (!!this.subjects.filter((subject) => subject.name === form.value.name).length) {
-                        this.notificationService.addToast('subject.new.form.error-toast-title',
+                        this.notificationService.add('subject.new.form.error-toast-title',
                             'subject.new.form.form-name-error',
                             'error');
                     } else {
@@ -128,7 +128,7 @@ export class SubjectEditComponent implements OnInit, OnDestroy {
     private create() {
         this.subjectService.create(this.subject).subscribe(
             (res) => {
-                this.notificationService.addToast('subject.new.form.toast-title',
+                this.notificationService.add('subject.new.form.toast-title',
                     'subject.new.form.creation-successfull',
                     'success');
                 this.router.navigateByUrl('/subjects');
@@ -139,7 +139,7 @@ export class SubjectEditComponent implements OnInit, OnDestroy {
         console.log(this.subject);
         this.subjectService.update(this.subject).subscribe(
             (res) => {
-                this.notificationService.addToast('subject.edit.form.toast-title',
+                this.notificationService.add('subject.edit.form.toast-title',
                     'subject.edit.form.update-successfull',
                     'success');
                 this.router.navigateByUrl('/subjects');

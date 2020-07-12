@@ -135,7 +135,7 @@ export class SchoolRoomEditComponent implements OnInit, OnDestroy {
             const srFound = this.schoolRooms.find((schoolRoom) => schoolRoom.name === values.name);
             if (srFound && this.routeState === 'new') {
                 this.creationError = true;
-                this.notificationService.addToast('schoolRoom.new.form.toast-title',
+                this.notificationService.add('schoolRoom.new.form.toast-title',
                     'schoolRoom.new.form.name-already-exists',
                     'error');
                 this.creationErrorMsg = '';
@@ -148,7 +148,7 @@ export class SchoolRoomEditComponent implements OnInit, OnDestroy {
                         this.schoolRoom = this.schoolRoom.update(values.name, type, values.surface, values.seats, values.closed,
                             values.timetable, values.comment, values.longitude, values.latitude);
                         if (this.schoolRoom.id == null) {
-                            this.notificationService.addToast('Error',
+                            this.notificationService.add('Error',
                                 'Id is null !!',
                                 'error');
 
@@ -160,7 +160,7 @@ export class SchoolRoomEditComponent implements OnInit, OnDestroy {
                         this.schoolRoom = new SchoolRoom(user.clientId, values.name, type, values.surface,
                             values.seats, values.closed, values.timetable, values.comment, values.longitude, values.latitude);
                         if (this.schoolRoom.id != null) {
-                            this.notificationService.addToast('Error',
+                            this.notificationService.add('Error',
                                 'id exists...',
                                 'error');
 
@@ -177,7 +177,7 @@ export class SchoolRoomEditComponent implements OnInit, OnDestroy {
     private create() {
         this.schoolRoomService.create(this.schoolRoom).subscribe(
             (res) => {
-                this.notificationService.addToast('schoolRoom.new.form.toast-title',
+                this.notificationService.add('schoolRoom.new.form.toast-title',
                     'schoolRoom.new.form.creation-successfull',
                     'success');
                 this.router.navigateByUrl('/school-rooms');
@@ -187,7 +187,7 @@ export class SchoolRoomEditComponent implements OnInit, OnDestroy {
     private update() {
         this.schoolRoomService.update(this.schoolRoom).subscribe(
             (res) => {
-                this.notificationService.addToast('schoolRoom.edit.form.toast-title',
+                this.notificationService.add('schoolRoom.edit.form.toast-title',
                     'schoolRoom.edit.form.update-successfull',
                     'success');
                 this.router.navigateByUrl('/school-rooms');

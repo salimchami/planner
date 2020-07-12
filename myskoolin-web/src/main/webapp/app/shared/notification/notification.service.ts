@@ -21,7 +21,7 @@ export class NotificationService {
      * </code>
      * @param closeOthers : close others toasts
      */
-    addToast(title: string, msg: string, type: string, closeOthers?: boolean) {
+    add(title: string, msg: string, type: string, closeOthers?: boolean) {
         if (closeOthers) {
             // this.toastyService.clearAll();
         }
