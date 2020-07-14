@@ -13,6 +13,7 @@ import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
 import io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintsProvider;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -37,6 +38,7 @@ public class TTSolverTest {
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("conflictParams")
+    @Disabled
     public void roomConflict(String description, SchoolRoom firstSchoolRoom, SchoolRoom secondSchoolRoom,
                              Subject firstSubject, Subject secondSubject, Teacher firstTeacher,
                              Teacher secondTeacher, TimeSlot firstTimeSlot, TimeSlot secondTimeSlot,
