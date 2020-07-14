@@ -1,7 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.schoolrooms;
 
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
-import io.edukativ.myskoolin.infrastructure.timetabling.LessonDbVO;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -42,9 +41,6 @@ public class SchoolRoomDbDTO implements Serializable {
 
     @Field(MONGO_FIELD_DISTANCES)
     private List<SchoolRoomDistanceDbVO> distances;
-
-    @Field(MONGO_FIELD_TIMETABLE)
-    private List<LessonDbVO> timetable;
 
     //TODO: add refTimeslots
     /*
@@ -87,13 +83,12 @@ public class SchoolRoomDbDTO implements Serializable {
     public SchoolRoomDbDTO() {
     }
 
-    public SchoolRoomDbDTO(ObjectId id, ObjectId clientId, List<SchoolRoomDistanceDbVO> distances, List<LessonDbVO> timetable,
+    public SchoolRoomDbDTO(ObjectId id, ObjectId clientId, List<SchoolRoomDistanceDbVO> distances,
                            String name, Boolean closed, Integer seats, EnumSchoolRoomsTypesDb type, BigDecimal surface,
                            String comment, String longitude, String latitude, Boolean deleted) {
         this.id = id;
         this.clientId = clientId;
         this.distances = distances;
-        this.timetable = timetable;
         this.name = name;
         this.closed = closed;
         this.seats = seats;
@@ -164,17 +159,6 @@ public class SchoolRoomDbDTO implements Serializable {
         this.surface = surface;
     }
 
-    public List<LessonDbVO> getTimetable() {
-        if (this.timetable == null) {
-            this.timetable = new ArrayList<>();
-        }
-        return timetable;
-    }
-
-    public void setTimetable(List<LessonDbVO> timetable) {
-        this.timetable = timetable;
-    }
-
     public String getLongitude() {
         return longitude;
     }
@@ -243,13 +227,11 @@ public class SchoolRoomDbDTO implements Serializable {
                 ", name='" + name + "'" +
 //                ", seats='" + seats + "'" +
 //                ", surface='" + surface + "'" +
-                ", timetable='" + timetable + "'" +
                 '}';
     }
 
     public void update(SchoolRoomDbDTO schoolRoom) {
         this.distances = schoolRoom.getDistances();
-        this.timetable = schoolRoom.getTimetable();
         this.name = schoolRoom.getName();
         this.closed = schoolRoom.isClosed();
         this.seats = schoolRoom.getSeats();

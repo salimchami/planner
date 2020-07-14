@@ -1,7 +1,5 @@
 package io.edukativ.myskoolin.infrastructure.timetabling;
 
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumPartsOfDay;
-
 import java.io.Serializable;
 
 public class TimeVO implements Serializable {
@@ -9,7 +7,14 @@ public class TimeVO implements Serializable {
     private Integer hour;
     private Integer minutes;
     private Integer seconds;
-    private EnumPartsOfDay partOfDay;
+    private String partOfDay;
+
+    public TimeVO(Integer hour, Integer minutes, Integer seconds, String partOfDay) {
+        this.hour = hour;
+        this.minutes = minutes;
+        this.seconds = seconds;
+        this.partOfDay = partOfDay;
+    }
 
     public Integer getHour() {
         return hour;
@@ -35,11 +40,11 @@ public class TimeVO implements Serializable {
         this.seconds = seconds;
     }
 
-    public EnumPartsOfDay getPartOfDay() {
+    public String getPartOfDay() {
         return partOfDay;
     }
 
-    public void setPartOfDay(EnumPartsOfDay partOfDay) {
+    public void setPartOfDay(String partOfDay) {
         this.partOfDay = partOfDay;
     }
 }

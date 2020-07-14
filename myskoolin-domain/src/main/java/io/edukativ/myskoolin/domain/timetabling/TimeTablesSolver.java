@@ -7,10 +7,12 @@ import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
 import org.optaplanner.core.api.score.ScoreManager;
+import org.optaplanner.core.api.solver.SolverJob;
 import org.optaplanner.core.api.solver.SolverManager;
 import org.optaplanner.core.api.solver.SolverStatus;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class TimeTablesSolver implements TimeTableSolverAPI {
@@ -62,7 +64,14 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
 
             final SchoolClassTimeTable schoolClassTimeTable = new SchoolClassTimeTable(clientId, schoolClass, schoolClasses,
                     schoolRooms, subjects, teachers, lessons, lessons.stream().map(Lesson::getTimeSlot).collect(Collectors.toList()));
-            solverManager.solveAndListen(schoolClassId, id -> schoolClassTimeTable, this::saveTimeTable);
+            final SolverJob<SchoolClassTimeTable, String> solverJob = solverManager.solveAndListen(schoolClassId, id -> schoolClassTimeTable, this::saveTimeTable);
+            try {
+                saveTimeTable(solverJob.getFinalBestSolution());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -80,6 +89,9 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
         if (schoolClassTimeTable.getScore().isFeasible()) {
             logger.info(String.format("saving time table for school class %s", schoolClassTimeTable.getSchoolClass().getName()));
             timeTableSPI.saveTimeTable(schoolClassTimeTable);
+        } else {
+            logger.warn(String.format("No feasible score. Time table for school class %s not saved",
+                    schoolClassTimeTable.getSchoolClass().getName()));
         }
     }
 

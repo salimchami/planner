@@ -14,11 +14,11 @@ public class EnumPartsOfDayToEnumConverter implements Converter<String, EnumPart
 
     @Override
     public EnumPartsOfDay convert(String source) {
-        try {
-            return EnumPartsOfDay.valueOf(source);
-        } catch (Exception e) {
+//        try {
             return EnumPartsOfDay.partOfDayByCode(source);
-        }
+//            return EnumPartsOfDay.valueOf(source);
+//        } catch (Exception e) {
+//        }
     }
 
 }
