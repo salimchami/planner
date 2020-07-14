@@ -1,6 +1,7 @@
 import {Time} from './time.model';
 
 export class Timeslot {
+
     constructor(
         public title?: string,
         public comment?: string,

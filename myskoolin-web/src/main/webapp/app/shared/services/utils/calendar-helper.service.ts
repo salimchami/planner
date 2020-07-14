@@ -39,6 +39,7 @@ export class CalendarHelper {
     convertTimeSlotsToFullCalendarEvents(clientFirstDayName: string, lessons: Array<Lesson>, translate: boolean): Array<any> {
         lessons = this.populateUniqueHalfTimeSlots(lessons);
         lessons = this.mergeSameSubjectsInTimeSlots(lessons);
+        // lessons = this.mergeSameSubjectsInOverlappedTimeSlots(lessons);
         return lessons.map((lesson: Lesson, index) => {
             lesson.timeSlot.date = this.dateBasedOnTodayAndClientFirstDayFor(lesson.timeSlot.day, clientFirstDayName, new Date());
             const start: Date = new Date(lesson.timeSlot.date.getFullYear(), lesson.timeSlot.date.getMonth(), lesson.timeSlot.date.getDate(),
@@ -151,29 +152,32 @@ export class CalendarHelper {
         return timeSlot.half ? result / 2 : result;
     }
 
-    private mergeSameSubjectsInTimeSlots(baseLessons: Array<Lesson>): Array<Lesson> {
-        baseLessons.forEach((lesson1, index, lessons) => {
-            const lesson2 = lessons[index + 1];
-            if (lesson2 && lesson2.timeSlot) {
-                const timeSlot1 = lesson1.timeSlot;
-                const timeSlot2 = lesson2.timeSlot;
-                let sameSchoolRooms = lesson1.schoolRoom.id === lesson2.schoolRoom.id;
-                let sameTeachers = lesson1.teacher.id === lesson2.teacher.id;
-                let sameSubjects = lesson1.subject.id === lesson2.subject.id;
-                let sameDays = timeSlot1.day === timeSlot2.day;
-                let sameEndAndStartTime = Time.equals(timeSlot1.endTime, timeSlot2.startTime);
-                if (sameSchoolRooms && sameTeachers && sameSubjects && sameDays && sameEndAndStartTime) {
-                    const lesson = new Lesson(lesson1.id, lesson1.schoolRoom, lesson1.subject, lesson1.teacher,
-                        new Timeslot(timeSlot1.title, timeSlot1.comment, timeSlot1.canceled, timeSlot1.startTime,
-                            timeSlot2.endTime, timeSlot1.bgColor, timeSlot1.fontColorCssClass, timeSlot1.day, timeSlot1.date,
-                            timeSlot1.autoAlterable, timeSlot1.half),
-                        lesson1.schoolClass);
-                    lessons.splice(index, 1);
-                    lessons.splice(index + 1, 1);
-                    lessons.push(lesson)
-                }
+    mergeSameSubjectsInTimeSlots(lessons: Array<Lesson>) {
+        return lessons.reduce((lessonsTmp: Array<Lesson>, currentLesson: Lesson) => {
+            const adjacentLesson = lessonsTmp.find((lesson) => {
+                const currentTimeSlot = currentLesson.timeSlot;
+                const adjacentTimeSlot = lesson.timeSlot;
+                const sameSchoolRooms = currentLesson.schoolRoom.id === lesson.schoolRoom.id;
+                const sameTeachers = currentLesson.teacher.id === lesson.teacher.id;
+                const sameSubjects = currentLesson.subject.id === lesson.subject.id;
+                const sameDays = currentTimeSlot.day === adjacentTimeSlot.day;
+                const sameEndAndStartTime = Time.equals(currentTimeSlot.startTime, adjacentTimeSlot.endTime);
+                return sameSchoolRooms && sameTeachers && sameSubjects && sameDays && sameEndAndStartTime;
+            });
+            if (lessonsTmp.includes(adjacentLesson)) {
+                lessonsTmp.push(
+                    new Lesson(currentLesson.id, currentLesson.schoolRoom, currentLesson.subject,
+                        currentLesson.teacher,
+                        new Timeslot(currentLesson.timeSlot.title, currentLesson.timeSlot.comment, currentLesson.timeSlot.canceled,
+                            adjacentLesson.timeSlot.startTime, currentLesson.timeSlot.endTime, currentLesson.timeSlot.bgColor,
+                            currentLesson.timeSlot.fontColorCssClass, currentLesson.timeSlot.day, currentLesson.timeSlot.date,
+                            currentLesson.timeSlot.autoAlterable, currentLesson.timeSlot.half),
+                        currentLesson.schoolClass));
+                lessonsTmp.splice(lessonsTmp.indexOf(adjacentLesson, 0), 1);
+            } else {
+                lessonsTmp.push(currentLesson);
             }
-        });
-        return baseLessons;
+            return lessonsTmp;
+        }, []);
     }
 }
