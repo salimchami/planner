@@ -1,7 +1,6 @@
 package io.edukativ.myskoolin.infrastructure.timetabling;
 
 import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
-import io.edukativ.myskoolin.infrastructure.common.vo.TimeVO;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;

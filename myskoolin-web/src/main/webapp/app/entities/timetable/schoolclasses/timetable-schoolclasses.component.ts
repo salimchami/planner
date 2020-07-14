@@ -71,13 +71,11 @@ export class TimetableSchoolClassesComponent implements OnInit, OnDestroy {
 
     schoolClassChange(schoolClass: SchoolClass) {
         this.schoolClassTimeTable = this.timetables.find((timetable) => timetable.schoolClass.id === schoolClass.id);
-        if (this.schoolClassTimeTable) {
-            if (typeof this.schoolClassTimeTable !== 'undefined') {
-                this.schoolClassesStaticTimeSlots = this.calendarHelper.convertTimeSlotsToFullCalendarEvents(
-                    this.timetableOptions.firstWeekDay.name,
-                    this.schoolClassTimeTable.staticTimeTable, false);
-                this.timetableValidations = this.calendarHelper.timetableValidations(this.schoolClassTimeTable.staticTimeTable, this.subjects);
-            }
+        if (typeof this.schoolClassTimeTable !== 'undefined') {
+            this.schoolClassesStaticTimeSlots = this.calendarHelper.convertTimeSlotsToFullCalendarEvents(
+                this.timetableOptions.firstWeekDay.name,
+                this.schoolClassTimeTable.staticTimeTable, false);
+            this.timetableValidations = this.calendarHelper.timetableValidations(this.schoolClassTimeTable.staticTimeTable, this.subjects);
         }
     }
 

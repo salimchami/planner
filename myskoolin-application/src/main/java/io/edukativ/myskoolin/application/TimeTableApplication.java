@@ -18,7 +18,10 @@ import io.edukativ.myskoolin.infrastructure.subjects.SubjectRepository;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherDbDTO;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherMapper;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherRepository;
-import io.edukativ.myskoolin.infrastructure.timetabling.*;
+import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableDTO;
+import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableMapper;
+import io.edukativ.myskoolin.infrastructure.timetabling.TimeTableOptionsDbVO;
+import io.edukativ.myskoolin.infrastructure.timetabling.TimeTableOptionsMapper;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,11 +106,13 @@ public class TimeTableApplication {
         return timeTableSolverAPI.solverStatus(timeTableId);
     }
 
+    @Transactional
     public Optional<SchoolClassTimeTableDTO> timeTableById(String schoolClassTimeTableId) {
         final Optional<SchoolClassTimeTable> schoolClassTimeTable = timeTableSolverAPI.timeTableById(schoolClassTimeTableId);
         return schoolClassTimeTable.map(schoolClassTimeTableMapper::domainToDto);
     }
 
+    @Transactional
     public List<SchoolClassTimeTableDTO> timeTables() {
         final UserDbDTO currentUser = userService.currentUserWithAuthorities();
         final ObjectId clientId = currentUser.getClientId();
