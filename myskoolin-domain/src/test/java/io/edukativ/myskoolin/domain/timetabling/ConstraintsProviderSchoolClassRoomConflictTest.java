@@ -34,9 +34,10 @@ public class ConstraintsProviderSchoolClassRoomConflictTest extends ConstraintPr
         return Stream.of(
                 Arguments.of("== schoolRoom, == subject, == schoolClass, == timeSlot", schoolRoom1, schoolRoom1, subject1, subject1, schoolClass1, schoolClass1, timeSlot1, timeSlot1, 0),
                 Arguments.of("== schoolRoom, == subject, == schoolClass, <> timeSlot", schoolRoom1, schoolRoom1, subject1, subject1, schoolClass1, schoolClass1, timeSlot1, timeSlot2, 0),
-
                 Arguments.of("== schoolRoom, == subject, <> schoolClass, == timeSlot", schoolRoom1, schoolRoom1, subject1, subject1, schoolClass1, schoolClass2, timeSlot1, timeSlot1, 2),
+
                 Arguments.of("== schoolRoom, == subject, <> schoolClass, <> timeSlot", schoolRoom1, schoolRoom1, subject1, subject1, schoolClass1, schoolClass2, timeSlot1, timeSlot2, 0),
+
                 Arguments.of("== schoolRoom, <> subject, == schoolClass, == timeSlot", schoolRoom1, schoolRoom1, subject1, subject2, schoolClass1, schoolClass1, timeSlot1, timeSlot1, 2),
                 Arguments.of("== schoolRoom, <> subject, == schoolClass, <> timeSlot", schoolRoom1, schoolRoom1, subject1, subject2, schoolClass1, schoolClass1, timeSlot1, timeSlot2, 0),
                 Arguments.of("== schoolRoom, <> subject, <> schoolClass, == timeSlot", schoolRoom1, schoolRoom1, subject1, subject2, schoolClass1, schoolClass2, timeSlot1, timeSlot1, 2),
