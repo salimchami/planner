@@ -1,5 +1,8 @@
 {
     "timetable": {
+        "home": {
+            "title": "Emplois du temps"
+        },
         "common": {
             "course-period": "Période de cours",
             "extra-activity-period": "Activités extra-scolaires",

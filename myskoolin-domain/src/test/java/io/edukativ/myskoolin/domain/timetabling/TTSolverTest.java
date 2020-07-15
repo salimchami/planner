@@ -12,8 +12,6 @@ import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
-import io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintsProvider;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -38,7 +36,6 @@ public class TTSolverTest {
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("conflictParams")
-    @Disabled
     public void roomConflict(String description, SchoolRoom firstSchoolRoom, SchoolRoom secondSchoolRoom,
                              Subject firstSubject, Subject secondSubject, Teacher firstTeacher,
                              Teacher secondTeacher, TimeSlot firstTimeSlot, TimeSlot secondTimeSlot,
@@ -51,9 +48,9 @@ public class TTSolverTest {
         Lesson lesson1 = new Lesson(1L, firstSchoolRoom, firstSubject, firstTeacher, firstTimeSlot, schoolClass);
         Lesson lesson2 = new Lesson(2L, secondSchoolRoom, secondSubject, secondTeacher, secondTimeSlot, schoolClass);
 
-        constraintVerifier.verifyThat(TimeTableConstraintsProvider::roomConflict)
-                .given(lesson1, lesson2)
-                .penalizesBy(expectedRoomConflictPenalty);
+//        constraintVerifier.verifyThat(TimeTableConstraintsProvider::roomConflict)
+//                .given(lesson1, lesson2)
+//                .penalizesBy(expectedRoomConflictPenalty);
 //        constraintVerifier.verifyThat(TimeTableConstraintsProvider::schoolClassConflict)
 //                .given(lesson1, lesson2)
 //                .penalizesBy(expectedSchoolClassConflictPenalty);
@@ -66,22 +63,19 @@ public class TTSolverTest {
 //        constraintVerifier.verifyThat(TimeTableConstraintsProvider::teacherRoomStability)
 //                .given(lesson1, lesson2)
 //                .penalizesBy(expectedTeacherRoomStabilityPenalty);
-//        constraintVerifier.verifyThat(TimeTableConstraintsProvider::timeSlotConflict)
-//                .given(lesson1, lesson2)
-//                .penalizesBy(expectedTimeSlotConflictPenalty);
+        constraintVerifier.verifyThat(TimeTableConstraintsProvider::timeSlotConflictPenalty)
+                .given(lesson1, lesson2)
+                .rewardsWith(expectedTimeSlotConflictPenalty);
 //        constraintVerifier.verifyThat(TimeTableConstraintsProvider::teacherTimeEfficiency)
 //                .given(lesson1, lesson2)
 //                .rewardsWith(expectedTeacherTimeEfficiencyReward);
     }
 
-
     private static Stream<Arguments> conflictParams() {
         prepareParams();
         return Stream.of(
-                Arguments.of("== schoolRoom, == subjects, == teacher, == timeSlot", schoolRoom1, schoolRoom1, subject1,
-                        subject1, teacher1, teacher1, timeSlot1, timeSlot1, schoolClass, 1, 1, 0, 1, 0, 4, 0),
                 Arguments.of("== schoolRoom, == subjects, == teacher, <> timeSlot", schoolRoom1, schoolRoom1, subject1,
-                        subject1, teacher1, teacher1, timeSlot1, timeSlot2, schoolClass, 0, 0, 1, 0, 0, 2, 1),
+                        subject1, teacher1, teacher1, timeSlot1, timeSlot2, schoolClass, 0, 0, 1, 0, 0, 0, 1),
                 Arguments.of("== schoolRoom, == subjects, <> teacher, == timeSlot", schoolRoom1, schoolRoom1, subject1,
                         subject1, teacher1, teacher2, timeSlot1, timeSlot1, schoolClass, 1, 1, 0, 0, 0, 4, 1),
                 Arguments.of("== schoolRoom, == subjects, <> teacher, <> timeSlot", schoolRoom1, schoolRoom1, subject1,

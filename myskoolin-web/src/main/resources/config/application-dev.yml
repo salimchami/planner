@@ -16,9 +16,9 @@
 logging:
   level:
     ROOT: INFO
-    io.github.jhipster: DEBUG
-    io.edukativ.schooling: DEBUG
-    org.optaplanner: DEBUG
+    io.github.jhipster: INFO
+    io.edukativ.schooling: INFO
+    org.optaplanner: INFO
 
 eureka:
   instance:

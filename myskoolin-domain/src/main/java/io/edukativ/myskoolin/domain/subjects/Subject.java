@@ -301,4 +301,13 @@ public class Subject implements Comparable<Subject> {
             optGradeSerie.ifPresent(this::setGradeSerie);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", customName='" + customName + '\'' +
+                '}';
+    }
 }

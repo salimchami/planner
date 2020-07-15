@@ -89,4 +89,15 @@ public class Lesson {
     public boolean isOverlapping(Lesson lesson2) {
         return this.timeSlot.isOverlapping(lesson2.getTimeSlot());
     }
+
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "schoolRoom=" + schoolRoom +
+                ", subject=" + subject +
+                ", teacher=" + teacher +
+                ", timeSlot=" + timeSlot +
+                ", schoolClass=" + schoolClass +
+                '}';
+    }
 }

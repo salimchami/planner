@@ -4,6 +4,7 @@ import io.edukativ.myskoolin.domain.grades.Grade;
 import io.edukativ.myskoolin.domain.grades.GradeSerie;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
 import io.edukativ.myskoolin.domain.teachers.TeachersBySubject;
+import io.edukativ.myskoolin.domain.timetabling.Lesson;
 import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
 import org.optaplanner.core.api.domain.lookup.PlanningId;
 
@@ -33,6 +34,7 @@ public class SchoolClass {
     private List<TimeSlot> dailyBook;
     private EnumSchoolClassNotation notation;
     private List<TeachersBySubject> teachersBySubjects;
+    private List<Lesson> timeTable;
 
     public SchoolClass() {
     }
@@ -202,11 +204,8 @@ public class SchoolClass {
     public String toString() {
         return "SchoolClass{" +
                 "id=" + id +
-                ", coursesStartDate='" + coursesStartDate + "'" +
-                ", coursesEndDate='" + coursesEndDate + "'" +
-                ", customName='" + customName + "'" +
                 ", name='" + name + "'" +
-                ", deleted='" + deleted + "'" +
+                ", customName='" + customName + "'" +
                 '}';
     }
 
@@ -215,5 +214,16 @@ public class SchoolClass {
                 .filter(teachersBySubject -> teachersBySubject.getSubject().getId().equals(subjectId))
                 .map(TeachersBySubject::getTeachers)
                 .flatMap(List::stream).collect(Collectors.toList());
+    }
+
+    public List<Lesson> getTimeTable() {
+        if(this.getTimeTable() == null) {
+            return new ArrayList<>();
+        }
+        return timeTable;
+    }
+
+    public void setTimeTable(List<Lesson> timeTable) {
+        this.timeTable = timeTable;
     }
 }
