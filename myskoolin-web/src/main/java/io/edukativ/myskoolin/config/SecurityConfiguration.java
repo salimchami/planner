@@ -1,8 +1,8 @@
 package io.edukativ.myskoolin.config;
 
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
-import io.edukativ.myskoolin.front.security.jwt.JWTConfigurer;
-import io.edukativ.myskoolin.front.security.jwt.TokenProvider;
+import io.edukativ.myskoolin.security.jwt.JWTConfigurer;
+import io.edukativ.myskoolin.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;

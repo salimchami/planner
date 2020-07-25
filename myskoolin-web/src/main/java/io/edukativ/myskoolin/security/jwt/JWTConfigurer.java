@@ -1,4 +1,4 @@
-package io.edukativ.myskoolin.front.security.jwt;
+package io.edukativ.myskoolin.security.jwt;
 
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

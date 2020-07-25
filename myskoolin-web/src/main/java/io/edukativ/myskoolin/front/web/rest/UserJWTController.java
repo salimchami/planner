@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.front.web.rest;
 
-import io.edukativ.myskoolin.front.security.jwt.JWTFilter;
-import io.edukativ.myskoolin.front.security.jwt.TokenProvider;
+import io.edukativ.myskoolin.security.jwt.JWTFilter;
+import io.edukativ.myskoolin.security.jwt.TokenProvider;
 import io.edukativ.myskoolin.front.web.rest.vm.LoginVM;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

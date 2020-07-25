@@ -1,4 +1,4 @@
-package io.edukativ.myskoolin.front.repository;
+package io.edukativ.myskoolin.repository;
 
 import io.edukativ.myskoolin.MyskoolinApp;
 

@@ -1,4 +1,4 @@
-package io.edukativ.myskoolin.front.security.jwt;
+package io.edukativ.myskoolin.security.jwt;
 
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.github.jhipster.config.JHipsterProperties;
@@ -21,20 +21,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class JWTFilterTest {
 
-    private TokenProvider tokenProvider;
+    private io.edukativ.myskoolin.security.jwt.TokenProvider tokenProvider;
 
-    private JWTFilter jwtFilter;
+    private io.edukativ.myskoolin.security.jwt.JWTFilter jwtFilter;
 
     @BeforeEach
     public void setup() {
         JHipsterProperties jHipsterProperties = new JHipsterProperties();
-        tokenProvider = new TokenProvider(jHipsterProperties);
+        tokenProvider = new io.edukativ.myskoolin.security.jwt.TokenProvider(jHipsterProperties);
         ReflectionTestUtils.setField(tokenProvider, "key",
             Keys.hmacShaKeyFor(Decoders.BASE64
                 .decode("fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8")));
 
         ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", 60000);
-        jwtFilter = new JWTFilter(tokenProvider);
+        jwtFilter = new io.edukativ.myskoolin.security.jwt.JWTFilter(tokenProvider);
         SecurityContextHolder.getContext().setAuthentication(null);
     }
 
@@ -47,7 +47,7 @@ public class JWTFilterTest {
         );
         String jwt = tokenProvider.createToken(authentication, false);
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addHeader(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        request.addHeader(io.edukativ.myskoolin.security.jwt.JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
         request.setRequestURI("/api/test");
         MockHttpServletResponse response = new MockHttpServletResponse();
         MockFilterChain filterChain = new MockFilterChain();
@@ -61,7 +61,7 @@ public class JWTFilterTest {
     public void testJWTFilterInvalidToken() throws Exception {
         String jwt = "wrong_jwt";
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addHeader(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        request.addHeader(io.edukativ.myskoolin.security.jwt.JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
         request.setRequestURI("/api/test");
         MockHttpServletResponse response = new MockHttpServletResponse();
         MockFilterChain filterChain = new MockFilterChain();
@@ -84,7 +84,7 @@ public class JWTFilterTest {
     @Test
     public void testJWTFilterMissingToken() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addHeader(JWTFilter.AUTHORIZATION_HEADER, "Bearer ");
+        request.addHeader(io.edukativ.myskoolin.security.jwt.JWTFilter.AUTHORIZATION_HEADER, "Bearer ");
         request.setRequestURI("/api/test");
         MockHttpServletResponse response = new MockHttpServletResponse();
         MockFilterChain filterChain = new MockFilterChain();
@@ -102,7 +102,7 @@ public class JWTFilterTest {
         );
         String jwt = tokenProvider.createToken(authentication, false);
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addHeader(JWTFilter.AUTHORIZATION_HEADER, "Basic " + jwt);
+        request.addHeader(io.edukativ.myskoolin.security.jwt.JWTFilter.AUTHORIZATION_HEADER, "Basic " + jwt);
         request.setRequestURI("/api/test");
         MockHttpServletResponse response = new MockHttpServletResponse();
         MockFilterChain filterChain = new MockFilterChain();

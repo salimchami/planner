@@ -1,4 +1,4 @@
-package io.edukativ.myskoolin.front.security;
+package io.edukativ.myskoolin.security;
 
 import io.edukativ.myskoolin.application.security.SecurityUtils;
 import io.edukativ.myskoolin.infrastructure.config.Constants;

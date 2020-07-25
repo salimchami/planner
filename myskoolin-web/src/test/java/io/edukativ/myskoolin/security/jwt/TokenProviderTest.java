@@ -1,4 +1,4 @@
-package io.edukativ.myskoolin.front.security.jwt;
+package io.edukativ.myskoolin.security.jwt;
 
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.github.jhipster.config.JHipsterProperties;
@@ -26,11 +26,11 @@ public class TokenProviderTest {
     private static final long ONE_MINUTE = 60000;
 
     private Key key;
-    private TokenProvider tokenProvider;
+    private io.edukativ.myskoolin.security.jwt.TokenProvider tokenProvider;
 
     @BeforeEach
     public void setup() {
-        tokenProvider = new TokenProvider( new JHipsterProperties());
+        tokenProvider = new io.edukativ.myskoolin.security.jwt.TokenProvider( new JHipsterProperties());
         key = Keys.hmacShaKeyFor(Decoders.BASE64
             .decode("fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8"));
 

@@ -1,4 +1,4 @@
-package io.edukativ.myskoolin.front.security;
+package io.edukativ.myskoolin.security;
 
 import io.edukativ.myskoolin.application.security.DomainUserDetailsService;
 import io.edukativ.myskoolin.application.security.UserNotActivatedException;
