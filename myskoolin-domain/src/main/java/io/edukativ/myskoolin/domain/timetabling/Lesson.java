@@ -100,4 +100,8 @@ public class Lesson {
                 ", schoolClass=" + schoolClass +
                 '}';
     }
+
+    public int overlappingGap(Lesson lesson2) {
+        return timeSlot.overlappingGap(lesson2.getTimeSlot()).intValue();
+    }
 }

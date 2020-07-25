@@ -1,4 +1,4 @@
-package io.edukativ.myskoolin.domain.timetabling;
+package io.edukativ.myskoolin.domain.timetabling.constraints;
 
 import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
 import io.edukativ.myskoolin.domain.commons.vo.EnumPartsOfDay;
@@ -12,10 +12,15 @@ import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
+import io.edukativ.myskoolin.domain.timetabling.*;
+import org.optaplanner.test.api.score.stream.ConstraintVerifier;
 
 import java.util.List;
 
 public abstract class ConstraintProviderTest {
+
+    protected final ConstraintVerifier<TimeTableConstraintsProvider, SchoolClassTimeTable> constraintVerifier
+            = ConstraintVerifier.build(new TimeTableConstraintsProvider(), SchoolClassTimeTable.class, Lesson.class);
 
     protected static SchoolRoom schoolRoom1;
     protected static SchoolClass schoolClass1;
@@ -25,6 +30,8 @@ public abstract class ConstraintProviderTest {
     protected static TimeSlot timeSlot2;
     protected static Subject subject1;
     protected static Subject subject2;
+    protected static Teacher teacher1;
+    protected static Teacher teacher2;
 
     protected static void prepareParams() {
         List<Grade> grades = GradeTestProvider.allGrades();
@@ -41,6 +48,8 @@ public abstract class ConstraintProviderTest {
         schoolRoom2 = allSchoolRooms.stream().filter(sr -> sr.getName().equals("101")).findFirst().get();
         subject1 = subjects.stream().filter(s -> s.getId().equals(GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_FRANCAIS_ID)).findFirst().get();
         subject2 = subjects.stream().filter(s -> s.getId().equals(GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_MATHS_ID)).findFirst().get();
+        teacher1 = teachers.stream().filter(t -> t.getId().equals(GlobalTestProvider.TEACHER_FRANCAIS_1_ID)).findFirst().get();
+        teacher2 = teachers.stream().filter(t -> t.getId().equals(GlobalTestProvider.TEACHER_MATHS_1_ID)).findFirst().get();
         timeSlot1 = new TimeSlot(1L, EnumDays.MONDAY,
                 new Time(8, 0, 0, EnumPartsOfDay.AM),
                 new Time(9, 0, 0, EnumPartsOfDay.AM)

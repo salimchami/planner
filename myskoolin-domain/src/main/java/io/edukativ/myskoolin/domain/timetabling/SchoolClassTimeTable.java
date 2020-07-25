@@ -4,12 +4,14 @@ import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
+import io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration;
+import org.optaplanner.core.api.domain.constraintweight.ConstraintConfigurationProvider;
 import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
 import org.optaplanner.core.api.domain.solution.PlanningScore;
 import org.optaplanner.core.api.domain.solution.PlanningSolution;
 import org.optaplanner.core.api.domain.solution.ProblemFactCollectionProperty;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
-import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
+import org.optaplanner.core.api.score.buildin.hardmediumsoft.HardMediumSoftScore;
 import org.optaplanner.core.api.solver.SolverStatus;
 
 import java.time.Instant;
@@ -43,13 +45,16 @@ public class SchoolClassTimeTable {
     private List<SchoolClass> schoolClasses;
 
     @PlanningScore
-    private HardSoftScore score;
+    private HardMediumSoftScore score;
 
     private SolverStatus solverStatus;
 
     private Instant lastGenerationDate;
 
     private SchoolClass schoolClass;
+
+    @ConstraintConfigurationProvider
+    private TimeTableConstraintConfiguration constraintConfiguration;
 
     public SchoolClassTimeTable() {
         this.timeSlots = new ArrayList<>();
@@ -158,11 +163,11 @@ public class SchoolClassTimeTable {
         this.schoolClasses = schoolClasses;
     }
 
-    public HardSoftScore getScore() {
+    public HardMediumSoftScore getScore() {
         return score;
     }
 
-    public void setScore(HardSoftScore score) {
+    public void setScore(HardMediumSoftScore score) {
         this.score = score;
     }
 
@@ -204,5 +209,13 @@ public class SchoolClassTimeTable {
 
     public void setClientId(String clientId) {
         this.clientId = clientId;
+    }
+
+    public TimeTableConstraintConfiguration getConstraintConfiguration() {
+        return constraintConfiguration;
+    }
+
+    public void setConstraintConfiguration(TimeTableConstraintConfiguration constraintConfiguration) {
+        this.constraintConfiguration = constraintConfiguration;
     }
 }

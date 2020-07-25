@@ -66,6 +66,6 @@ public class MyskoolinDomainInjectionConfiguration {
                                                      SchoolClassSPI schoolClassSPI,
                                                      TimeTableSPI timeTableSPI, MyskoolinLogger logger,
                                                      SolverFactory<SchoolClassTimeTable> solverFactory) {
-        return new TimeTablesSolver(solverManager, scoreManager, schoolClassSPI, solverFactory, timeTableSPI, logger);
+        return new TimeTablesSolver(solverManager, scoreManager, schoolClassSPI, timeTableSPI, logger);
     }
 }

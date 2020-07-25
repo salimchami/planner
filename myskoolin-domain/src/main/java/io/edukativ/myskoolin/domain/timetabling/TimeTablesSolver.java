@@ -7,11 +7,9 @@ import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
 import org.optaplanner.core.api.score.ScoreManager;
-import org.optaplanner.core.api.solver.SolverFactory;
 import org.optaplanner.core.api.solver.SolverJob;
 import org.optaplanner.core.api.solver.SolverManager;
 import org.optaplanner.core.api.solver.SolverStatus;
-import org.optaplanner.core.impl.score.director.ScoreDirector;
 
 import java.util.List;
 import java.util.Map;
@@ -24,19 +22,16 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
     private final SolverManager<SchoolClassTimeTable, String> solverManager;
     private final SchoolClassSPI schoolClassSPI;
     private final ScoreManager<SchoolClassTimeTable> scoreManager;
-    private final SolverFactory<SchoolClassTimeTable> solverFactory;
     private final TimeTableSPI timeTableSPI;
     private final MyskoolinLoggerSPI logger;
-    private ScoreDirector<SchoolClassTimeTable> guiScoreDirector;
 
     public TimeTablesSolver(SolverManager<SchoolClassTimeTable, String> solverManager,
                             ScoreManager<SchoolClassTimeTable> scoreManager,
                             SchoolClassSPI schoolClassSPI,
-                            SolverFactory<SchoolClassTimeTable> solverFactory, TimeTableSPI timeTableSPI, MyskoolinLoggerSPI logger) {
+                            TimeTableSPI timeTableSPI, MyskoolinLoggerSPI logger) {
         this.solverManager = solverManager;
         this.schoolClassSPI = schoolClassSPI;
         this.scoreManager = scoreManager;
-        this.solverFactory = solverFactory;
         this.timeTableSPI = timeTableSPI;
         this.logger = logger;
     }
@@ -71,15 +66,18 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
 
             final SchoolClassTimeTable schoolClassTimeTable = new SchoolClassTimeTable(clientId, schoolClass, schoolClasses,
                     schoolRooms, subjects, teachers, lessons, lessons.stream().map(Lesson::getTimeSlot).collect(Collectors.toList()));
-            final SolverJob<SchoolClassTimeTable, String> solverJob = solverManager.solveAndListen(schoolClassId, id -> schoolClassTimeTable, this::saveTimeTable);
-            try {
-                saveTimeTable(solverJob.getFinalBestSolution());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+            solveSaveAndListen(schoolClass, schoolClassTimeTable);
         });
+    }
+
+    private void solveSaveAndListen(SchoolClass schoolClass, SchoolClassTimeTable schoolClassTimeTable) {
+        final SolverJob<SchoolClassTimeTable, String> solverJob = solverManager.solveAndListen(schoolClass.getId(), id -> schoolClassTimeTable, this::saveTimeTable);
+        try {
+            saveTimeTable(solverJob.getFinalBestSolution());
+        } catch (InterruptedException | ExecutionException e) {
+            solverJob.terminateEarly();
+            logger.error(String.format("error while getting final time table for school class %s", schoolClass.getName()), e);
+        }
     }
 
     @Override
@@ -101,8 +99,6 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
                     schoolClassTimeTable.getSchoolClass().getName()));
             timeTableSPI.saveTimeTable(schoolClassTimeTable);
         }
-
-        this.guiScoreDirector = solverFactory.getScoreDirectorFactory().buildScoreDirector();
         logger.warn(scoreManager.explainScore(schoolClassTimeTable));
     }
 

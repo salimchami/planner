@@ -17,6 +17,9 @@ public class HardSoftScoreDbVO implements Serializable {
     @Field(MONGO_FIELD_INIT_SCORE)
     private int initScore;
 
+    public HardSoftScoreDbVO() {
+    }
+
     public HardSoftScoreDbVO(int initScore, int hardScore, int softScore) {
         this.initScore = initScore;
         this.hardScore = hardScore;

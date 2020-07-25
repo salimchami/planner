@@ -117,8 +117,8 @@ public class Time implements Comparable<Time> {
         return this;
     }
 
-    public Instant toInstant(DayOfWeek day) {
-        return ZonedDateTime.now()
+    public Instant toInstant(DayOfWeek day, ZonedDateTime now) {
+        return now
                 .with(ChronoField.DAY_OF_WEEK, day.getValue())
                 .with(ChronoField.MINUTE_OF_HOUR, Long.valueOf(minutes))
                 .with(ChronoField.SECOND_OF_MINUTE, Long.valueOf(seconds))

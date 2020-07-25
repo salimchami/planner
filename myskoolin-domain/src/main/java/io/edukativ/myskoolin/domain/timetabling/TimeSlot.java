@@ -218,6 +218,25 @@ public class TimeSlot implements Comparable<TimeSlot> {
         return sameTimes || inside || including || standardOverlapping;
     }
 
+    public Long overlappingGap(TimeSlot timeSlot) {
+        if (this.day == timeSlot.getDay()) {
+            if (isIncluding(timeSlot)) {
+                return Duration.between(this.startTime.toLocalTime(), timeSlot.startTime.toLocalTime()).toMinutes()
+                        + Duration.between(this.endTime.toLocalTime(), timeSlot.endTime.toLocalTime()).toMinutes();
+            } else if (timeSlot.isIncluding(this)) {
+                return Duration.between(timeSlot.startTime.toLocalTime(), this.startTime.toLocalTime()).toMinutes()
+                        + Duration.between(timeSlot.endTime.toLocalTime(), this.endTime.toLocalTime()).toMinutes();
+            } else if (isBefore(timeSlot)) {
+                return Duration.between(this.startTime.toLocalTime(), timeSlot.startTime.toLocalTime()).toMinutes();
+            } else if (timeSlot.isBefore(this)) {
+                return Duration.between(timeSlot.startTime.toLocalTime(), this.startTime.toLocalTime()).toMinutes();
+            } else if(this.hasSameTimes(timeSlot)) {
+                return this.durationInMinutes();
+            }
+        }
+        return 0L;
+    }
+
     private boolean standardOverlapping(TimeSlot timeSlot) {
         return this.startTime.toLocalTime().isBefore(timeSlot.getEndTime().toLocalTime())
                 && this.endTime.toLocalTime().isAfter(timeSlot.getStartTime().toLocalTime());
@@ -283,6 +302,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
     @Override
     public String toString() {
         return "TimeSlot{" +
+                "hashcode=" + hashCode() +
                 "day=" + day +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
@@ -311,8 +331,9 @@ public class TimeSlot implements Comparable<TimeSlot> {
     }
 
     boolean isBefore(TimeSlot timeSlot) {
-        final Instant instant1 = this.getEndTime().toInstant(DayOfWeek.valueOf(this.getDay().name()));
-        final Instant instant2 = timeSlot.getStartTime().toInstant(DayOfWeek.valueOf(timeSlot.getDay().name()));
-        return !this.isOverlapping(timeSlot) && (instant1.equals(instant2) || instant1.isBefore(instant2));
+        final ZonedDateTime now = ZonedDateTime.now();
+        final Instant instant1 = this.getStartTime().toInstant(DayOfWeek.valueOf(this.getDay().name()), now);
+        final Instant instant2 = timeSlot.getStartTime().toInstant(DayOfWeek.valueOf(timeSlot.getDay().name()), now);
+        return instant1.isBefore(instant2);
     }
 }
