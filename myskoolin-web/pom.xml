@@ -327,10 +327,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-failsafe-plugin</artifactId>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-idea-plugin</artifactId>
@@ -342,6 +342,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- Force alphabetical order to have a reproducible build -->
+                    <runOrder>alphabetical</runOrder>
+                    <reportsDirectory>${junit.utReportFolder}</reportsDirectory>
+                    <excludes>
+                        <exclude>**/*IT*</exclude>
+                        <exclude>**/*IntTest*</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>

@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.test.context.ActiveProfiles;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.Multipart;
@@ -43,7 +44,8 @@ import static org.mockito.Mockito.*;
  * Integration tests for {@link io.edukativ.myskoolin.infrastructure.app.providers.MailProvider}.
  */
 @SpringBootTest(classes = MyskoolinApp.class)
-public class MailProviderIT {
+@ActiveProfiles("dev")
+class MailProviderIT {
 
     private static final String[] languages = {
         "en",
@@ -78,7 +80,7 @@ public class MailProviderIT {
     }
 
     @Test
-    public void testSendEmail() throws Exception {
+    void testSendEmail() throws Exception {
         mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, false);
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();

@@ -287,28 +287,28 @@
                                 <outputDirectory>${jacoco.utReportFolder}</outputDirectory>
                             </configuration>
                         </execution>
-                        <execution>
-                            <id>pre-integration-tests</id>
-                            <goals>
-                                <goal>prepare-agent-integration</goal>
-                            </goals>
-                            <configuration>
-                                <!-- Sets the path to the file which contains the execution data. -->
-                                <destFile>${jacoco.itReportFile}</destFile>
-                            </configuration>
-                        </execution>
+<!--                        <execution>-->
+<!--                            <id>pre-integration-tests</id>-->
+<!--                            <goals>-->
+<!--                                <goal>prepare-agent-integration</goal>-->
+<!--                            </goals>-->
+<!--                            <configuration>-->
+<!--                                &lt;!&ndash; Sets the path to the file which contains the execution data. &ndash;&gt;-->
+<!--                                <destFile>${jacoco.itReportFile}</destFile>-->
+<!--                            </configuration>-->
+<!--                        </execution>-->
                         <!-- Ensures that the code coverage report for integration tests is created after integration tests have been run -->
-                        <execution>
-                            <id>post-integration-tests</id>
-                            <phase>post-integration-test</phase>
-                            <goals>
-                                <goal>report-integration</goal>
-                            </goals>
-                            <configuration>
-                                <dataFile>${jacoco.itReportFile}</dataFile>
-                                <outputDirectory>${jacoco.itReportFolder}</outputDirectory>
-                            </configuration>
-                        </execution>
+<!--                        <execution>-->
+<!--                            <id>post-integration-tests</id>-->
+<!--                            <phase>post-integration-test</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>report-integration</goal>-->
+<!--                            </goals>-->
+<!--                            <configuration>-->
+<!--                                <dataFile>${jacoco.itReportFile}</dataFile>-->
+<!--                                <outputDirectory>${jacoco.itReportFolder}</outputDirectory>-->
+<!--                            </configuration>-->
+<!--                        </execution>-->
                     </executions>
                 </plugin>
                 <!-- jib-maven-plugin -->
