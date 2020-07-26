@@ -1,11 +1,14 @@
 package io.edukativ.myskoolin.domain.timetabling.constraints;
 
+import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.timetabling.Lesson;
+import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
+import org.optaplanner.core.api.score.buildin.hardmediumsoft.HardMediumSoftScore;
 import org.optaplanner.core.api.score.stream.Constraint;
 import org.optaplanner.core.api.score.stream.ConstraintFactory;
 import org.optaplanner.core.api.score.stream.ConstraintProvider;
 
-import static io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration.CONSTRAINT_TIMESLOTS_OVERLAPS;
+import static io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration.*;
 import static org.optaplanner.core.api.score.stream.Joiners.filtering;
 
 public class TimeTableConstraintsProvider implements ConstraintProvider {
@@ -13,8 +16,17 @@ public class TimeTableConstraintsProvider implements ConstraintProvider {
     @Override
     public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
         return new Constraint[]{
-                timeSlotsOverlappingConflictPenalty(constraintFactory)
+                timeSlotsOverlappingConflictPenalty(constraintFactory),
+                schoolRoomTypeReward(constraintFactory),
+                subjectsDayDurationPenalty(constraintFactory),
         };
+    }
+
+    private Constraint subjectsDayDurationPenalty(ConstraintFactory constraintFactory) {
+        return constraintFactory.from(SchoolClassTimeTable.class)
+                .join(Lesson.class)
+                .filter(SchoolClassTimeTable::subjectDurationByDayExceedsMax)
+                .penalizeConfigurable(CONSTRAINT_SUBJECT_DURATION_BY_DAY, SchoolClassTimeTable::subjectDurationByDayGap);
     }
 
     public Constraint timeSlotsOverlappingConflictPenalty(ConstraintFactory constraintFactory) {
@@ -22,6 +34,21 @@ public class TimeTableConstraintsProvider implements ConstraintProvider {
                 filtering(Lesson::isOverlapping))
                 .penalizeConfigurable(CONSTRAINT_TIMESLOTS_OVERLAPS, Lesson::overlappingGap);
     }
+
+    public Constraint schoolRoomTypeReward(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                .from(Lesson.class)
+                .join(Subject.class)
+                .filter((lesson, subject) -> subject.getSchoolRoomsTypes().contains(lesson.getSchoolRoom().getType()))
+                .reward(CONSTRAINT_SCHOOL_TYPE_REWARD, HardMediumSoftScore.ofMedium(1));
+    }
+
+//    public Constraint roomConflict(ConstraintFactory constraintFactory) {
+//        return constraintFactory.fromUniquePair(Lesson.class,
+//                filtering(Lesson::isSameOverlappingAndSameSchoolRoom))
+//                .penalize("Room conflict", HardSoftScore.ofHard(2));
+//    }
+
 
 //    public Constraint globalConflictsForSameSchoolClass(ConstraintFactory constraintFactory) {
 //        return constraintFactory
@@ -48,13 +75,6 @@ public class TimeTableConstraintsProvider implements ConstraintProvider {
 //                .penalize("conflict between school classes penalized", HardSoftScore.ONE_HARD);
 //    }
 
-//    private Constraint schoolRoomTypeReward(ConstraintFactory constraintFactory) {
-//        return constraintFactory
-//                .from(Lesson.class)
-//                .join(Subject.class)
-//                .filter((lesson, subject) -> subject.getSchoolRoomsTypes().contains(lesson.getSchoolRoom().getType()))
-//                .reward("school type reward", HardSoftScore.ofHard(1));
-//    }
 
     /*
     *   private Constraint roomUnavailableTimeslot(ConstraintFactory factory) {
@@ -65,29 +85,6 @@ public class TimeTableConstraintsProvider implements ConstraintProvider {
     }
     * */
 
-//
-//    public Constraint roomConflict(ConstraintFactory constraintFactory) {
-//        // A room can accommodate at most one lesson at the same time.
-//        return constraintFactory
-//                // Select each pair of 2 different lessons ...
-//                .from(Lesson.class)
-//                .join(Lesson.class)
-//                .filter((lesson1, lesson2) -> lesson1.getSchoolRoom().equals(lesson2.getSchoolRoom()))
-//                // ... and penalize each pair with a hard weight.
-//                .penalize("Room conflict", HardSoftScore.ofHard(2));
-//    }
-//
-//    /**
-//     * A student can attend at most one lesson at the same time.
-//     * If the timeslot overlaps an other timeslot, it cannot be added.
-//     */
-//    public Constraint timeSlotConflictReward(ConstraintFactory constraintFactory) {
-//        return constraintFactory
-//                .from(Lesson.class)
-//                .join(Lesson.class)
-//                .filter((lesson1, lesson2) -> !lesson1.isOverlapping(lesson2))
-//                .reward("time slot conflict reward", HardSoftScore.ONE_HARD);
-//    }
 //
 //    public Constraint teacherConflict(ConstraintFactory constraintFactory) {
 //        // A teacher can teach at most one lesson at the same time.

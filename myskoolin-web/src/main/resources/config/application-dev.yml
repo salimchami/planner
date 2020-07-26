@@ -15,10 +15,10 @@
 
 logging:
   level:
-    ROOT: INFO
-    io.github.jhipster: INFO
-    io.edukativ.schooling: INFO
-    org.optaplanner: INFO
+    ROOT: WARN
+    io.github.jhipster: WARN
+    io.edukativ.schooling: WARN
+    org.optaplanner: WARN
 
 eureka:
   instance:

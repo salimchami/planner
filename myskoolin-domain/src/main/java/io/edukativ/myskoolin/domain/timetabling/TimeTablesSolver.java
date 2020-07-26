@@ -6,11 +6,13 @@ import io.edukativ.myskoolin.domain.schoolclasses.SchoolClassSPI;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
+import io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration;
 import org.optaplanner.core.api.score.ScoreManager;
 import org.optaplanner.core.api.solver.SolverJob;
 import org.optaplanner.core.api.solver.SolverManager;
 import org.optaplanner.core.api.solver.SolverStatus;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -63,8 +65,8 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
             logger.info(String.format("solving time table for class : %s", schoolClass.getName()));
             TimeTableFirstStepSolver firstStepSolver = new TimeTableFirstStepSolver(schoolRooms, subjects, teachers, schoolClass, timeTableOptions, logger);
             final List<Lesson> lessons = firstStepSolver.generateFirstStepTimeTable();
-
-            final SchoolClassTimeTable schoolClassTimeTable = new SchoolClassTimeTable(clientId, schoolClass, schoolClasses,
+            TimeTableConstraintConfiguration config = new TimeTableConstraintConfiguration();
+            final SchoolClassTimeTable schoolClassTimeTable = new SchoolClassTimeTable(config, clientId, schoolClass, schoolClasses,
                     schoolRooms, subjects, teachers, lessons, lessons.stream().map(Lesson::getTimeSlot).collect(Collectors.toList()));
             solveSaveAndListen(schoolClass, schoolClassTimeTable);
         });
@@ -91,15 +93,15 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
     }
 
     private void saveTimeTable(SchoolClassTimeTable schoolClassTimeTable) {
+        schoolClassTimeTable.setLastGenerationDate(Instant.now());
         if (schoolClassTimeTable.getScore().isFeasible()) {
             logger.info(String.format("saving time table for school class %s", schoolClassTimeTable.getSchoolClass().getName()));
-            timeTableSPI.saveTimeTable(schoolClassTimeTable);
         } else {
             logger.warn(String.format("No feasible score. Time table for school class %s saved.",
                     schoolClassTimeTable.getSchoolClass().getName()));
-            timeTableSPI.saveTimeTable(schoolClassTimeTable);
         }
-        logger.warn(scoreManager.explainScore(schoolClassTimeTable));
+        timeTableSPI.saveTimeTable(schoolClassTimeTable);
+        logger.info(scoreManager.explainScore(schoolClassTimeTable));
     }
 
     @Override

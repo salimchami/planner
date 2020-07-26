@@ -62,8 +62,9 @@ public class SchoolClassTimeTable {
         this.events = new ArrayList<>();
     }
 
-    public SchoolClassTimeTable(String clientId, SchoolClass schoolClass, List<SchoolClass> schoolClasses, List<SchoolRoom> schoolRooms,
+    public SchoolClassTimeTable(TimeTableConstraintConfiguration config, String clientId, SchoolClass schoolClass, List<SchoolClass> schoolClasses, List<SchoolRoom> schoolRooms,
                                 List<Subject> subjects, List<Teacher> teachers, List<Lesson> lessons, List<TimeSlot> timeSlots) {
+        this.constraintConfiguration = config;
         this.clientId = clientId;
         this.id = schoolClass.getId();
         this.schoolClass = schoolClass;
@@ -217,5 +218,20 @@ public class SchoolClassTimeTable {
 
     public void setConstraintConfiguration(TimeTableConstraintConfiguration constraintConfiguration) {
         this.constraintConfiguration = constraintConfiguration;
+    }
+
+    /////////////////////////////////////////////
+
+    public int subjectDurationByDayGap(Lesson lesson) {
+        return Math.abs(Math.toIntExact(lessonDurationByDay(lesson) - lesson.getSubject().getMaxMinutesPerDay()));
+    }
+
+    public boolean subjectDurationByDayExceedsMax(Lesson lesson) {
+        return lessonDurationByDay(lesson) > lesson.getSubject().getMaxMinutesPerDay();
+    }
+
+    private long lessonDurationByDay(Lesson lesson) {
+        return lessons.stream().filter(lesson1 -> lesson1.getTimeSlot().getDay().equals(lesson.getTimeSlot().getDay())
+                && lesson1.getSubject().equals(lesson.getSubject())).mapToLong(lesson1 -> lesson1.getTimeSlot().durationInMinutes()).sum();
     }
 }

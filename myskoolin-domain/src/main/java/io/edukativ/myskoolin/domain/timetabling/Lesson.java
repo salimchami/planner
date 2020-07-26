@@ -104,4 +104,8 @@ public class Lesson {
     public int overlappingGap(Lesson lesson2) {
         return timeSlot.overlappingGap(lesson2.getTimeSlot()).intValue();
     }
+
+    public  boolean isSameOverlappingAndSameSchoolRoom(Lesson lesson) {
+        return isOverlapping(lesson) && this.schoolRoom.equals(lesson.getSchoolRoom());
+    }
 }
