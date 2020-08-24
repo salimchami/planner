@@ -115,10 +115,10 @@ public class TimeTablesSolver implements TimeTableSolverAPI {
     }
 
     @Override
-    public Optional<SchoolClassTimeTable> timeTableById(String timeTableId) {
-        Optional<SchoolClassTimeTable> optTimeTable = timeTableSPI.findById(timeTableId);
+    public Optional<SchoolClassTimeTable> timeTableBySchoolCLassId(String schoolCLassId) {
+        Optional<SchoolClassTimeTable> optTimeTable = timeTableSPI.findBySchoolCLassId(schoolCLassId);
         return optTimeTable.map(schoolClassTimeTable -> {
-            String solverStatus = solverStatus(timeTableId);
+            String solverStatus = solverStatus(schoolCLassId);
             schoolClassTimeTable.setSolverStatus(SolverStatus.valueOf(solverStatus));
             return schoolClassTimeTable;
         });

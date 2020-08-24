@@ -7,6 +7,7 @@ import io.edukativ.myskoolin.infrastructure.teachers.TeacherMapperImplemented;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,24 @@ public class SchoolClassTimeTableProvider implements TimeTableSPI {
     public List<SchoolClassTimeTable> findAllByClientId(String clientId) {
         final List<SchoolClassTimeTableDbDTO> timetables = schoolClassTimeTableRepository.findByClientId(new ObjectId(clientId));
         return schoolClassTimeTableMapper.dbDtosToDomains(timetables);
+    }
+
+    @Override
+    public Optional<SchoolClassTimeTable> findBySchoolCLassId(String schoolCLassId) {
+        final Optional<SchoolClassTimeTableDbDTO> optTimetable = schoolClassTimeTableRepository.findBySchoolClassId(new ObjectId(schoolCLassId));
+        return optTimetable.map(schoolClassTimeTableMapper::dbDtoToDomain);
+    }
+
+    @Override
+    public long countTimeTables() {
+        return schoolClassTimeTableRepository.count();
+    }
+
+    @Override
+    public Instant lastGenerationDate() {
+        return schoolClassTimeTableRepository.findTopByOrderByLastGenerationDateDesc()
+                .map(SchoolClassTimeTableDbDTO::getLastGenerationDate)
+                .orElse(null);
     }
 
     private void mapTeachers(SchoolClassTimeTable schoolClassTimeTable, SchoolClassTimeTableDbDTO schoolClassTimeTableDbDTO) {

@@ -336,4 +336,8 @@ public class TimeSlot implements Comparable<TimeSlot> {
         final Instant instant2 = timeSlot.getStartTime().toInstant(DayOfWeek.valueOf(timeSlot.getDay().name()), now);
         return instant1.isBefore(instant2);
     }
+
+    public boolean isConsecutive(TimeSlot timeSlot) {
+        return this.startTime.equals(timeSlot.endTime) || this.endTime.equals(timeSlot.startTime);
+    }
 }

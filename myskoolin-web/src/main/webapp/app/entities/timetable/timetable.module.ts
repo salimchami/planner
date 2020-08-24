@@ -20,8 +20,9 @@ import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {TimeTablesResolver} from '../../shared/services/resolvers/timetables.resolver';
 import {TimeTableOptionsResolver} from '../../shared/services/resolvers/timetableoptions.resolver';
+import {TimeTablesCountResolver} from '../../shared/services/resolvers/timetables-count.resolver';
+import {TimeTablesLastGenerationDateResolver} from '../../shared/services/resolvers/timetables-last-generation-date.resolver';
 
 const ENTITY_STATES = [
     ...teacherRoute,
@@ -62,8 +63,9 @@ const ENTITY_STATES = [
     ],
     providers: [
         NotificationService,
-        TimeTablesResolver,
         TimeTableOptionsResolver,
+        TimeTablesCountResolver,
+        TimeTablesLastGenerationDateResolver,
     ],
     exports: [
         TimetableComponent,

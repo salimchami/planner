@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Spring Data MongoDB fr.wideapps.schoolme.repository for the TimeTableOptions entity.
@@ -15,4 +16,8 @@ public interface SchoolClassTimeTableRepository extends MongoRepository<SchoolCl
 
     @Query("{ 'clientId': ?0 }")
     List<SchoolClassTimeTableDbDTO> findByClientId(ObjectId objectId);
+
+    Optional<SchoolClassTimeTableDbDTO> findBySchoolClassId(ObjectId schoolClassId);
+
+    Optional<SchoolClassTimeTableDbDTO> findTopByOrderByLastGenerationDateDesc();
 }

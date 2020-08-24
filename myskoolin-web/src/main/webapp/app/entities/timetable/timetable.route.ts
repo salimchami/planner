@@ -9,8 +9,9 @@ import {GradesResolver} from './../../shared/services/resolvers/grades.resolver'
 import {SubjectsResolver} from './../../shared/services/resolvers/subject.resolver';
 import {SchoolRoomsResolver} from '../../shared/services/resolvers/school-rooms.resolver';
 import {TeachersResolver} from '../../shared/services/resolvers/teachers.resolver';
-import {TimeTablesResolver} from '../../shared/services/resolvers/timetables.resolver';
 import {TimeTableOptionsResolver} from '../../shared/services/resolvers/timetableoptions.resolver';
+import {TimeTablesCountResolver} from '../../shared/services/resolvers/timetables-count.resolver';
+import {TimeTablesLastGenerationDateResolver} from '../../shared/services/resolvers/timetables-last-generation-date.resolver';
 
 export const teacherRoute: Routes = [
     {
@@ -47,8 +48,9 @@ export const teacherRoute: Routes = [
                     subjects: SubjectsResolver,
                     schoolRooms: SchoolRoomsResolver,
                     teachers: TeachersResolver,
-                    timetables: TimeTablesResolver,
                     timetableOptions: TimeTableOptionsResolver,
+                    timetablesCount: TimeTablesCountResolver,
+                    lastGenerationDate: TimeTablesLastGenerationDateResolver,
                 },
                 canActivate: [UserRouteAccessService],
             },

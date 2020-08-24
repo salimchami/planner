@@ -20,12 +20,13 @@ export class TimetableListComponent implements OnInit, OnDestroy {
     timetables: Array<SchoolClassTimetable>;
     generatedTimetablesPourcent: number;
     client: Client;
-    generatedTimetablesLength: number;
+    generatedTimetablesCount: number;
+    lastGenerationDate: Date;
     @ViewChild('timetableSchoolClassesComponent') child: TimetableSchoolClassesComponent;
 
     constructor(
         private route: ActivatedRoute,
-        private dateHelper: DateTimeHelper,
+        public dateHelper: DateTimeHelper,
         private timetableService: TimetableService,
         private router: Router,
         private notificationService: NotificationService,
@@ -36,7 +37,8 @@ export class TimetableListComponent implements OnInit, OnDestroy {
         this.timetables = this.route.snapshot.data['timetables'];
         this.schoolClasses = this.route.snapshot.data['schoolClasses'];
         this.client = this.route.snapshot.data['client'];
-        this.generatedTimetablesLength = this.timetables.length;
+        this.generatedTimetablesCount = this.route.snapshot.data['timetablesCount'];
+        this.lastGenerationDate = this.route.snapshot.data['lastGenerationDate'];
         this.generatedTimetablesPourcent = this.calculateGeneratedTimetablesPourcent();
     }
 
@@ -63,17 +65,6 @@ export class TimetableListComponent implements OnInit, OnDestroy {
     }
 
     calculateGeneratedTimetablesPourcent() {
-        return (this.generatedTimetablesLength / this.schoolClasses.length) * 100;
-    }
-
-    maxTimeTablesGenerationDate() {
-        const sortedSchoolClassTimetables = this.timetables
-            .filter((timetable) => typeof timetable.lastGenerationDate !== 'undefined')
-            .sort((a, b) => (b.lastGenerationDate > a.lastGenerationDate) ? 1 : -1);
-        return sortedSchoolClassTimetables[0].lastGenerationDate;
-    }
-
-    lastGenerationDateExists() {
-        return !!this.timetables.map((timetable) => timetable.staticTimeTable).length;
+        return (this.generatedTimetablesCount / this.schoolClasses.length) * 100;
     }
 }

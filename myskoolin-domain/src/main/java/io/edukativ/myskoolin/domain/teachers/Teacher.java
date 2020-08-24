@@ -8,6 +8,7 @@ import io.edukativ.myskoolin.domain.grades.Grade;
 import io.edukativ.myskoolin.domain.medical.InfirmaryStatistics;
 import io.edukativ.myskoolin.domain.medical.MedicalInfos;
 import io.edukativ.myskoolin.domain.subjects.Subject;
+import org.optaplanner.core.api.domain.entity.PlanningPin;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -35,6 +36,8 @@ public class Teacher extends User {
     private ZonedDateTime exitDate;
     private String exitReason;
     private List<Grade> grades;
+    @PlanningPin
+    private boolean pinned = true;
 
     public Teacher() {
     }
@@ -197,5 +200,13 @@ public class Teacher extends User {
             addAuthority(teacherAuthority);
         }
 
+    }
+
+    public boolean isPinned() {
+        return pinned;
+    }
+
+    public void setPinned(boolean pinned) {
+        this.pinned = pinned;
     }
 }

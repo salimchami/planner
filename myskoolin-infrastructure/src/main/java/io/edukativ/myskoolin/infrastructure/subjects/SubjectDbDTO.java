@@ -64,7 +64,7 @@ public class SubjectDbDTO implements Comparable<SubjectDbDTO>, Serializable {
     @Field(MONGO_FIELD_CUSTOM_NAME)
     private String customName;
 
-    @DBRef
+    @DBRef(lazy = true)
     @Field(MONGO_FIELD_GRADE)
     private GradeDbDTO grade;
 

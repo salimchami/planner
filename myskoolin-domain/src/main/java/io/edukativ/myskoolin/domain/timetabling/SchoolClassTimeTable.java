@@ -29,16 +29,19 @@ public class SchoolClassTimeTable {
 
     private List<Lesson> events;
 
+    @ProblemFactCollectionProperty
     @ValueRangeProvider(id = "timeSlotRange")
     private List<TimeSlot> timeSlots;
 
     @ProblemFactCollectionProperty
+    @ValueRangeProvider(id = "schoolRoomRange")
     private List<SchoolRoom> schoolRooms;
 
     @ProblemFactCollectionProperty
     private List<Subject> subjects;
 
     @ProblemFactCollectionProperty
+    @ValueRangeProvider(id = "teacherRange")
     private List<Teacher> teachers;
 
     @ProblemFactCollectionProperty
@@ -231,7 +234,7 @@ public class SchoolClassTimeTable {
     }
 
     private long lessonDurationByDay(Lesson lesson) {
-        return lessons.stream().filter(lesson1 -> lesson1.getTimeSlot().getDay().equals(lesson.getTimeSlot().getDay())
-                && lesson1.getSubject().equals(lesson.getSubject())).mapToLong(lesson1 -> lesson1.getTimeSlot().durationInMinutes()).sum();
+        return lessons.stream().filter(timetableLesson -> timetableLesson.getTimeSlot().getDay().equals(lesson.getTimeSlot().getDay())
+                && timetableLesson.getSubject().equals(lesson.getSubject())).mapToLong(lesson1 -> lesson1.getTimeSlot().durationInMinutes()).sum();
     }
 }

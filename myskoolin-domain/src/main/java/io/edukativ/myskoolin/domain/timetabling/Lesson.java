@@ -13,11 +13,18 @@ public class Lesson {
 
     @PlanningId
     private Long id;
+
+    @PlanningVariable(valueRangeProviderRefs = "schoolRoomRange")
     private SchoolRoom schoolRoom;
+
     private Subject subject;
+
+    @PlanningVariable(valueRangeProviderRefs = "teacherRange")
     private Teacher teacher;
+
     @PlanningVariable(valueRangeProviderRefs = "timeSlotRange")
     private TimeSlot timeSlot;
+
     //FIXME: add option entity
     //private Subject option;
     private SchoolClass schoolClass;
@@ -107,5 +114,19 @@ public class Lesson {
 
     public  boolean isSameOverlappingAndSameSchoolRoom(Lesson lesson) {
         return isOverlapping(lesson) && this.schoolRoom.equals(lesson.getSchoolRoom());
+    }
+
+    public boolean isSameSchoolRoomIfConsecutiveLessons(Lesson lesson2) {
+        final boolean sameSubjects = this.subject.equals(lesson2.subject);
+        final boolean consecutive = this.timeSlot.isConsecutive(lesson2.timeSlot);
+        final boolean sameTimeslots = this.schoolRoom.equals(lesson2.schoolRoom);
+        return sameSubjects
+                && consecutive
+                && sameTimeslots;
+    }
+
+    public static int sameSchoolRoomsConsecuticeLessonsGap(Lesson lesson, Lesson lesson1) {
+        //TODO: add distance between school rooms
+        return 1;
     }
 }

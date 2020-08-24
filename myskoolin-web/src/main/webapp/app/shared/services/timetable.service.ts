@@ -8,6 +8,8 @@ import {map} from 'rxjs/operators';
 import {SchoolClassTimetable} from 'app/shared/model/school-class-timetable.model';
 
 export type EntityResponseType = HttpResponse<SchoolClassTimetable>;
+export type EntityResponseNumberType = HttpResponse<number>;
+export type EntityResponseDateType = HttpResponse<Date>;
 
 @Injectable()
 export class TimetableService {
@@ -29,10 +31,14 @@ export class TimetableService {
             .pipe(map((res: HttpResponse<string>) => res));
     }
 
-    query(req?: any): Observable<HttpResponse<SchoolClassTimetable[]>> {
-        const options = createRequestOption(req);
-        return this.http.get<SchoolClassTimetable[]>(this.resourceUrl, {params: options, observe: 'response'})
-            .pipe(map((res: HttpResponse<SchoolClassTimetable[]>) => this.convertArrayResponse(res)));
+    find(schoolClassId: string): Observable<EntityResponseType> {
+        return this.http.get<SchoolClassTimetable>(`${this.resourceUrl}/${schoolClassId}`, {observe: 'response'})
+            .pipe(map((res: EntityResponseType) => this.convertResponse(res)));
+    }
+
+    private convertResponse(res: EntityResponseType): EntityResponseType {
+        const body: SchoolClassTimetable = this.convertItemFromServer(res.body);
+        return res.clone({body});
     }
 
     private convertArrayResponse(res: HttpResponse<SchoolClassTimetable[]>): HttpResponse<SchoolClassTimetable[]> {
@@ -51,4 +57,13 @@ export class TimetableService {
         return Object.assign({}, schoolClassTimeTable);
     }
 
+    countTimeTables(): Observable<EntityResponseNumberType> {
+        return this.http.get<number>(`${this.resourceUrl}/count`, {observe: 'response'})
+            .pipe(map((res: EntityResponseNumberType) => res));
+    }
+
+    lastGenerationDate(): Observable<EntityResponseDateType> {
+        return this.http.get<Date>(`${this.resourceUrl}/lastGenerationDate`, {observe: 'response'})
+            .pipe(map((res: EntityResponseDateType) => res));
+    }
 }

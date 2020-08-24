@@ -22,12 +22,12 @@ public abstract class ConstraintProviderTest {
     protected final ConstraintVerifier<TimeTableConstraintsProvider, SchoolClassTimeTable> constraintVerifier
             = ConstraintVerifier.build(new TimeTableConstraintsProvider(), SchoolClassTimeTable.class, Lesson.class);
 
-    protected static SchoolRoom schoolRoom1;
     protected static SchoolClass schoolClass1;
     protected static SchoolClass schoolClass2;
-    protected static SchoolRoom schoolRoom2;
     protected static TimeSlot timeSlot1;
     protected static TimeSlot timeSlot2;
+    protected static SchoolRoom schoolRoom1;
+    protected static SchoolRoom schoolRoom2;
     protected static Subject subject1;
     protected static Subject subject2;
     protected static Teacher teacher1;

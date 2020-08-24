@@ -7,6 +7,7 @@ import org.optaplanner.core.api.score.buildin.hardmediumsoft.HardMediumSoftScore
 import org.optaplanner.core.api.score.stream.Constraint;
 import org.optaplanner.core.api.score.stream.ConstraintFactory;
 import org.optaplanner.core.api.score.stream.ConstraintProvider;
+import org.optaplanner.core.api.score.stream.Joiners;
 
 import static io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration.*;
 import static org.optaplanner.core.api.score.stream.Joiners.filtering;
@@ -18,28 +19,38 @@ public class TimeTableConstraintsProvider implements ConstraintProvider {
         return new Constraint[]{
                 timeSlotsOverlappingConflictPenalty(constraintFactory),
                 schoolRoomTypeReward(constraintFactory),
-                subjectsDayDurationPenalty(constraintFactory),
+                sameSchoolRoomIfConsecutiveLessons(constraintFactory)
+//                subjectsDayDurationPenalty(constraintFactory),
         };
     }
 
-    private Constraint subjectsDayDurationPenalty(ConstraintFactory constraintFactory) {
+    public Constraint sameSchoolRoomIfConsecutiveLessons(ConstraintFactory constraintFactory) {
+        return constraintFactory.from(Lesson.class)
+                .join(Lesson.class,
+                        filtering((lesson1, lesson2) -> !lesson1.isSameSchoolRoomIfConsecutiveLessons(lesson2)))
+                .penalizeConfigurable(CONSTRAINT_SAME_SCHOOLROOM_IF_CONSECUTIVE_LESSONS, Lesson::sameSchoolRoomsConsecuticeLessonsGap);
+    }
+
+    public Constraint timeSlotsOverlappingConflictPenalty(ConstraintFactory constraintFactory) {
+        return constraintFactory.from(Lesson.class).join(Lesson.class,
+                Joiners.filtering(Lesson::isOverlapping))
+                .penalizeConfigurable(CONSTRAINT_TIMESLOTS_OVERLAPS, Lesson::overlappingGap);
+    }
+
+    public Constraint subjectsDayDurationPenalty(ConstraintFactory constraintFactory) {
         return constraintFactory.from(SchoolClassTimeTable.class)
                 .join(Lesson.class)
                 .filter(SchoolClassTimeTable::subjectDurationByDayExceedsMax)
                 .penalizeConfigurable(CONSTRAINT_SUBJECT_DURATION_BY_DAY, SchoolClassTimeTable::subjectDurationByDayGap);
     }
 
-    public Constraint timeSlotsOverlappingConflictPenalty(ConstraintFactory constraintFactory) {
-        return constraintFactory.fromUniquePair(Lesson.class,
-                filtering(Lesson::isOverlapping))
-                .penalizeConfigurable(CONSTRAINT_TIMESLOTS_OVERLAPS, Lesson::overlappingGap);
-    }
-
     public Constraint schoolRoomTypeReward(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .from(Lesson.class)
-                .join(Subject.class)
-                .filter((lesson, subject) -> subject.getSchoolRoomsTypes().contains(lesson.getSchoolRoom().getType()))
+                .join(Subject.class,
+                filtering((lesson, subject) -> {
+                    return subject.getSchoolRoomsTypes().contains(lesson.getSchoolRoom().getType());
+                }))
                 .reward(CONSTRAINT_SCHOOL_TYPE_REWARD, HardMediumSoftScore.ofMedium(1));
     }
 

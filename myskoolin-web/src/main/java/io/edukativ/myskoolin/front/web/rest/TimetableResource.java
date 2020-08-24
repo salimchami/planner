@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
 
 @RequestMapping(value = "/api/timetables")
@@ -27,7 +28,7 @@ class TimetableResource {
         AuthoritiesConstants.SCHOOL_LIFE,
     })
     @PostMapping(value = "/solve")
-        public ResponseEntity<Void> solveTimetablesFromScratch() {
+    public ResponseEntity<Void> solveTimetablesFromScratch() {
         logger.debug("generating timetables for all school classes");
         timeTableApplication.solveNewTimeTablesForSchoolClasses();
         return ResponseEntity.ok().build();
@@ -57,11 +58,30 @@ class TimetableResource {
         AuthoritiesConstants.ADMINISTRATION,
         AuthoritiesConstants.SCHOOL_LIFE,
     })
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<SchoolClassTimeTableDTO> schoolClassTimeTable(@PathVariable(name = "id") String id) {
-        return timeTableApplication.timeTableById(id)
+    @GetMapping(value = "/{schoolCLassId}")
+    public ResponseEntity<SchoolClassTimeTableDTO> schoolClassTimeTable(
+        @PathVariable(name = "schoolCLassId") String schoolCLassId) {
+        return timeTableApplication.timeTableBySchoolClassId(schoolCLassId)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.noContent().build());
+    }
+
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE,
+    })
+    @GetMapping(value = "/count")
+    public ResponseEntity<Long> count() {
+        return ResponseEntity.ok(timeTableApplication.countTimetables());
+    }
+
+    @Secured({
+        AuthoritiesConstants.ADMINISTRATION,
+        AuthoritiesConstants.SCHOOL_LIFE,
+    })
+    @GetMapping(value = "/lastGenerationDate")
+    public ResponseEntity<Instant> lastGenerationDate() {
+        return ResponseEntity.ok(timeTableApplication.lastGenerationDate());
     }
 
     @Secured({

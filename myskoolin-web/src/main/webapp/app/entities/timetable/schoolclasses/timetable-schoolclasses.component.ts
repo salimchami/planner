@@ -1,11 +1,12 @@
 import {Component, OnInit, OnDestroy, ViewChild, TemplateRef} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Client, Grade, Lesson, SchoolClass, SchoolRoom, Subject, Teacher, Timeslot} from '../../../shared/model';
+import {CalendarView} from 'angular-calendar';
+import {Client, Grade, Lesson, SchoolClass, SchoolRoom, Subject, Teacher} from '../../../shared/model';
 import {CalendarHelper} from '../../../shared/services/utils/calendar-helper.service';
 import {SchoolClassTimetable} from '../../../shared/model/school-class-timetable.model';
-import {CalendarView} from 'angular-calendar';
 import {DateTimeHelper} from '../../../shared/services/utils/date-time-helper.service';
 import {TimeTableOptions} from '../../../shared/model/sub/time-table-options.model';
+import {TimetableService} from '../../../shared/services/timetable.service';
 
 @Component({
     selector: 'jhi-timetables-schoolclasses',
@@ -38,20 +39,20 @@ export class TimetableSchoolClassesComponent implements OnInit, OnDestroy {
     timetableValidations: Array<any>;
     schoolRooms: Array<SchoolRoom>;
     teachers: Array<Teacher>;
-    timetables: Array<SchoolClassTimetable>;
+    timetable: SchoolClassTimetable;
     timetableOptions: TimeTableOptions;
 
     constructor(
         private route: ActivatedRoute,
         private calendarHelper: CalendarHelper,
-        private dateTimeHelper: DateTimeHelper,
+        public dateTimeHelper: DateTimeHelper,
+        private timetableService: TimetableService
     ) {
     }
 
     ngOnInit() {
         this.schoolClassesStaticTimeSlots = [];
         this.timetableValidations = [];
-        this.timetables = this.route.snapshot.data['timetables'];
         this.timetableOptions = this.route.snapshot.data['timetableOptions'];
         this.client = this.route.snapshot.data['client'];
         this.subjects = this.route.snapshot.data['subjects'];
@@ -70,13 +71,13 @@ export class TimetableSchoolClassesComponent implements OnInit, OnDestroy {
     }
 
     schoolClassChange(schoolClass: SchoolClass) {
-        this.schoolClassTimeTable = this.timetables.find((timetable) => timetable.schoolClass.id === schoolClass.id);
-        if (typeof this.schoolClassTimeTable !== 'undefined') {
+        this.timetableService.find(schoolClass.id).subscribe((timetable) => {
+            this.schoolClassTimeTable = timetable.body;
             this.schoolClassesStaticTimeSlots = this.calendarHelper.convertTimeSlotsToFullCalendarEvents(
                 this.timetableOptions.firstWeekDay.name,
                 this.schoolClassTimeTable.staticTimeTable, false);
             this.timetableValidations = this.calendarHelper.timetableValidations(this.schoolClassTimeTable.staticTimeTable, this.subjects);
-        }
+        });
     }
 
     timetableIsValid() {

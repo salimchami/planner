@@ -20,7 +20,6 @@ class ConstraintProviderSchoolRoomsTypesTest extends ConstraintProviderTest {
     void roomConflict(String description, int expectedReward, EnumSchoolRoomsTypes schoolRoomType,
                       List<EnumSchoolRoomsTypes> subjectSchoolRoomTypes) {
 
-
         SchoolRoom schoolRoom = new SchoolRoom();
         schoolRoom.setType(schoolRoomType);
         Lesson lesson = new Lesson(1L, schoolRoom, null, null, timeSlot1, null);
