@@ -69,8 +69,8 @@
                                 <div class="row align-items-center">
                                     <div class="col-4 notify-icon"><em class="mdi mdi-update"></em></div>
                                     <div class="col-8 notify-cont">
-                                        <h4 *ngIf="lastGenerationDateExists()">{{maxTimeTablesGenerationDate() | date: dateHelper.dateTimeFormat()}}</h4>
-                                        <h4 *ngIf="!lastGenerationDateExists()">-</h4>
+                                        <h4 *ngIf="lastGenerationDate">{{lastGenerationDate | date: dateHelper.dateTimeFormat()}}</h4>
+                                        <h4 *ngIf="!lastGenerationDate">-</h4>
                                         <p><span
                                             jhiTranslate="timetable.list.view.headers.last-generation-date"></span>
                                         </p>
