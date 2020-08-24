@@ -21,6 +21,9 @@ import java.util.stream.Collectors;
 
 public class TimeTablesSolver implements TimeTableSolverAPI {
 
+    public static final String SOLVER_CONFIG = "timetabling/solver/schoolClassTimetablesSolverConfig.xml";
+
+
     private final SolverManager<SchoolClassTimeTable, String> solverManager;
     private final SchoolClassSPI schoolClassSPI;
     private final ScoreManager<SchoolClassTimeTable> scoreManager;

@@ -12,18 +12,19 @@ import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
-import io.edukativ.myskoolin.domain.timetabling.Lesson;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 import io.edukativ.myskoolin.domain.timetabling.Time;
 import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
-import org.optaplanner.test.api.score.stream.ConstraintVerifier;
+import io.edukativ.myskoolin.domain.timetabling.TimeTablesSolver;
+import org.optaplanner.core.api.solver.SolverFactory;
+import org.optaplanner.test.impl.score.buildin.hardmediumsoft.HardMediumSoftScoreVerifier;
 
 import java.util.List;
 
-public abstract class ConstraintProviderTest {
+public abstract class ScoreConstraintProviderTest {
 
-    protected final ConstraintVerifier<TimeTableConstraintsProvider, SchoolClassTimeTable> constraintVerifier
-            = ConstraintVerifier.build(new TimeTableConstraintsProvider(), SchoolClassTimeTable.class, Lesson.class);
+    protected HardMediumSoftScoreVerifier<SchoolClassTimeTable> scoreVerifier = new HardMediumSoftScoreVerifier<>(
+            SolverFactory.createFromXmlResource(TimeTablesSolver.SOLVER_CONFIG));
 
     protected static SchoolClass schoolClass1;
     protected static SchoolClass schoolClass2;

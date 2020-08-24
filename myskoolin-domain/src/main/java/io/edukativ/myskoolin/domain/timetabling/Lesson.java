@@ -108,7 +108,7 @@ public class Lesson {
                 '}';
     }
 
-    public int overlappingGap(Lesson lesson2) {
+    public Integer overlappingGap(Lesson lesson2) {
         return timeSlot.overlappingGap(lesson2.getTimeSlot()).intValue();
     }
 
@@ -125,7 +125,7 @@ public class Lesson {
                 && sameTimeslots;
     }
 
-    public static int sameSchoolRoomsConsecuticeLessonsGap(Lesson lesson, Lesson lesson1) {
+    public static int sameSchoolRoomsConsecutiveLessonsGap(Lesson lesson, Lesson lesson1) {
         //TODO: add distance between school rooms
         return 1;
     }

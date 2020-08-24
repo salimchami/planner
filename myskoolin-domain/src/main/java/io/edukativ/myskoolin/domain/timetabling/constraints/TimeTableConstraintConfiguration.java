@@ -4,7 +4,7 @@ import org.optaplanner.core.api.domain.constraintweight.ConstraintConfiguration;
 import org.optaplanner.core.api.domain.constraintweight.ConstraintWeight;
 import org.optaplanner.core.api.score.buildin.hardmediumsoft.HardMediumSoftScore;
 
-@ConstraintConfiguration
+@ConstraintConfiguration(constraintPackage = "io.edukativ.myskoolin.domain.timetabling.constraints")
 public class TimeTableConstraintConfiguration {
 
     public static final String CONSTRAINT_TIMESLOTS_OVERLAPS = "Time slot overlapping another time slot";
@@ -13,11 +13,19 @@ public class TimeTableConstraintConfiguration {
     public static final String CONSTRAINT_SAME_SCHOOLROOM_IF_CONSECUTIVE_LESSONS = "Same schoolroom if consecutive lessons";
 
     @ConstraintWeight(CONSTRAINT_TIMESLOTS_OVERLAPS)
-    private final HardMediumSoftScore timeslotsOverlappingScore = HardMediumSoftScore.ONE_HARD;
+    private HardMediumSoftScore timeslotsOverlappingScore = HardMediumSoftScore.ofHard(1);
 
-    @ConstraintWeight(CONSTRAINT_SUBJECT_DURATION_BY_DAY)
-    private final HardMediumSoftScore subjectDurationByDayScore = HardMediumSoftScore.ONE_HARD;
+//    @ConstraintWeight(CONSTRAINT_SUBJECT_DURATION_BY_DAY)
+//    private final HardMediumSoftScore subjectDurationByDayScore = HardMediumSoftScore.ONE_HARD;
+//
+//    @ConstraintWeight(CONSTRAINT_SAME_SCHOOLROOM_IF_CONSECUTIVE_LESSONS)
+//    private final HardMediumSoftScore sameSchoolRoomsConsecutiveLessonsScore = HardMediumSoftScore.ONE_HARD;
 
-    @ConstraintWeight(CONSTRAINT_SAME_SCHOOLROOM_IF_CONSECUTIVE_LESSONS)
-    private final HardMediumSoftScore sameSchoolRoomsConsecutiveLessonsScore = HardMediumSoftScore.ONE_HARD;
+    public HardMediumSoftScore getTimeslotsOverlappingScore() {
+        return timeslotsOverlappingScore;
+    }
+
+    public void setTimeslotsOverlappingScore(HardMediumSoftScore timeslotsOverlappingScore) {
+        this.timeslotsOverlappingScore = timeslotsOverlappingScore;
+    }
 }

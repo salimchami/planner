@@ -26,7 +26,7 @@ class ConstraintProviderSchoolRoomsTypesTest extends ConstraintProviderTest {
         Subject subject = new Subject();
         subject.setSchoolRoomsTypes(subjectSchoolRoomTypes);
 
-        constraintVerifier.verifyThat(TimeTableConstraintsProvider::schoolRoomTypeReward)
+        constraintVerifier.verifyThat(TimeTableConstraintsProvider::schoolRoomTypesConflicsPenalty)
                 .given(lesson, subject)
                 .rewardsWith(expectedReward);
     }

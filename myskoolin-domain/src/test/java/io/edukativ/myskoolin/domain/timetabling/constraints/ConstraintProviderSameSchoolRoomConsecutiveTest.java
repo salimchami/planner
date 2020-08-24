@@ -22,7 +22,7 @@ class ConstraintProviderSameSchoolRoomConsecutiveTest extends ConstraintProvider
         Lesson lesson1 = new Lesson(1L, schoolRoom1, subject1, null, firstTimeSlot, null);
         Lesson lesson2 = new Lesson(2L, schoolRoom2, subject2, null, secondTimeSlot, null);
 
-        constraintVerifier.verifyThat(TimeTableConstraintsProvider::sameSchoolRoomIfConsecutiveLessons)
+        constraintVerifier.verifyThat(TimeTableConstraintsProvider::sameSchoolRoomIfConsecutiveLessonsPenalty)
                 .given(lesson1, lesson2)
                 .penalizesBy(expectedConflictPenalty);
     }

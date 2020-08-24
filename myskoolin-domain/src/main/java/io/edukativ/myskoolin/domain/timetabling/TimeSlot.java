@@ -160,14 +160,15 @@ public class TimeSlot implements Comparable<TimeSlot> {
             return false;
         }
         TimeSlot timeSlot = (TimeSlot) o;
-        return day.equals(timeSlot.day) &&
+        return Objects.equals(id, timeSlot.id) &&
+                day.equals(timeSlot.day) &&
                 startTime.equals(timeSlot.startTime) &&
                 endTime.equals(timeSlot.endTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(day, startTime, endTime, date);
+        return Objects.hash(id, day, startTime, endTime, date);
     }
 
     //####################################################################################################

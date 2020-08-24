@@ -1,15 +1,13 @@
 package io.edukativ.myskoolin.domain.timetabling.constraints;
 
-import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.timetabling.Lesson;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
-import org.optaplanner.core.api.score.buildin.hardmediumsoft.HardMediumSoftScore;
 import org.optaplanner.core.api.score.stream.Constraint;
 import org.optaplanner.core.api.score.stream.ConstraintFactory;
 import org.optaplanner.core.api.score.stream.ConstraintProvider;
-import org.optaplanner.core.api.score.stream.Joiners;
 
-import static io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration.*;
+import static io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration.CONSTRAINT_SAME_SCHOOLROOM_IF_CONSECUTIVE_LESSONS;
+import static io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration.CONSTRAINT_SUBJECT_DURATION_BY_DAY;
 import static org.optaplanner.core.api.score.stream.Joiners.filtering;
 
 public class TimeTableConstraintsProvider implements ConstraintProvider {
@@ -17,24 +15,27 @@ public class TimeTableConstraintsProvider implements ConstraintProvider {
     @Override
     public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
         return new Constraint[]{
-                timeSlotsOverlappingConflictPenalty(constraintFactory),
-                schoolRoomTypeReward(constraintFactory),
-                sameSchoolRoomIfConsecutiveLessons(constraintFactory)
+//                sameSchoolRoomIfConsecutiveLessonsPenalty(constraintFactory)
 //                subjectsDayDurationPenalty(constraintFactory),
         };
     }
 
-    public Constraint sameSchoolRoomIfConsecutiveLessons(ConstraintFactory constraintFactory) {
+    public Constraint schoolRoomTypesConflicsPenalty(ConstraintFactory constraintFactory) {
+        return null;
+//        return constraintFactory
+//                .from(Lesson.class)
+//                .join(Subject.class,
+//                filtering((lesson, subject) -> {
+//                    return !subject.getSchoolRoomsTypes().contains(lesson.getSchoolRoom().getType());
+//                }))
+//                .penalizeConfigurable(CONSTRAINT_SCHOOL_TYPE_REWARD, TimeTableConstraintConfiguration::getSameSchoolRoomsConsecutiveLessonsScore);
+    }
+
+    public Constraint sameSchoolRoomIfConsecutiveLessonsPenalty(ConstraintFactory constraintFactory) {
         return constraintFactory.from(Lesson.class)
                 .join(Lesson.class,
                         filtering((lesson1, lesson2) -> !lesson1.isSameSchoolRoomIfConsecutiveLessons(lesson2)))
-                .penalizeConfigurable(CONSTRAINT_SAME_SCHOOLROOM_IF_CONSECUTIVE_LESSONS, Lesson::sameSchoolRoomsConsecuticeLessonsGap);
-    }
-
-    public Constraint timeSlotsOverlappingConflictPenalty(ConstraintFactory constraintFactory) {
-        return constraintFactory.from(Lesson.class).join(Lesson.class,
-                Joiners.filtering(Lesson::isOverlapping))
-                .penalizeConfigurable(CONSTRAINT_TIMESLOTS_OVERLAPS, Lesson::overlappingGap);
+                .penalizeConfigurable(CONSTRAINT_SAME_SCHOOLROOM_IF_CONSECUTIVE_LESSONS, Lesson::sameSchoolRoomsConsecutiveLessonsGap);
     }
 
     public Constraint subjectsDayDurationPenalty(ConstraintFactory constraintFactory) {
@@ -42,16 +43,6 @@ public class TimeTableConstraintsProvider implements ConstraintProvider {
                 .join(Lesson.class)
                 .filter(SchoolClassTimeTable::subjectDurationByDayExceedsMax)
                 .penalizeConfigurable(CONSTRAINT_SUBJECT_DURATION_BY_DAY, SchoolClassTimeTable::subjectDurationByDayGap);
-    }
-
-    public Constraint schoolRoomTypeReward(ConstraintFactory constraintFactory) {
-        return constraintFactory
-                .from(Lesson.class)
-                .join(Subject.class,
-                filtering((lesson, subject) -> {
-                    return subject.getSchoolRoomsTypes().contains(lesson.getSchoolRoom().getType());
-                }))
-                .reward(CONSTRAINT_SCHOOL_TYPE_REWARD, HardMediumSoftScore.ofMedium(1));
     }
 
 //    public Constraint roomConflict(ConstraintFactory constraintFactory) {
