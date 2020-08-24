@@ -231,9 +231,8 @@ public class TimeSlot implements Comparable<TimeSlot> {
                 return Duration.between(this.startTime.toLocalTime(), timeSlot.startTime.toLocalTime()).toMinutes();
             } else if (timeSlot.isBefore(this)) {
                 return Duration.between(timeSlot.startTime.toLocalTime(), this.startTime.toLocalTime()).toMinutes();
-            } else if(this.hasSameTimes(timeSlot)) {
-                return this.durationInMinutes();
             }
+            return 0L;
         }
         return 0L;
     }

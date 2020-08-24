@@ -8,12 +8,12 @@ import org.optaplanner.core.api.score.buildin.hardmediumsoft.HardMediumSoftScore
 public class TimeTableConstraintConfiguration {
 
     public static final String CONSTRAINT_TIMESLOTS_OVERLAPS = "Time slot overlapping another time slot";
-    public static final String CONSTRAINT_SCHOOL_TYPE_REWARD= "School type reward";
+    public static final String CONSTRAINT_SCHOOL_TYPE_REWARD = "School type reward";
     public static final String CONSTRAINT_SUBJECT_DURATION_BY_DAY = "Subject duration by day";
     public static final String CONSTRAINT_SAME_SCHOOLROOM_IF_CONSECUTIVE_LESSONS = "Same schoolroom if consecutive lessons";
 
     @ConstraintWeight(CONSTRAINT_TIMESLOTS_OVERLAPS)
-    private HardMediumSoftScore timeslotsOverlappingScore = HardMediumSoftScore.ofHard(1);
+    private HardMediumSoftScore timeslotsOverlappingScore = HardMediumSoftScore.ofHard(10);
 
 //    @ConstraintWeight(CONSTRAINT_SUBJECT_DURATION_BY_DAY)
 //    private final HardMediumSoftScore subjectDurationByDayScore = HardMediumSoftScore.ONE_HARD;
