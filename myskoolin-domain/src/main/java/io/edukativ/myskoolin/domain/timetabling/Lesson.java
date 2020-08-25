@@ -129,4 +129,8 @@ public class Lesson {
         //TODO: add distance between school rooms
         return 1;
     }
+
+    public boolean hasRightSchoolRoom() {
+        return subject.getSchoolRoomsTypes().contains(schoolRoom.getType());
+    }
 }

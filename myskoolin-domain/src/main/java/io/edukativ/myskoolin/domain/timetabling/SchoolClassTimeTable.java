@@ -233,8 +233,11 @@ public class SchoolClassTimeTable {
         return lessonDurationByDay(lesson) > lesson.getSubject().getMaxMinutesPerDay();
     }
 
-    private long lessonDurationByDay(Lesson lesson) {
-        return lessons.stream().filter(timetableLesson -> timetableLesson.getTimeSlot().getDay().equals(lesson.getTimeSlot().getDay())
-                && timetableLesson.getSubject().equals(lesson.getSubject())).mapToLong(lesson1 -> lesson1.getTimeSlot().durationInMinutes()).sum();
+    public int lessonDurationByDay(Lesson lesson) {
+        return lessons.stream()
+                .filter(timetableLesson ->
+                        timetableLesson.getTimeSlot().getDay().equals(lesson.getTimeSlot().getDay())
+                                && timetableLesson.getSubject().equals(lesson.getSubject()))
+                .mapToInt(subjectLesson -> subjectLesson.getTimeSlot().durationInMinutes().intValue()).sum();
     }
 }

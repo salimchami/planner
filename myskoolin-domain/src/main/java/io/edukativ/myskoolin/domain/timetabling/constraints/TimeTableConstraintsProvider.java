@@ -7,7 +7,7 @@ import org.optaplanner.core.api.score.stream.ConstraintFactory;
 import org.optaplanner.core.api.score.stream.ConstraintProvider;
 
 import static io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration.CONSTRAINT_SAME_SCHOOLROOM_IF_CONSECUTIVE_LESSONS;
-import static io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration.CONSTRAINT_SUBJECT_DURATION_BY_DAY;
+import static io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration.CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY;
 import static org.optaplanner.core.api.score.stream.Joiners.filtering;
 
 public class TimeTableConstraintsProvider implements ConstraintProvider {
@@ -42,7 +42,7 @@ public class TimeTableConstraintsProvider implements ConstraintProvider {
         return constraintFactory.from(SchoolClassTimeTable.class)
                 .join(Lesson.class)
                 .filter(SchoolClassTimeTable::subjectDurationByDayExceedsMax)
-                .penalizeConfigurable(CONSTRAINT_SUBJECT_DURATION_BY_DAY, SchoolClassTimeTable::subjectDurationByDayGap);
+                .penalizeConfigurable(CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY, SchoolClassTimeTable::subjectDurationByDayGap);
     }
 
 //    public Constraint roomConflict(ConstraintFactory constraintFactory) {

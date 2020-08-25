@@ -1,4 +1,4 @@
-package io.edukativ.myskoolin.domain.timetabling.constraints;
+package io.edukativ.myskoolin.domain.timetabling.solving;
 
 import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
 import io.edukativ.myskoolin.domain.commons.vo.EnumPartsOfDay;
@@ -15,12 +15,13 @@ import io.edukativ.myskoolin.domain.teachers.Teacher;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 import io.edukativ.myskoolin.domain.timetabling.Time;
 import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
+import io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration;
 import org.optaplanner.core.api.solver.SolverFactory;
 import org.optaplanner.test.impl.score.buildin.hardmediumsoft.HardMediumSoftScoreVerifier;
 
 import java.util.List;
 
-public abstract class ScoreConstraintProviderTest {
+public abstract class ScoreConstraintVerifierTest {
 
     public static final String SOLVER_CONFIG = "timetabling/solver/schoolClassTimetablesSolverConfig.xml";
 

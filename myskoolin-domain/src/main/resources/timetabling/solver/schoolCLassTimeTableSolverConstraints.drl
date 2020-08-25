@@ -2,6 +2,7 @@ package io.edukativ.myskoolin.domain.timetabling.constraints;
     dialect "java"
 
 import io.edukativ.myskoolin.domain.timetabling.Lesson;
+import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import org.optaplanner.core.api.score.buildin.hardmediumsoft.HardMediumSoftScoreHolder;
 
@@ -17,9 +18,16 @@ end
 
 rule "School room right type"
     when
-        $lesson : Lesson(timeSlot != null)
-        $subject : Subject(!schoolRoomsTypes.contains($lesson.schoolRoom.type))
+        $lesson: Lesson(hasRightSchoolRoom())
     then
-        scoreHolder.penalize(kcontext, 10);
+        scoreHolder.penalize(kcontext, $lesson.getTimeSlot().durationInMinutes().intValue());
+end
+
+rule "Subject duration max by day"
+    when
+        $lesson : Lesson()
+        $timetable : SchoolClassTimeTable(subjectDurationByDayExceedsMax($lesson))
+    then
+        scoreHolder.penalize(kcontext, $timetable.subjectDurationByDayGap($lesson));
 end
 

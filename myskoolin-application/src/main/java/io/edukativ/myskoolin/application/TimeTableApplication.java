@@ -27,6 +27,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import io.edukativ.myskoolin.domain.timetabling.TimetablesSolverAPI;
+
 @Component
 public class TimeTableApplication {
 
