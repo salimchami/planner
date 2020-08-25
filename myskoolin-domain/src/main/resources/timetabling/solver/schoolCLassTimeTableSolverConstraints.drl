@@ -25,9 +25,9 @@ end
 
 rule "Subject duration max by day"
     when
-        $lesson : Lesson()
-        $timetable : SchoolClassTimeTable(subjectDurationByDayExceedsMax($lesson))
+        $timetable : SchoolClassTimeTable($lessons: lessons)
+        $lesson : Lesson(subjectDurationByDayExceedsMax($lessons))
     then
-        scoreHolder.penalize(kcontext, $timetable.subjectDurationByDayGap($lesson));
+        scoreHolder.penalize(kcontext, $lesson.subjectDurationByDayGap($lessons));
 end
 

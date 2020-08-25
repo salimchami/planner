@@ -222,22 +222,4 @@ public class SchoolClassTimeTable {
     public void setConstraintConfiguration(TimeTableConstraintConfiguration constraintConfiguration) {
         this.constraintConfiguration = constraintConfiguration;
     }
-
-    /////////////////////////////////////////////
-
-    public int subjectDurationByDayGap(Lesson lesson) {
-        return Math.abs(Math.toIntExact(lessonDurationByDay(lesson) - lesson.getSubject().getMaxMinutesPerDay()));
-    }
-
-    public boolean subjectDurationByDayExceedsMax(Lesson lesson) {
-        return lessonDurationByDay(lesson) > lesson.getSubject().getMaxMinutesPerDay();
-    }
-
-    public int lessonDurationByDay(Lesson lesson) {
-        return lessons.stream()
-                .filter(timetableLesson ->
-                        timetableLesson.getTimeSlot().getDay().equals(lesson.getTimeSlot().getDay())
-                                && timetableLesson.getSubject().equals(lesson.getSubject()))
-                .mapToInt(subjectLesson -> subjectLesson.getTimeSlot().durationInMinutes().intValue()).sum();
-    }
 }
