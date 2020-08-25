@@ -8,26 +8,29 @@ import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
 import io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration;
 import org.optaplanner.core.api.score.ScoreManager;
-import org.optaplanner.core.api.solver.Solver;
+import org.optaplanner.core.api.solver.SolverJob;
+import org.optaplanner.core.api.solver.SolverManager;
+import org.optaplanner.core.api.solver.SolverStatus;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class TimeTablesSolver implements TimetablesSolverAPI {
 
-    private final Solver<SchoolClassTimeTable> solver;
+    private final SolverManager<SchoolClassTimeTable, String> solverManager;
     private final SchoolClassSPI schoolClassSPI;
     private final ScoreManager<SchoolClassTimeTable> scoreManager;
     private final TimeTableSPI timeTableSPI;
     private final MyskoolinLoggerSPI logger;
 
-    public TimeTablesSolver(Solver<SchoolClassTimeTable> solver,
-                            ScoreManager<SchoolClassTimeTable> scoreManager,
+    public TimeTablesSolver(SolverManager<SchoolClassTimeTable, String> solverManager, ScoreManager<SchoolClassTimeTable> scoreManager,
                             SchoolClassSPI schoolClassSPI,
                             TimeTableSPI timeTableSPI, MyskoolinLoggerSPI logger) {
-        this.solver = solver;
+        this.solverManager = solverManager;
         this.schoolClassSPI = schoolClassSPI;
         this.scoreManager = scoreManager;
         this.timeTableSPI = timeTableSPI;
@@ -45,7 +48,7 @@ public class TimeTablesSolver implements TimetablesSolverAPI {
 
     @Override
     public void stopSolving(String timeTableId) {
-        solver.terminateEarly();
+        solverManager.terminateEarly(timeTableId);
     }
 
     @Override
@@ -64,13 +67,27 @@ public class TimeTablesSolver implements TimetablesSolverAPI {
             TimeTableConstraintConfiguration config = new TimeTableConstraintConfiguration();
             final SchoolClassTimeTable schoolClassTimeTable = new SchoolClassTimeTable(config, clientId, schoolClass, schoolClasses,
                     schoolRooms, subjects, teachers, lessons, lessons.stream().map(Lesson::getTimeSlot).collect(Collectors.toList()));
-            solveSaveAndListen(schoolClassTimeTable);
+            solveSaveAndListen(schoolClass, schoolClassTimeTable);
         });
     }
 
-    private void solveSaveAndListen(SchoolClassTimeTable schoolClassTimeTable) {
-        final SchoolClassTimeTable solvedSchoolClassTimeTable = solver.solve(schoolClassTimeTable);
-        saveTimeTable(solvedSchoolClassTimeTable);
+    private void solveSaveAndListen(SchoolClass schoolClass, SchoolClassTimeTable schoolClassTimeTable) {
+        final SolverJob<SchoolClassTimeTable, String> solverJob = solverManager.solveAndListen(schoolClass.getId(), id -> schoolClassTimeTable, this::saveTimeTable);
+        try {
+            saveTimeTable(solverJob.getFinalBestSolution());
+        } catch (InterruptedException | ExecutionException e) {
+            solverJob.terminateEarly();
+            logger.error(String.format("error while getting final time table for school class %s", schoolClass.getName()), e);
+        }
+    }
+    @Override
+    public String solverStatus(String timeTableId) {
+        return solverManager.getSolverStatus(timeTableId).name();
+    }
+
+    @Override
+    public Map<String, SolverStatus> solverStatus(List<String> timeTableIds) {
+        return timeTableIds.stream().collect(Collectors.toMap(id -> id, solverManager::getSolverStatus));
     }
 
     private void saveTimeTable(SchoolClassTimeTable schoolClassTimeTable) {

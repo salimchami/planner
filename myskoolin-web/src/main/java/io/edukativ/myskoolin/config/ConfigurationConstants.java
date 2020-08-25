@@ -6,5 +6,5 @@ public final class ConfigurationConstants {
         // private constructor
     }
 
-    public static final String SOLVER_CONFIG = "timetabling/solver/schoolClassTimetablesSolverConfig.xml";
+    public static final String SOLVER_CONFIG = "solverConfig.xml";
 }

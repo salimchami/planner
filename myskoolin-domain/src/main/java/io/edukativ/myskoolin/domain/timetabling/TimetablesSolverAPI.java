@@ -4,8 +4,10 @@ import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
+import org.optaplanner.core.api.solver.SolverStatus;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TimetablesSolverAPI {
 
@@ -19,4 +21,7 @@ public interface TimetablesSolverAPI {
 
     void stopSolving(List<String> timeTableIds);
 
+    String solverStatus(String timeTableId);
+
+    Map<String, SolverStatus> solverStatus(List<String> timeTableIds);
 }

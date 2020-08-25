@@ -23,7 +23,7 @@ import java.util.List;
 
 public abstract class ScoreConstraintVerifierTest {
 
-    public static final String SOLVER_CONFIG = "timetabling/solver/schoolClassTimetablesSolverConfig.xml";
+    public static final String SOLVER_CONFIG = "solverConfig.xml";
 
     protected HardMediumSoftScoreVerifier<SchoolClassTimeTable> scoreVerifier = new HardMediumSoftScoreVerifier<>(
             SolverFactory.createFromXmlResource(SOLVER_CONFIG));
