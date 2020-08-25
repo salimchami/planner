@@ -26,7 +26,7 @@ import java.util.List;
 
 
 @Configuration
-@EnableMongoRepositories("io.edukativ.myskoolin.repository")
+@EnableMongoRepositories("io.edukativ.myskoolin.infrastructure")
 @Profile(JHipsterConstants.SPRING_PROFILE_CLOUD)
 public class CloudDatabaseConfiguration extends AbstractCloudConfig {
 

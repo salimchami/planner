@@ -2,6 +2,7 @@ package io.edukativ.myskoolin.domain.timetabling.constraints;
     dialect "java"
 
 import io.edukativ.myskoolin.domain.timetabling.Lesson;
+import io.edukativ.myskoolin.domain.subjects.Subject;
 import org.optaplanner.core.api.score.buildin.hardmediumsoft.HardMediumSoftScoreHolder;
 
 global HardMediumSoftScoreHolder scoreHolder;
@@ -13,3 +14,12 @@ rule "Time slot overlapping another time slot"
     then
         scoreHolder.penalize(kcontext, $lesson1.overlappingGap($lesson2));
 end
+
+rule "School room right type"
+    when
+        $lesson : Lesson(timeSlot != null)
+        $subject : Subject(!schoolRoomsTypes.contains($lesson.schoolRoom.type))
+    then
+        scoreHolder.penalize(kcontext, 10);
+end
+

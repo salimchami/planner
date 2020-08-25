@@ -20,13 +20,13 @@ import io.edukativ.myskoolin.domain.teachers.TeacherMailingSPI;
 import io.edukativ.myskoolin.domain.teachers.TeacherSPI;
 import io.edukativ.myskoolin.domain.teachers.TeacherService;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
-import io.edukativ.myskoolin.domain.timetabling.TimeTableSolverAPI;
 import io.edukativ.myskoolin.domain.timetabling.TimeTableSPI;
 import io.edukativ.myskoolin.domain.timetabling.TimeTablesSolver;
+import io.edukativ.myskoolin.domain.timetabling.TimetablesSolverAPI;
 import io.edukativ.myskoolin.infrastructure.app.providers.MyskoolinLogger;
 import org.optaplanner.core.api.score.ScoreManager;
+import org.optaplanner.core.api.solver.Solver;
 import org.optaplanner.core.api.solver.SolverFactory;
-import org.optaplanner.core.api.solver.SolverManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -61,11 +61,12 @@ public class MyskoolinDomainInjectionConfiguration {
     }
 
     @Bean
-    public TimeTableSolverAPI timeTableGenerationAPI(SolverManager<SchoolClassTimeTable, String> solverManager,
-                                                     ScoreManager<SchoolClassTimeTable> scoreManager,
-                                                     SchoolClassSPI schoolClassSPI,
-                                                     TimeTableSPI timeTableSPI, MyskoolinLogger logger,
-                                                     SolverFactory<SchoolClassTimeTable> solverFactory) {
-        return new TimeTablesSolver(solverManager, scoreManager, schoolClassSPI, timeTableSPI, logger);
+    public TimetablesSolverAPI timeTableGenerationAPI(ScoreManager<SchoolClassTimeTable> scoreManager,
+                                                      SchoolClassSPI schoolClassSPI,
+                                                      TimeTableSPI timeTableSPI, MyskoolinLogger logger) {
+        SolverFactory<SchoolClassTimeTable> solverFactory = SolverFactory.createFromXmlResource(
+            "org/optaplanner/core/api/solver/testdataSolverConfig.xml");
+        Solver<SchoolClassTimeTable> solver = solverFactory.buildSolver();
+        return new TimeTablesSolver(solver, scoreManager, schoolClassSPI, timeTableSPI, logger);
     }
 }

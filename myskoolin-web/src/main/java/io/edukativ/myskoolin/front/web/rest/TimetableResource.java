@@ -49,15 +49,6 @@ class TimetableResource {
         AuthoritiesConstants.ADMINISTRATION,
         AuthoritiesConstants.SCHOOL_LIFE,
     })
-    @GetMapping(value = "/solve/status/{id}")
-    public ResponseEntity<String> solverStatus(@PathVariable(name = "id") String id) {
-        return ResponseEntity.ok(timeTableApplication.solverStatus(id));
-    }
-
-    @Secured({
-        AuthoritiesConstants.ADMINISTRATION,
-        AuthoritiesConstants.SCHOOL_LIFE,
-    })
     @GetMapping(value = "/{schoolCLassId}")
     public ResponseEntity<SchoolClassTimeTableDTO> schoolClassTimeTable(
         @PathVariable(name = "schoolCLassId") String schoolCLassId) {

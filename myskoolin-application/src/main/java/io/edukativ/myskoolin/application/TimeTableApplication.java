@@ -3,7 +3,6 @@ package io.edukativ.myskoolin.application;
 import io.edukativ.myskoolin.application.security.UserService;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 import io.edukativ.myskoolin.domain.timetabling.TimeTableSPI;
-import io.edukativ.myskoolin.domain.timetabling.TimeTableSolverAPI;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.commercial.ClientDbDTO;
 import io.edukativ.myskoolin.infrastructure.commercial.ClientRepository;
@@ -19,10 +18,7 @@ import io.edukativ.myskoolin.infrastructure.subjects.SubjectRepository;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherDbDTO;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherMapper;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherRepository;
-import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableDTO;
-import io.edukativ.myskoolin.infrastructure.timetabling.SchoolClassTimeTableMapper;
-import io.edukativ.myskoolin.infrastructure.timetabling.TimeTableOptionsDbVO;
-import io.edukativ.myskoolin.infrastructure.timetabling.TimeTableOptionsMapper;
+import io.edukativ.myskoolin.infrastructure.timetabling.*;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,11 +26,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
-
+import io.edukativ.myskoolin.domain.timetabling.TimetablesSolverAPI;
 @Component
 public class TimeTableApplication {
 
-    private final TimeTableSolverAPI timeTableSolverAPI;
+    private final TimetablesSolverAPI timeTableSolverAPI;
     private final UserService userService;
     private final SchoolRoomRepository schoolRoomRepository;
     private final SchoolClassMapper schoolClassMapper;
@@ -48,14 +44,17 @@ public class TimeTableApplication {
     private final ClientRepository clientRepository;
     private final TimeTableOptionsMapper timeTableOptionsMapper;
     private final TimeTableSPI timeTableSPI;
+    private final SchoolClassTimeTableProvider timetablesProvider;
 
 
-    public TimeTableApplication(TimeTableSolverAPI timeTableSolverAPI, SchoolClassMapper schoolClassMapper,
+    public TimeTableApplication(TimetablesSolverAPI timeTableSolverAPI, SchoolClassMapper schoolClassMapper,
                                 UserService userService, SchoolRoomRepository schoolRoomRepository,
                                 SchoolRoomMapper schoolRoomMapper, SubjectMapper subjectMapper,
                                 TeacherMapper teacherMapper, SubjectRepository subjectRepository,
                                 TeacherRepository teacherRepository, SchoolClassRepository schoolClassRepository,
-                                SchoolClassTimeTableMapper schoolClassTimeTableMapper, ClientRepository clientRepository, TimeTableOptionsMapper timeTableOptionsMapper, TimeTableSPI timeTableSPI) {
+                                SchoolClassTimeTableMapper schoolClassTimeTableMapper, ClientRepository clientRepository,
+                                TimeTableOptionsMapper timeTableOptionsMapper, TimeTableSPI timeTableSPI,
+                                SchoolClassTimeTableProvider timetablesProvider) {
         this.timeTableSolverAPI = timeTableSolverAPI;
         this.schoolClassMapper = schoolClassMapper;
         this.userService = userService;
@@ -70,6 +69,7 @@ public class TimeTableApplication {
         this.clientRepository = clientRepository;
         this.timeTableOptionsMapper = timeTableOptionsMapper;
         this.timeTableSPI = timeTableSPI;
+        this.timetablesProvider = timetablesProvider;
     }
 
     @Transactional
@@ -107,13 +107,9 @@ public class TimeTableApplication {
                 timeTableOptionsMapper.dbVoToDomain(timeTableOptionsDbVO));
     }
 
-    public String solverStatus(String timeTableId) {
-        return timeTableSolverAPI.solverStatus(timeTableId);
-    }
-
     @Transactional
     public Optional<SchoolClassTimeTableDTO> timeTableBySchoolClassId(String schoolClassTimeTableId) {
-        final Optional<SchoolClassTimeTable> schoolClassTimeTable = timeTableSolverAPI.timeTableBySchoolCLassId(schoolClassTimeTableId);
+        final Optional<SchoolClassTimeTable> schoolClassTimeTable = timetablesProvider.findBySchoolCLassId(schoolClassTimeTableId);
         return schoolClassTimeTable.map(schoolClassTimeTableMapper::domainToDto);
     }
 
@@ -121,7 +117,7 @@ public class TimeTableApplication {
     public List<SchoolClassTimeTableDTO> timeTables() {
         final UserDbDTO currentUser = userService.currentUserWithAuthorities();
         final ObjectId clientId = currentUser.getClientId();
-        final List<SchoolClassTimeTable> schoolClassTimeTables = timeTableSolverAPI.timeTables(clientId.toString());
+        final List<SchoolClassTimeTable> schoolClassTimeTables = timetablesProvider.findAllByClientId(clientId.toString());
         return schoolClassTimeTableMapper.domainsToDtos(schoolClassTimeTables);
     }
 

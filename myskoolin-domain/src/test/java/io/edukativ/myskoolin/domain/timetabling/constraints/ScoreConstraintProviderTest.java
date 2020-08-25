@@ -15,7 +15,6 @@ import io.edukativ.myskoolin.domain.teachers.Teacher;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 import io.edukativ.myskoolin.domain.timetabling.Time;
 import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
-import io.edukativ.myskoolin.domain.timetabling.TimeTablesSolver;
 import org.optaplanner.core.api.solver.SolverFactory;
 import org.optaplanner.test.impl.score.buildin.hardmediumsoft.HardMediumSoftScoreVerifier;
 
@@ -23,8 +22,12 @@ import java.util.List;
 
 public abstract class ScoreConstraintProviderTest {
 
+    public static final String SOLVER_CONFIG = "timetabling/solver/schoolClassTimetablesSolverConfig.xml";
+
     protected HardMediumSoftScoreVerifier<SchoolClassTimeTable> scoreVerifier = new HardMediumSoftScoreVerifier<>(
-            SolverFactory.createFromXmlResource(TimeTablesSolver.SOLVER_CONFIG));
+            SolverFactory.createFromXmlResource(SOLVER_CONFIG));
+
+    protected static TimeTableConstraintConfiguration config;
 
     protected static SchoolClass schoolClass1;
     protected static SchoolClass schoolClass2;
@@ -38,6 +41,7 @@ public abstract class ScoreConstraintProviderTest {
     protected static Teacher teacher2;
 
     protected static void prepareParams() {
+        config = new TimeTableConstraintConfiguration();
         List<Grade> grades = GradeTestProvider.allGrades();
         List<SchoolRoom> allSchoolRooms = SchoolRoomTestProvider.allSchoolRooms();
         List<Subject> subjects = SubjectTestProvider.allSubjects();
