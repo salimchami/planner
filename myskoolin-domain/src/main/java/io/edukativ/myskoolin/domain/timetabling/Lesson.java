@@ -139,17 +139,14 @@ public class Lesson {
     /////////////////////////////////////////////
 
     public int subjectDurationByDayGap(List<Lesson> lessons) {
-        System.out.println("------------------------------2");
         return Math.abs(Math.toIntExact(lessonDurationByDay(lessons) - subject.getMaxMinutesPerDay().longValue()));
     }
 
     public boolean subjectDurationByDayExceedsMax(List<Lesson> lessons) {
-        System.out.println("------------------------------1");
         return lessonDurationByDay(lessons) > subject.getMaxMinutesPerDay();
     }
 
     public int lessonDurationByDay(List<Lesson> lessons) {
-        System.out.println("------------------------------3");
         return lessons.stream()
                 .filter(timetableLesson ->
                         timetableLesson.getTimeSlot().getDay().equals(timeSlot.getDay())

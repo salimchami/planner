@@ -25,6 +25,7 @@ class ConstraintVerifierSchoolRoomsTypesTest extends ScoreConstraintVerifierTest
 
         SchoolRoom schoolRoom = new SchoolRoom();
         schoolRoom.setType(schoolRoomType);
+        schoolRoom.setId("1");
         Subject subject = new Subject();
         subject.setSchoolRoomsTypes(subjectSchoolRoomTypes);
         Lesson lesson = new Lesson(1L, schoolRoom, subject, teacher1, timeSlot1, schoolClass1);
@@ -42,7 +43,7 @@ class ConstraintVerifierSchoolRoomsTypesTest extends ScoreConstraintVerifierTest
                         Arrays.asList(EnumSchoolRoomsTypes.NORMAL, EnumSchoolRoomsTypes.MUSIC)),
                 Arguments.of("normal - [normal]", 0, EnumSchoolRoomsTypes.NORMAL,
                         Collections.singletonList(EnumSchoolRoomsTypes.NORMAL)),
-                Arguments.of("IT - [normal]", -100, EnumSchoolRoomsTypes.IT,
+                Arguments.of("IT - [normal]", -600, EnumSchoolRoomsTypes.IT,
                         Arrays.asList(EnumSchoolRoomsTypes.NORMAL, EnumSchoolRoomsTypes.MUSIC))
         );
     }
