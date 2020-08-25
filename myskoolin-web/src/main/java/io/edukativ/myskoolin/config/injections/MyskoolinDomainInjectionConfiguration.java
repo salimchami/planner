@@ -64,8 +64,8 @@ public class MyskoolinDomainInjectionConfiguration {
     public TimetablesSolverAPI timeTableGenerationAPI(ScoreManager<SchoolClassTimeTable> scoreManager,
                                                       SchoolClassSPI schoolClassSPI,
                                                       TimeTableSPI timeTableSPI, MyskoolinLogger logger) {
-        SolverFactory<SchoolClassTimeTable> solverFactory = SolverFactory.createFromXmlResource(
-            "org/optaplanner/core/api/solver/testdataSolverConfig.xml");
+        ClassLoader classloader = SchoolClassTimeTable.class.getClassLoader();
+        SolverFactory<SchoolClassTimeTable> solverFactory = SolverFactory.createFromXmlResource("timetabling/solver/schoolClassTimetablesSolverConfig.xml", classloader);
         Solver<SchoolClassTimeTable> solver = solverFactory.buildSolver();
         return new TimeTablesSolver(solver, scoreManager, schoolClassSPI, timeTableSPI, logger);
     }
