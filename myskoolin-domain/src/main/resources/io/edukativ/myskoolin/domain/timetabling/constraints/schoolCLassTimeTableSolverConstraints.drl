@@ -14,10 +14,11 @@ global HardMediumSoftScoreHolder scoreHolder;
 
 rule "Time slot overlapping another time slot"
     when
-        $lesson1 : Lesson(timeSlot != null)
-        $lesson2 : Lesson(timeSlot != null, $lesson1.isOverlapping($lesson2))
+        $lesson1 : Lesson(timeSlot != null, $timeslot1: timeSlot)
+        $lesson2 : Lesson(timeSlot != null, $timeslot2: timeSlot, $lesson1.isOverlapping($lesson2))
+        $gap: Integer() from $lesson1.overlappingGap($lesson2)
     then
-        scoreHolder.penalize(kcontext, $lesson1.overlappingGap($lesson2));
+        scoreHolder.penalize(kcontext, $gap == 0 ? -1 : $gap);
 end
 
 //----------------------------------------------------------------------------------------------------------
@@ -34,7 +35,6 @@ end
 rule "Subject duration max by day"
     when
         $lesson : Lesson($subject1: subject)
-        $subject2: Subject(equals($subject1))
         $total : Number() from accumulate(
                             Lesson(
                                 timeSlot.day == $lesson.timeSlot.day,

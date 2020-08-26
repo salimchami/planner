@@ -3,7 +3,6 @@ package io.edukativ.myskoolin.domain.timetabling.solving;
 import io.edukativ.myskoolin.domain.providers.GlobalTestProvider;
 import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
-import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.timetabling.Lesson;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 import io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration;
@@ -26,9 +25,8 @@ class ConstraintVerifierSchoolRoomsTypesTest extends ScoreConstraintVerifierTest
         SchoolRoom schoolRoom = new SchoolRoom();
         schoolRoom.setType(schoolRoomType);
         schoolRoom.setId("1");
-        Subject subject = new Subject();
-        subject.setSchoolRoomsTypes(subjectSchoolRoomTypes);
-        Lesson lesson = new Lesson(1L, schoolRoom, subject, teacher1, timeSlot1, schoolClass1);
+        subject1.setSchoolRoomsTypes(subjectSchoolRoomTypes);
+        Lesson lesson = new Lesson(1L, schoolRoom, subject1, teacher1, timeSlot1, schoolClass1);
         SchoolClassTimeTable timetable = new SchoolClassTimeTable(config, GlobalTestProvider.CLIENT_ID, schoolClass1, Arrays.asList(schoolClass1, schoolClass2),
                 Arrays.asList(schoolRoom1, schoolRoom2), Arrays.asList(subject1, subject2), Arrays.asList(teacher1, teacher2), Collections.singletonList(lesson),
                 Collections.singletonList(lesson.getTimeSlot()));
@@ -43,7 +41,7 @@ class ConstraintVerifierSchoolRoomsTypesTest extends ScoreConstraintVerifierTest
                         Arrays.asList(EnumSchoolRoomsTypes.NORMAL, EnumSchoolRoomsTypes.MUSIC)),
                 Arguments.of("normal - [normal]", 0, EnumSchoolRoomsTypes.NORMAL,
                         Collections.singletonList(EnumSchoolRoomsTypes.NORMAL)),
-                Arguments.of("IT - [normal]", -600, EnumSchoolRoomsTypes.IT,
+                Arguments.of("IT - [normal]", -60, EnumSchoolRoomsTypes.IT,
                         Arrays.asList(EnumSchoolRoomsTypes.NORMAL, EnumSchoolRoomsTypes.MUSIC))
         );
     }

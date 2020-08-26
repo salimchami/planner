@@ -34,10 +34,10 @@ class ConstraintVerifierOverlappingTest extends ScoreConstraintVerifierTest {
     private static Stream<Arguments> conflictParams() {
         prepareParams();
         return Stream.of(
-                Arguments.of("== timeSlot", 0, timeSlot1, new TimeSlot(3L, timeSlot1.getDay(),
+                Arguments.of("== timeSlot", 40, timeSlot1, new TimeSlot(3L, timeSlot1.getDay(),
                         timeSlot1.getStartTime(), timeSlot1.getEndTime())),
-                Arguments.of("<> timeSlot", 0, timeSlot1, timeSlot2),
-                Arguments.of("<> timeSlot", -600, timeSlot1, new TimeSlot(3L, EnumDays.MONDAY,
+                Arguments.of("<> timeSlot", 20, timeSlot1, timeSlot2),
+                Arguments.of("<> timeSlot", -580, timeSlot1, new TimeSlot(3L, EnumDays.MONDAY,
                         new Time(8, 30, 0, EnumPartsOfDay.AM),
                         new Time(10, 0, 0, EnumPartsOfDay.AM)))
         );
