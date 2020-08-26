@@ -22,10 +22,11 @@ class ConstraintVerifierSubjectDayDurationMaxTest extends ScoreConstraintVerifie
     void subjectsDayDurationPenalty(String description, int expectedConflictPenalty, TimeSlot firstTimeSlot, TimeSlot secondTimeSlot) {
 
         Lesson lesson1 = new Lesson(1L, schoolRoom1, subject1, teacher1, firstTimeSlot, schoolClass1);
-        Lesson lesson2 = new Lesson(2L, schoolRoom1, subject1, teacher1, secondTimeSlot, schoolClass1);
+        Lesson lesson2 = new Lesson(2L, schoolRoom1, subject2, teacher1, secondTimeSlot, schoolClass1);
+        Lesson lesson3 = new Lesson(3L, schoolRoom2, subject2, teacher2, secondTimeSlot, schoolClass1);
 
         SchoolClassTimeTable timetable = new SchoolClassTimeTable(config, GlobalTestProvider.CLIENT_ID, schoolClass1, List.of(schoolClass1, schoolClass2),
-                List.of(schoolRoom1, schoolRoom2), List.of(subject1, subject2), List.of(teacher1, teacher2), List.of(lesson1, lesson2),
+                List.of(schoolRoom1, schoolRoom2), List.of(subject1, subject2), List.of(teacher1, teacher2), List.of(lesson1, lesson2, lesson3),
                 List.of(lesson1.getTimeSlot(), lesson2.getTimeSlot()));
 
         scoreVerifier.assertHardWeight(TimeTableConstraintConfiguration.CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY, expectedConflictPenalty, timetable);
@@ -34,13 +35,13 @@ class ConstraintVerifierSubjectDayDurationMaxTest extends ScoreConstraintVerifie
     private static Stream<Arguments> conflictParams() {
         prepareParams();
         return Stream.of(
-                Arguments.of("francais 60 minutes timeSlot / max : 120", 0, timeSlot1, timeSlot2),
-                Arguments.of("francais 120 minutes timeSlot / max : 120", 0, timeSlot1, new TimeSlot(3L, EnumDays.MONDAY,
+                Arguments.of("francais 120 minutes timeSlot / max : 120", 60, timeSlot1, timeSlot2),
+                Arguments.of("francais 120 minutes timeSlot / max : 120", 60, timeSlot1, new TimeSlot(3L, EnumDays.MONDAY,
                         new Time(10, 0, 0, EnumPartsOfDay.AM),
                         new Time(11, 0, 0, EnumPartsOfDay.AM))),
-                Arguments.of("francais 180 minutes timeSlot / max : 120", -480, timeSlot1, new TimeSlot(3L, EnumDays.MONDAY,
+                Arguments.of("francais 180 minutes timeSlot / max : 120", -180, timeSlot1, new TimeSlot(3L, EnumDays.MONDAY,
                         new Time(10, 0, 0, EnumPartsOfDay.AM),
-                        new Time(13, 0, 0, EnumPartsOfDay.AM)))
+                        new Time(12, 0, 0, EnumPartsOfDay.AM)))
         );
     }
 

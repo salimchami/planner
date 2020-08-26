@@ -13,13 +13,13 @@ public class TimeTableConstraintConfiguration {
     public static final String CONSTRAINT_SAME_SCHOOLROOM_IF_CONSECUTIVE_LESSONS = "Same schoolroom if consecutive lessons";
 
     @ConstraintWeight(CONSTRAINT_TIMESLOTS_OVERLAPS)
-    private HardMediumSoftScore timeslotsOverlappingScore = HardMediumSoftScore.ofHard(10);
+    private HardMediumSoftScore timeslotsOverlappingScore = HardMediumSoftScore.ofHard(1000);
 
     @ConstraintWeight(CONSTRAINT_SCHOOL_ROOM_TYPE)
-    private HardMediumSoftScore schoolRoomRightTypeScore = HardMediumSoftScore.ofHard(10);
+    private HardMediumSoftScore schoolRoomRightTypeScore = HardMediumSoftScore.ofHard(1000);
 
     @ConstraintWeight(CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY)
-    private HardMediumSoftScore subjectDurationByDayScore = HardMediumSoftScore.ONE_HARD;
+    private HardMediumSoftScore subjectDurationByDayScore = HardMediumSoftScore.ofHard(1000);
 //
 //    @ConstraintWeight(CONSTRAINT_SAME_SCHOOLROOM_IF_CONSECUTIVE_LESSONS)
 //    private final HardMediumSoftScore sameSchoolRoomsConsecutiveLessonsScore = HardMediumSoftScore.ONE_HARD;
