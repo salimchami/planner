@@ -2,9 +2,11 @@ package io.edukativ.myskoolin.domain.timetabling.constraints;
     dialect "java"
 
 import io.edukativ.myskoolin.domain.timetabling.Lesson;
+import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import org.optaplanner.core.api.score.buildin.hardmediumsoft.HardMediumSoftScoreHolder;
+import java.util.List
 
 global HardMediumSoftScoreHolder scoreHolder;
 
@@ -13,7 +15,6 @@ rule "Time slot overlapping another time slot"
         $lesson1 : Lesson(timeSlot != null)
         $lesson2 : Lesson(timeSlot != null, $lesson1.isOverlapping($lesson2))
     then
-        System.out.println("------------------------1");
         scoreHolder.penalize(kcontext, $lesson1.overlappingGap($lesson2));
 end
 
@@ -21,16 +22,39 @@ rule "School room right type"
     when
         $lesson: Lesson(!hasRightSchoolRoom())
     then
-        System.out.println("------------------------2");
         scoreHolder.penalize(kcontext, $lesson.getTimeSlot().durationInMinutes().intValue());
 end
 
+//rule "Subject duration max by day"
+//    when
+//        $lesson : Lesson($subject : subject)
+//        $subjectDurationTotal : Long() from accumulate(
+//            Lesson(
+//                $subject.equals(subject),
+//                $subjectDuration : timeSlot.durationInMinutes()
+//            ),
+//            sum($subjectDuration)
+//        )
+//        Boolean($subject.getMaxMinutesPerDay() > $subjectDurationTotal)
+//    then
+//        System.out.println("----------------------$result : "+ ($subject.getMaxMinutesPerDay() > $subjectDurationTotal));
+//        scoreHolder.penalize(kcontext, $subjectDurationTotal.intValue());
+//end
+
+//rule ""
+//    when
+//    then
+//end
 rule "Subject duration max by day"
     when
-        $timetable : SchoolClassTimeTable($lessons: lessons)
-        $lesson : Lesson(subjectDurationByDayExceedsMax($lessons))
+        $lesson1: Lesson($timeSlot1: timeSlot)
+        accumulate(
+            Lesson(subject.equals($lesson1.getSubject()),
+                    $timeSlot1.day == timeSlot.day, $timeSlot2: timeSlot
+            );
+            $total : sum($timeSlot2.durationInMinutes());
+            $total > $lesson1.subject.maxMinutesPerDay
+        )
     then
-        System.out.println("------------------------3");
-        scoreHolder.penalize(kcontext, $lesson.subjectDurationByDayGap($lessons));
+        scoreHolder.penalize(kcontext, $total.intValue());
 end
-
