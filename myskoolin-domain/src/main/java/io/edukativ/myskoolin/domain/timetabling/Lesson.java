@@ -154,4 +154,7 @@ public class Lesson {
                 .mapToInt(subjectLesson -> subjectLesson.getTimeSlot().durationInMinutes().intValue()).sum();
     }
 
+    public boolean exceedsDuration() {
+        return subject.getMaxMinutesPerDay() < timeSlot.durationInMinutes();
+    }
 }

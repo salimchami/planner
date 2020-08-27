@@ -3,6 +3,7 @@ package io.edukativ.myskoolin.domain.timetabling.solving;
 import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
 import io.edukativ.myskoolin.domain.commons.vo.EnumPartsOfDay;
 import io.edukativ.myskoolin.domain.providers.GlobalTestProvider;
+import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.timetabling.Lesson;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 import io.edukativ.myskoolin.domain.timetabling.Time;
@@ -19,10 +20,10 @@ class ConstraintVerifierOverlappingTest extends ScoreConstraintVerifierTest {
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("conflictParams")
-    void roomConflict(String description, int expectedConflictPenalty, TimeSlot firstTimeSlot, TimeSlot secondTimeSlot) {
+    void timeSlotsOverlapping(String description, int expectedConflictPenalty, Subject firstSubject, Subject secondSubject, TimeSlot firstTimeSlot, TimeSlot secondTimeSlot) {
 
-        Lesson lesson1 = new Lesson(1L, schoolRoom1, subject1, teacher1, firstTimeSlot, schoolClass1);
-        Lesson lesson2 = new Lesson(2L, schoolRoom2, subject2, teacher2, secondTimeSlot, schoolClass1);
+        Lesson lesson1 = new Lesson(1L, schoolRoom1, firstSubject, teacher1, firstTimeSlot, schoolClass1);
+        Lesson lesson2 = new Lesson(2L, schoolRoom2, secondSubject, teacher2, secondTimeSlot, schoolClass1);
         SchoolClassTimeTable timetable = new SchoolClassTimeTable(config, GlobalTestProvider.CLIENT_ID, schoolClass1, Arrays.asList(schoolClass1, schoolClass2),
                 Arrays.asList(schoolRoom1, schoolRoom2), Arrays.asList(subject1, subject2), Arrays.asList(teacher1, teacher2), Arrays.asList(lesson1, lesson2),
                 Arrays.asList(lesson1.getTimeSlot(), lesson2.getTimeSlot()));
@@ -34,10 +35,16 @@ class ConstraintVerifierOverlappingTest extends ScoreConstraintVerifierTest {
     private static Stream<Arguments> conflictParams() {
         prepareParams();
         return Stream.of(
-                Arguments.of("== timeSlot", 40, timeSlot1, new TimeSlot(3L, timeSlot1.getDay(),
+                Arguments.of("== timeSlot, <> subject", -600, subject1, subject2, timeSlot1, new TimeSlot(3L, timeSlot1.getDay(),
                         timeSlot1.getStartTime(), timeSlot1.getEndTime())),
-                Arguments.of("<> timeSlot", 20, timeSlot1, timeSlot2),
-                Arguments.of("<> timeSlot", -580, timeSlot1, new TimeSlot(3L, EnumDays.MONDAY,
+                Arguments.of("<> timeSlot, <> subject", 0, subject1, subject2, timeSlot1, timeSlot2),
+                Arguments.of("<> timeSlot (overlapping), <> subject", -300, subject1, subject2, timeSlot1, new TimeSlot(3L, EnumDays.MONDAY,
+                        new Time(8, 30, 0, EnumPartsOfDay.AM),
+                        new Time(10, 0, 0, EnumPartsOfDay.AM))),
+                Arguments.of("== timeSlot, == subject", -600, subject1, subject1, timeSlot1, new TimeSlot(3L, timeSlot1.getDay(),
+                        timeSlot1.getStartTime(), timeSlot1.getEndTime())),
+                Arguments.of("<> timeSlot, == subject", 0, subject1, subject1, timeSlot1, timeSlot2),
+                Arguments.of("<> timeSlot (overlapping), == subject", -300, subject1, subject1, timeSlot1, new TimeSlot(3L, EnumDays.MONDAY,
                         new Time(8, 30, 0, EnumPartsOfDay.AM),
                         new Time(10, 0, 0, EnumPartsOfDay.AM)))
         );

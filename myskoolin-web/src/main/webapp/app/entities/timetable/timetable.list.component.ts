@@ -53,14 +53,14 @@ export class TimetableListComponent implements OnInit, OnDestroy {
     }
 
     private generateConfirmation() {
-        this.notificationService.add('client.new.form.toast-generation-title',
-            'client.new.form.toast-generation',
+        this.notificationService.add('timetable.generation.notifications.title',
+            'timetable.generation.notifications.success',
             NotificationTypes.SUCCESS);
     }
 
     private saveError() {
-        this.notificationService.add('client.new.form.toast-generation-error-title',
-            'client.new.form.toast-generation-error',
+        this.notificationService.add('timetable.generation.notifications.title',
+            'timetable.generation.notifications.error',
             NotificationTypes.ERROR);
     }
 

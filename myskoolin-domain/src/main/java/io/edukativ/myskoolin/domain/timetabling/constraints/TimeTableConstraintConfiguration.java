@@ -9,17 +9,21 @@ public class TimeTableConstraintConfiguration {
 
     public static final String CONSTRAINT_TIMESLOTS_OVERLAPS = "Time slot overlapping another time slot";
     public static final String CONSTRAINT_SCHOOL_ROOM_TYPE = "School room right type";
-    public static final String CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY = "Subject duration max by day";
+    public static final String CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY_MULTIPLE_LESSONS = "Subject duration max by day - multiple lessons";
+    public static final String CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY_SINGLE_LESSON = "Subject duration max by day - single lesson";
     public static final String CONSTRAINT_SAME_SCHOOLROOM_IF_CONSECUTIVE_LESSONS = "Same schoolroom if consecutive lessons";
 
     @ConstraintWeight(CONSTRAINT_TIMESLOTS_OVERLAPS)
     private HardMediumSoftScore timeslotsOverlappingScore = HardMediumSoftScore.ofHard(10);
 
     @ConstraintWeight(CONSTRAINT_SCHOOL_ROOM_TYPE)
-    private HardMediumSoftScore schoolRoomRightTypeScore = HardMediumSoftScore.ofHard(1);
+    private HardMediumSoftScore schoolRoomRightTypeScore = HardMediumSoftScore.ofHard(10);
 
-    @ConstraintWeight(CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY)
-    private HardMediumSoftScore subjectDurationByDayScore = HardMediumSoftScore.ofHard(1);
+    @ConstraintWeight(CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY_MULTIPLE_LESSONS)
+    private HardMediumSoftScore subjectDurationByDayScoreForMultipleLessons = HardMediumSoftScore.ofHard(10);
+
+    @ConstraintWeight(CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY_SINGLE_LESSON)
+    private HardMediumSoftScore subjectDurationByDayScoreForSingleLesson = HardMediumSoftScore.ofHard(10);
 //
 //    @ConstraintWeight(CONSTRAINT_SAME_SCHOOLROOM_IF_CONSECUTIVE_LESSONS)
 //    private final HardMediumSoftScore sameSchoolRoomsConsecutiveLessonsScore = HardMediumSoftScore.ONE_HARD;
@@ -40,11 +44,19 @@ public class TimeTableConstraintConfiguration {
         this.schoolRoomRightTypeScore = schoolRoomRightTypeScore;
     }
 
-    public HardMediumSoftScore getSubjectDurationByDayScore() {
-        return subjectDurationByDayScore;
+    public HardMediumSoftScore getSubjectDurationByDayScoreForMultipleLessons() {
+        return subjectDurationByDayScoreForMultipleLessons;
     }
 
-    public void setSubjectDurationByDayScore(HardMediumSoftScore subjectDurationByDayScore) {
-        this.subjectDurationByDayScore = subjectDurationByDayScore;
+    public void setSubjectDurationByDayScoreForMultipleLessons(HardMediumSoftScore subjectDurationByDayScoreForMultipleLessons) {
+        this.subjectDurationByDayScoreForMultipleLessons = subjectDurationByDayScoreForMultipleLessons;
+    }
+
+    public HardMediumSoftScore getSubjectDurationByDayScoreForSingleLesson() {
+        return subjectDurationByDayScoreForSingleLesson;
+    }
+
+    public void setSubjectDurationByDayScoreForSingleLesson(HardMediumSoftScore subjectDurationByDayScoreForSingleLesson) {
+        this.subjectDurationByDayScoreForSingleLesson = subjectDurationByDayScoreForSingleLesson;
     }
 }

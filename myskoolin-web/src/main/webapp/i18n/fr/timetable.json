@@ -51,6 +51,13 @@
                     }
                 }
             }
+        },
+        "generation": {
+            "notifications": {
+                "title": "Génération emplois du temps",
+                "success": "Les emplois du temps ont été générés avec succès",
+                "error": "Une erreur est survenue lors de la génération des emplois du temps"
+            }
         }
     }
 }
