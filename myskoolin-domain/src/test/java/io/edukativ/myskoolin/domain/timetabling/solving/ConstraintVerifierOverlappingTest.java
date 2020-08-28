@@ -35,18 +35,26 @@ class ConstraintVerifierOverlappingTest extends ScoreConstraintVerifierTest {
     private static Stream<Arguments> conflictParams() {
         prepareParams();
         return Stream.of(
-                Arguments.of("== timeSlot, <> subject", -600, subject1, subject2, timeSlot1, new TimeSlot(3L, timeSlot1.getDay(),
-                        timeSlot1.getStartTime(), timeSlot1.getEndTime())),
-                Arguments.of("<> timeSlot, <> subject", 0, subject1, subject2, timeSlot1, timeSlot2),
-                Arguments.of("<> timeSlot (overlapping), <> subject", -300, subject1, subject2, timeSlot1, new TimeSlot(3L, EnumDays.MONDAY,
-                        new Time(8, 30, 0, EnumPartsOfDay.AM),
-                        new Time(10, 0, 0, EnumPartsOfDay.AM))),
-                Arguments.of("== timeSlot, == subject", -600, subject1, subject1, timeSlot1, new TimeSlot(3L, timeSlot1.getDay(),
-                        timeSlot1.getStartTime(), timeSlot1.getEndTime())),
+                Arguments.of("== timeSlot, <> subject", -600, subject1, subject2,
+                        timeSlot1,
+                        new TimeSlot(3L, timeSlot1.getDay(), timeSlot1.getStartTime(), timeSlot1.getEndTime())),
+                Arguments.of("<> timeSlot, <> subject", 0, subject1, subject2,
+                        timeSlot1,
+                        timeSlot2),
+                Arguments.of("<> timeSlot (overlapping), <> subject", -300, subject1, subject2,
+                        timeSlot1,
+                        new TimeSlot(3L, EnumDays.MONDAY,
+                                new Time(8, 30, 0, EnumPartsOfDay.AM),
+                                new Time(10, 0, 0, EnumPartsOfDay.AM))),
+                Arguments.of("== timeSlot, == subject", -600, subject1, subject1,
+                        timeSlot1,
+                        new TimeSlot(3L, timeSlot1.getDay(), timeSlot1.getStartTime(), timeSlot1.getEndTime())),
                 Arguments.of("<> timeSlot, == subject", 0, subject1, subject1, timeSlot1, timeSlot2),
-                Arguments.of("<> timeSlot (overlapping), == subject", -300, subject1, subject1, timeSlot1, new TimeSlot(3L, EnumDays.MONDAY,
-                        new Time(8, 30, 0, EnumPartsOfDay.AM),
-                        new Time(10, 0, 0, EnumPartsOfDay.AM)))
+                Arguments.of("<> timeSlot (overlapping), == subject", -300, subject1, subject1,
+                        timeSlot1,
+                        new TimeSlot(3L, EnumDays.MONDAY,
+                                new Time(8, 30, 0, EnumPartsOfDay.AM),
+                                new Time(10, 0, 0, EnumPartsOfDay.AM)))
         );
     }
 

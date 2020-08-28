@@ -12,12 +12,28 @@ global HardMediumSoftScoreHolder scoreHolder;
 
 //----------------------------------------------------------------------------------------------------------
 
+rule "Subject duration max by day"
+when
+  // extract the variables from the Order
+  $lesson: Lesson( $lessonSubject: subject,
+         $timeslot: timeSlot)
+  $subject: Subject(id == $lessonSubject.id)
+  // use the accumulate function to sum up the product fees
+  $total: Integer(  ) from
+                accumulate(TimeSlot( $duration: Integer.valueOf(durationInMinutes())  ) from $timeslot,
+                            sum($duration) )
+then
+        scoreHolder.penalize(kcontext, $total > $lessonSubject.getMaxMinutesPerDay() ? ($total - $lessonSubject.getMaxMinutesPerDay()) : 0);
+ end
+
+//----------------------------------------------------------------------------------------------------------
+
 rule "Time slot overlapping another time slot"
     when
-        $lesson1 : Lesson(timeSlot != null)
-        $lesson2 : Lesson(this != $lesson1, timeSlot != null, $lesson2.isOverlapping($lesson1))
+        $lesson1 : Lesson(timeSlot != null, $timeslot1: timeSlot)
+        $lesson2 : Lesson(this != $lesson1, timeSlot != null, $timeslot2: timeSlot, $timeslot1.isOverlapping($timeslot2) )
     then
-        scoreHolder.penalize(kcontext, $lesson1.overlappingGap($lesson2));
+        scoreHolder.penalize(kcontext, $timeslot1.overlappingGap($timeslot2).intValue() / 2);
 end
 
 //----------------------------------------------------------------------------------------------------------
@@ -31,20 +47,36 @@ end
 
 //----------------------------------------------------------------------------------------------------------
 
-rule "Subject duration max by day - multiple lessons"
-    when
-        $lesson1 : Lesson( $subject1: subject )
-        $lesson2 : Lesson( this != $lesson1, $subject2: subject, $subject2.id == $subject1.id, timeSlot.day == $lesson1.timeSlot.day )
-        $totalDuration : Number() from accumulate(
-                            TimeSlot( $duration : durationInMinutes(), $subject1.maxMinutesPerDay < $duration ),
-                            sum( $duration ) )
-    then
-        scoreHolder.penalize(kcontext, $totalDuration.intValue() - $subject1.getMaxMinutesPerDay());
-end
+//rule "Subject duration max by day - multiple lessons"
+//    when
+//        $lesson1 : Lesson( $subject1: subject )
+//        $lesson2 : Lesson( this != $lesson1, $subject2: subject, $subject2.id == $subject1.id, timeSlot.day == $lesson1.timeSlot.day )
+//        $totalDuration : Number() from accumulate(
+//                            TimeSlot( $duration : durationInMinutes(), $subject1.maxMinutesPerDay < $duration ),
+//                            sum( $duration ) )
+//    then
+//        scoreHolder.penalize(kcontext, ($totalDuration.intValue() - $subject1.getMaxMinutesPerDay()) / 2);
+//end
+//
+//rule "Subject duration max by day - single lesson"
+//    when
+//        $lesson : Lesson( $subject: subject, exceedsDuration())
+//    then
+//        scoreHolder.penalize(kcontext, ($lesson.getTimeSlot().durationInMinutes().intValue() - $subject.getMaxMinutesPerDay()) / 2);
+//end
 
-rule "Subject duration max by day - single lesson"
-    when
-        $lesson : Lesson( $subject: subject, exceedsDuration())
-    then
-        scoreHolder.penalize(kcontext, $lesson.getTimeSlot().durationInMinutes().intValue() - $subject.getMaxMinutesPerDay());
-end
+
+
+//rule "Subject duration max by day"
+//when
+//  $lesson: Lesson( $timeslot: timeSlot, $subject: subject)
+//  $totalDuration: Integer() from
+//        accumulate(
+//                   TimeSlot($duration: Integer.valueOf(durationInMinutes()), subject != $lesson.subject) from $lesson.timeSlot,
+//
+//                    sum($duration) );
+//then
+//        System.out.println($timeslot);
+//        System.out.println($totalDuration);
+//        scoreHolder.penalize(kcontext, $totalDuration > $subject.getMaxMinutesPerDay() ? ($totalDuration - $subject.getMaxMinutesPerDay()) : 0);
+//end

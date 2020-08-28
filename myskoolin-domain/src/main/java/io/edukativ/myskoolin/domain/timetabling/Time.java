@@ -64,8 +64,12 @@ public class Time implements Comparable<Time> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Time time = (Time) o;
         return hour.equals(time.hour) &&
                 minutes.equals(time.minutes) &&

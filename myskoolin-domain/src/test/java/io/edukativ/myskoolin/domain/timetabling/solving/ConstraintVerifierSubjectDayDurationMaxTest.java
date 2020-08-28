@@ -21,16 +21,9 @@ class ConstraintVerifierSubjectDayDurationMaxTest extends ScoreConstraintVerifie
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("conflictParams")
-    void subjectsDayDurationPenaltySingleLesson(String description, int expectedSingleConflictPenalty, int expectedMultipleConflictPenalty, TimeSlot firstTimeSlot, TimeSlot secondTimeSlot, TimeSlot thirdTimeSlot) {
+    void subjectsDayDurationPenalty(String description, int expectedSingleConflictPenalty, TimeSlot firstTimeSlot, TimeSlot secondTimeSlot, TimeSlot thirdTimeSlot) {
         initVariables(firstTimeSlot, secondTimeSlot, thirdTimeSlot);
-        scoreVerifier.assertHardWeight(TimeTableConstraintConfiguration.CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY_MULTIPLE_LESSONS, expectedMultipleConflictPenalty, timetable);
-    }
-
-    @ParameterizedTest(name = "{0}")
-    @MethodSource("conflictParams")
-    void subjectsDayDurationPenaltyMultipleLessons(String description, int expectedSingleConflictPenalty, int expectedMultipleConflictPenalty, TimeSlot firstTimeSlot, TimeSlot secondTimeSlot, TimeSlot thirdTimeSlot) {
-        initVariables(firstTimeSlot, secondTimeSlot, thirdTimeSlot);
-        scoreVerifier.assertHardWeight(TimeTableConstraintConfiguration.CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY_SINGLE_LESSON, expectedSingleConflictPenalty, timetable);
+        scoreVerifier.assertHardWeight(TimeTableConstraintConfiguration.CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY, expectedSingleConflictPenalty, timetable);
     }
 
     private void initVariables(TimeSlot timeSlot1, TimeSlot timeSlot2, TimeSlot timeSlot3) {
@@ -46,19 +39,19 @@ class ConstraintVerifierSubjectDayDurationMaxTest extends ScoreConstraintVerifie
     private static Stream<Arguments> conflictParams() {
         prepareParams();
         return Stream.of(
-                Arguments.of("francais -> 120 mn (max : 120) / maths -> 60 mn (max 120)", 0, 0,
+                Arguments.of("francais -> 120 mn (max : 120) / maths -> 60 mn (max 120)", 0,
                         timeSlot1,
                         timeSlot2,
                         new TimeSlot(3L, EnumDays.MONDAY,
                                 new Time(10, 0, 0, EnumPartsOfDay.AM),
                                 new Time(11, 0, 0, EnumPartsOfDay.AM))),
-                Arguments.of("francais -> 180 mn (max : 120) / maths -> 60 mn (max 120)", 0, -600,
+                Arguments.of("francais -> 180 mn (max : 120) / maths -> 60 mn (max 120)", 0,
                         timeSlot1,
                         new TimeSlot(3L, EnumDays.MONDAY,
                                 new Time(10, 0, 0, EnumPartsOfDay.AM),
                                 new Time(12, 0, 0, EnumPartsOfDay.AM)),
                         timeSlot2),
-                Arguments.of("francais -> 180 mn (max : 120) / maths -> 180 mn (max 120)", -1200, -1800,
+                Arguments.of("francais -> 180 mn (max : 120) / maths -> 180 mn (max 120)", -1200,
                         timeSlot1,
                         new TimeSlot(3L, EnumDays.MONDAY,
                                 new Time(10, 0, 0, EnumPartsOfDay.AM),
