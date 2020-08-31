@@ -21,9 +21,9 @@ class SubjectTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0}")
     @MethodSource("maxMinutesPerDayGapParams")
-    void maxMinutesPerDayGap(int maxMinutesPerDay, int totalDuration, int expected) {
+    void maxMinutesPerDayGap(String description, int maxMinutesPerDay, int totalDuration, int expected) {
         Subject subject = new Subject();
         subject.setMaxMinutesPerDay(maxMinutesPerDay);
         int gap = subject.maxMinutesPerDayPenalty(totalDuration);
