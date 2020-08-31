@@ -14,33 +14,36 @@ global HardMediumSoftScoreHolder scoreHolder;
 
 rule "Subject duration max by day"
 when
-  // extract the variables from the Order
-  $lesson: Lesson( $lessonSubject: subject,
-         $timeslot: timeSlot)
-  $subject: Subject(id == $lessonSubject.id)
-  // use the accumulate function to sum up the product fees
-  $total: Integer(  ) from
-                accumulate(TimeSlot( $duration: Integer.valueOf(durationInMinutes())  ) from $timeslot,
-                            sum($duration) )
+  $lesson : Lesson( $id: id )
+  $total : Integer() from
+     accumulate ( Lesson($timeslot: timeSlot, subject == $lesson.subject, timeSlot.day == $lesson.timeSlot.day) ,
+            init( int total =0;),
+            action(total+=$timeslot.durationInMinutes();),
+            result( new Integer (total)))
 then
-        scoreHolder.penalize(kcontext, $total > $lessonSubject.getMaxMinutesPerDay() ? ($total - $lessonSubject.getMaxMinutesPerDay()) : 0);
- end
+//  System.out.println(
+//                     " subject : "+ $lesson.getSubject().getName() +
+//          " \nTotal : " + $total +
+//          " \nGap : " + $lesson.getSubject().maxMinutesPerDayGap($total)
+//                     );
+        scoreHolder.penalize(kcontext, $lesson.getSubject().maxMinutesPerDayGap($total));
+end
 
 //----------------------------------------------------------------------------------------------------------
 
 rule "Time slot overlapping another time slot"
-    when
-        $lesson1 : Lesson(timeSlot != null, $timeslot1: timeSlot)
-        $lesson2 : Lesson(this != $lesson1, timeSlot != null, $timeslot2: timeSlot, $timeslot1.isOverlapping($timeslot2) )
-    then
-        scoreHolder.penalize(kcontext, $timeslot1.overlappingGap($timeslot2).intValue() / 2);
+when
+  $timeslot1: TimeSlot()
+  $lesson : Lesson($timeslot2: timeSlot, $timeslot2 != $timeslot1, $timeslot1.isOverlapping($timeslot2))
+then
+  scoreHolder.penalize(kcontext, $timeslot1.overlappingGap($timeslot2).intValue() /2);
 end
 
 //----------------------------------------------------------------------------------------------------------
 
 rule "School room right type"
     when
-        $lesson: Lesson(!hasRightSchoolRoom())
+        $lesson: Lesson(!hasRightSchoolRoomType())
     then
         scoreHolder.penalize(kcontext, $lesson.getTimeSlot().durationInMinutes().intValue());
 end

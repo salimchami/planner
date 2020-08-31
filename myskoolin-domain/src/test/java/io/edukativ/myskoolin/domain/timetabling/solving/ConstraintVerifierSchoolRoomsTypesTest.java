@@ -37,12 +37,14 @@ class ConstraintVerifierSchoolRoomsTypesTest extends ScoreConstraintVerifierTest
     private static Stream<Arguments> conflictParams() {
         prepareParams();
         return Stream.of(
-                Arguments.of("normal - [normal, music]", 0, EnumSchoolRoomsTypes.NORMAL,
+                Arguments.of("NORMAL - [NORMAL, MUSIC]", 0, EnumSchoolRoomsTypes.NORMAL,
                         Arrays.asList(EnumSchoolRoomsTypes.NORMAL, EnumSchoolRoomsTypes.MUSIC)),
-                Arguments.of("normal - [normal]", 0, EnumSchoolRoomsTypes.NORMAL,
+                Arguments.of("NORMAL - [NORMAL]", 0, EnumSchoolRoomsTypes.NORMAL,
                         Collections.singletonList(EnumSchoolRoomsTypes.NORMAL)),
-                Arguments.of("IT - [normal]", -600, EnumSchoolRoomsTypes.IT,
-                        Arrays.asList(EnumSchoolRoomsTypes.NORMAL, EnumSchoolRoomsTypes.MUSIC))
+                Arguments.of("IT - [NORMAL, MUSIC]", -600, EnumSchoolRoomsTypes.IT,
+                        Arrays.asList(EnumSchoolRoomsTypes.NORMAL, EnumSchoolRoomsTypes.MUSIC)),
+                Arguments.of("IT - [NORMAL, MUSIC, AMPHITHEATER]", -600, EnumSchoolRoomsTypes.IT,
+                        Arrays.asList(EnumSchoolRoomsTypes.NORMAL, EnumSchoolRoomsTypes.MUSIC, EnumSchoolRoomsTypes.AMPHITHEATER ))
         );
     }
 

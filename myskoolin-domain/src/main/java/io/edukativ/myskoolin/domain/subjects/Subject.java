@@ -285,7 +285,7 @@ public class Subject implements Comparable<Subject> {
                 .stream()
                 .filter(g -> g.getName().equals(grade.getName()))
                 .findFirst();
-        if(optGrade.isPresent()) {
+        if (optGrade.isPresent()) {
             this.setGrade(optGrade.get());
         } else {
             throw new GradeNotFoundException(String.format("No grade for subject %s", name));
@@ -309,5 +309,12 @@ public class Subject implements Comparable<Subject> {
                 ", name='" + name + '\'' +
                 ", customName='" + customName + '\'' +
                 '}';
+    }
+
+    public int maxMinutesPerDayGap(Integer totalDuration) {
+        if (totalDuration > maxMinutesPerDay) {
+            return totalDuration - maxMinutesPerDay;
+        }
+        return -totalDuration;
     }
 }

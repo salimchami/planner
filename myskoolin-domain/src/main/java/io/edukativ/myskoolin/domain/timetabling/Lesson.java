@@ -8,8 +8,6 @@ import org.optaplanner.core.api.domain.entity.PlanningEntity;
 import org.optaplanner.core.api.domain.lookup.PlanningId;
 import org.optaplanner.core.api.domain.variable.PlanningVariable;
 
-import java.util.List;
-
 @PlanningEntity
 public class Lesson {
 
@@ -114,7 +112,7 @@ public class Lesson {
         return timeSlot.overlappingGap(lesson2.getTimeSlot()).intValue();
     }
 
-    public  boolean isSameOverlappingAndSameSchoolRoom(Lesson lesson) {
+    public boolean isSameOverlappingAndSameSchoolRoom(Lesson lesson) {
         return isOverlapping(lesson) && this.schoolRoom.equals(lesson.getSchoolRoom());
     }
 
@@ -132,29 +130,7 @@ public class Lesson {
         return 1;
     }
 
-    public boolean hasRightSchoolRoom() {
+    public boolean hasRightSchoolRoomType() {
         return subject.getSchoolRoomsTypes().contains(schoolRoom.getType());
-    }
-
-    /////////////////////////////////////////////
-
-    public int subjectDurationByDayGap(List<Lesson> lessons) {
-        return Math.abs(Math.toIntExact(lessonDurationByDay(lessons) - subject.getMaxMinutesPerDay().longValue()));
-    }
-
-    public boolean subjectDurationByDayExceedsMax(List<Lesson> lessons) {
-        return lessonDurationByDay(lessons) > subject.getMaxMinutesPerDay();
-    }
-
-    public int lessonDurationByDay(List<Lesson> lessons) {
-        return lessons.stream()
-                .filter(timetableLesson ->
-                        timetableLesson.getTimeSlot().getDay().equals(timeSlot.getDay())
-                                && timetableLesson.getSubject().equals(subject))
-                .mapToInt(subjectLesson -> subjectLesson.getTimeSlot().durationInMinutes().intValue()).sum();
-    }
-
-    public boolean exceedsDuration() {
-        return subject.getMaxMinutesPerDay() < timeSlot.durationInMinutes();
     }
 }
