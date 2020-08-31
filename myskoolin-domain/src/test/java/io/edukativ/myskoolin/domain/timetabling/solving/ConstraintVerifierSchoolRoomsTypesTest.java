@@ -26,7 +26,7 @@ class ConstraintVerifierSchoolRoomsTypesTest extends ScoreConstraintVerifierTest
         schoolRoom.setType(schoolRoomType);
         schoolRoom.setId("1");
         subject1.setSchoolRoomsTypes(subjectSchoolRoomTypes);
-        Lesson lesson = new Lesson(1L, schoolRoom, subject1, teacher1, timeSlot1, schoolClass1);
+        Lesson lesson = new Lesson(1L, schoolRoom, subject1, teacher1, timeSlot1);
         SchoolClassTimeTable timetable = new SchoolClassTimeTable(config, GlobalTestProvider.CLIENT_ID, schoolClass1, Arrays.asList(schoolClass1, schoolClass2),
                 Arrays.asList(schoolRoom1, schoolRoom2), Arrays.asList(subject1, subject2), Arrays.asList(teacher1, teacher2), Collections.singletonList(lesson),
                 Collections.singletonList(lesson.getTimeSlot()));

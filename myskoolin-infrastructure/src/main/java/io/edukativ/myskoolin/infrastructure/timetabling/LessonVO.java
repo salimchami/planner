@@ -1,6 +1,5 @@
 package io.edukativ.myskoolin.infrastructure.timetabling;
 
-import io.edukativ.myskoolin.infrastructure.schoolclasses.SchoolClassDTO;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDTO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDTO;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherDTO;
@@ -16,7 +15,6 @@ public class LessonVO implements Serializable {
     private TimeSlotVO timeSlot;
     //FIXME: add option entity
     //private Subject option;
-    private SchoolClassDTO schoolClass;
 
     public String getId() {
         return id;
@@ -56,13 +54,5 @@ public class LessonVO implements Serializable {
 
     public void setTimeSlot(TimeSlotVO timeSlot) {
         this.timeSlot = timeSlot;
-    }
-
-    public SchoolClassDTO getSchoolClass() {
-        return schoolClass;
-    }
-
-    public void setSchoolClass(SchoolClassDTO schoolClass) {
-        this.schoolClass = schoolClass;
     }
 }

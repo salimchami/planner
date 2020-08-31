@@ -23,11 +23,9 @@ import java.util.Objects;
 public class SchoolClassTimeTable {
 
     private String id;
-    private String clientId;
+
     @PlanningEntityCollectionProperty
     private List<Lesson> lessons;
-
-    private List<Lesson> events;
 
     @ProblemFactCollectionProperty
     @ValueRangeProvider(id = "timeSlotRange")
@@ -37,23 +35,16 @@ public class SchoolClassTimeTable {
     @ValueRangeProvider(id = "schoolRoomRange")
     private List<SchoolRoom> schoolRooms;
 
-    @ProblemFactCollectionProperty
-    private List<Subject> subjects;
-
-    @ProblemFactCollectionProperty
-    @ValueRangeProvider(id = "teacherRange")
-    private List<Teacher> teachers;
-
-    @ProblemFactCollectionProperty
-    private List<SchoolClass> schoolClasses;
-
     @PlanningScore
     private HardMediumSoftScore score;
 
+    private String clientId;
+    private List<Lesson> events;
+    private List<Subject> subjects;
+    private List<Teacher> teachers;
+    private List<SchoolClass> schoolClasses;
     private SolverStatus solverStatus;
-
     private Instant lastGenerationDate;
-
     private SchoolClass schoolClass;
 
     @ConstraintConfigurationProvider

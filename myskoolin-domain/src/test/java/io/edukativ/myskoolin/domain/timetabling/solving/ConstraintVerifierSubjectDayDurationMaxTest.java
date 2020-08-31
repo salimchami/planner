@@ -27,9 +27,9 @@ class ConstraintVerifierSubjectDayDurationMaxTest extends ScoreConstraintVerifie
     }
 
     private void initVariables(TimeSlot timeSlot1, TimeSlot timeSlot2, TimeSlot timeSlot3) {
-        Lesson lesson1 = new Lesson(1L, schoolRoom1, subject1, teacher1, timeSlot1, schoolClass1);
-        Lesson lesson2 = new Lesson(2L, schoolRoom1, subject1, teacher2, timeSlot2, schoolClass1);
-        Lesson lesson3 = new Lesson(3L, schoolRoom2, subject2, teacher2, timeSlot3, schoolClass1);
+        Lesson lesson1 = new Lesson(1L, schoolRoom1, subject1, teacher1, timeSlot1);
+        Lesson lesson2 = new Lesson(2L, schoolRoom1, subject1, teacher2, timeSlot2);
+        Lesson lesson3 = new Lesson(3L, schoolRoom2, subject2, teacher2, timeSlot3);
 
         timetable = new SchoolClassTimeTable(config, GlobalTestProvider.CLIENT_ID, schoolClass1, List.of(schoolClass1, schoolClass2),
                 List.of(schoolRoom1, schoolRoom2), List.of(subject1, subject2), List.of(teacher1, teacher2), List.of(lesson1, lesson2, lesson3),

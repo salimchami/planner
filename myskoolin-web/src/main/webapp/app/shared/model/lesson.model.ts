@@ -11,7 +11,6 @@ export class Lesson {
         public subject?: Subject,
         public teacher?: Teacher,
         public timeSlot?: Timeslot,
-        public schoolClass?: SchoolClass,
     ) {
     }
 }

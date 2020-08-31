@@ -59,7 +59,7 @@ public class TimeTableFirstStepSolver {
                     currentTimeSlot.getStartTime(), currentTimeSlot.getEndTime(), subject.getBgColor(), subject.getColor());
             final Lesson lesson = new Lesson(
                     id, schoolRoomBySubject(subject, schoolRooms), subject,
-                    teacherBySubjectAndSchoolClass(subject, schoolClass, teachers), timeSlot, schoolClass);
+                    teacherBySubjectAndSchoolClass(subject, schoolClass, teachers), timeSlot);
             lessons.add(lesson);
             currentTimeSlot = currentTimeSlot.next(timeTableOptions.getCoursesTimeSlots());
             subjectTotalDuration = subjectTotalDuration(subject);

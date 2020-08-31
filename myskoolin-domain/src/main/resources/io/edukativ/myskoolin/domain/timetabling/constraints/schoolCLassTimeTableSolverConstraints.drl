@@ -14,24 +14,20 @@ global HardMediumSoftScoreHolder scoreHolder;
 
 rule "Subject duration max by day"
 when
-  $lesson : Lesson($timeslot1: timeSlot)
+  $lesson : Lesson($timeslot1: timeSlot, $subject1: subject)
   $total : Integer() from
-     accumulate ( Lesson($timeslot2: timeSlot, subject.equals($lesson.subject), $timeslot1.day == $timeslot2.day) ,
+     accumulate ( Lesson($timeslot2: timeSlot, $subject2: subject, $subject2.equals($subject1), $timeslot1.day == $timeslot2.day) ,
             init( int total =0;),
             action(total+=($timeslot2.durationInMinutes());),
             result( new Integer (total)))
 then
-  System.out.println(
-          " Subject : "+ $lesson.getSubject().getName() +
-          " \nTotal duration : " + $total +
-          " \nMax duration : " + $lesson.getSubject().getMaxMinutesPerDay() +
-          " \nGap : " + $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue())
-                     );
+//  System.out.println(
+//          " Subject : "+ $lesson.getSubject().getName() +
+//          " \nTotal duration : " + $total +
+//          " \nMax duration : " + $lesson.getSubject().getMaxMinutesPerDay() +
+//          " \nGap : " + $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue())
+//                     );
                         scoreHolder.penalize(kcontext, $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue()));
-//                     if($lesson.getSubject().maxMinutesPerDayPenalty($total.intValue()) > 0) {
-//                     } else {
-//                        scoreHolder.reward(kcontext, $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue()));
-//                     }
 end
 
 //----------------------------------------------------------------------------------------------------------

@@ -22,8 +22,8 @@ class ConstraintVerifierOverlappingTest extends ScoreConstraintVerifierTest {
     @MethodSource("conflictParams")
     void timeSlotsOverlapping(String description, int expectedConflictPenalty, Subject firstSubject, Subject secondSubject, TimeSlot firstTimeSlot, TimeSlot secondTimeSlot) {
 
-        Lesson lesson1 = new Lesson(1L, schoolRoom1, firstSubject, teacher1, firstTimeSlot, schoolClass1);
-        Lesson lesson2 = new Lesson(2L, schoolRoom2, secondSubject, teacher2, secondTimeSlot, schoolClass1);
+        Lesson lesson1 = new Lesson(1L, schoolRoom1, firstSubject, teacher1, firstTimeSlot);
+        Lesson lesson2 = new Lesson(2L, schoolRoom2, secondSubject, teacher2, secondTimeSlot);
         SchoolClassTimeTable timetable = new SchoolClassTimeTable(config, GlobalTestProvider.CLIENT_ID, schoolClass1, Arrays.asList(schoolClass1, schoolClass2),
                 Arrays.asList(schoolRoom1, schoolRoom2), Arrays.asList(subject1, subject2), Arrays.asList(teacher1, teacher2), Arrays.asList(lesson1, lesson2),
                 Arrays.asList(lesson1.getTimeSlot(), lesson2.getTimeSlot()));

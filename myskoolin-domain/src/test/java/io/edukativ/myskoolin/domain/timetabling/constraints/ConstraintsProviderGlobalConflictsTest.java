@@ -23,8 +23,8 @@ class ConstraintsProviderGlobalConflictsTest extends ScoreConstraintVerifierTest
                       Subject firstSubject, Subject secondSubject, TimeSlot firstTimeSlot,
                       TimeSlot secondTimeSlot) {
 
-        Lesson lesson1 = new Lesson(1L, firstSchoolRoom, firstSubject, firstTeacher, firstTimeSlot, schoolClass1);
-        Lesson lesson2 = new Lesson(2L, secondSchoolRoom, secondSubject, secondTeacher, secondTimeSlot, schoolClass1);
+        Lesson lesson1 = new Lesson(1L, firstSchoolRoom, firstSubject, firstTeacher, firstTimeSlot);
+        Lesson lesson2 = new Lesson(2L, secondSchoolRoom, secondSubject, secondTeacher, secondTimeSlot);
 //        constraintVerifier.verifyThat(TimeTableConstraintsProvider::globalConflictsForSameSchoolClass)
 //                .given(lesson1, lesson2)
 //                .penalizesBy(expectedConflictPenalty);

@@ -1,6 +1,5 @@
 package io.edukativ.myskoolin.infrastructure.timetabling;
 
-import io.edukativ.myskoolin.infrastructure.schoolclasses.SchoolClassDbDTO;
 import io.edukativ.myskoolin.infrastructure.schoolrooms.SchoolRoomDbDTO;
 import io.edukativ.myskoolin.infrastructure.subjects.SubjectDbDTO;
 import io.edukativ.myskoolin.infrastructure.teachers.TeacherDbDTO;
@@ -34,9 +33,6 @@ public class LessonDbVO implements Serializable {
     private TimeSlotDbVO timeSlot;
     //FIXME: add option entity
     //private Subject option;
-    @DBRef
-    @Field(MONGO_FIELD_SCHOOL_CLASS)
-    private SchoolClassDbDTO schoolClass;
 
     public String getId() {
         return id;
@@ -76,13 +72,5 @@ public class LessonDbVO implements Serializable {
 
     public void setTimeSlot(TimeSlotDbVO timeSlot) {
         this.timeSlot = timeSlot;
-    }
-
-    public SchoolClassDbDTO getSchoolClass() {
-        return schoolClass;
-    }
-
-    public void setSchoolClass(SchoolClassDbDTO schoolClass) {
-        this.schoolClass = schoolClass;
     }
 }

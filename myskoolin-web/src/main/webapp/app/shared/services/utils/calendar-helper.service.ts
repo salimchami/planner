@@ -29,7 +29,7 @@ export class CalendarHelper {
                     lessonToCopy.timeSlot.startTime, lessonToCopy.timeSlot.endTime, '', '',
                     lessonToCopy.timeSlot.day, lessonToCopy.timeSlot.date, false, true);
                 const lessonToAdd = new Lesson(groupedHalfLessonTimeSlot.id, groupedHalfLessonTimeSlot.schoolRoom, groupedHalfLessonTimeSlot.subject,
-                    groupedHalfLessonTimeSlot.teacher, timeSlotToAdd, groupedHalfLessonTimeSlot.schoolClass);
+                    groupedHalfLessonTimeSlot.teacher, timeSlotToAdd);
                 lessons.push(lessonToAdd);
             }
         }
@@ -171,8 +171,7 @@ export class CalendarHelper {
                         new Timeslot(currentLesson.timeSlot.title, currentLesson.timeSlot.comment, currentLesson.timeSlot.canceled,
                             adjacentLesson.timeSlot.startTime, currentLesson.timeSlot.endTime, currentLesson.timeSlot.bgColor,
                             currentLesson.timeSlot.fontColorCssClass, currentLesson.timeSlot.day, currentLesson.timeSlot.date,
-                            currentLesson.timeSlot.autoAlterable, currentLesson.timeSlot.half),
-                        currentLesson.schoolClass));
+                            currentLesson.timeSlot.autoAlterable, currentLesson.timeSlot.half)));
                 lessonsTmp.splice(lessonsTmp.indexOf(adjacentLesson, 0), 1);
             } else {
                 lessonsTmp.push(currentLesson);

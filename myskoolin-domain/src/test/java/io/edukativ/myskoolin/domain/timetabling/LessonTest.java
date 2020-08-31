@@ -43,8 +43,8 @@ class LessonTest {
 
     @Test
     void shouldReturnFalseBecauseNotSameSchoolRoom() {
-        Lesson lesson1 = new Lesson(1L, schoolRoom1, subject1, null, timeSlot1, null);
-        Lesson lesson2 = new Lesson(2L, schoolRoom2, subject1, null, timeSlot2, null);
+        Lesson lesson1 = new Lesson(1L, schoolRoom1, subject1, null, timeSlot1);
+        Lesson lesson2 = new Lesson(2L, schoolRoom2, subject1, null, timeSlot2);
         final boolean sameSchoolRoom = lesson1.isSameSchoolRoomIfConsecutiveLessons(lesson2);
         assertFalse(sameSchoolRoom);
 
@@ -52,8 +52,8 @@ class LessonTest {
 
     @Test
     void shouldReturnTrueBecauseSameSchoolRoom() {
-        Lesson lesson1 = new Lesson(1L, schoolRoom1, subject1, null, timeSlot1, null);
-        Lesson lesson2 = new Lesson(2L, schoolRoom1, subject1, null, timeSlot2, null);
+        Lesson lesson1 = new Lesson(1L, schoolRoom1, subject1, null, timeSlot1);
+        Lesson lesson2 = new Lesson(2L, schoolRoom1, subject1, null, timeSlot2);
         final boolean sameSchoolRoom = lesson1.isSameSchoolRoomIfConsecutiveLessons(lesson2);
         assertTrue(sameSchoolRoom);
 

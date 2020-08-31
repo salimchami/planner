@@ -1,6 +1,5 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
-import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
@@ -17,28 +16,21 @@ public class Lesson {
     @PlanningVariable(valueRangeProviderRefs = "schoolRoomRange")
     private SchoolRoom schoolRoom;
 
-    private Subject subject;
-
-    @PlanningVariable(valueRangeProviderRefs = "teacherRange")
-    private Teacher teacher;
-
     @PlanningVariable(valueRangeProviderRefs = "timeSlotRange")
     private TimeSlot timeSlot;
 
-    //FIXME: add option entity
-    //private Subject option;
-    private SchoolClass schoolClass;
+    private Subject subject;
+    private Teacher teacher;
 
     public Lesson() {
     }
 
-    public Lesson(Long id, SchoolRoom schoolRoom, Subject subject, Teacher teacher, TimeSlot timeSlot, SchoolClass schoolClass) {
+    public Lesson(Long id, SchoolRoom schoolRoom, Subject subject, Teacher teacher, TimeSlot timeSlot) {
         this.id = id;
         this.schoolRoom = schoolRoom;
         this.subject = subject;
         this.teacher = teacher;
         this.timeSlot = timeSlot;
-        this.schoolClass = schoolClass;
     }
 
     public Long getId() {
@@ -81,14 +73,6 @@ public class Lesson {
         this.timeSlot = timeSlot;
     }
 
-    public void setSchoolClass(SchoolClass schoolClass) {
-        this.schoolClass = schoolClass;
-    }
-
-    public SchoolClass getSchoolClass() {
-        return schoolClass;
-    }
-
     public boolean isOverlapping(TimeSlot timeSlot) {
         return this.timeSlot.isOverlapping(timeSlot);
     }
@@ -104,7 +88,6 @@ public class Lesson {
                 ", subject=" + subject +
                 ", teacher=" + teacher +
                 ", timeSlot=" + timeSlot +
-                ", schoolClass=" + schoolClass +
                 '}';
     }
 
