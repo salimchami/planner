@@ -39,19 +39,19 @@ class ConstraintVerifierSubjectDayDurationMaxTest extends ScoreConstraintVerifie
     private static Stream<Arguments> conflictParams() {
         prepareParams();
         return Stream.of(
-                Arguments.of("francais -> 120 mn (max : 120) / maths -> 60 mn (max 120)", 1800,
+                Arguments.of("francais -> 120 mn (max : 120) / maths -> 60 mn (max 120)", 600,
                         timeSlot1,
                         timeSlot2,
                         new TimeSlot(3L, EnumDays.MONDAY,
                                 new Time(10, 0, 0, EnumPartsOfDay.AM),
                                 new Time(11, 0, 0, EnumPartsOfDay.AM))),
-                Arguments.of("francais -> 180 mn (max : 120) / maths -> 60 mn (max 120)", 0,
+                Arguments.of("francais -> 180 mn (max : 120) / maths -> 60 mn (max 120)", -1200,
                         timeSlot1,
                         new TimeSlot(3L, EnumDays.MONDAY,
                                 new Time(10, 0, 0, EnumPartsOfDay.AM),
                                 new Time(12, 0, 0, EnumPartsOfDay.AM)),
                         timeSlot2),
-                Arguments.of("francais -> 180 mn (max : 120) / maths -> 240 mn (max 120)", -1800,
+                Arguments.of("francais -> 180 mn (max : 120) / maths -> 240 mn (max 120)", -4200,
                         timeSlot1,
                         new TimeSlot(3L, EnumDays.MONDAY,
                                 new Time(10, 0, 0, EnumPartsOfDay.AM),
