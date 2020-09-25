@@ -117,7 +117,7 @@ spring:
 optaplanner:
     solver:
         termination:
-            spent-limit: 10s
+            spent-limit: 300s
 server:
   servlet:
     session:

@@ -13,10 +13,10 @@ public class Lesson {
     @PlanningId
     private Long id;
 
-    @PlanningVariable(valueRangeProviderRefs = "schoolRoomRange")
+    @PlanningVariable(valueRangeProviderRefs = SchoolClassTimeTable.SCHOOL_ROOM_RANGE)
     private SchoolRoom schoolRoom;
 
-    @PlanningVariable(valueRangeProviderRefs = "timeSlotRange")
+    @PlanningVariable(valueRangeProviderRefs = SchoolClassTimeTable.TIME_SLOT_RANGE)
     private TimeSlot timeSlot;
 
     private Subject subject;
@@ -108,12 +108,19 @@ public class Lesson {
                 && sameTimeslots;
     }
 
-    public static int sameSchoolRoomsConsecutiveLessonsGap(Lesson lesson, Lesson lesson1) {
+    public static int sameSchoolRoomsConsecutiveLessonsGap(Lesson lesson1, Lesson lesson2) {
         //TODO: add distance between school rooms
         return 1;
     }
 
     public boolean hasRightSchoolRoomType() {
         return subject.getSchoolRoomsTypes().contains(schoolRoom.getType());
+    }
+
+    public static int schoolRoomTypeConflictPenalty(Lesson lesson) {
+        if(!lesson.hasRightSchoolRoomType()) {
+            return lesson.timeSlot.durationInMinutes().intValue();
+        }
+        return 0;
     }
 }

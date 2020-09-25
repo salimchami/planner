@@ -22,17 +22,20 @@ import java.util.Objects;
 @PlanningSolution
 public class SchoolClassTimeTable {
 
+    static final String TIME_SLOT_RANGE = "timeSlotRange";
+    static final String SCHOOL_ROOM_RANGE = "schoolRoomRange";
+
     private String id;
 
     @PlanningEntityCollectionProperty
     private List<Lesson> lessons;
 
     @ProblemFactCollectionProperty
-    @ValueRangeProvider(id = "timeSlotRange")
+    @ValueRangeProvider(id = TIME_SLOT_RANGE)
     private List<TimeSlot> timeSlots;
 
     @ProblemFactCollectionProperty
-    @ValueRangeProvider(id = "schoolRoomRange")
+    @ValueRangeProvider(id = SCHOOL_ROOM_RANGE)
     private List<SchoolRoom> schoolRooms;
 
     @PlanningScore

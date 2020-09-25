@@ -86,7 +86,7 @@ public class TimeTableFirstStepSolver {
 
     private SchoolRoom schoolRoomBySubject(Subject subject, List<SchoolRoom> schoolRooms) {
         return schoolRooms.stream()
-                .filter(schoolRoom -> subject.getSchoolRoomsTypes().contains(schoolRoom.getType()))
+                .filter(schoolRoom -> !subject.getSchoolRoomsTypes().contains(schoolRoom.getType()))
                 .findFirst()
                 .orElseThrow();
     }

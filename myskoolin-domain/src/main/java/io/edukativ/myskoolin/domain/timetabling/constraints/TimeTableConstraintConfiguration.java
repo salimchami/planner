@@ -9,7 +9,7 @@ public class TimeTableConstraintConfiguration {
 
     public static final String CONSTRAINT_TIMESLOTS_OVERLAPS = "Time slot overlapping another time slot";
     public static final String CONSTRAINT_SCHOOL_ROOM_TYPE = "School room right type";
-    public static final String CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY = "Subject duration max by day";
+//    public static final String CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY = "Subject duration max by day";
     public static final String CONSTRAINT_SAME_SCHOOLROOM_IF_CONSECUTIVE_LESSONS = "Same schoolroom if consecutive lessons";
 
     @ConstraintWeight(CONSTRAINT_TIMESLOTS_OVERLAPS)
@@ -18,8 +18,8 @@ public class TimeTableConstraintConfiguration {
     @ConstraintWeight(CONSTRAINT_SCHOOL_ROOM_TYPE)
     private HardMediumSoftScore schoolRoomRightTypeScore = HardMediumSoftScore.ofHard(10);
 
-    @ConstraintWeight(CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY)
-    private HardMediumSoftScore subjectDurationByDayScore = HardMediumSoftScore.ofHard(10);
+//    @ConstraintWeight(CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY)
+//    private HardMediumSoftScore subjectDurationByDayScore = HardMediumSoftScore.ofHard(10);
 
 //
 //    @ConstraintWeight(CONSTRAINT_SAME_SCHOOLROOM_IF_CONSECUTIVE_LESSONS)
@@ -41,11 +41,11 @@ public class TimeTableConstraintConfiguration {
         this.schoolRoomRightTypeScore = schoolRoomRightTypeScore;
     }
 
-    public HardMediumSoftScore getSubjectDurationByDayScore() {
-        return subjectDurationByDayScore;
-    }
-
-    public void setSubjectDurationByDayScore(HardMediumSoftScore subjectDurationByDayScore) {
-        this.subjectDurationByDayScore = subjectDurationByDayScore;
-    }
+//    public HardMediumSoftScore getSubjectDurationByDayScore() {
+//        return subjectDurationByDayScore;
+//    }
+//
+//    public void setSubjectDurationByDayScore(HardMediumSoftScore subjectDurationByDayScore) {
+//        this.subjectDurationByDayScore = subjectDurationByDayScore;
+//    }
 }
