@@ -25,7 +25,11 @@ import io.edukativ.myskoolin.domain.timetabling.TimeTablesSolver;
 import io.edukativ.myskoolin.domain.timetabling.TimetablesSolverAPI;
 import io.edukativ.myskoolin.infrastructure.app.providers.MyskoolinLogger;
 import org.optaplanner.core.api.score.ScoreManager;
+import org.optaplanner.core.api.solver.Solver;
+import org.optaplanner.core.api.solver.SolverFactory;
 import org.optaplanner.core.api.solver.SolverManager;
+import org.optaplanner.core.config.solver.SolverConfig;
+import org.optaplanner.core.config.solver.SolverManagerConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -60,10 +64,17 @@ public class MyskoolinDomainInjectionConfiguration {
     }
 
     @Bean
-    public TimetablesSolverAPI timeTableGenerationAPI(SolverManager<SchoolClassTimeTable, String> solverManager,
-                                                      ScoreManager<SchoolClassTimeTable> scoreManager,
+    public TimetablesSolverAPI timeTableGenerationAPI(ScoreManager<SchoolClassTimeTable> scoreManager,
                                                       SchoolClassSPI schoolClassSPI,
                                                       TimeTableSPI timeTableSPI, MyskoolinLogger logger) {
-        return new TimeTablesSolver(solverManager, scoreManager, schoolClassSPI, timeTableSPI, logger);
+
+        SolverConfig solverConfig = SolverConfig.createFromXmlResource("solverConfig.xml");
+        SolverManager<SchoolClassTimeTable, Long> solverManager = SolverManager.create(solverConfig, new SolverManagerConfig());
+
+        ClassLoader classloader = SchoolClassTimeTable.class.getClassLoader();
+        SolverFactory<SchoolClassTimeTable> solverFactory = SolverFactory.createFromXmlResource("solverConfig.xml", classloader);
+        Solver<SchoolClassTimeTable> solver = solverFactory.buildSolver();
+
+        return new TimeTablesSolver(solver, scoreManager, schoolClassSPI, timeTableSPI, logger);
     }
 }

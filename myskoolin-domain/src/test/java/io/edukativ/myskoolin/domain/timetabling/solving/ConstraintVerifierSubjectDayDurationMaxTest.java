@@ -7,6 +7,7 @@ import io.edukativ.myskoolin.domain.timetabling.Lesson;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 import io.edukativ.myskoolin.domain.timetabling.Time;
 import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
+import io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -22,7 +23,7 @@ class ConstraintVerifierSubjectDayDurationMaxTest extends ScoreConstraintVerifie
     @MethodSource("conflictParams")
     void subjectsDayDurationPenalty(String description, int expectedSingleConflictPenalty, TimeSlot firstTimeSlot, TimeSlot secondTimeSlot, TimeSlot thirdTimeSlot) {
         initVariables(firstTimeSlot, secondTimeSlot, thirdTimeSlot);
-//        scoreVerifier.assertHardWeight(TimeTableConstraintConfiguration.CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY, expectedSingleConflictPenalty, timetable);
+        scoreVerifier.assertHardWeight(TimeTableConstraintConfiguration.CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY, expectedSingleConflictPenalty, timetable);
     }
 
     private void initVariables(TimeSlot timeSlot1, TimeSlot timeSlot2, TimeSlot timeSlot3) {

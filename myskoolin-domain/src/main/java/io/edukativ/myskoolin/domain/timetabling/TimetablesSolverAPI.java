@@ -11,8 +11,8 @@ import java.util.Map;
 
 public interface TimetablesSolverAPI {
 
-    void solveForAllSchoolClasses(String clientId, List<SchoolRoom> schoolRooms,
-                                  List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses, TimeTableOptions timeTableOptions);
+    void solveForAllSchoolClasses(String clientId, List<SchoolRoom> schoolRooms, List<Subject> subjects,
+                                  List<Teacher> teachers, List<SchoolClass> schoolClasses, TimeTableOptions timeTableOptions);
 
     void solveForSchoolClass(String schoolClassId, String clientId, List<SchoolRoom> schoolRooms,
                              List<Subject> subjects, List<Teacher> teachers, List<SchoolClass> schoolClasses, TimeTableOptions timeTableOptions);

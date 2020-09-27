@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver>
+    <solutionClass>io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable</solutionClass>
+    <entityClass>io.edukativ.myskoolin.domain.timetabling.Lesson</entityClass>
+
+    <scoreDirectorFactory>
+        <scoreDrl>io/edukativ/myskoolin/domain/timetabling/constraints/schoolCLassTimeTableSolverConstraints.drl</scoreDrl>
+    </scoreDirectorFactory>
+
+    <!--<termination>-->
+    <!--<minutesSpentLimit>5</minutesSpentLimit>-->
+    <!--</termination>-->
+
+    <constructionHeuristic/>
+    <localSearch>
+        <localSearchType>TABU_SEARCH</localSearchType>
+    </localSearch>
+</solver>
