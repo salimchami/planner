@@ -16,7 +16,7 @@ public class TimeTableConstraintConfiguration {
     private HardMediumSoftScore timeslotsOverlappingScore = HardMediumSoftScore.ofHard(10);
 
     @ConstraintWeight(CONSTRAINT_SCHOOL_ROOM_TYPE)
-    private HardMediumSoftScore schoolRoomRightTypeScore = HardMediumSoftScore.ofHard(0);
+    private HardMediumSoftScore schoolRoomRightTypeScore = HardMediumSoftScore.ofHard(10);
 //
 //    @ConstraintWeight(CONSTRAINT_SUBJECT_DURATION_MAX_BY_DAY)
 //    private HardMediumSoftScore subjectDurationByDayScore = HardMediumSoftScore.ofHard(10);

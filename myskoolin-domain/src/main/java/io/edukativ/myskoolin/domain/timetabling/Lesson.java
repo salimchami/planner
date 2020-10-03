@@ -118,9 +118,13 @@ public class Lesson {
     }
 
     public static int schoolRoomTypeConflictPenalty(Lesson lesson) {
-        if(!lesson.hasRightSchoolRoomType()) {
+        if (!lesson.hasRightSchoolRoomType()) {
             return lesson.timeSlot.durationInMinutes().intValue();
         }
         return 0;
+    }
+
+    public int wrongSchoolRoomTypePenalty() {
+        return timeSlot.durationInMinutes().intValue();
     }
 }

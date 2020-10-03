@@ -219,6 +219,10 @@ public class TimeSlot implements Comparable<TimeSlot> {
         return sameTimes || inside || including || standardOverlapping;
     }
 
+    public int overlappingPenalty(TimeSlot timeSlot) {
+        return overlappingGap(timeSlot).intValue() / 2;
+    }
+
     public Long overlappingGap(TimeSlot timeSlot) {
         if (this.day == timeSlot.getDay()) {
             if (isIncluding(timeSlot)) {

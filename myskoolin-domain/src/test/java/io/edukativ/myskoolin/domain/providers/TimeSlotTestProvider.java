@@ -12,17 +12,25 @@ public class TimeSlotTestProvider {
 
     public static TimeSlot timeSlot(Long id, EnumDays day, int startHour, EnumPartsOfDay startPartsOfDay, int endHour, EnumPartsOfDay endPartsOfDay) {
         return new TimeSlot(id,
-            day,
-            new Time(startHour, 0, 0, startPartsOfDay),
-            new Time(endHour, 0, 0, endPartsOfDay)
+                day,
+                new Time(startHour, 0, 0, startPartsOfDay),
+                new Time(endHour, 0, 0, endPartsOfDay)
+        );
+    }
+
+    public static TimeSlot timeSlot(Long id, EnumDays day, int startHour, int startMinutes, EnumPartsOfDay startPartsOfDay, int endHour, int endMinutes, EnumPartsOfDay endPartsOfDay) {
+        return new TimeSlot(id,
+                day,
+                new Time(startHour, startMinutes, 0, startPartsOfDay),
+                new Time(endHour, endMinutes, 0, endPartsOfDay)
         );
     }
 
     public static TimeSlot timeSlot(EnumDays day, int startHour, EnumPartsOfDay startPartsOfDay, int endHour, EnumPartsOfDay endPartsOfDay) {
         return new TimeSlot(
-            day,
-            new Time(startHour, 0, 0, startPartsOfDay),
-            new Time(endHour, 0, 0, endPartsOfDay)
+                day,
+                new Time(startHour, 0, 0, startPartsOfDay),
+                new Time(endHour, 0, 0, endPartsOfDay)
         );
     }
 
@@ -30,14 +38,14 @@ public class TimeSlotTestProvider {
         final EnumPartsOfDay pm = EnumPartsOfDay.PM;
         final EnumPartsOfDay am = EnumPartsOfDay.AM;
         return Arrays.asList(
-            timeSlot(day, 8, am, 9, am),
-            timeSlot(day, 9, am, 10, am),
-            timeSlot(day, 10, am, 11, am),
-            timeSlot(day, 11, am, 12, pm),
-            timeSlot(day, 14, pm, 15, pm),
-            timeSlot(day, 15, pm, 16, pm),
-            timeSlot(day, 16, pm, 17, pm),
-            timeSlot(day, 17, pm, 18, pm)
+                timeSlot(day, 8, am, 9, am),
+                timeSlot(day, 9, am, 10, am),
+                timeSlot(day, 10, am, 11, am),
+                timeSlot(day, 11, am, 12, pm),
+                timeSlot(day, 14, pm, 15, pm),
+                timeSlot(day, 15, pm, 16, pm),
+                timeSlot(day, 16, pm, 17, pm),
+                timeSlot(day, 17, pm, 18, pm)
         );
     }
 

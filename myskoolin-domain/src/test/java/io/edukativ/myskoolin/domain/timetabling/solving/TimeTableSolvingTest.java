@@ -41,30 +41,54 @@ class TimeTableSolvingTest extends ScoreConstraintVerifierTest {
     private static Stream<Arguments> conflictParams() {
         prepareParams();
         return Stream.of(
-                Arguments.of("== timeSlot / <> subject / room type ok / <> room", -600, 0,
+                Arguments.of("<> timeSlot / <> subject / room type OK / <> room", 0, 0,
+                        List.of(
+                                new Lesson(1L, SchoolRoomTestProvider.normalSchoolRoom100(), SubjectSixiemeTestProvider.francais(), francaisTeacher,
+                                        TimeSlotTestProvider.timeSlot(1L, EnumDays.MONDAY, 8, EnumPartsOfDay.AM, 9, EnumPartsOfDay.AM)),
+                                new Lesson(2L, SchoolRoomTestProvider.normalSchoolRoom101(), SubjectSixiemeTestProvider.maths(), mathsTeacher,
+                                        TimeSlotTestProvider.timeSlot(2L, EnumDays.MONDAY, 9, EnumPartsOfDay.AM, 10, EnumPartsOfDay.AM))
+                        )
+                ),
+                Arguments.of("<> timeSlot (overlapping) / <> subject / room type OK / <> room", -300, 0,
+                        List.of(
+                                new Lesson(1L, SchoolRoomTestProvider.normalSchoolRoom100(), SubjectSixiemeTestProvider.francais(), francaisTeacher,
+                                        TimeSlotTestProvider.timeSlot(1L, EnumDays.MONDAY, 8, 30, EnumPartsOfDay.AM, 9, 10, EnumPartsOfDay.AM)),
+                                new Lesson(2L, SchoolRoomTestProvider.normalSchoolRoom101(), SubjectSixiemeTestProvider.maths(), mathsTeacher,
+                                        TimeSlotTestProvider.timeSlot(2L, EnumDays.MONDAY, 9, EnumPartsOfDay.AM, 10, EnumPartsOfDay.AM))
+                        )
+                ),
+                Arguments.of("== timeSlot (overlapping) / <> subject / room type OK / <> room", -600, 0,
                         List.of(
                                 new Lesson(1L, SchoolRoomTestProvider.normalSchoolRoom100(), SubjectSixiemeTestProvider.francais(), francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(1L, EnumDays.MONDAY, 8, EnumPartsOfDay.AM, 9, EnumPartsOfDay.AM)),
                                 new Lesson(2L, SchoolRoomTestProvider.normalSchoolRoom101(), SubjectSixiemeTestProvider.maths(), mathsTeacher,
                                         TimeSlotTestProvider.timeSlot(2L, EnumDays.MONDAY, 8, EnumPartsOfDay.AM, 9, EnumPartsOfDay.AM))
-                        ))
-//                Arguments.of("<> timeSlot, <> subject", 0, 0, sixiemeFrancaisSubject, sixiemeMathsSubject,
-//                        timeSlot1,
-//                        timeSlot2),
-//                Arguments.of("<> timeSlot (overlapping), <> subject", -300, 0, sixiemeFrancaisSubject, sixiemeMathsSubject,
-//                        timeSlot1,
-//                        new TimeSlot(3L, EnumDays.MONDAY,
-//                                new Time(8, 30, 0, EnumPartsOfDay.AM),
-//                                new Time(10, 0, 0, EnumPartsOfDay.AM))),
-//                Arguments.of("== timeSlot, == subject", -600, 0, sixiemeFrancaisSubject, sixiemeFrancaisSubject,
-//                        timeSlot1,
-//                        new TimeSlot(3L, timeSlot1.getDay(), timeSlot1.getStartTime(), timeSlot1.getEndTime())),
-//                Arguments.of("<> timeSlot, == subject", 0, 0,sixiemeFrancaisSubject, sixiemeFrancaisSubject, timeSlot1, timeSlot2),
-//                Arguments.of("<> timeSlot (overlapping), == subject", -300, 0, sixiemeFrancaisSubject, sixiemeFrancaisSubject,
-//                        timeSlot1,
-//                        new TimeSlot(3L, EnumDays.MONDAY,
-//                                new Time(8, 30, 0, EnumPartsOfDay.AM),
-//                                new Time(10, 0, 0, EnumPartsOfDay.AM)))
+                        )
+                ),
+                Arguments.of("== timeSlot (overlapping) / == subject / room type OK / <> room", -600, 0,
+                        List.of(
+                                new Lesson(1L, SchoolRoomTestProvider.normalSchoolRoom100(), SubjectSixiemeTestProvider.francais(), francaisTeacher,
+                                        TimeSlotTestProvider.timeSlot(1L, EnumDays.MONDAY, 8, EnumPartsOfDay.AM, 9, EnumPartsOfDay.AM)),
+                                new Lesson(2L, SchoolRoomTestProvider.normalSchoolRoom101(), SubjectSixiemeTestProvider.francais(), francaisTeacher,
+                                        TimeSlotTestProvider.timeSlot(2L, EnumDays.MONDAY, 8, EnumPartsOfDay.AM, 9, EnumPartsOfDay.AM))
+                        )
+                ),
+                Arguments.of("== timeSlot (overlapping) / == subject / multiple room type !OK / <> room", -600, -1200,
+                        List.of(
+                                new Lesson(1L, SchoolRoomTestProvider.sciencesSchoolRoomSC1(), SubjectSixiemeTestProvider.francais(), francaisTeacher,
+                                        TimeSlotTestProvider.timeSlot(1L, EnumDays.MONDAY, 8, EnumPartsOfDay.AM, 9, EnumPartsOfDay.AM)),
+                                new Lesson(2L, SchoolRoomTestProvider.amphitheaterSchoolRoom(), SubjectSixiemeTestProvider.francais(), francaisTeacher,
+                                        TimeSlotTestProvider.timeSlot(2L, EnumDays.MONDAY, 8, EnumPartsOfDay.AM, 9, EnumPartsOfDay.AM))
+                        )
+                ),
+                Arguments.of("== timeSlot (overlapping) / == subject / 1 room type !OK / <> room", -600, -600,
+                        List.of(
+                                new Lesson(1L, SchoolRoomTestProvider.sciencesSchoolRoomSC1(), SubjectSixiemeTestProvider.francais(), francaisTeacher,
+                                        TimeSlotTestProvider.timeSlot(1L, EnumDays.MONDAY, 8, EnumPartsOfDay.AM, 9, EnumPartsOfDay.AM)),
+                                new Lesson(2L, SchoolRoomTestProvider.normalSchoolRoom101(), SubjectSixiemeTestProvider.francais(), francaisTeacher,
+                                        TimeSlotTestProvider.timeSlot(2L, EnumDays.MONDAY, 8, EnumPartsOfDay.AM, 9, EnumPartsOfDay.AM))
+                        )
+                )
         );
     }
 }

@@ -37,11 +37,11 @@ global HardMediumSoftScoreHolder scoreHolder;
 //----------------------------------------------------------------------------------------------------------
 
 rule "Time slot overlapping another time slot"
-when
-  $timeslot1: TimeSlot()
-  $lesson : Lesson($timeslot2: timeSlot, $timeslot2 != $timeslot1, $timeslot1.isOverlapping($timeslot2))
-then
-  scoreHolder.penalize(kcontext, $timeslot1.overlappingGap($timeslot2).intValue() /2);
+    when
+        $timeslot1: TimeSlot()
+        $lesson : Lesson($timeslot2: timeSlot, $timeslot2 != $timeslot1, $timeslot1.isOverlapping($timeslot2))
+    then
+        scoreHolder.penalize(kcontext, $timeslot1.overlappingPenalty($timeslot2));
 end
 
 //----------------------------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ rule "School room right type"
     when
         $lesson: Lesson(!hasRightSchoolRoomType())
     then
-        scoreHolder.penalize(kcontext, $lesson.getTimeSlot().durationInMinutes().intValue());
+        scoreHolder.penalize(kcontext, $lesson.wrongSchoolRoomTypePenalty());
 end
 
 //----------------------------------------------------------------------------------------------------------
