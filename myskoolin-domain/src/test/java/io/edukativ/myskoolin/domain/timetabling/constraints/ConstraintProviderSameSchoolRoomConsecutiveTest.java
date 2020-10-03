@@ -30,8 +30,8 @@ class ConstraintProviderSameSchoolRoomConsecutiveTest extends ScoreConstraintVer
     private static Stream<Arguments> conflictParams() {
         prepareParams();
         return Stream.of(
-                Arguments.of("<> timeslots, == schoolRoom", 0, schoolRoom1, schoolRoom1, subject1, subject1, timeSlot1, timeSlot2),
-                Arguments.of("<> timeslots, <> schoolRoom", 1, schoolRoom1, schoolRoom2, subject1, subject1, timeSlot1, timeSlot2)
+                Arguments.of("<> timeslots, == schoolRoom", 0, schoolRoom1, schoolRoom1, sixiemeFrancaisSubject, sixiemeFrancaisSubject, timeSlot1, timeSlot2),
+                Arguments.of("<> timeslots, <> schoolRoom", 1, schoolRoom1, schoolRoom2, sixiemeFrancaisSubject, sixiemeFrancaisSubject, timeSlot1, timeSlot2)
         );
     }
 

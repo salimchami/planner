@@ -18,6 +18,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @PlanningSolution
 public class SchoolClassTimeTable {
@@ -60,7 +61,7 @@ public class SchoolClassTimeTable {
     }
 
     public SchoolClassTimeTable(TimeTableConstraintConfiguration config, String clientId, SchoolClass schoolClass, List<SchoolClass> schoolClasses, List<SchoolRoom> schoolRooms,
-                                List<Subject> subjects, List<Teacher> teachers, List<Lesson> lessons, List<TimeSlot> timeSlots) {
+                                List<Subject> subjects, List<Teacher> teachers, List<Lesson> lessons) {
         this.constraintConfiguration = config;
         this.clientId = clientId;
         this.id = schoolClass.getId();
@@ -69,8 +70,8 @@ public class SchoolClassTimeTable {
         this.schoolRooms = schoolRooms;
         this.subjects = subjects;
         this.teachers = teachers;
-        this.timeSlots = timeSlots;
         this.lessons = lessons;
+        this.timeSlots = lessons.stream().map(Lesson::getTimeSlot).collect(Collectors.toList());
         this.events = new ArrayList<>();
     }
 

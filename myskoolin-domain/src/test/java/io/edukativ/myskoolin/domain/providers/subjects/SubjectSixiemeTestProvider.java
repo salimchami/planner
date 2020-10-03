@@ -21,7 +21,7 @@ public final class SubjectSixiemeTestProvider {
         );
     }
 
-    private static Subject francais() {
+    public static Subject francais() {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_FRANCAIS_ID, GradeTestProvider.sixiemeGrade, "FRANCAIS", false,
                 60, 60 * 2, (int) (60 * 3.5), 3,
@@ -32,7 +32,7 @@ public final class SubjectSixiemeTestProvider {
     /**
      * enseignements pratiques interdisciplinaires - EPI - Francais
      */
-    private static Subject francaisEpi() {
+    public static Subject francaisEpi() {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_FRANCAIS_EPI_ID, GradeTestProvider.sixiemeGrade, "Français - EPI", false,
                 60, 60, 60, 1,
@@ -40,7 +40,7 @@ public final class SubjectSixiemeTestProvider {
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
-    private static Subject maths() {
+    public static Subject maths() {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_MATHS_ID, GradeTestProvider.sixiemeGrade, "MATHEMATIQUES", false,
                 60, 60 * 2, (int) (60 * 3.5), 3,
@@ -51,7 +51,7 @@ public final class SubjectSixiemeTestProvider {
     /**
      * enseignements pratiques interdisciplinaires - EPI - Maths
      */
-    private static Subject mathsEpi() {
+    public static Subject mathsEpi() {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_MATHS_EPI_ID, GradeTestProvider.sixiemeGrade, "MATHS - EPI", false,
                 60, 60, 60, 1,
@@ -60,7 +60,7 @@ public final class SubjectSixiemeTestProvider {
     }
 
 
-    private static Subject histoireGeo() {
+    public static Subject histoireGeo() {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_HISTGEO_GEO_ID, GradeTestProvider.sixiemeGrade, "HISTOIRE GEOGRAPHIE", false,
                 60, 60, 60 * 2, 2,
@@ -68,7 +68,7 @@ public final class SubjectSixiemeTestProvider {
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
-    private static Subject educationCivique() {
+    public static Subject educationCivique() {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_EDUCCIV_ID, GradeTestProvider.sixiemeGrade, "ENSEIGNEMENT MORAL ET CIVIQUE", false,
                 60, 60, 60, 1,
@@ -77,7 +77,7 @@ public final class SubjectSixiemeTestProvider {
 
     }
 
-    private static Subject anglais() {
+    public static Subject anglais() {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_ANGLAIS_ID, GradeTestProvider.sixiemeGrade, "ANGLAIS", true,
                 60, 60 * 2, 60 * 4, 4,
@@ -85,7 +85,7 @@ public final class SubjectSixiemeTestProvider {
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
-    private static Subject allemand() {
+    public static Subject allemand() {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_ALLEMAND_ID, GradeTestProvider.sixiemeGrade, "ALLEMAND", true,
                 60, 60, 60 * 2, 2,
@@ -93,7 +93,7 @@ public final class SubjectSixiemeTestProvider {
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
-    private static Subject svt() {
+    public static Subject svt() {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_SVT_ID, GradeTestProvider.sixiemeGrade, "SCIENCES DE LA VIE ET DE LA TERRE", false,
                 60, 60, 60, 1,
@@ -101,7 +101,7 @@ public final class SubjectSixiemeTestProvider {
                 Collections.singletonList(EnumSchoolRoomsTypes.SCIENCES), 1, "");
     }
 
-    private static Subject physique() {
+    public static Subject physique() {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_PHYSIQUE_ID, GradeTestProvider.sixiemeGrade, "PHYSIQUE-CHIMIE", false,
                 60, 60, 60, 1,
@@ -109,7 +109,7 @@ public final class SubjectSixiemeTestProvider {
                 Collections.singletonList(EnumSchoolRoomsTypes.SCIENCES), 1, "");
     }
 
-    private static Subject techno() {
+    public static Subject techno() {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_TECHNOLOGIE_ID, GradeTestProvider.sixiemeGrade, "TECHNOLOGIE", false,
                 60, 60, 60, 1,
@@ -124,7 +124,7 @@ public final class SubjectSixiemeTestProvider {
     /**
      * enseignements pratiques interdisciplinaires - EPI - Sciences
      */
-    private static Subject sciencesEpi() {
+    public static Subject sciencesEpi() {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_SCIENCES_EPI_ID, GradeTestProvider.sixiemeGrade, "Sciences - EPI", false,
                 60, 60, 60, 1,
@@ -132,7 +132,7 @@ public final class SubjectSixiemeTestProvider {
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
-    private static Subject sport() {
+    public static Subject sport() {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_SPORT_ID, GradeTestProvider.sixiemeGrade, "EDUCATION PHYSIQUE", false,
                 120, 60 * 2, 60 * 4, 2,
@@ -144,7 +144,7 @@ public final class SubjectSixiemeTestProvider {
                 Collections.singletonList(EnumSchoolRoomsTypes.SPORT), 1, "");
     }
 
-    private static Subject dessin() {
+    public static Subject dessin() {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_DESSIN_ID, GradeTestProvider.sixiemeGrade, "ARTS PLASTIQUES", false,
                 60, 60, 60, 1,
@@ -152,7 +152,7 @@ public final class SubjectSixiemeTestProvider {
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 
-    private static Subject musique() {
+    public static Subject musique() {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Sixieme.SUBJECT_SIXIEME_MUSIQUE_ID, GradeTestProvider.sixiemeGrade, "EDUCATION MUSICALE", false,
                 60, 60, 60, 1,

@@ -22,11 +22,11 @@ class ConstraintVerifierOverlappingTest extends ScoreConstraintVerifierTest {
     @MethodSource("conflictParams")
     void timeSlotsOverlapping(String description, int expectedConflictPenalty, Subject firstSubject, Subject secondSubject, TimeSlot firstTimeSlot, TimeSlot secondTimeSlot) {
 
-        Lesson lesson1 = new Lesson(1L, schoolRoom1, firstSubject, teacher1, firstTimeSlot);
-        Lesson lesson2 = new Lesson(2L, schoolRoom2, secondSubject, teacher2, secondTimeSlot);
+        Lesson lesson1 = new Lesson(1L, schoolRoom1, firstSubject, francaisTeacher, firstTimeSlot);
+        Lesson lesson2 = new Lesson(2L, schoolRoom2, secondSubject, mathsTeacher, secondTimeSlot);
         SchoolClassTimeTable timetable = new SchoolClassTimeTable(config, GlobalTestProvider.CLIENT_ID, schoolClass1, Arrays.asList(schoolClass1, schoolClass2),
-                Arrays.asList(schoolRoom1, schoolRoom2), Arrays.asList(subject1, subject2), Arrays.asList(teacher1, teacher2), Arrays.asList(lesson1, lesson2),
-                Arrays.asList(lesson1.getTimeSlot(), lesson2.getTimeSlot()));
+                Arrays.asList(schoolRoom1, schoolRoom2), Arrays.asList(sixiemeFrancaisSubject, sixiemeMathsSubject), Arrays.asList(francaisTeacher, mathsTeacher),
+                Arrays.asList(lesson1, lesson2));
 
         scoreVerifier.assertHardWeight(TimeTableConstraintConfiguration.CONSTRAINT_TIMESLOTS_OVERLAPS, expectedConflictPenalty,
                 timetable);
@@ -35,22 +35,22 @@ class ConstraintVerifierOverlappingTest extends ScoreConstraintVerifierTest {
     private static Stream<Arguments> conflictParams() {
         prepareParams();
         return Stream.of(
-                Arguments.of("== timeSlot, <> subject", -600, subject1, subject2,
+                Arguments.of("== timeSlot, <> subject", -600, sixiemeFrancaisSubject, sixiemeMathsSubject,
                         timeSlot1,
                         new TimeSlot(3L, timeSlot1.getDay(), timeSlot1.getStartTime(), timeSlot1.getEndTime())),
-                Arguments.of("<> timeSlot, <> subject", 0, subject1, subject2,
+                Arguments.of("<> timeSlot, <> subject", 0, sixiemeFrancaisSubject, sixiemeMathsSubject,
                         timeSlot1,
                         timeSlot2),
-                Arguments.of("<> timeSlot (overlapping), <> subject", -300, subject1, subject2,
+                Arguments.of("<> timeSlot (overlapping), <> subject", -300, sixiemeFrancaisSubject, sixiemeMathsSubject,
                         timeSlot1,
                         new TimeSlot(3L, EnumDays.MONDAY,
                                 new Time(8, 30, 0, EnumPartsOfDay.AM),
                                 new Time(10, 0, 0, EnumPartsOfDay.AM))),
-                Arguments.of("== timeSlot, == subject", -600, subject1, subject1,
+                Arguments.of("== timeSlot, == subject", -600, sixiemeFrancaisSubject, sixiemeFrancaisSubject,
                         timeSlot1,
                         new TimeSlot(3L, timeSlot1.getDay(), timeSlot1.getStartTime(), timeSlot1.getEndTime())),
-                Arguments.of("<> timeSlot, == subject", 0, subject1, subject1, timeSlot1, timeSlot2),
-                Arguments.of("<> timeSlot (overlapping), == subject", -300, subject1, subject1,
+                Arguments.of("<> timeSlot, == subject", 0, sixiemeFrancaisSubject, sixiemeFrancaisSubject, timeSlot1, timeSlot2),
+                Arguments.of("<> timeSlot (overlapping), == subject", -300, sixiemeFrancaisSubject, sixiemeFrancaisSubject,
                         timeSlot1,
                         new TimeSlot(3L, EnumDays.MONDAY,
                                 new Time(8, 30, 0, EnumPartsOfDay.AM),

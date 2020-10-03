@@ -15,7 +15,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class TimeTablesSolver implements TimetablesSolverAPI {
 
@@ -75,7 +74,7 @@ public class TimeTablesSolver implements TimetablesSolverAPI {
             final List<Lesson> lessons = firstStepSolver.generateFirstStepTimeTable();
             TimeTableConstraintConfiguration config = new TimeTableConstraintConfiguration();
             final SchoolClassTimeTable schoolClassTimeTable = new SchoolClassTimeTable(config, clientId, schoolClass, schoolClasses,
-                    schoolRooms, subjects, teachers, lessons, lessons.stream().map(Lesson::getTimeSlot).collect(Collectors.toList()));
+                    schoolRooms, subjects, teachers, lessons);
             solveSaveAndListen(schoolClassTimeTable);
         });
     }

@@ -29,73 +29,172 @@ public final class SchoolRoomTestProvider {
                 sportSchoolRooms(),
                 itSchoolRooms()
         )
-        .flatMap(Collection::stream).collect(Collectors.toList());
+                .flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     public static List<SchoolRoom> steppedSchoolRooms() {
-        return Collections.singletonList(
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_STEPPED_01_ID, new ArrayList<>(), "Victor HUGO", 100, EnumSchoolRoomsTypes.STEPPED)
-        );
+        return Collections.singletonList(steppedSchoolRoom());
+    }
+
+    public static SchoolRoom steppedSchoolRoom() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_STEPPED_01_ID, new ArrayList<>(), "Victor HUGO", 100, EnumSchoolRoomsTypes.STEPPED);
     }
 
     public static List<SchoolRoom> multipurposeSchoolRooms() {
-        return Collections.singletonList(
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_MULTIPURPOSE_01_ID, new ArrayList<>(), "POLY", 100, EnumSchoolRoomsTypes.MULTIPURPOSE)
-        );
+        return Collections.singletonList(multipurposeSchoolRoom());
+    }
+
+    public static SchoolRoom multipurposeSchoolRoom() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_MULTIPURPOSE_01_ID, new ArrayList<>(), "POLY", 100, EnumSchoolRoomsTypes.MULTIPURPOSE);
     }
 
     public static List<SchoolRoom> amphitheaterSchoolRooms() {
-        return Collections.singletonList(
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_AMPHITHEATER_01_ID, new ArrayList<>(), "René Descartes", 100, EnumSchoolRoomsTypes.AMPHITHEATER)
+        return Collections.singletonList(amphitheaterSchoolRoom());
+    }
+
+    public static SchoolRoom amphitheaterSchoolRoom() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_AMPHITHEATER_01_ID, new ArrayList<>(), "René Descartes", 100, EnumSchoolRoomsTypes.AMPHITHEATER);
+    }
+
+    public static List<SchoolRoom> normalSchoolRooms() {
+        return Arrays.asList(
+                normalSchoolRoom100(),
+                normalSchoolRoom101(),
+                normalSchoolRoom102(),
+                normalSchoolRoom103(),
+                normalSchoolRoom104(),
+                normalSchoolRoom105(),
+                normalSchoolRoom106(),
+                normalSchoolRoom107(),
+                normalSchoolRoom108(),
+                normalSchoolRoom109(),
+                normalSchoolRoom110()
         );
     }
 
-    private static List<SchoolRoom> normalSchoolRooms() {
+    public static SchoolRoom normalSchoolRoom110() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_110_ID, new ArrayList<>(), "110", 30, EnumSchoolRoomsTypes.NORMAL);
+    }
+
+    public static SchoolRoom normalSchoolRoom109() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_109_ID, new ArrayList<>(), "109", 30, EnumSchoolRoomsTypes.NORMAL);
+    }
+
+    public static SchoolRoom normalSchoolRoom108() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_108_ID, new ArrayList<>(), "108", 30, EnumSchoolRoomsTypes.NORMAL);
+    }
+
+    public static SchoolRoom normalSchoolRoom107() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_107_ID, new ArrayList<>(), "107", 30, EnumSchoolRoomsTypes.NORMAL);
+    }
+
+    public static SchoolRoom normalSchoolRoom106() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_106_ID, new ArrayList<>(), "106", 30, EnumSchoolRoomsTypes.NORMAL);
+    }
+
+    public static SchoolRoom normalSchoolRoom105() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_105_ID, new ArrayList<>(), "105", 30, EnumSchoolRoomsTypes.NORMAL);
+    }
+
+    public static SchoolRoom normalSchoolRoom104() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_104_ID, new ArrayList<>(), "104", 30, EnumSchoolRoomsTypes.NORMAL);
+    }
+
+    public static SchoolRoom normalSchoolRoom103() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_103_ID, new ArrayList<>(), "103", 30, EnumSchoolRoomsTypes.NORMAL);
+    }
+
+    public static SchoolRoom normalSchoolRoom102() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_102_ID, new ArrayList<>(), "102", 30, EnumSchoolRoomsTypes.NORMAL);
+    }
+
+    public static SchoolRoom normalSchoolRoom101() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_101_ID, new ArrayList<>(), "101", 30, EnumSchoolRoomsTypes.NORMAL);
+    }
+
+    public static SchoolRoom normalSchoolRoom100() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_100_ID, new ArrayList<>(), "100", 30, EnumSchoolRoomsTypes.NORMAL);
+    }
+
+    public static List<SchoolRoom> sciencesSchoolRooms() {
         return Arrays.asList(
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_100_ID, new ArrayList<>(), "100", 30, EnumSchoolRoomsTypes.NORMAL),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_101_ID, new ArrayList<>(), "101", 30, EnumSchoolRoomsTypes.NORMAL),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_102_ID, new ArrayList<>(), "102", 30, EnumSchoolRoomsTypes.NORMAL),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_103_ID, new ArrayList<>(), "103", 30, EnumSchoolRoomsTypes.NORMAL),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_104_ID, new ArrayList<>(), "104", 30, EnumSchoolRoomsTypes.NORMAL),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_105_ID, new ArrayList<>(), "105", 30, EnumSchoolRoomsTypes.NORMAL),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_106_ID, new ArrayList<>(), "106", 30, EnumSchoolRoomsTypes.NORMAL),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_107_ID, new ArrayList<>(), "107", 30, EnumSchoolRoomsTypes.NORMAL),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_108_ID, new ArrayList<>(), "108", 30, EnumSchoolRoomsTypes.NORMAL),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_109_ID, new ArrayList<>(), "109", 30, EnumSchoolRoomsTypes.NORMAL),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_110_ID, new ArrayList<>(), "110", 30, EnumSchoolRoomsTypes.NORMAL)
+                sciencesSchoolRoomSC1(),
+                sciencesSchoolRoomSC2(),
+                sciencesSchoolRoomSC3(),
+                sciencesSchoolRoomSC4()
         );
     }
 
-    private static List<SchoolRoom> sciencesSchoolRooms() {
+    public static SchoolRoom sciencesSchoolRoomSC4() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SCIENCES_04_ID, new ArrayList<>(), "SC-4", 30, EnumSchoolRoomsTypes.SCIENCES);
+    }
+
+    public static SchoolRoom sciencesSchoolRoomSC3() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SCIENCES_03_ID, new ArrayList<>(), "SC-3", 30, EnumSchoolRoomsTypes.SCIENCES);
+    }
+
+    public static SchoolRoom sciencesSchoolRoomSC2() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SCIENCES_02_ID, new ArrayList<>(), "SC-2", 30, EnumSchoolRoomsTypes.SCIENCES);
+    }
+
+    public static SchoolRoom sciencesSchoolRoomSC1() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SCIENCES_01_ID, new ArrayList<>(), "SC-1", 30, EnumSchoolRoomsTypes.SCIENCES);
+    }
+
+    public static List<SchoolRoom> musicSchoolRooms() {
+        return Arrays.asList(musicSchoolRoom100(), musicSchoolRoom101());
+    }
+
+    public static SchoolRoom musicSchoolRoom101() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_MUSIQUE_02_ID, new ArrayList<>(), "M-101", 30, EnumSchoolRoomsTypes.MUSIC);
+    }
+
+    public static SchoolRoom musicSchoolRoom100() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_MUSIQUE_01_ID, new ArrayList<>(), "M-100", 30, EnumSchoolRoomsTypes.MUSIC);
+    }
+
+    public static List<SchoolRoom> sportSchoolRooms() {
         return Arrays.asList(
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SCIENCES_01_ID, new ArrayList<>(), "SC-1", 30, EnumSchoolRoomsTypes.SCIENCES),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SCIENCES_02_ID, new ArrayList<>(), "SC-2", 30, EnumSchoolRoomsTypes.SCIENCES),
-                    schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SCIENCES_03_ID, new ArrayList<>(), "SC-3", 30, EnumSchoolRoomsTypes.SCIENCES),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SCIENCES_04_ID, new ArrayList<>(), "SC-4", 30, EnumSchoolRoomsTypes.SCIENCES)
+                sportSchoolRoom0(),
+                sportSchoolRoom1(),
+                sportSchoolRoom2(),
+                sportSchoolRoom3()
         );
     }
 
-    private static List<SchoolRoom> musicSchoolRooms() {
+    public static SchoolRoom sportSchoolRoom3() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SPORT_04_ID, new ArrayList<>(), "SP-3", 30, EnumSchoolRoomsTypes.SPORT);
+    }
+
+    public static SchoolRoom sportSchoolRoom2() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SPORT_03_ID, new ArrayList<>(), "SP-2", 30, EnumSchoolRoomsTypes.SPORT);
+    }
+
+    public static SchoolRoom sportSchoolRoom1() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SPORT_02_ID, new ArrayList<>(), "SP-1", 30, EnumSchoolRoomsTypes.SPORT);
+    }
+
+    public static SchoolRoom sportSchoolRoom0() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SPORT_01_ID, new ArrayList<>(), "SP-0", 30, EnumSchoolRoomsTypes.SPORT);
+    }
+
+    public static List<SchoolRoom> itSchoolRooms() {
         return Arrays.asList(
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_MUSIQUE_01_ID, new ArrayList<>(), "M-100", 30, EnumSchoolRoomsTypes.MUSIC),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_MUSIQUE_02_ID, new ArrayList<>(), "M-101", 30, EnumSchoolRoomsTypes.MUSIC)
+                itSchoolRoom0(),
+                itSchoolRoom10(),
+                itSchoolRoom100()
         );
     }
 
-    private static List<SchoolRoom> sportSchoolRooms() {
-        return Arrays.asList(
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SPORT_01_ID, new ArrayList<>(), "SP-0", 30, EnumSchoolRoomsTypes.SPORT),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SPORT_02_ID, new ArrayList<>(), "SP-1", 30, EnumSchoolRoomsTypes.SPORT),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SPORT_03_ID, new ArrayList<>(), "SP-2", 30, EnumSchoolRoomsTypes.SPORT),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_SPORT_04_ID, new ArrayList<>(), "SP-3", 30, EnumSchoolRoomsTypes.SPORT)
-        );
+    public static SchoolRoom itSchoolRoom100() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_IT_03_ID, new ArrayList<>(), "IT-100", 30, EnumSchoolRoomsTypes.IT);
     }
 
-    private static List<SchoolRoom> itSchoolRooms() {
-        return Arrays.asList(
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_IT_01_ID, new ArrayList<>(), "IT-0", 30, EnumSchoolRoomsTypes.IT),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_IT_02_ID, new ArrayList<>(), "IT-10", 30, EnumSchoolRoomsTypes.IT),
-                schoolRoom(GlobalTestProvider.SCHOOL_ROOM_IT_03_ID, new ArrayList<>(), "IT-100", 30, EnumSchoolRoomsTypes.IT)
-        );
+    public static SchoolRoom itSchoolRoom10() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_IT_02_ID, new ArrayList<>(), "IT-10", 30, EnumSchoolRoomsTypes.IT);
+    }
+
+    public static SchoolRoom itSchoolRoom0() {
+        return schoolRoom(GlobalTestProvider.SCHOOL_ROOM_IT_01_ID, new ArrayList<>(), "IT-0", 30, EnumSchoolRoomsTypes.IT);
     }
 }

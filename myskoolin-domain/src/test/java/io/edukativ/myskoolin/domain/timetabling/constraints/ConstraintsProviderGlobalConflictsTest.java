@@ -33,23 +33,23 @@ class ConstraintsProviderGlobalConflictsTest extends ScoreConstraintVerifierTest
     private static Stream<Arguments> conflictParams() {
         prepareParams();
         return Stream.of(
-                Arguments.of("== schoolRoom, == teacher, == subject, == timeSlot", 4, schoolRoom1, schoolRoom1, teacher1, teacher1, subject1, subject1, timeSlot1, timeSlot1),
-                Arguments.of("== schoolRoom, == teacher, <> subject, == timeSlot", 4, schoolRoom1, schoolRoom1, teacher1, teacher1, subject1, subject2, timeSlot1, timeSlot1),
-                Arguments.of("== schoolRoom, <> teacher, == subject, == timeSlot", 4, schoolRoom1, schoolRoom1, teacher1, teacher2, subject1, subject1, timeSlot1, timeSlot1),
-                Arguments.of("== schoolRoom, <> teacher, <> subject, == timeSlot", 4, schoolRoom1, schoolRoom1, teacher1, teacher2, subject1, subject2, timeSlot1, timeSlot1),
-                Arguments.of("<> schoolRoom, == teacher, == subject, == timeSlot", 4, schoolRoom1, schoolRoom2, teacher1, teacher1, subject1, subject1, timeSlot1, timeSlot1),
-                Arguments.of("<> schoolRoom, == teacher, <> subject, == timeSlot", 4, schoolRoom1, schoolRoom2, teacher1, teacher1, subject1, subject2, timeSlot1, timeSlot1),
-                Arguments.of("<> schoolRoom, <> teacher, == subject, == timeSlot", 4, schoolRoom1, schoolRoom2, teacher1, teacher2, subject1, subject1, timeSlot1, timeSlot1),
-                Arguments.of("<> schoolRoom, <> teacher, <> subject, == timeSlot", 4, schoolRoom1, schoolRoom2, teacher1, teacher2, subject1, subject2, timeSlot1, timeSlot1),
+                Arguments.of("== schoolRoom, == teacher, == subject, == timeSlot", 4, schoolRoom1, schoolRoom1, francaisTeacher, francaisTeacher, sixiemeFrancaisSubject, sixiemeFrancaisSubject, timeSlot1, timeSlot1),
+                Arguments.of("== schoolRoom, == teacher, <> subject, == timeSlot", 4, schoolRoom1, schoolRoom1, francaisTeacher, francaisTeacher, sixiemeFrancaisSubject, sixiemeMathsSubject, timeSlot1, timeSlot1),
+                Arguments.of("== schoolRoom, <> teacher, == subject, == timeSlot", 4, schoolRoom1, schoolRoom1, francaisTeacher, mathsTeacher, sixiemeFrancaisSubject, sixiemeFrancaisSubject, timeSlot1, timeSlot1),
+                Arguments.of("== schoolRoom, <> teacher, <> subject, == timeSlot", 4, schoolRoom1, schoolRoom1, francaisTeacher, mathsTeacher, sixiemeFrancaisSubject, sixiemeMathsSubject, timeSlot1, timeSlot1),
+                Arguments.of("<> schoolRoom, == teacher, == subject, == timeSlot", 4, schoolRoom1, schoolRoom2, francaisTeacher, francaisTeacher, sixiemeFrancaisSubject, sixiemeFrancaisSubject, timeSlot1, timeSlot1),
+                Arguments.of("<> schoolRoom, == teacher, <> subject, == timeSlot", 4, schoolRoom1, schoolRoom2, francaisTeacher, francaisTeacher, sixiemeFrancaisSubject, sixiemeMathsSubject, timeSlot1, timeSlot1),
+                Arguments.of("<> schoolRoom, <> teacher, == subject, == timeSlot", 4, schoolRoom1, schoolRoom2, francaisTeacher, mathsTeacher, sixiemeFrancaisSubject, sixiemeFrancaisSubject, timeSlot1, timeSlot1),
+                Arguments.of("<> schoolRoom, <> teacher, <> subject, == timeSlot", 4, schoolRoom1, schoolRoom2, francaisTeacher, mathsTeacher, sixiemeFrancaisSubject, sixiemeMathsSubject, timeSlot1, timeSlot1),
 
-                Arguments.of("== schoolRoom, == teacher, == subject, <> timeSlot", 0, schoolRoom1, schoolRoom1, teacher1, teacher1, subject1, subject1, timeSlot1, timeSlot2),
-                Arguments.of("== schoolRoom, == teacher, <> subject, <> timeSlot", 0, schoolRoom1, schoolRoom1, teacher1, teacher1, subject1, subject2, timeSlot1, timeSlot2),
-                Arguments.of("== schoolRoom, <> teacher, == subject, <> timeSlot", 0, schoolRoom1, schoolRoom1, teacher1, teacher2, subject1, subject1, timeSlot1, timeSlot2),
-                Arguments.of("== schoolRoom, <> teacher, <> subject, <> timeSlot", 0, schoolRoom1, schoolRoom1, teacher1, teacher2, subject1, subject2, timeSlot1, timeSlot2),
-                Arguments.of("<> schoolRoom, == teacher, == subject, <> timeSlot", 0, schoolRoom1, schoolRoom2, teacher1, teacher1, subject1, subject1, timeSlot1, timeSlot2),
-                Arguments.of("<> schoolRoom, == teacher, <> subject, <> timeSlot", 0, schoolRoom1, schoolRoom2, teacher1, teacher1, subject1, subject2, timeSlot1, timeSlot2),
-                Arguments.of("<> schoolRoom, <> teacher, == subject, <> timeSlot", 0, schoolRoom1, schoolRoom2, teacher1, teacher2, subject1, subject1, timeSlot1, timeSlot2),
-                Arguments.of("<> schoolRoom, <> teacher, <> subject, <> timeSlot", 0, schoolRoom1, schoolRoom2, teacher1, teacher2, subject1, subject2, timeSlot1, timeSlot2)
+                Arguments.of("== schoolRoom, == teacher, == subject, <> timeSlot", 0, schoolRoom1, schoolRoom1, francaisTeacher, francaisTeacher, sixiemeFrancaisSubject, sixiemeFrancaisSubject, timeSlot1, timeSlot2),
+                Arguments.of("== schoolRoom, == teacher, <> subject, <> timeSlot", 0, schoolRoom1, schoolRoom1, francaisTeacher, francaisTeacher, sixiemeFrancaisSubject, sixiemeMathsSubject, timeSlot1, timeSlot2),
+                Arguments.of("== schoolRoom, <> teacher, == subject, <> timeSlot", 0, schoolRoom1, schoolRoom1, francaisTeacher, mathsTeacher, sixiemeFrancaisSubject, sixiemeFrancaisSubject, timeSlot1, timeSlot2),
+                Arguments.of("== schoolRoom, <> teacher, <> subject, <> timeSlot", 0, schoolRoom1, schoolRoom1, francaisTeacher, mathsTeacher, sixiemeFrancaisSubject, sixiemeMathsSubject, timeSlot1, timeSlot2),
+                Arguments.of("<> schoolRoom, == teacher, == subject, <> timeSlot", 0, schoolRoom1, schoolRoom2, francaisTeacher, francaisTeacher, sixiemeFrancaisSubject, sixiemeFrancaisSubject, timeSlot1, timeSlot2),
+                Arguments.of("<> schoolRoom, == teacher, <> subject, <> timeSlot", 0, schoolRoom1, schoolRoom2, francaisTeacher, francaisTeacher, sixiemeFrancaisSubject, sixiemeMathsSubject, timeSlot1, timeSlot2),
+                Arguments.of("<> schoolRoom, <> teacher, == subject, <> timeSlot", 0, schoolRoom1, schoolRoom2, francaisTeacher, mathsTeacher, sixiemeFrancaisSubject, sixiemeFrancaisSubject, timeSlot1, timeSlot2),
+                Arguments.of("<> schoolRoom, <> teacher, <> subject, <> timeSlot", 0, schoolRoom1, schoolRoom2, francaisTeacher, mathsTeacher, sixiemeFrancaisSubject, sixiemeMathsSubject, timeSlot1, timeSlot2)
         );
     }
 }

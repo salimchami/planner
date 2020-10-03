@@ -10,6 +10,14 @@ import java.util.*;
 public class TimeSlotTestProvider {
 
 
+    public static TimeSlot timeSlot(Long id, EnumDays day, int startHour, EnumPartsOfDay startPartsOfDay, int endHour, EnumPartsOfDay endPartsOfDay) {
+        return new TimeSlot(id,
+            day,
+            new Time(startHour, 0, 0, startPartsOfDay),
+            new Time(endHour, 0, 0, endPartsOfDay)
+        );
+    }
+
     public static TimeSlot timeSlot(EnumDays day, int startHour, EnumPartsOfDay startPartsOfDay, int endHour, EnumPartsOfDay endPartsOfDay) {
         return new TimeSlot(
             day,
