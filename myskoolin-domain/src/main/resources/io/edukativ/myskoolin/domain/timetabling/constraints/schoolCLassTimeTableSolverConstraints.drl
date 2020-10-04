@@ -12,30 +12,6 @@ global HardMediumSoftScoreHolder scoreHolder;
 
 //----------------------------------------------------------------------------------------------------------
 
-//rule "Subject duration max by day"
-//when
-//    $lesson : Lesson($timeslot1: timeSlot, $subject1: subject)
-//    $total : Integer() from
-//     accumulate ( Lesson($timeslot2: timeSlot, $subject2: subject, $subject2.equals($subject1), $timeslot1.day == $timeslot2.day),
-//            init( int total =0;),
-//            action(total+=($timeslot2.durationInMinutes());),
-//            result( new Integer (total)))
-//    $duplicates: List() from collect(Lesson(subject == $subject1, timeSlot == $timeslot1))
-//then
-//    scoreHolder.penalize(kcontext, $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue()));
-//    for(Object lesson : $duplicates){
-//        delete(lesson);
-//    }
-//    System.out.println(
-//      " Subject : "+ $lesson.getSubject().getName() +
-//      " \nTotal duration : " + $total +
-//      " \nMax duration : " + $lesson.getSubject().getMaxMinutesPerDay() +
-//      " \nGap : " + $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue())
-//    );
-//end
-
-//----------------------------------------------------------------------------------------------------------
-
 rule "Time slot overlapping another time slot"
     when
         $timeslot1: TimeSlot()
@@ -54,3 +30,24 @@ rule "School room right type"
 end
 
 //----------------------------------------------------------------------------------------------------------
+
+rule "Subject duration max by day"
+    when
+        $lesson : Lesson($timeslot1: timeSlot, $subject1: subject)
+//        not( TimeSlot(this == $timeslot1) )
+        $total : Integer() from
+         accumulate ( Lesson($timeslot2: timeSlot, $subject2: subject, $subject2.equals($subject1), $timeslot1.day == $timeslot2.day),
+                init( int total =0;),
+                action(total+=($timeslot2.durationInMinutes());),
+                result( new Integer (total)))
+
+    then
+        scoreHolder.penalize(kcontext, $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue()));
+//        insert($timeslot1);
+        System.out.println(
+          " Subject : "+ $lesson.getSubject().getName() +
+          " \nTotal duration : " + $total +
+          " \nMax duration : " + $lesson.getSubject().getMaxMinutesPerDay() +
+          " \nGap : " + $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue())
+        );
+end

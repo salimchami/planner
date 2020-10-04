@@ -310,12 +310,9 @@ public class Subject implements Comparable<Subject> {
     }
 
     public int maxMinutesPerDayPenalty(Integer totalDuration) {
-        if(totalDuration.equals(maxMinutesPerDay)) {
-            return 0;
-        } else if(totalDuration > maxMinutesPerDay) {
+        if (totalDuration > maxMinutesPerDay) {
             return totalDuration;
-        } else {
-            return totalDuration - maxMinutesPerDay;
         }
+        return 0;
     }
 }
