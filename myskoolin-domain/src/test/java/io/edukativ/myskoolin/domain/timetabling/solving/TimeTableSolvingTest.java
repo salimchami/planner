@@ -48,6 +48,7 @@ class TimeTableSolvingTest extends ScoreConstraintVerifierTest {
         final Subject mathsSubject = SubjectSixiemeTestProvider.maths();
         final SchoolRoom schoolRoom100 = SchoolRoomTestProvider.normalSchoolRoom100();
         final SchoolRoom schoolRoom101 = SchoolRoomTestProvider.normalSchoolRoom101();
+        final SchoolRoom sciencesSchoolRoomSC1 = SchoolRoomTestProvider.sciencesSchoolRoomSC1();
         return Stream.of(
                 Arguments.of("<> timeSlot / <> subject / room type OK / <> room", 0, 0, 0,
                         List.of(
@@ -83,7 +84,7 @@ class TimeTableSolvingTest extends ScoreConstraintVerifierTest {
                 ),
                 Arguments.of("== timeSlot (overlapping) / == subject / multiple room type !OK / <> room", -600, -1200, 0,
                         List.of(
-                                new Lesson(1L, SchoolRoomTestProvider.sciencesSchoolRoomSC1(), francaisSubject, francaisTeacher,
+                                new Lesson(1L, sciencesSchoolRoomSC1, francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(1L, EnumDays.MONDAY, 8, EnumPartsOfDay.AM, 9, EnumPartsOfDay.AM)),
                                 new Lesson(2L, SchoolRoomTestProvider.amphitheaterSchoolRoom(), francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(2L, EnumDays.MONDAY, 8, EnumPartsOfDay.AM, 9, EnumPartsOfDay.AM))
@@ -91,10 +92,22 @@ class TimeTableSolvingTest extends ScoreConstraintVerifierTest {
                 ),
                 Arguments.of("== timeSlot (overlapping) / == subject / 1 room type !OK / <> room", -600, -600, 0,
                         List.of(
-                                new Lesson(1L, SchoolRoomTestProvider.sciencesSchoolRoomSC1(), francaisSubject, francaisTeacher,
+                                new Lesson(1L, sciencesSchoolRoomSC1, francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(1L, EnumDays.MONDAY, 8, EnumPartsOfDay.AM, 9, EnumPartsOfDay.AM)),
                                 new Lesson(2L, schoolRoom101, francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(2L, EnumDays.MONDAY, 8, EnumPartsOfDay.AM, 9, EnumPartsOfDay.AM))
+                        )
+                ),
+                Arguments.of("== timeSlot (overlapping) / == subject / 1 room type !OK / <> room", 0, -1800, -600,
+                        List.of(
+                                new Lesson(1L, sciencesSchoolRoomSC1, francaisSubject, francaisTeacher,
+                                        TimeSlotTestProvider.timeSlot(1L, EnumDays.MONDAY, 8, EnumPartsOfDay.AM, 9, EnumPartsOfDay.AM)),
+                                new Lesson(2L, sciencesSchoolRoomSC1, francaisSubject, francaisTeacher,
+                                        TimeSlotTestProvider.timeSlot(2L, EnumDays.MONDAY, 9, EnumPartsOfDay.AM, 10, EnumPartsOfDay.AM)),
+                                new Lesson(3L, sciencesSchoolRoomSC1, francaisSubject, francaisTeacher,
+                                        TimeSlotTestProvider.timeSlot(3L, EnumDays.MONDAY, 10, EnumPartsOfDay.AM, 11, EnumPartsOfDay.AM)),
+                                new Lesson(4L, schoolRoom101, mathsSubject, mathsTeacher,
+                                        TimeSlotTestProvider.timeSlot(4L, EnumDays.MONDAY, 2, EnumPartsOfDay.PM, 3, EnumPartsOfDay.PM))
                         )
                 )
         );
