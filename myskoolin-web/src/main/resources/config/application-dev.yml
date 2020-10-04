@@ -20,6 +20,11 @@ logging:
     io.edukativ.schooling: WARN
     org.optaplanner: INFO
 
+optaplanner:
+    solver:
+        termination:
+            spent-limit: 110s
+
 eureka:
   instance:
     prefer-ip-address: true

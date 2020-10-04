@@ -20,7 +20,8 @@ export class TimetableService {
     }
 
     generateTimetables(req?: any): Observable<HttpResponse<any>> {
-        const options = createRequestOption(req);
+        let options = createRequestOption(req);
+        options = options.append('timeout', '360000');
         return this.http.post(this.resourceUrl + '/solve?timestamp=',
             {params: options, observe: 'response'})
             .pipe(map((res: HttpResponse<any>) => res));

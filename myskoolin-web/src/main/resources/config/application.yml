@@ -114,10 +114,6 @@ spring:
     ansi:
       console-available: true
 
-optaplanner:
-    solver:
-        termination:
-            spent-limit: 300s
 server:
   servlet:
     session:
