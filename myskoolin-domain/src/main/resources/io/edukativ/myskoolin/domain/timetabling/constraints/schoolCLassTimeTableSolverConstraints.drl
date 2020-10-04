@@ -6,7 +6,8 @@ import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import org.optaplanner.core.api.score.buildin.hardmediumsoft.HardMediumSoftScoreHolder;
-import java.util.List;
+import java.util.List
+import org.apache.commons.math3.stat.descriptive.summary.Product;
 
 global HardMediumSoftScoreHolder scoreHolder;
 
@@ -34,7 +35,7 @@ end
 rule "Subject duration max by day"
     when
         $lesson : Lesson($timeslot1: timeSlot, $subject1: subject)
-//        not( TimeSlot(this == $timeslot1) )
+        $duplicates: List() from collect( Lesson( subject == $subject1 ) )
         $total : Integer() from
          accumulate ( Lesson($timeslot2: timeSlot, $subject2: subject, $subject2.equals($subject1), $timeslot1.day == $timeslot2.day),
                 init( int total =0;),
@@ -42,12 +43,12 @@ rule "Subject duration max by day"
                 result( new Integer (total)))
 
     then
-        scoreHolder.penalize(kcontext, $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue()));
-//        insert($timeslot1);
         System.out.println(
           " Subject : "+ $lesson.getSubject().getName() +
           " \nTotal duration : " + $total +
           " \nMax duration : " + $lesson.getSubject().getMaxMinutesPerDay() +
-          " \nGap : " + $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue())
+          " \nGap : " + $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue()) +
+          " \n---------------------------------------"
         );
+        scoreHolder.penalize(kcontext,  $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue()) / $duplicates.size());
 end
