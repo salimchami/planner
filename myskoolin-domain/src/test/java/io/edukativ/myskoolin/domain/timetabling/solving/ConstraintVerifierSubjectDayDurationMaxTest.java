@@ -1,16 +1,15 @@
 package io.edukativ.myskoolin.domain.timetabling.solving;
 
-import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
-import io.edukativ.myskoolin.domain.commons.vo.EnumPartsOfDay;
 import io.edukativ.myskoolin.domain.providers.GlobalTestProvider;
 import io.edukativ.myskoolin.domain.timetabling.Lesson;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
-import io.edukativ.myskoolin.domain.timetabling.Time;
 import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -41,23 +40,23 @@ class ConstraintVerifierSubjectDayDurationMaxTest extends ScoreConstraintVerifie
                 Arguments.of("francais -> 120 mn (max : 120) / maths -> 60 mn (max 120)", 600,
                         timeSlot1,
                         timeSlot2,
-                        new TimeSlot(3L, EnumDays.MONDAY,
-                                new Time(10, 0, 0, EnumPartsOfDay.AM),
-                                new Time(11, 0, 0, EnumPartsOfDay.AM))),
+                        new TimeSlot(3L, DayOfWeek.MONDAY,
+                                LocalTime.of(10, 0, 0),
+                                LocalTime.of(11, 0, 0))),
                 Arguments.of("francais -> 180 mn (max : 120) / maths -> 60 mn (max 120)", -1200,
                         timeSlot1,
-                        new TimeSlot(3L, EnumDays.MONDAY,
-                                new Time(10, 0, 0, EnumPartsOfDay.AM),
-                                new Time(12, 0, 0, EnumPartsOfDay.AM)),
+                        new TimeSlot(3L, DayOfWeek.MONDAY,
+                                LocalTime.of(10, 0, 0),
+                                LocalTime.of(12, 0, 0)),
                         timeSlot2),
                 Arguments.of("francais -> 180 mn (max : 120) / maths -> 240 mn (max 120)", -4200,
                         timeSlot1,
-                        new TimeSlot(3L, EnumDays.MONDAY,
-                                new Time(10, 0, 0, EnumPartsOfDay.AM),
-                                new Time(12, 0, 0, EnumPartsOfDay.AM)),
-                        new TimeSlot(4L, EnumDays.MONDAY,
-                                new Time(10, 0, 0, EnumPartsOfDay.AM),
-                                new Time(14, 0, 0, EnumPartsOfDay.PM)))
+                        new TimeSlot(3L, DayOfWeek.MONDAY,
+                                LocalTime.of(10, 0, 0),
+                                LocalTime.of(12, 0, 0)),
+                        new TimeSlot(4L, DayOfWeek.MONDAY,
+                                LocalTime.of(10, 0, 0),
+                                LocalTime.of(14, 0, 0)))
         );
     }
 

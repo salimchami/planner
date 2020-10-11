@@ -1,7 +1,5 @@
 import {CalendarHelper} from 'app/shared/services/utils/calendar-helper.service';
 
-import {Time} from 'app/shared/model';
-
 fdescribe('Calendar Helper Tests', function() {
 
     const calendarHelper = new CalendarHelper();

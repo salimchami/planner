@@ -1,9 +1,9 @@
 package io.edukativ.myskoolin.infrastructure.canteen;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
 
 import java.io.Serializable;
+import java.time.DayOfWeek;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class CanteenRegistrationVO implements Serializable {
     private Boolean breakfast;
     private Boolean lunch;
     private Boolean dinner;
-    private List<EnumDays> weekDays;
+    private List<DayOfWeek> weekDays;
     private ZonedDateTime subscriptionPeriodStart;
     private ZonedDateTime subscriptionPeriodEnd;
 
@@ -54,14 +54,14 @@ public class CanteenRegistrationVO implements Serializable {
         this.dinner = dinner;
     }
 
-    public List<EnumDays> getWeekDays() {
+    public List<DayOfWeek> getWeekDays() {
         if (this.weekDays == null) {
             this.weekDays = new ArrayList<>();
         }
         return weekDays;
     }
 
-    public void setWeekDays(List<EnumDays> weekDays) {
+    public void setWeekDays(List<DayOfWeek> weekDays) {
         this.weekDays = weekDays;
     }
 

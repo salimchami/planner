@@ -58,25 +58,25 @@ public class ChangeSet013Schoolclasses {
                 });
     }
 
-    @ChangeSet(order = "02", author = "sch", id = "02-schoolClass-SixiemeDeux")
-    public void addSchoolClassSixiemeDeux(MongoTemplate mongoTemplate) {
-        GradeDbDTO grade = DbMigrationsFindUtils.findGradeById(mongoTemplate, DevDbMigrationsConstants.GRADE_SIXIEME_ID);
-        List<SubjectDbDTO> subjects = DbMigrationsFindUtils.findSubjectsByGrade(mongoTemplate, DevDbMigrationsConstants.CLIENT_01_ID, grade);
-        List<TeacherDbDTO> teacherUsers = DbMigrationsFindUtils.findTeachersByGrade(mongoTemplate, DevDbMigrationsConstants.CLIENT_01_ID, grade);
-        List<TeachersBySubjectDbVO> teachersBySubjects = new ArrayList<>();
-        subjects.forEach(subject -> teachersBySubjects.add(new TeachersBySubjectDbVO(subject, teacherUsers.stream()
-                .filter(teacher -> teacher.getTaughtSubjects().contains(subject))
-                .collect(Collectors.toList()))));
-        SchoolClassDbDTO schoolClass = new SchoolClassDbDTO(DevDbMigrationsConstants.SCHOOLCLASS_SIXIEME_2_ID, DevDbMigrationsConstants.CLIENT_01_ID,
-                ZonedDateTime.of(2018, 9, 2, 8, 0, 0, 0, ZoneId.systemDefault()),
-                ZonedDateTime.of(2019, 7, 2, 8, 0, 0, 0, ZoneId.systemDefault()),
-                Arrays.asList(
-                        ZonedDateTime.of(2018, 12, 22, 18, 30, 0, 0, ZoneId.systemDefault()),
-                        ZonedDateTime.of(2019, 3, 22, 18, 30, 0, 0, ZoneId.systemDefault()),
-                        ZonedDateTime.of(2019, 6, 22, 18, 30, 0, 0, ZoneId.systemDefault())
-                ), "6°2", "Sixième 2", false, Collections.emptyList(), grade, null,
-                Collections.emptyList(), EnumSchoolClassNotation.QUARTER, teachersBySubjects);
-        mongoTemplate.insert(schoolClass);
-        MigrationTempData.schoolClasses.add(schoolClass);
-    }
+//    @ChangeSet(order = "02", author = "sch", id = "02-schoolClass-SixiemeDeux")
+//    public void addSchoolClassSixiemeDeux(MongoTemplate mongoTemplate) {
+//        GradeDbDTO grade = DbMigrationsFindUtils.findGradeById(mongoTemplate, DevDbMigrationsConstants.GRADE_SIXIEME_ID);
+//        List<SubjectDbDTO> subjects = DbMigrationsFindUtils.findSubjectsByGrade(mongoTemplate, DevDbMigrationsConstants.CLIENT_01_ID, grade);
+//        List<TeacherDbDTO> teacherUsers = DbMigrationsFindUtils.findTeachersByGrade(mongoTemplate, DevDbMigrationsConstants.CLIENT_01_ID, grade);
+//        List<TeachersBySubjectDbVO> teachersBySubjects = new ArrayList<>();
+//        subjects.forEach(subject -> teachersBySubjects.add(new TeachersBySubjectDbVO(subject, teacherUsers.stream()
+//                .filter(teacher -> teacher.getTaughtSubjects().contains(subject))
+//                .collect(Collectors.toList()))));
+//        SchoolClassDbDTO schoolClass = new SchoolClassDbDTO(DevDbMigrationsConstants.SCHOOLCLASS_SIXIEME_2_ID, DevDbMigrationsConstants.CLIENT_01_ID,
+//                ZonedDateTime.of(2018, 9, 2, 8, 0, 0, 0, ZoneId.systemDefault()),
+//                ZonedDateTime.of(2019, 7, 2, 8, 0, 0, 0, ZoneId.systemDefault()),
+//                Arrays.asList(
+//                        ZonedDateTime.of(2018, 12, 22, 18, 30, 0, 0, ZoneId.systemDefault()),
+//                        ZonedDateTime.of(2019, 3, 22, 18, 30, 0, 0, ZoneId.systemDefault()),
+//                        ZonedDateTime.of(2019, 6, 22, 18, 30, 0, 0, ZoneId.systemDefault())
+//                ), "6°2", "Sixième 2", false, Collections.emptyList(), grade, null,
+//                Collections.emptyList(), EnumSchoolClassNotation.QUARTER, teachersBySubjects);
+//        mongoTemplate.insert(schoolClass);
+//        MigrationTempData.schoolClasses.add(schoolClass);
+//    }
 }

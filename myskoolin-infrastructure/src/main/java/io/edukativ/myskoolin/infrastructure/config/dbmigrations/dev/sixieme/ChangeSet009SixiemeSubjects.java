@@ -2,7 +2,6 @@ package io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev.sixieme;
 
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumPartsOfDay;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolRoomsTypesDb;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsFindUtils;
@@ -15,6 +14,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -43,8 +43,8 @@ public class ChangeSet009SixiemeSubjects {
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_TECHNO_ID);
         subject.setPreferredPartsOfDaysInTimetables(
                 Arrays.asList(
-                        new PreferredPartsOfDaysDbVO(EnumDays.TUESDAY, Collections.singletonList(EnumPartsOfDay.PM)),
-                        new PreferredPartsOfDaysDbVO(EnumDays.THURSDAY, Collections.singletonList(EnumPartsOfDay.PM))
+                        new PreferredPartsOfDaysDbVO(DayOfWeek.TUESDAY, Collections.singletonList(EnumPartsOfDay.PM)),
+                        new PreferredPartsOfDaysDbVO(DayOfWeek.THURSDAY, Collections.singletonList(EnumPartsOfDay.PM))
                 )
         );
         mongoTemplate.insert(subject, MONGO_COLLECTION_NAME);
@@ -67,10 +67,10 @@ public class ChangeSet009SixiemeSubjects {
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_FRANCAIS_ID);
         subject.setPreferredPartsOfDaysInTimetables(
                 Arrays.asList(
-                        new PreferredPartsOfDaysDbVO(EnumDays.MONDAY, Collections.singletonList(EnumPartsOfDay.AM)),
-                        new PreferredPartsOfDaysDbVO(EnumDays.TUESDAY, Collections.singletonList(EnumPartsOfDay.AM)),
-                        new PreferredPartsOfDaysDbVO(EnumDays.THURSDAY, Collections.singletonList(EnumPartsOfDay.AM)),
-                        new PreferredPartsOfDaysDbVO(EnumDays.FRIDAY, Collections.singletonList(EnumPartsOfDay.AM))
+                        new PreferredPartsOfDaysDbVO(DayOfWeek.MONDAY, Collections.singletonList(EnumPartsOfDay.AM)),
+                        new PreferredPartsOfDaysDbVO(DayOfWeek.TUESDAY, Collections.singletonList(EnumPartsOfDay.AM)),
+                        new PreferredPartsOfDaysDbVO(DayOfWeek.THURSDAY, Collections.singletonList(EnumPartsOfDay.AM)),
+                        new PreferredPartsOfDaysDbVO(DayOfWeek.FRIDAY, Collections.singletonList(EnumPartsOfDay.AM))
                 )
         );
         mongoTemplate.insert(subject, MONGO_COLLECTION_NAME);
@@ -93,10 +93,10 @@ public class ChangeSet009SixiemeSubjects {
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_SPORT_ID);
         subject.setPreferredPartsOfDaysInTimetables(
                 Arrays.asList(
-                        new PreferredPartsOfDaysDbVO(EnumDays.MONDAY, Collections.singletonList(EnumPartsOfDay.PM)),
-                        new PreferredPartsOfDaysDbVO(EnumDays.TUESDAY, Collections.singletonList(EnumPartsOfDay.PM)),
-                        new PreferredPartsOfDaysDbVO(EnumDays.THURSDAY, Collections.singletonList(EnumPartsOfDay.PM)),
-                        new PreferredPartsOfDaysDbVO(EnumDays.FRIDAY, Collections.singletonList(EnumPartsOfDay.PM))
+                        new PreferredPartsOfDaysDbVO(DayOfWeek.MONDAY, Collections.singletonList(EnumPartsOfDay.PM)),
+                        new PreferredPartsOfDaysDbVO(DayOfWeek.TUESDAY, Collections.singletonList(EnumPartsOfDay.PM)),
+                        new PreferredPartsOfDaysDbVO(DayOfWeek.THURSDAY, Collections.singletonList(EnumPartsOfDay.PM)),
+                        new PreferredPartsOfDaysDbVO(DayOfWeek.FRIDAY, Collections.singletonList(EnumPartsOfDay.PM))
                 )
         );
         mongoTemplate.insert(subject, MONGO_COLLECTION_NAME);
@@ -137,7 +137,7 @@ public class ChangeSet009SixiemeSubjects {
                 false, null, Collections.singletonList(EnumSchoolRoomsTypesDb.NORMAL), false);
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_ARTS_PLASTIQUES_ID);
         subject.setPreferredPartsOfDaysInTimetables(Collections.singletonList(
-                new PreferredPartsOfDaysDbVO(EnumDays.FRIDAY, Arrays.asList(EnumPartsOfDay.AM, EnumPartsOfDay.PM))
+                new PreferredPartsOfDaysDbVO(DayOfWeek.FRIDAY, Arrays.asList(EnumPartsOfDay.AM, EnumPartsOfDay.PM))
         ));
 
         mongoTemplate.insert(subject, MONGO_COLLECTION_NAME);
@@ -160,10 +160,10 @@ public class ChangeSet009SixiemeSubjects {
                 false, null, Collections.singletonList(EnumSchoolRoomsTypesDb.NORMAL), false);
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_HIST_GEO_ID);
         subject.setPreferredPartsOfDaysInTimetables(Arrays.asList(
-                new PreferredPartsOfDaysDbVO(EnumDays.MONDAY, Collections.singletonList(EnumPartsOfDay.AM)),
-                new PreferredPartsOfDaysDbVO(EnumDays.TUESDAY, Collections.singletonList(EnumPartsOfDay.AM)),
-                new PreferredPartsOfDaysDbVO(EnumDays.THURSDAY, Collections.singletonList(EnumPartsOfDay.AM)),
-                new PreferredPartsOfDaysDbVO(EnumDays.FRIDAY, Collections.singletonList(EnumPartsOfDay.AM))
+                new PreferredPartsOfDaysDbVO(DayOfWeek.MONDAY, Collections.singletonList(EnumPartsOfDay.AM)),
+                new PreferredPartsOfDaysDbVO(DayOfWeek.TUESDAY, Collections.singletonList(EnumPartsOfDay.AM)),
+                new PreferredPartsOfDaysDbVO(DayOfWeek.THURSDAY, Collections.singletonList(EnumPartsOfDay.AM)),
+                new PreferredPartsOfDaysDbVO(DayOfWeek.FRIDAY, Collections.singletonList(EnumPartsOfDay.AM))
         ));
         mongoTemplate.insert(subject, MONGO_COLLECTION_NAME);
         MigrationTempData.subjects.add(subject);
@@ -261,10 +261,10 @@ public class ChangeSet009SixiemeSubjects {
                 false, null, Collections.singletonList(EnumSchoolRoomsTypesDb.MUSIC), false);
         subject.setId(DevDbMigrationsConstants.SUBJECT_SIXIEME_MUSIC_ID);
         subject.setPreferredPartsOfDaysInTimetables(Arrays.asList(
-                new PreferredPartsOfDaysDbVO(EnumDays.MONDAY, Collections.singletonList(EnumPartsOfDay.PM)),
-                new PreferredPartsOfDaysDbVO(EnumDays.TUESDAY, Collections.singletonList(EnumPartsOfDay.PM)),
-                new PreferredPartsOfDaysDbVO(EnumDays.THURSDAY, Collections.singletonList(EnumPartsOfDay.PM)),
-                new PreferredPartsOfDaysDbVO(EnumDays.FRIDAY, Collections.singletonList(EnumPartsOfDay.PM))
+                new PreferredPartsOfDaysDbVO(DayOfWeek.MONDAY, Collections.singletonList(EnumPartsOfDay.PM)),
+                new PreferredPartsOfDaysDbVO(DayOfWeek.TUESDAY, Collections.singletonList(EnumPartsOfDay.PM)),
+                new PreferredPartsOfDaysDbVO(DayOfWeek.THURSDAY, Collections.singletonList(EnumPartsOfDay.PM)),
+                new PreferredPartsOfDaysDbVO(DayOfWeek.FRIDAY, Collections.singletonList(EnumPartsOfDay.PM))
         ));
         mongoTemplate.insert(subject, MONGO_COLLECTION_NAME);
         MigrationTempData.subjects.add(subject);

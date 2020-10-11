@@ -1,9 +1,10 @@
 package io.edukativ.myskoolin.infrastructure.timetabling;
 
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
+import java.time.DayOfWeek;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -12,10 +13,10 @@ import java.util.List;
 public class TimeTableOptionsVO implements Serializable {
 
     private Boolean schoolRoomsDistances = true;
-    private EnumDays firstWeekDay;
+    private DayOfWeek firstWeekDay;
     private BigDecimal surfaceMinPerStudent;
-    private TimeVO coursesStartTime;
-    private TimeVO coursesEndTime;
+    private LocalTime coursesStartTime;
+    private LocalTime coursesEndTime;
     private List<TimeSlotVO> coursesTimeSlots;
     private List<TimeSlotVO> extraActivities;
     private Integer calendarTimelineDuration;
@@ -28,11 +29,11 @@ public class TimeTableOptionsVO implements Serializable {
         this.schoolRoomsDistances = schoolRoomsDistances;
     }
 
-    public EnumDays getFirstWeekDay() {
+    public DayOfWeek getFirstWeekDay() {
         return firstWeekDay;
     }
 
-    public void setFirstWeekDay(EnumDays firstWeekDay) {
+    public void setFirstWeekDay(DayOfWeek firstWeekDay) {
         this.firstWeekDay = firstWeekDay;
     }
 
@@ -44,19 +45,19 @@ public class TimeTableOptionsVO implements Serializable {
         this.surfaceMinPerStudent = surfaceMinPerStudent;
     }
 
-    public TimeVO getCoursesStartTime() {
+    public LocalTime getCoursesStartTime() {
         return coursesStartTime;
     }
 
-    public void setCoursesStartTime(TimeVO coursesStartTime) {
+    public void setCoursesStartTime(LocalTime coursesStartTime) {
         this.coursesStartTime = coursesStartTime;
     }
 
-    public TimeVO getCoursesEndTime() {
+    public LocalTime getCoursesEndTime() {
         return coursesEndTime;
     }
 
-    public void setCoursesEndTime(TimeVO coursesEndTime) {
+    public void setCoursesEndTime(LocalTime coursesEndTime) {
         this.coursesEndTime = coursesEndTime;
     }
 

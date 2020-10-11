@@ -4,9 +4,7 @@ import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR, uses = {
-        TimeMapper.class
-})
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface TimeSlotMapper {
 
     TimeSlotVO dbVoToVo(TimeSlotDbVO timeSlot);

@@ -1,7 +1,5 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
-import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
-import io.edukativ.myskoolin.domain.commons.vo.EnumPartsOfDay;
 import io.edukativ.myskoolin.domain.providers.GlobalTestProvider;
 import io.edukativ.myskoolin.domain.providers.GradeTestProvider;
 import io.edukativ.myskoolin.domain.providers.SchoolRoomTestProvider;
@@ -13,6 +11,7 @@ import io.edukativ.myskoolin.domain.subjects.Subject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.DayOfWeek;
 import java.util.Collections;
 
 import static org.junit.Assert.assertFalse;
@@ -36,8 +35,8 @@ class LessonTest {
                 60, 60 * 2, (int) (60 * 3.5), 3,
                 Collections.emptyList(),
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
-        timeSlot1 = TimeSlotTestProvider.timeSlot(EnumDays.MONDAY, 8, EnumPartsOfDay.AM, 9, EnumPartsOfDay.AM);
-        timeSlot2 = TimeSlotTestProvider.timeSlot(EnumDays.MONDAY, 9, EnumPartsOfDay.AM, 10, EnumPartsOfDay.AM);
+        timeSlot1 = TimeSlotTestProvider.timeSlot(DayOfWeek.MONDAY, 8, 9);
+        timeSlot2 = TimeSlotTestProvider.timeSlot(DayOfWeek.MONDAY, 9, 10);
 
     }
 

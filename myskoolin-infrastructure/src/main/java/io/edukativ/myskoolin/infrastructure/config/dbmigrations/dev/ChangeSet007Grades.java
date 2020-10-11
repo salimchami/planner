@@ -3,7 +3,6 @@ package io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev;
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
 import io.edukativ.myskoolin.infrastructure.commercial.ClientDbDTO;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSchoolClassNotation;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.MigrationTempData;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.dev.util.DevDbMigrationsConstants;
@@ -12,6 +11,7 @@ import io.edukativ.myskoolin.infrastructure.grades.GradeSerieDbVO;
 import io.edukativ.myskoolin.infrastructure.timetabling.TimeTableOptionsDbVO;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+import java.time.DayOfWeek;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.Collectors;
@@ -27,11 +27,11 @@ public class ChangeSet007Grades {
         final TimeTableOptionsDbVO timeTableOptions = ClientDbDTO.defaultTimeTableOptions();
         timeTableOptions.setCoursesTimeSlots(timeTableOptions.getCoursesTimeSlots()
                 .stream()
-                .filter(timeSlot -> !EnumDays.SATURDAY.equals(timeSlot.getDay()))
+                .filter(timeSlot -> !DayOfWeek.SATURDAY.equals(timeSlot.getDay()))
                 .collect(Collectors.toList()));
         timeTableOptions.setExtraActivities(timeTableOptions.getExtraActivities()
                 .stream()
-                .filter(timeSlot -> !EnumDays.SATURDAY.equals(timeSlot.getDay()))
+                .filter(timeSlot -> !DayOfWeek.SATURDAY.equals(timeSlot.getDay()))
                 .collect(Collectors.toList()));
         GradeDbDTO grade = new GradeDbDTO(DevDbMigrationsConstants.CLIENT_01_ID,
                 "Sixième",

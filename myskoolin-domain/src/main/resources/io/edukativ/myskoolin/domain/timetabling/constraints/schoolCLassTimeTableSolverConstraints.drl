@@ -35,6 +35,7 @@ end
 rule "Subject duration max by day"
     when
         $lesson : Lesson($timeslot1: timeSlot, $subject1: subject)
+        not(Lesson($timeslot1.equals(timeSlot)))
         $duplicates: List() from collect( Lesson( subject == $subject1 ) )
         $total : Integer() from
          accumulate ( Lesson($timeslot2: timeSlot, $subject2: subject, $subject2.equals($subject1), $timeslot1.day == $timeslot2.day),
@@ -42,5 +43,7 @@ rule "Subject duration max by day"
                 action(total+=($timeslot2.durationInMinutes());),
                 result( new Integer (total)))
     then
-        scoreHolder.penalize(kcontext,  $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue()) / $duplicates.size());
+        //scoreHolder.penalize(kcontext,  $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue()) / $duplicates.size());
+        scoreHolder.penalize(kcontext,  $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue()));
+        insert($timeslot1)
 end

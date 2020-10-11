@@ -67,7 +67,8 @@ export class TimetableSchoolClassesComponent implements OnInit, OnDestroy {
 
     gradeChange(grade: Grade) {
         this.schoolClassesStaticTimeSlots = [];
-        this.schoolClassesByGrade = this.schoolClasses.filter((schoolClass) => schoolClass.grade.id === grade.id);
+        this.schoolClassesByGrade = this.schoolClasses
+            .filter((schoolClass) => schoolClass.grade.id === grade.id);
     }
 
     schoolClassChange(schoolClass: SchoolClass) {

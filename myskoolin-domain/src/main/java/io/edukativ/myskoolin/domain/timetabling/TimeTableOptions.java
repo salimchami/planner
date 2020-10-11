@@ -1,8 +1,9 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
-import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -12,10 +13,10 @@ import java.util.stream.Collectors;
 public class TimeTableOptions {
 
     private Boolean schoolRoomsDistances = true;
-    private EnumDays firstWeekDay;
+    private DayOfWeek firstWeekDay;
     private BigDecimal surfaceMinPerStudent;
-    private Time coursesStartTime;
-    private Time coursesEndTime;
+    private LocalTime coursesStartTime;
+    private LocalTime coursesEndTime;
     private List<TimeSlot> coursesTimeSlots;
     private List<TimeSlot> extraActivities;
     private Integer calendarTimelineDuration;
@@ -23,8 +24,8 @@ public class TimeTableOptions {
     public TimeTableOptions() {
     }
 
-    public TimeTableOptions(Boolean schoolRoomsDistances, EnumDays firstWeekDay, BigDecimal surfaceMinPerStudent,
-                            Time coursesStartTime, Time coursesEndTime,
+    public TimeTableOptions(Boolean schoolRoomsDistances, DayOfWeek firstWeekDay, BigDecimal surfaceMinPerStudent,
+                            LocalTime coursesStartTime, LocalTime coursesEndTime,
                             List<TimeSlot> coursesTimeSlots, List<TimeSlot> extraActivities,
                             Integer calendarTimelineDuration) {
         this.schoolRoomsDistances = schoolRoomsDistances;
@@ -41,10 +42,8 @@ public class TimeTableOptions {
         this.schoolRoomsDistances = options.getSchoolRoomsDistances();
         this.firstWeekDay = options.getFirstWeekDay();
         this.surfaceMinPerStudent = options.getSurfaceMinPerStudent();
-        final Time optionsCoursesStartTime = options.getCoursesStartTime();
-        this.coursesStartTime = new Time(optionsCoursesStartTime.getHour(), optionsCoursesStartTime.getMinutes(), optionsCoursesStartTime.getSeconds(), optionsCoursesStartTime.getPartOfDay());
-        final Time optionsCoursesEndTime = options.getCoursesEndTime();
-        this.coursesEndTime = new Time(optionsCoursesEndTime.getHour(), optionsCoursesEndTime.getMinutes(), optionsCoursesEndTime.getSeconds(), optionsCoursesEndTime.getPartOfDay());
+        this.coursesStartTime = options.getCoursesStartTime();
+        this.coursesEndTime = options.getCoursesEndTime();
         this.coursesTimeSlots = new ArrayList<>(options.getCoursesTimeSlots());
         this.extraActivities = new ArrayList<>(options.getExtraActivities());
         this.calendarTimelineDuration = options.getCalendarTimelineDuration();
@@ -58,11 +57,11 @@ public class TimeTableOptions {
         this.schoolRoomsDistances = schoolRoomsDistances;
     }
 
-    public EnumDays getFirstWeekDay() {
+    public DayOfWeek getFirstWeekDay() {
         return firstWeekDay;
     }
 
-    public void setFirstWeekDay(EnumDays firstWeekDay) {
+    public void setFirstWeekDay(DayOfWeek firstWeekDay) {
         this.firstWeekDay = firstWeekDay;
     }
 
@@ -74,19 +73,19 @@ public class TimeTableOptions {
         this.surfaceMinPerStudent = surfaceMinPerStudent;
     }
 
-    public Time getCoursesStartTime() {
+    public LocalTime getCoursesStartTime() {
         return coursesStartTime;
     }
 
-    public void setCoursesStartTime(Time coursesStartTime) {
+    public void setCoursesStartTime(LocalTime coursesStartTime) {
         this.coursesStartTime = coursesStartTime;
     }
 
-    public Time getCoursesEndTime() {
+    public LocalTime getCoursesEndTime() {
         return coursesEndTime;
     }
 
-    public void setCoursesEndTime(Time coursesEndTime) {
+    public void setCoursesEndTime(LocalTime coursesEndTime) {
         this.coursesEndTime = coursesEndTime;
     }
 
@@ -128,8 +127,8 @@ public class TimeTableOptions {
         return Objects.hash(schoolRoomsDistances, firstWeekDay, surfaceMinPerStudent, coursesStartTime, coursesEndTime, coursesTimeSlots, calendarTimelineDuration);
     }
 
-    public Map<EnumDays, List<TimeSlot>> refCoursesByDay(List<EnumDays> withDays) {
-        Map<EnumDays, List<TimeSlot>> clientCoursesTimeSlotsPerDay = new EnumMap<>(EnumDays.class);
+    public Map<DayOfWeek, List<TimeSlot>> refCoursesByDay(List<DayOfWeek> withDays) {
+        Map<DayOfWeek, List<TimeSlot>> clientCoursesTimeSlotsPerDay = new EnumMap<>(DayOfWeek.class);
         withDays.forEach(day -> {
             final List<TimeSlot> timeSlots = coursesTimeSlots
                     .stream()
@@ -153,13 +152,13 @@ public class TimeTableOptions {
         this.extraActivities = extraActivities;
     }
 
-    public List<EnumDays> refDays() {
+    public List<DayOfWeek> refDays() {
         return coursesTimeSlots.stream().map(TimeSlot::getDay).distinct().collect(Collectors.toList());
     }
 
-    public Map<EnumDays, List<TimeSlot>> coursesTimeSlotsByDay() {
-        Map<EnumDays, List<TimeSlot>> clientCoursesTimeSlotsPerDay = new EnumMap<>(EnumDays.class);
-        Arrays.stream(EnumDays.values()).forEach(enumDays -> {
+    public Map<DayOfWeek, List<TimeSlot>> coursesTimeSlotsByDay() {
+        Map<DayOfWeek, List<TimeSlot>> clientCoursesTimeSlotsPerDay = new EnumMap<>(DayOfWeek.class);
+        Arrays.stream(DayOfWeek.values()).forEach(enumDays -> {
             final List<TimeSlot> timeSlots = coursesTimeSlots
                     .stream()
                     .filter(timeSlot -> enumDays.equals(timeSlot.getDay()))

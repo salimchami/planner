@@ -2,10 +2,10 @@ package io.edukativ.myskoolin.domain.providers;
 
 import io.edukativ.myskoolin.domain.commercial.Client;
 import io.edukativ.myskoolin.domain.grades.Grade;
-import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
 import io.edukativ.myskoolin.domain.schoolclasses.EnumSchoolClassNotation;
 import io.edukativ.myskoolin.domain.timetabling.TimeTableOptions;
 
+import java.time.DayOfWeek;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -50,7 +50,7 @@ public final class GradeTestProvider {
         TimeTableOptions options = new TimeTableOptions(clientTimeTableOptions);
         options.setCoursesTimeSlots(new ArrayList<>(clientTimeTableOptions.getCoursesTimeSlots()
                 .stream()
-                .filter(timeSlot -> !timeSlot.getDay().equals(EnumDays.SATURDAY)).collect(Collectors.toList())));
+                .filter(timeSlot -> !timeSlot.getDay().equals(DayOfWeek.SATURDAY)).collect(Collectors.toList())));
         return options;
     }
 

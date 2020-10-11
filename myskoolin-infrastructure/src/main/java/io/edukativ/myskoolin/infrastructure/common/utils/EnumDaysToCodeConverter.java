@@ -1,11 +1,12 @@
 package io.edukativ.myskoolin.infrastructure.common.utils;
 
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;
 
+import java.time.DayOfWeek;
+
 @WritingConverter
-public class EnumDaysToCodeConverter implements Converter<EnumDays, String> {
+public class EnumDaysToCodeConverter implements Converter<DayOfWeek, String> {
 
     public static final EnumDaysToCodeConverter INSTANCE = new EnumDaysToCodeConverter();
 
@@ -13,8 +14,8 @@ public class EnumDaysToCodeConverter implements Converter<EnumDays, String> {
     }
 
     @Override
-    public String convert(EnumDays source) {
-        return source == null ? "" : source.getCode();
+    public String convert(DayOfWeek source) {
+        return source == null ? "" : source.name();
     }
 
 }

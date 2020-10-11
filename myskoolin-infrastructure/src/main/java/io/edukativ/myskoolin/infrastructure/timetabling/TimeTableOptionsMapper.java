@@ -5,7 +5,6 @@ import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR, uses = {
-        TimeMapper.class,
         TimeSlotMapper.class
 })
 public interface TimeTableOptionsMapper {

@@ -1,8 +1,9 @@
 package io.edukativ.myskoolin.infrastructure.timetabling;
 
-import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
 
 import java.io.Serializable;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 
 public class TimeSlotVO implements Serializable {
@@ -12,9 +13,9 @@ public class TimeSlotVO implements Serializable {
     private String secondTitle;
     private String comment;
     private Boolean canceled;
-    private EnumDays day;
-    private TimeVO startTime;
-    private TimeVO endTime;
+    private DayOfWeek day;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private ZonedDateTime date;
     private String bgColor;
     private String fontColorCssClass;
@@ -61,27 +62,27 @@ public class TimeSlotVO implements Serializable {
         this.canceled = canceled;
     }
 
-    public EnumDays getDay() {
+    public DayOfWeek getDay() {
         return day;
     }
 
-    public void setDay(EnumDays day) {
+    public void setDay(DayOfWeek day) {
         this.day = day;
     }
 
-    public TimeVO getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(TimeVO startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public TimeVO getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(TimeVO endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 

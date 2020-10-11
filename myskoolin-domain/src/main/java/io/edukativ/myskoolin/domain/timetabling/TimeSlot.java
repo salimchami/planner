@@ -1,12 +1,8 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
-import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
 import org.optaplanner.core.api.domain.lookup.PlanningId;
 
-import java.time.DayOfWeek;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,9 +16,9 @@ public class TimeSlot implements Comparable<TimeSlot> {
     private String secondTitle;
     private String comment;
     private Boolean canceled;
-    private EnumDays day;
-    private Time startTime;
-    private Time endTime;
+    private DayOfWeek day;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private ZonedDateTime date;
     private String bgColor;
     private String fontColorCssClass;
@@ -32,7 +28,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
     public TimeSlot() {
     }
 
-    public TimeSlot(Long id, String courseTitle, EnumDays day, Time startTime, Time endTime, String bgColor, String fontColorCssClass) {
+    public TimeSlot(Long id, String courseTitle, DayOfWeek day, LocalTime startTime, LocalTime endTime, String bgColor, String fontColorCssClass) {
         this.id = id;
         this.title = courseTitle;
         this.day = day;
@@ -42,13 +38,13 @@ public class TimeSlot implements Comparable<TimeSlot> {
         this.fontColorCssClass = fontColorCssClass;
     }
 
-    public TimeSlot(EnumDays day, Time startTime, Time endTime) {
+    public TimeSlot(DayOfWeek day, LocalTime startTime, LocalTime endTime) {
         this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public TimeSlot(Long id, EnumDays day, Time startTime, Time endTime) {
+    public TimeSlot(Long id, DayOfWeek day, LocalTime startTime, LocalTime endTime) {
         this.id = id;
         this.day = day;
         this.startTime = startTime;
@@ -85,30 +81,6 @@ public class TimeSlot implements Comparable<TimeSlot> {
 
     public void setCanceled(Boolean canceled) {
         this.canceled = canceled;
-    }
-
-    public EnumDays getDay() {
-        return day;
-    }
-
-    public void setDay(EnumDays day) {
-        this.day = day;
-    }
-
-    public Time getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
-    }
-
-    public Time getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Time endTime) {
-        this.endTime = endTime;
     }
 
     public ZonedDateTime getDate() {
@@ -151,6 +123,30 @@ public class TimeSlot implements Comparable<TimeSlot> {
         this.half = half;
     }
 
+    public DayOfWeek getDay() {
+        return day;
+    }
+
+    public void setDay(DayOfWeek day) {
+        this.day = day;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -177,11 +173,11 @@ public class TimeSlot implements Comparable<TimeSlot> {
     //####################################################################################################
 
     public boolean hasSameTimes(TimeSlot timeSlot) {
-        return this.startTime.equals(timeSlot.getStartTime()) || this.endTime.equals(timeSlot.getEndTime());
+        return this.startTime.equals(timeSlot.startTime) || this.endTime.equals(timeSlot.endTime);
     }
 
     public Long durationInMinutes() {
-        return Duration.between(startTime.toLocalTime(), endTime.toLocalTime()).toMinutes();
+        return Duration.between(startTime, endTime).toMinutes();
     }
 
     //
@@ -191,8 +187,8 @@ public class TimeSlot implements Comparable<TimeSlot> {
 //        }
 //        for (TimeSlot timeSlot : staticTimeSlotsForDate) {
 //            if (this.hasSameTimes(timeSlot) || this.hasSamePartsOfTime(timeSlot) || this.isInside(timeSlot) || this.isIncluding(timeSlot) ||
-//                    (this.startTime.toLocalTime().isBefore(timeSlot.getEndTime().toLocalTime())
-//                            && this.endTime.toLocalTime().isAfter(timeSlot.getEndTime().toLocalTime()))) {
+//                    (this.startTime.isBefore(timeSlot.endTime)
+//                            && this.endTime.isAfter(timeSlot.endTime))) {
 //                return true;
 //            }
 //        }
@@ -209,7 +205,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
 //    }
 //
     public boolean isOverlapping(TimeSlot timeSlot) {
-        if (this.day != timeSlot.getDay()) {
+        if (this.day != timeSlot.day) {
             return false;
         }
         final boolean sameTimes = hasSameTimes(timeSlot);
@@ -224,17 +220,17 @@ public class TimeSlot implements Comparable<TimeSlot> {
     }
 
     public Long overlappingGap(TimeSlot timeSlot) {
-        if (this.day == timeSlot.getDay()) {
+        if (this.day == timeSlot.day) {
             if (isIncluding(timeSlot)) {
-                return Duration.between(this.startTime.toLocalTime(), timeSlot.startTime.toLocalTime()).toMinutes()
-                        + Duration.between(this.endTime.toLocalTime(), timeSlot.endTime.toLocalTime()).toMinutes();
+                return Duration.between(this.startTime, timeSlot.startTime).toMinutes()
+                        + Duration.between(this.endTime, timeSlot.endTime).toMinutes();
             } else if (timeSlot.isIncluding(this)) {
-                return Duration.between(timeSlot.startTime.toLocalTime(), this.startTime.toLocalTime()).toMinutes()
-                        + Duration.between(timeSlot.endTime.toLocalTime(), this.endTime.toLocalTime()).toMinutes();
+                return Duration.between(timeSlot.startTime, this.startTime).toMinutes()
+                        + Duration.between(timeSlot.endTime, this.endTime).toMinutes();
             } else if (isBefore(timeSlot)) {
-                return Duration.between(this.startTime.toLocalTime(), timeSlot.startTime.toLocalTime()).toMinutes();
+                return Duration.between(this.startTime, timeSlot.startTime).toMinutes();
             } else if (timeSlot.isBefore(this)) {
-                return Duration.between(timeSlot.startTime.toLocalTime(), this.startTime.toLocalTime()).toMinutes();
+                return Duration.between(timeSlot.startTime, this.startTime).toMinutes();
             } else if(!this.id.equals(timeSlot.id) && hasSameTimes(timeSlot)) {
                 return durationInMinutes();
             }
@@ -244,27 +240,27 @@ public class TimeSlot implements Comparable<TimeSlot> {
     }
 
     private boolean standardOverlapping(TimeSlot timeSlot) {
-        return this.startTime.toLocalTime().isBefore(timeSlot.getEndTime().toLocalTime())
-                && this.endTime.toLocalTime().isAfter(timeSlot.getStartTime().toLocalTime());
+        return this.startTime.isBefore(timeSlot.endTime)
+                && this.endTime.isAfter(timeSlot.startTime);
     }
 
     private boolean isIncluding(TimeSlot timeSlot) {
-        return this.getStartTime().toLocalTime().isBefore(timeSlot.getStartTime().toLocalTime())
-                && this.getEndTime().toLocalTime().isAfter(timeSlot.getEndTime().toLocalTime());
+        return this.startTime.isBefore(timeSlot.startTime)
+                && this.endTime.isAfter(timeSlot.endTime);
     }
 
     //
     private boolean isInside(TimeSlot timeSlot) {
-        return this.getStartTime().toLocalTime().isAfter(timeSlot.getStartTime().toLocalTime())
-                && this.getEndTime().toLocalTime().isBefore(timeSlot.getEndTime().toLocalTime());
+        return this.startTime.isAfter(timeSlot.startTime)
+                && this.endTime.isBefore(timeSlot.endTime);
     }
 
     //    public boolean hasSamePartsOfTime(TimeSlot timeSlot) {
-//        return (this.getStartTime().getHour().equals(timeSlot.getStartTime().getHour())
-//                && this.getStartTime().getMinutes().equals(timeSlot.getStartTime().getMinutes()))
+//        return (this.startTime.getHour().equals(timeSlot.startTime.getHour())
+//                && this.startTime.getMinutes().equals(timeSlot.startTime.getMinutes()))
 //                ||
-//                (this.getEndTime().getHour().equals(timeSlot.getEndTime().getHour())
-//                        && this.getEndTime().getMinutes().equals(timeSlot.getEndTime().getMinutes()));
+//                (this.endTime.getHour().equals(timeSlot.endTime.getHour())
+//                        && this.endTime.getMinutes().equals(timeSlot.endTime.getMinutes()));
 //    }
 //
 //    public boolean isOverlappingRefTimeBreaks(EnumDays day, List<TimeSlot> refCourses, Time refCoursesStartTime, Time refCoursesEndTime) {
@@ -278,22 +274,22 @@ public class TimeSlot implements Comparable<TimeSlot> {
 //    }
 //
 //    public static List<TimeSlot> searchForTimeBreaks(EnumDays day, List<TimeSlot> refCourses, Time refCoursesStartTime, Time refCoursesEndTime) {
-//        refCourses.sort(comparing(timeSlot -> timeSlot.getStartTime().toLocalTime()));
+//        refCourses.sort(comparing(timeSlot -> timeSlot.startTime));
 //        List<TimeSlot> timeBreaks = new ArrayList<>();
-//        if (!refCourses.isEmpty() && !refCoursesStartTime.toLocalTime().equals(refCourses.get(0).getStartTime().toLocalTime())) {
+//        if (!refCourses.isEmpty() && !refCoursesStartTime.equals(refCourses.get(0).startTime)) {
 //            TimeSlot firstRefCourse = refCourses.get(0);
-//            timeBreaks.add(new TimeSlot(day, refCoursesStartTime, firstRefCourse.getEndTime()));
+//            timeBreaks.add(new TimeSlot(day, refCoursesStartTime, firstRefCourse.endTime));
 //        }
-//        if (!refCourses.isEmpty() && !refCoursesEndTime.toLocalTime().equals(refCourses.get(refCourses.size() - 1).getEndTime().toLocalTime())) {
+//        if (!refCourses.isEmpty() && !refCoursesEndTime.equals(refCourses.get(refCourses.size() - 1).endTime)) {
 //            TimeSlot lastRefCourse = refCourses.get(refCourses.size() - 1);
-//            timeBreaks.add(new TimeSlot(day, lastRefCourse.getEndTime(), refCoursesEndTime));
+//            timeBreaks.add(new TimeSlot(day, lastRefCourse.endTime, refCoursesEndTime));
 //        }
 //        for (int i = 0; i < refCourses.size(); i++) {
 //            TimeSlot firstTimeSlot = refCourses.get(i);
 //            if (refCourses.size() >= i + 2) {
 //                TimeSlot nextTimeSlot = refCourses.get(i + 1);
-//                if (!nextTimeSlot.getStartTime().equals(firstTimeSlot.getEndTime())) {
-//                    timeBreaks.add(new TimeSlot(day, firstTimeSlot.getEndTime(), nextTimeSlot.getStartTime()));
+//                if (!nextTimeSlot.startTime.equals(firstTimeSlot.endTime)) {
+//                    timeBreaks.add(new TimeSlot(day, firstTimeSlot.endTime, nextTimeSlot.startTime));
 //                }
 //            }
 //        }
@@ -323,7 +319,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
         this.id = id;
     }
 
-    public boolean isOverlappingTimeSlots(EnumDays day, List<TimeSlot> timeSlots) {
+    public boolean isOverlappingTimeSlots(DayOfWeek day, List<TimeSlot> timeSlots) {
         return timeSlots.stream()
                 .filter(timeSlot -> timeSlot.day.equals(day))
                 .anyMatch(this::isOverlapping);
@@ -338,8 +334,8 @@ public class TimeSlot implements Comparable<TimeSlot> {
 
     boolean isBefore(TimeSlot timeSlot) {
         final ZonedDateTime now = ZonedDateTime.now();
-        final Instant instant1 = this.getStartTime().toInstant(DayOfWeek.valueOf(this.getDay().name()), now);
-        final Instant instant2 = timeSlot.getStartTime().toInstant(DayOfWeek.valueOf(timeSlot.getDay().name()), now);
+        final Instant instant1 = LocalDateTime.of(now.getYear(), now.getMonth(), day.getValue(), startTime.getHour(), startTime.getMinute()).toInstant(ZoneOffset.UTC);
+        final Instant instant2 = LocalDateTime.of(now.getYear(), now.getMonth(), timeSlot.day.getValue(), timeSlot.startTime.getHour(), timeSlot.startTime.getMinute()).toInstant(ZoneOffset.UTC);
         return instant1.isBefore(instant2);
     }
 

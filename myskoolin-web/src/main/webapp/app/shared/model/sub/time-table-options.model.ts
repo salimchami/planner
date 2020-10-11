@@ -1,6 +1,6 @@
-import {Time} from './time.model';
 import {Timeslot} from './timeslot.model';
 import {WeekDay} from './week-day.model';
+import {Time} from "@angular/common";
 
 export class TimeTableOptions {
     constructor(

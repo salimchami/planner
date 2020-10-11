@@ -1,13 +1,13 @@
 package io.edukativ.myskoolin.infrastructure.timetabling;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
-import io.edukativ.myskoolin.infrastructure.common.vo.TimeDbVO;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.DayOfWeek;
 import java.time.Duration;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,15 +55,15 @@ public class TimeSlotDbVO implements Serializable {
 
     @NotNull
     @Field(MONGO_FIELD_DAY)
-    private EnumDays day;
+    private DayOfWeek day;
 
     @NotNull
     @Field(MONGO_FIELD_START_TIME)
-    private TimeDbVO startTime;
+    private LocalTime startTime;
 
     @NotNull
     @Field(MONGO_FIELD_END_TIME)
-    private TimeDbVO endTime;
+    private LocalTime endTime;
 
     @Field(MONGO_FIELD_DATE)
     private ZonedDateTime date;
@@ -87,7 +87,7 @@ public class TimeSlotDbVO implements Serializable {
         autoAlterable = false;
     }
 
-    public TimeSlotDbVO(EnumDays day, TimeDbVO startTime, TimeDbVO endTime) {
+    public TimeSlotDbVO(DayOfWeek day, LocalTime startTime, LocalTime endTime) {
         this.canceled = false;
         this.day = day;
         this.startTime = startTime;
@@ -95,7 +95,7 @@ public class TimeSlotDbVO implements Serializable {
         autoAlterable = false;
     }
 
-    public TimeSlotDbVO(EnumDays day, TimeDbVO startTime, TimeDbVO endTime, boolean half) {
+    public TimeSlotDbVO(DayOfWeek day, LocalTime startTime, LocalTime endTime, boolean half) {
         this.half = half;
         this.canceled = false;
         this.day = day;
@@ -104,7 +104,7 @@ public class TimeSlotDbVO implements Serializable {
         autoAlterable = false;
     }
 
-    public TimeSlotDbVO(String title, EnumDays day, TimeDbVO startTime, TimeDbVO endTime, String bgColor, String fontColorCssClass, boolean autoAlterable) {
+    public TimeSlotDbVO(String title, DayOfWeek day, LocalTime startTime, LocalTime endTime, String bgColor, String fontColorCssClass, boolean autoAlterable) {
         this(day, startTime, endTime);
         this.title = title;
         this.bgColor = bgColor;
@@ -112,12 +112,12 @@ public class TimeSlotDbVO implements Serializable {
         this.autoAlterable = autoAlterable;
     }
 
-    public TimeSlotDbVO(String title, EnumDays day, TimeDbVO startTime, TimeDbVO endTime, String bgColor, String fontColorCssClass) {
+    public TimeSlotDbVO(String title, DayOfWeek day, LocalTime startTime, LocalTime endTime, String bgColor, String fontColorCssClass) {
         this(title, day, startTime, endTime, bgColor, fontColorCssClass, false);
     }
 
-    public TimeSlotDbVO(String title, String secondTitle, String comment, Boolean canceled, EnumDays day, TimeDbVO startTime,
-                        TimeDbVO endTime, ZonedDateTime date, String bgColor, String fontColorCssClass, Boolean autoAlterable, boolean half) {
+    public TimeSlotDbVO(String title, String secondTitle, String comment, Boolean canceled, DayOfWeek day, LocalTime startTime,
+                        LocalTime endTime, ZonedDateTime date, String bgColor, String fontColorCssClass, Boolean autoAlterable, boolean half) {
         this(title, day, startTime, endTime, bgColor, fontColorCssClass, autoAlterable);
         this.secondTitle = secondTitle;
         this.comment = comment;
@@ -176,27 +176,27 @@ public class TimeSlotDbVO implements Serializable {
         this.canceled = canceled;
     }
 
-    public EnumDays getDay() {
+    public DayOfWeek getDay() {
         return day;
     }
 
-    public void setDay(EnumDays day) {
+    public void setDay(DayOfWeek day) {
         this.day = day;
     }
 
-    public TimeDbVO getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(TimeDbVO startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public TimeDbVO getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(TimeDbVO endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
@@ -286,17 +286,17 @@ public class TimeSlotDbVO implements Serializable {
 
 
     public Long durationInMinutes() {
-        return Duration.between(startTime.toLocalTime(), endTime.toLocalTime()).toMinutes();
+        return Duration.between(startTime, endTime).toMinutes();
     }
 
-    public boolean isOverlapping(EnumDays day, List<TimeSlotDbVO> staticTimeSlotsForDate) {
+    public boolean isOverlapping(DayOfWeek day, List<TimeSlotDbVO> staticTimeSlotsForDate) {
         if(this.day != day) {
             return false;
         }
         for (TimeSlotDbVO timeSlot : staticTimeSlotsForDate) {
             if (this.hasSameTimes(timeSlot) || this.hasSamePartsOfTime(timeSlot) || this.isInside(timeSlot) || this.isIncluding(timeSlot) ||
-                    (this.startTime.toLocalTime().isBefore(timeSlot.getEndTime().toLocalTime())
-                            && this.endTime.toLocalTime().isAfter(timeSlot.getEndTime().toLocalTime()))) {
+                    (this.startTime.isBefore(timeSlot.getEndTime())
+                            && this.endTime.isAfter(timeSlot.getEndTime()))) {
                 return true;
             }
         }
@@ -315,29 +315,29 @@ public class TimeSlotDbVO implements Serializable {
     }
 
     private boolean standardOverlapping(TimeSlotDbVO timeSlot) {
-        return this.startTime.toLocalTime().isBefore(timeSlot.getEndTime().toLocalTime())
-                && this.endTime.toLocalTime().isAfter(timeSlot.getStartTime().toLocalTime());
+        return this.startTime.isBefore(timeSlot.getEndTime())
+                && this.endTime.isAfter(timeSlot.getStartTime());
     }
 
     private boolean isIncluding(TimeSlotDbVO timeSlot) {
-        return this.getStartTime().toLocalTime().isBefore(timeSlot.getStartTime().toLocalTime())
-                && this.getEndTime().toLocalTime().isAfter(timeSlot.getEndTime().toLocalTime());
+        return this.getStartTime().isBefore(timeSlot.getStartTime())
+                && this.getEndTime().isAfter(timeSlot.getEndTime());
     }
 
     private boolean isInside(TimeSlotDbVO timeSlot) {
-        return this.getStartTime().toLocalTime().isAfter(timeSlot.getStartTime().toLocalTime())
-                && this.getEndTime().toLocalTime().isBefore(timeSlot.getEndTime().toLocalTime());
+        return this.getStartTime().isAfter(timeSlot.getStartTime())
+                && this.getEndTime().isBefore(timeSlot.getEndTime());
     }
 
     public boolean hasSamePartsOfTime(TimeSlotDbVO timeSlot) {
-        return (this.getStartTime().getHour().equals(timeSlot.getStartTime().getHour())
-                && this.getStartTime().getMinutes().equals(timeSlot.getStartTime().getMinutes()))
+        return (this.getStartTime().getHour() == timeSlot.getStartTime().getHour()
+                && this.getStartTime().getMinute() == timeSlot.getStartTime().getMinute())
                 ||
-                (this.getEndTime().getHour().equals(timeSlot.getEndTime().getHour())
-                        && this.getEndTime().getMinutes().equals(timeSlot.getEndTime().getMinutes()));
+                (this.getEndTime().getHour() == timeSlot.getEndTime().getHour()
+                        && this.getEndTime().getMinute() == timeSlot.getEndTime().getMinute());
     }
 
-    public boolean isOverlappingRefTimeBreaks(EnumDays day, List<TimeSlotDbVO> refCourses, TimeDbVO refCoursesStartTime, TimeDbVO refCoursesEndTime) {
+    public boolean isOverlappingRefTimeBreaks(DayOfWeek day, List<TimeSlotDbVO> refCourses, LocalTime refCoursesStartTime, LocalTime refCoursesEndTime) {
         final List<TimeSlotDbVO> timeBreaks = searchForTimeBreaks(day, refCourses, refCoursesStartTime, refCoursesEndTime);
         for (TimeSlotDbVO timeBreak : timeBreaks) {
             if (this.isOverlapping(timeBreak)) {
@@ -347,14 +347,14 @@ public class TimeSlotDbVO implements Serializable {
         return false;
     }
 
-    public static List<TimeSlotDbVO> searchForTimeBreaks(EnumDays day, List<TimeSlotDbVO> refCourses, TimeDbVO refCoursesStartTime, TimeDbVO refCoursesEndTime) {
-        refCourses.sort(comparing(timeSlot -> timeSlot.getStartTime().toLocalTime()));
+    public static List<TimeSlotDbVO> searchForTimeBreaks(DayOfWeek day, List<TimeSlotDbVO> refCourses, LocalTime refCoursesStartTime, LocalTime refCoursesEndTime) {
+        refCourses.sort(comparing(timeSlot -> timeSlot.getStartTime()));
         List<TimeSlotDbVO> timeBreaks = new ArrayList<>();
-        if (!refCourses.isEmpty() && !refCoursesStartTime.toLocalTime().equals(refCourses.get(0).getStartTime().toLocalTime())) {
+        if (!refCourses.isEmpty() && !refCoursesStartTime.equals(refCourses.get(0).getStartTime())) {
             TimeSlotDbVO firstRefCourse = refCourses.get(0);
             timeBreaks.add(new TimeSlotDbVO(day, refCoursesStartTime, firstRefCourse.getEndTime()));
         }
-        if (!refCourses.isEmpty() && !refCoursesEndTime.toLocalTime().equals(refCourses.get(refCourses.size() - 1).getEndTime().toLocalTime())) {
+        if (!refCourses.isEmpty() && !refCoursesEndTime.equals(refCourses.get(refCourses.size() - 1).getEndTime())) {
             TimeSlotDbVO lastRefCourse = refCourses.get(refCourses.size() - 1);
             timeBreaks.add(new TimeSlotDbVO(day, lastRefCourse.getEndTime(), refCoursesEndTime));
         }
@@ -378,7 +378,7 @@ public class TimeSlotDbVO implements Serializable {
         this.half = half;
     }
 
-    public boolean isOverlappingSchoolClassTimeSlots(EnumDays day, List<TimeSlotDbVO> schoolClassTimeSlots) {
+    public boolean isOverlappingSchoolClassTimeSlots(DayOfWeek day, List<TimeSlotDbVO> schoolClassTimeSlots) {
         return isOverlapping(day, schoolClassTimeSlots.stream().map(TimeSlotDbVO::new).collect(Collectors.toList()));
     }
 }

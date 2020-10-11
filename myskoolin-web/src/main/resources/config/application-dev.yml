@@ -23,7 +23,7 @@ logging:
 optaplanner:
     solver:
         termination:
-            spent-limit: 110s
+            spent-limit: 600s
 
 eureka:
   instance:

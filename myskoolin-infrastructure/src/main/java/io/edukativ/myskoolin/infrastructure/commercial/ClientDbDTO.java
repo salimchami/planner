@@ -1,9 +1,10 @@
 package io.edukativ.myskoolin.infrastructure.commercial;
 
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumContactsBy;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumPartsOfDay;
-import io.edukativ.myskoolin.infrastructure.common.vo.*;
+import io.edukativ.myskoolin.infrastructure.common.vo.AddressDbVO;
+import io.edukativ.myskoolin.infrastructure.common.vo.EmailDbVO;
+import io.edukativ.myskoolin.infrastructure.common.vo.PhoneDbVO;
+import io.edukativ.myskoolin.infrastructure.common.vo.WebsiteDbVO;
 import io.edukativ.myskoolin.infrastructure.timetabling.TimeSlotDbVO;
 import io.edukativ.myskoolin.infrastructure.timetabling.TimeTableOptionsDbVO;
 import org.bson.types.ObjectId;
@@ -13,6 +14,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -359,11 +362,11 @@ public class ClientDbDTO implements Serializable {
         String courseTitle = "timetable.common.course-period";
         String bgColor = "#31708f";
         String fontColorCssClass = "#FFFFFF";
-        Arrays.stream(EnumDays.values()).forEach(enumDays -> {
-            if (!enumDays.equals(EnumDays.SATURDAY) && !enumDays.equals(EnumDays.SUNDAY) && !enumDays.equals(EnumDays.WEDNESDAY)) {
+        Arrays.stream(DayOfWeek.values()).forEach(enumDays -> {
+            if (!enumDays.equals(DayOfWeek.SATURDAY) && !enumDays.equals(DayOfWeek.SUNDAY) && !enumDays.equals(DayOfWeek.WEDNESDAY)) {
                 addAmCourses(courses, courseTitle, bgColor, fontColorCssClass, enumDays);
                 addPmCourses(courses, courseTitle, bgColor, fontColorCssClass, enumDays);
-            } else if (enumDays.equals(EnumDays.SATURDAY) || enumDays.equals(EnumDays.WEDNESDAY)) {
+            } else if (enumDays.equals(DayOfWeek.SATURDAY) || enumDays.equals(DayOfWeek.WEDNESDAY)) {
                 addAmCourses(courses, courseTitle, bgColor, fontColorCssClass, enumDays);
             }
         });
@@ -375,54 +378,55 @@ public class ClientDbDTO implements Serializable {
         String courseTitle = "timetable.common.extra-activity-period";
         String bgColor = "#cfe0cbff";
         String fontColorCssClass = "#333366";
-        Arrays.stream(EnumDays.values()).forEach(enumDays -> {
-            if (enumDays.equals(EnumDays.SATURDAY) || enumDays.equals(EnumDays.WEDNESDAY)) {
+        Arrays.stream(DayOfWeek.values()).forEach(enumDays -> {
+            if (enumDays.equals(DayOfWeek.SATURDAY) || enumDays.equals(DayOfWeek.WEDNESDAY)) {
                 addPmExtraActivities(extraActivities, courseTitle, bgColor, fontColorCssClass, enumDays);
             }
         });
         return extraActivities;
     }
 
-    private static void addPmExtraActivities(List<TimeSlotDbVO> courses, String courseTitle, String bgColor, String fontColorCssClass, EnumDays enumDays) {
+    private static void addPmExtraActivities(List<TimeSlotDbVO> courses, String courseTitle, String bgColor, String fontColorCssClass, DayOfWeek enumDays) {
         courses.add(new TimeSlotDbVO(courseTitle, enumDays,
-                new TimeDbVO(13, 0, 0, EnumPartsOfDay.PM),
-                new TimeDbVO(18, 30, 0, EnumPartsOfDay.PM), bgColor, fontColorCssClass));
+                LocalTime.of(13, 0, 0),
+                LocalTime.of(18, 30, 0), bgColor, fontColorCssClass));
     }
 
-    private static void addPmCourses(List<TimeSlotDbVO> courses, String courseTitle, String bgColor, String fontColorCssClass, EnumDays enumDays) {
+    private static void addPmCourses(List<TimeSlotDbVO> courses, String courseTitle, String bgColor, String fontColorCssClass,
+                                     DayOfWeek enumDays) {
         courses.add(new TimeSlotDbVO(courseTitle, enumDays,
-                new TimeDbVO(14, 0, 0, EnumPartsOfDay.PM),
-                new TimeDbVO(15, 0, 0, EnumPartsOfDay.PM), bgColor, fontColorCssClass));
+                LocalTime.of(14, 0, 0),
+                LocalTime.of(15, 0, 0), bgColor, fontColorCssClass));
         courses.add(new TimeSlotDbVO(courseTitle, enumDays,
-                new TimeDbVO(15, 0, 0, EnumPartsOfDay.PM),
-                new TimeDbVO(16, 0, 0, EnumPartsOfDay.PM), bgColor, fontColorCssClass));
+                LocalTime.of(15, 0, 0),
+                LocalTime.of(16, 0, 0), bgColor, fontColorCssClass));
         courses.add(new TimeSlotDbVO(courseTitle, enumDays,
-                new TimeDbVO(16, 0, 0, EnumPartsOfDay.PM),
-                new TimeDbVO(17, 0, 0, EnumPartsOfDay.PM), bgColor, fontColorCssClass));
+                LocalTime.of(16, 0, 0),
+                LocalTime.of(17, 0, 0), bgColor, fontColorCssClass));
         courses.add(new TimeSlotDbVO(courseTitle, enumDays,
-                new TimeDbVO(17, 0, 0, EnumPartsOfDay.PM),
-                new TimeDbVO(18, 0, 0, EnumPartsOfDay.PM), bgColor, fontColorCssClass));
+                LocalTime.of(17, 0, 0),
+                LocalTime.of(18, 0, 0), bgColor, fontColorCssClass));
     }
 
-    private static void addAmCourses(List<TimeSlotDbVO> courses, String courseTitle, String bgColor, String fontColorCssClass, EnumDays enumDays) {
+    private static void addAmCourses(List<TimeSlotDbVO> courses, String courseTitle, String bgColor, String fontColorCssClass, DayOfWeek enumDays) {
         courses.add(new TimeSlotDbVO(courseTitle, enumDays,
-                new TimeDbVO(8, 0, 0, EnumPartsOfDay.AM),
-                new TimeDbVO(9, 0, 0, EnumPartsOfDay.AM), bgColor, fontColorCssClass));
+                LocalTime.of(8, 0, 0),
+                LocalTime.of(9, 0, 0), bgColor, fontColorCssClass));
         courses.add(new TimeSlotDbVO(courseTitle, enumDays,
-                new TimeDbVO(9, 0, 0, EnumPartsOfDay.AM),
-                new TimeDbVO(10, 0, 0, EnumPartsOfDay.AM), bgColor, fontColorCssClass));
+                LocalTime.of(9, 0, 0),
+                LocalTime.of(10, 0, 0), bgColor, fontColorCssClass));
         courses.add(new TimeSlotDbVO(courseTitle, enumDays,
-                new TimeDbVO(10, 0, 0, EnumPartsOfDay.AM),
-                new TimeDbVO(11, 0, 0, EnumPartsOfDay.AM), bgColor, fontColorCssClass));
+                LocalTime.of(10, 0, 0),
+                LocalTime.of(11, 0, 0), bgColor, fontColorCssClass));
         courses.add(new TimeSlotDbVO(courseTitle, enumDays,
-                new TimeDbVO(11, 0, 0, EnumPartsOfDay.AM),
-                new TimeDbVO(12, 0, 0, EnumPartsOfDay.PM), bgColor, fontColorCssClass));
+                LocalTime.of(11, 0, 0),
+                LocalTime.of(12, 0, 0), bgColor, fontColorCssClass));
     }
 
     public static TimeTableOptionsDbVO defaultTimeTableOptions() {
-        return new TimeTableOptionsDbVO(true, EnumDays.MONDAY, BigDecimal.valueOf(2L),
-                new TimeDbVO(8, 0, 0, EnumPartsOfDay.AM),
-                new TimeDbVO(18, 0, 0, EnumPartsOfDay.PM),
+        return new TimeTableOptionsDbVO(true, DayOfWeek.MONDAY, BigDecimal.valueOf(2L),
+                LocalTime.of(8, 0, 0),
+                LocalTime.of(18, 0, 0),
                 defaultCoursesTimeSlots(), defaultExtraActivities(), 30);
     }
 }

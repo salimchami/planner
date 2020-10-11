@@ -126,7 +126,7 @@
                      [container]="'body'"
                 >
                     <ng-template #popTitle class="text-center">
-                        <strong> {{dateTimeHelper.twoDigitTimeFormat(weekEvent?.event?.lesson?.timeSlot?.startTime.hour, weekEvent?.event?.lesson?.timeSlot?.startTime.minutes)}} - {{dateTimeHelper.twoDigitTimeFormat(weekEvent?.event?.lesson?.timeSlot?.endTime.hour, weekEvent?.event?.lesson?.timeSlot?.endTime.minutes)}}</strong>
+                        <strong> {{weekEvent?.event?.lesson?.timeSlot?.startTime}} - {{weekEvent?.event?.lesson?.timeSlot?.endTime}}</strong>
                     </ng-template>
                     <ng-template #popContent let-event="event">
                         <div><span jhiTranslate="timetable.list.tabs.schoolClasses.timeslot-subject"></span> : <strong><span class="float-right">{{weekEvent.event.lesson.timeSlot.title}}</span></strong></div>
@@ -142,7 +142,7 @@
             </ng-template>
             <ng-template #eventTitleTemplate let-event="event">
                 <div [style.color]="event['fontColor']">
-                    <strong> {{dateTimeHelper.twoDigitTimeFormat(event.lesson?.timeSlot?.startTime.hour, event.lesson?.timeSlot?.startTime.minutes)}} - {{dateTimeHelper.twoDigitTimeFormat(event.lesson?.timeSlot?.endTime.hour, event.lesson?.timeSlot?.endTime.minutes)}} <span class="float-right schoolRoom-timeSlot">{{schoolRoomNameFromLesson(event.lesson)}}</span></strong>
+                    <strong> {{event.lesson?.timeSlot?.startTime}} - {{event.lesson?.timeSlot?.endTime}} <span class="float-right schoolRoom-timeSlot">{{schoolRoomNameFromLesson(event.lesson)}}</span></strong>
                     <br />
                     <span class="text-center">{{event.lesson.timeSlot.title}}</span>
                     <br />

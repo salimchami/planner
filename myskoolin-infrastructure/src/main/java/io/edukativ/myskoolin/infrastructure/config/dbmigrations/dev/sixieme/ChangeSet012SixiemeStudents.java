@@ -6,7 +6,6 @@ import com.google.common.collect.Sets;
 import io.edukativ.myskoolin.domain.commons.AuthoritiesConstants;
 import io.edukativ.myskoolin.infrastructure.app.dto.UserDbDTO;
 import io.edukativ.myskoolin.infrastructure.canteen.CanteenRegistrationDbVO;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
 import io.edukativ.myskoolin.infrastructure.common.enums.EnumSex;
 import io.edukativ.myskoolin.infrastructure.common.vo.AddressDbVO;
 import io.edukativ.myskoolin.infrastructure.config.dbmigrations.DbMigrationsConstants;
@@ -23,6 +22,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.DayOfWeek;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
@@ -261,8 +261,7 @@ public class ChangeSet012SixiemeStudents {
     }
 
     private CanteenRegistrationDbVO createCanteenRegistration() {
-        return new CanteenRegistrationDbVO(true, false, true, false, Arrays.asList(EnumDays.MONDAY, EnumDays.TUESDAY,
-                EnumDays.WEDNESDAY, EnumDays.THURSDAY, EnumDays.FRIDAY),
+        return new CanteenRegistrationDbVO(true, false, true, false, Arrays.asList(DayOfWeek.values()),
                 ZonedDateTime.of(2018, 9, 1, 0, 0, 0, 0, ZoneId.systemDefault()),
                 ZonedDateTime.of(2019, 7, 31, 0, 0, 0, 0, ZoneId.systemDefault())
         );

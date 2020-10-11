@@ -1,18 +1,17 @@
 package io.edukativ.myskoolin.domain.timetabling.solving;
 
-import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
-import io.edukativ.myskoolin.domain.commons.vo.EnumPartsOfDay;
 import io.edukativ.myskoolin.domain.providers.GlobalTestProvider;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.timetabling.Lesson;
 import io.edukativ.myskoolin.domain.timetabling.SchoolClassTimeTable;
-import io.edukativ.myskoolin.domain.timetabling.Time;
 import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
 import io.edukativ.myskoolin.domain.timetabling.constraints.TimeTableConstraintConfiguration;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -43,18 +42,18 @@ class ConstraintVerifierOverlappingTest extends ScoreConstraintVerifierTest {
                         timeSlot2),
                 Arguments.of("<> timeSlot (overlapping), <> subject", -300, sixiemeFrancaisSubject, sixiemeMathsSubject,
                         timeSlot1,
-                        new TimeSlot(3L, EnumDays.MONDAY,
-                                new Time(8, 30, 0, EnumPartsOfDay.AM),
-                                new Time(10, 0, 0, EnumPartsOfDay.AM))),
+                        new TimeSlot(3L, DayOfWeek.MONDAY,
+                                LocalTime.of(8, 30, 0),
+                                LocalTime.of(10, 0, 0))),
                 Arguments.of("== timeSlot, == subject", -600, sixiemeFrancaisSubject, sixiemeFrancaisSubject,
                         timeSlot1,
                         new TimeSlot(3L, timeSlot1.getDay(), timeSlot1.getStartTime(), timeSlot1.getEndTime())),
                 Arguments.of("<> timeSlot, == subject", 0, sixiemeFrancaisSubject, sixiemeFrancaisSubject, timeSlot1, timeSlot2),
                 Arguments.of("<> timeSlot (overlapping), == subject", -300, sixiemeFrancaisSubject, sixiemeFrancaisSubject,
                         timeSlot1,
-                        new TimeSlot(3L, EnumDays.MONDAY,
-                                new Time(8, 30, 0, EnumPartsOfDay.AM),
-                                new Time(10, 0, 0, EnumPartsOfDay.AM)))
+                        new TimeSlot(3L, DayOfWeek.MONDAY,
+                                LocalTime.of(8, 30, 0),
+                                LocalTime.of(10, 0, 0)))
         );
     }
 

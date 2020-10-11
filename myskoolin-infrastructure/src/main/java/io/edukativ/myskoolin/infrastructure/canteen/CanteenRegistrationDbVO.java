@@ -1,10 +1,10 @@
 package io.edukativ.myskoolin.infrastructure.canteen;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
+import java.time.DayOfWeek;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class CanteenRegistrationDbVO implements Serializable {
     private Boolean dinner;
 
     @Field(MONGO_FIELD_WEEK_DAYS)
-    private List<EnumDays> weekDays;
+    private List<DayOfWeek> weekDays;
 
     @Field(MONGO_FIELD_SUBSCRIPTION_PERIOD_START)
     private ZonedDateTime subscriptionPeriodStart;
@@ -51,7 +51,7 @@ public class CanteenRegistrationDbVO implements Serializable {
         this.recorded = recorded;
     }
 
-    public CanteenRegistrationDbVO(Boolean recorded, Boolean breakfast, Boolean lunch, Boolean dinner, List<EnumDays> weekDays, ZonedDateTime subscriptionPeriodStart, ZonedDateTime subscriptionPeriodEnd) {
+    public CanteenRegistrationDbVO(Boolean recorded, Boolean breakfast, Boolean lunch, Boolean dinner, List<DayOfWeek> weekDays, ZonedDateTime subscriptionPeriodStart, ZonedDateTime subscriptionPeriodEnd) {
         this.recorded = recorded;
         this.breakfast = breakfast;
         this.lunch = lunch;
@@ -93,14 +93,14 @@ public class CanteenRegistrationDbVO implements Serializable {
         this.dinner = dinner;
     }
 
-    public List<EnumDays> getWeekDays() {
+    public List<DayOfWeek> getWeekDays() {
         if (this.weekDays == null) {
             this.weekDays = new ArrayList<>();
         }
         return weekDays;
     }
 
-    public void setWeekDays(List<EnumDays> weekDays) {
+    public void setWeekDays(List<DayOfWeek> weekDays) {
         this.weekDays = weekDays;
     }
 

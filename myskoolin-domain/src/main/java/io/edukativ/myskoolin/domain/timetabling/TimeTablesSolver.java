@@ -72,7 +72,8 @@ public class TimeTablesSolver implements TimetablesSolverAPI {
     }
 
     private void solveSaveAndListen(SchoolClass schoolClass, SchoolClassTimeTable schoolClassTimeTable) {
-        final SolverJob<SchoolClassTimeTable, String> solverJob = solverManager.solveAndListen(schoolClass.getId(), id -> schoolClassTimeTable, this::saveTimeTable);
+        final SolverJob<SchoolClassTimeTable, String> solverJob =
+                solverManager.solveAndListen(schoolClass.getId(), id -> schoolClassTimeTable, this::saveTimeTable);
         try {
             saveTimeTable(solverJob.getFinalBestSolution());
         } catch (InterruptedException | ExecutionException e) {

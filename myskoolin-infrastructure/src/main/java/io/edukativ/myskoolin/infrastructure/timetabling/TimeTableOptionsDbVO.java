@@ -1,12 +1,12 @@
 package io.edukativ.myskoolin.infrastructure.timetabling;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.edukativ.myskoolin.infrastructure.common.enums.EnumDays;
-import io.edukativ.myskoolin.infrastructure.common.vo.TimeDbVO;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,16 +30,16 @@ public class TimeTableOptionsDbVO implements Serializable {
     private Boolean schoolRoomsDistances = true;
 
     @Field(MONGO_FIELD_FIRST_WEEK_DAY)
-    private EnumDays firstWeekDay;
+    private DayOfWeek firstWeekDay;
 
     @Field(MONGO_FIELD_SURFACE_MIN_PER_STUDENT)
     private BigDecimal surfaceMinPerStudent;
 
     @Field(MONGO_FIELD_COURSES_START_TIME)
-    private TimeDbVO coursesStartTime;
+    private LocalTime coursesStartTime;
 
     @Field(MONGO_FIELD_COURSES_END_TIME)
-    private TimeDbVO coursesEndTime;
+    private LocalTime coursesEndTime;
 
     @Field(MONGO_FIELD_COURSES_TIME_SLOTS)
     private List<TimeSlotDbVO> coursesTimeSlots;
@@ -53,8 +53,8 @@ public class TimeTableOptionsDbVO implements Serializable {
     public TimeTableOptionsDbVO() {
     }
 
-    public TimeTableOptionsDbVO(Boolean schoolRoomsDistances, EnumDays firstWeekDay, BigDecimal surfaceMinPerStudent,
-                                TimeDbVO coursesStartTime, TimeDbVO coursesEndTime,
+    public TimeTableOptionsDbVO(Boolean schoolRoomsDistances, DayOfWeek firstWeekDay, BigDecimal surfaceMinPerStudent,
+                                LocalTime coursesStartTime, LocalTime coursesEndTime,
                                 List<TimeSlotDbVO> coursesTimeSlots, List<TimeSlotDbVO> extraActivities,
                                 Integer calendarTimelineDuration) {
         this.schoolRoomsDistances = schoolRoomsDistances;
@@ -75,11 +75,11 @@ public class TimeTableOptionsDbVO implements Serializable {
         this.schoolRoomsDistances = schoolRoomsDistances;
     }
 
-    public EnumDays getFirstWeekDay() {
+    public DayOfWeek getFirstWeekDay() {
         return firstWeekDay;
     }
 
-    public void setFirstWeekDay(EnumDays firstWeekDay) {
+    public void setFirstWeekDay(DayOfWeek firstWeekDay) {
         this.firstWeekDay = firstWeekDay;
     }
 
@@ -91,19 +91,19 @@ public class TimeTableOptionsDbVO implements Serializable {
         this.surfaceMinPerStudent = surfaceMinPerStudent;
     }
 
-    public TimeDbVO getCoursesStartTime() {
+    public LocalTime getCoursesStartTime() {
         return coursesStartTime;
     }
 
-    public void setCoursesStartTime(TimeDbVO coursesStartTime) {
+    public void setCoursesStartTime(LocalTime coursesStartTime) {
         this.coursesStartTime = coursesStartTime;
     }
 
-    public TimeDbVO getCoursesEndTime() {
+    public LocalTime getCoursesEndTime() {
         return coursesEndTime;
     }
 
-    public void setCoursesEndTime(TimeDbVO coursesEndTime) {
+    public void setCoursesEndTime(LocalTime coursesEndTime) {
         this.coursesEndTime = coursesEndTime;
     }
 
@@ -162,16 +162,16 @@ public class TimeTableOptionsDbVO implements Serializable {
         }
     }
 
-    public List<EnumDays> clientCoursesDaysList() {
+    public List<DayOfWeek> clientCoursesDaysList() {
         return coursesTimeSlots.stream()
                 .map(TimeSlotDbVO::getDay)
                 .distinct()
                 .collect(Collectors.toList());
     }
 
-    public Map<EnumDays, List<TimeSlotDbVO>> coursesTimeSlotsByDay() {
-        Map<EnumDays, List<TimeSlotDbVO>> clientCoursesTimeSlotsPerDay = new HashMap<>();
-        Arrays.stream(EnumDays.values()).forEach(enumDays -> {
+    public Map<DayOfWeek, List<TimeSlotDbVO>> coursesTimeSlotsByDay() {
+        Map<DayOfWeek, List<TimeSlotDbVO>> clientCoursesTimeSlotsPerDay = new HashMap<>();
+        Arrays.stream(DayOfWeek.values()).forEach(enumDays -> {
             final List<TimeSlotDbVO> timeSlots = coursesTimeSlots
                     .stream()
                     .filter(timeSlot -> enumDays.equals(timeSlot.getDay()))
@@ -183,16 +183,16 @@ public class TimeTableOptionsDbVO implements Serializable {
         return clientCoursesTimeSlotsPerDay;
     }
 
-    public static List<TimeSlotDbVO> timeSlotsByDay(EnumDays day, List<TimeSlotDbVO> timeSlots) {
+    public static List<TimeSlotDbVO> timeSlotsByDay(DayOfWeek day, List<TimeSlotDbVO> timeSlots) {
         return timeSlots
                 .stream()
                 .filter(timeSlot -> timeSlot.getDay().equals(day))
                 .collect(Collectors.toList());
     }
 
-    public static Map<EnumDays, List<TimeSlotDbVO>> timeSlotsMapByDay(List<TimeSlotDbVO> timeSlots) {
-        Map<EnumDays, List<TimeSlotDbVO>> timeSlotsPerDay = new HashMap<>();
-        Arrays.stream(EnumDays.values()).forEach(enumDays -> {
+    public static Map<DayOfWeek, List<TimeSlotDbVO>> timeSlotsMapByDay(List<TimeSlotDbVO> timeSlots) {
+        Map<DayOfWeek, List<TimeSlotDbVO>> timeSlotsPerDay = new HashMap<>();
+        Arrays.stream(DayOfWeek.values()).forEach(enumDays -> {
             final List<TimeSlotDbVO> filteredTimeSlots = timeSlots
                     .stream()
                     .filter(timeSlot -> enumDays.equals(timeSlot.getDay()))

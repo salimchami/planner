@@ -1,13 +1,13 @@
 package io.edukativ.myskoolin.domain.providers.subjects;
 
-import io.edukativ.myskoolin.domain.subjects.Subject;
+import io.edukativ.myskoolin.domain.commons.vo.EnumPartsOfDay;
 import io.edukativ.myskoolin.domain.providers.GlobalTestProvider;
 import io.edukativ.myskoolin.domain.providers.GradeTestProvider;
-import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
-import io.edukativ.myskoolin.domain.commons.vo.EnumPartsOfDay;
 import io.edukativ.myskoolin.domain.schoolrooms.EnumSchoolRoomsTypes;
+import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.timetabling.PreferredPartsOfDays;
 
+import java.time.DayOfWeek;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -114,9 +114,9 @@ public final class SubjectCinquiemeTestProvider {
                 GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_TECHNOLOGIE_ID, GradeTestProvider.cinquiemeGrade, "TECHNOLOGIE", false,
                 60, 60, 60, 1,
                 Arrays.asList(
-                        new PreferredPartsOfDays(EnumDays.MONDAY),
-                        new PreferredPartsOfDays(EnumDays.TUESDAY, EnumPartsOfDay.PM),
-                        new PreferredPartsOfDays(EnumDays.FRIDAY, EnumPartsOfDay.PM)
+                        new PreferredPartsOfDays(DayOfWeek.MONDAY),
+                        new PreferredPartsOfDays(DayOfWeek.TUESDAY, EnumPartsOfDay.PM),
+                        new PreferredPartsOfDays(DayOfWeek.FRIDAY, EnumPartsOfDay.PM)
                 ),
                 Collections.singletonList(EnumSchoolRoomsTypes.IT), 1, "");
     }
@@ -137,9 +137,9 @@ public final class SubjectCinquiemeTestProvider {
                 GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_SPORT_ID, GradeTestProvider.cinquiemeGrade, "EDUCATION PHYSIQUE", false,
                 (int) (60 * 1.5), (int) (60 * 1.5), 60 * 3, 2,
                 Arrays.asList(
-                        new PreferredPartsOfDays(EnumDays.FRIDAY, EnumPartsOfDay.PM),
-                        new PreferredPartsOfDays(EnumDays.THURSDAY, EnumPartsOfDay.PM),
-                        new PreferredPartsOfDays(EnumDays.FRIDAY, EnumPartsOfDay.PM)
+                        new PreferredPartsOfDays(DayOfWeek.FRIDAY, EnumPartsOfDay.PM),
+                        new PreferredPartsOfDays(DayOfWeek.THURSDAY, EnumPartsOfDay.PM),
+                        new PreferredPartsOfDays(DayOfWeek.FRIDAY, EnumPartsOfDay.PM)
                 ),
                 Collections.singletonList(EnumSchoolRoomsTypes.SPORT), 1, "");
     }
@@ -148,7 +148,7 @@ public final class SubjectCinquiemeTestProvider {
         return SubjectTestProvider.subject(
                 GlobalTestProvider.Subjects.Cinquieme.SUBJECT_CINQUIEME_DESSIN_ID, GradeTestProvider.cinquiemeGrade, "ARTS PLASTIQUES", false,
                 60, 60, 60, 1,
-                Collections.singletonList(new PreferredPartsOfDays(EnumDays.FRIDAY)),
+                Collections.singletonList(new PreferredPartsOfDays(DayOfWeek.FRIDAY)),
                 Collections.singletonList(EnumSchoolRoomsTypes.NORMAL), 0, "");
     }
 

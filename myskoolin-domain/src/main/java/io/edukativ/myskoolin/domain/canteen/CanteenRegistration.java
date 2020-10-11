@@ -1,7 +1,6 @@
 package io.edukativ.myskoolin.domain.canteen;
 
-import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
-
+import java.time.DayOfWeek;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ public class CanteenRegistration {
     private Boolean breakfast;
     private Boolean lunch;
     private Boolean dinner;
-    private List<EnumDays> weekDays;
+    private List<DayOfWeek> weekDays;
     private ZonedDateTime subscriptionPeriodStart;
     private ZonedDateTime subscriptionPeriodEnd;
 
@@ -27,7 +26,7 @@ public class CanteenRegistration {
         this.recorded = recorded;
     }
 
-    public CanteenRegistration(Boolean recorded, Boolean breakfast, Boolean lunch, Boolean dinner, List<EnumDays> weekDays, ZonedDateTime subscriptionPeriodStart, ZonedDateTime subscriptionPeriodEnd) {
+    public CanteenRegistration(Boolean recorded, Boolean breakfast, Boolean lunch, Boolean dinner, List<DayOfWeek> weekDays, ZonedDateTime subscriptionPeriodStart, ZonedDateTime subscriptionPeriodEnd) {
         this.recorded = recorded;
         this.breakfast = breakfast;
         this.lunch = lunch;
@@ -69,14 +68,14 @@ public class CanteenRegistration {
         this.dinner = dinner;
     }
 
-    public List<EnumDays> getWeekDays() {
+    public List<DayOfWeek> getWeekDays() {
         if (this.weekDays == null) {
             this.weekDays = new ArrayList<>();
         }
         return weekDays;
     }
 
-    public void setWeekDays(List<EnumDays> weekDays) {
+    public void setWeekDays(List<DayOfWeek> weekDays) {
         this.weekDays = weekDays;
     }
 

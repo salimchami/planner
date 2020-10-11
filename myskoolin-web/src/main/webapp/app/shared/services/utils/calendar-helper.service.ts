@@ -1,15 +1,12 @@
 import {Injectable} from '@angular/core';
 import {WEEKDAYS} from '../../../app.constants';
 import {JhiLanguageHelper} from '../..';
-import {Lesson, Subject, Time, Timeslot} from '../../model';
-import {DateTimeHelper} from './date-time-helper.service';
-import {DataHelper} from './data.helper';
+import {Lesson, Subject, Timeslot} from '../../model';
 
 @Injectable()
 export class CalendarHelper {
 
-    constructor(private languageHelper?: JhiLanguageHelper,
-                private dateTimeHelper?: DateTimeHelper
+    constructor(private languageHelper?: JhiLanguageHelper
     ) {
     }
 
@@ -17,35 +14,39 @@ export class CalendarHelper {
         return '#3B4650';
     }
 
-    populateUniqueHalfTimeSlots(lessons: Array<Lesson>) {
-        const halfTimeSlots = lessons.filter((lesson) => lesson.timeSlot.half);
-        const groupedHalfLessonTimeSlots = DataHelper.arrayGroupBy(halfTimeSlots, (lesson: Lesson) => {
-            return [lesson.timeSlot.day, lesson.timeSlot.startTime.hour, lesson.timeSlot.endTime.hour];
-        });
-        for (const groupedHalfLessonTimeSlot of groupedHalfLessonTimeSlots) {
-            if (groupedHalfLessonTimeSlot.length !== 2) {
-                const lessonToCopy: Lesson = Object.assign({}, groupedHalfLessonTimeSlot[0]);
-                const timeSlotToAdd = new Timeslot('', '', false,
-                    lessonToCopy.timeSlot.startTime, lessonToCopy.timeSlot.endTime, '', '',
-                    lessonToCopy.timeSlot.day, lessonToCopy.timeSlot.date, false, true);
-                const lessonToAdd = new Lesson(groupedHalfLessonTimeSlot.id, groupedHalfLessonTimeSlot.schoolRoom, groupedHalfLessonTimeSlot.subject,
-                    groupedHalfLessonTimeSlot.teacher, timeSlotToAdd);
-                lessons.push(lessonToAdd);
-            }
-        }
-        return lessons;
-    }
+    // populateUniqueHalfTimeSlots(lessons: Array<Lesson>) {
+    //     const halfTimeSlots = lessons.filter((lesson) => lesson.timeSlot.half);
+    //     const groupedHalfLessonTimeSlots = DataHelper.arrayGroupBy(halfTimeSlots, (lesson: Lesson) => {
+    //         return [lesson.timeSlot.day, lesson.timeSlot.startTime.hour, lesson.timeSlot.endTime.hour];
+    //     });
+    //     for (const groupedHalfLessonTimeSlot of groupedHalfLessonTimeSlots) {
+    //         if (groupedHalfLessonTimeSlot.length !== 2) {
+    //             const lessonToCopy: Lesson = Object.assign({}, groupedHalfLessonTimeSlot[0]);
+    //             const timeSlotToAdd = new Timeslot('', '', false,
+    //                 lessonToCopy.timeSlot.startTime, lessonToCopy.timeSlot.endTime, '', '',
+    //                 lessonToCopy.timeSlot.day, lessonToCopy.timeSlot.date, false, true);
+    //             const lessonToAdd = new Lesson(groupedHalfLessonTimeSlot.id, groupedHalfLessonTimeSlot.schoolRoom, groupedHalfLessonTimeSlot.subject,
+    //                 groupedHalfLessonTimeSlot.teacher, timeSlotToAdd);
+    //             lessons.push(lessonToAdd);
+    //         }
+    //     }
+    //     return lessons;
+    // }
 
     convertTimeSlotsToFullCalendarEvents(clientFirstDayName: string, lessons: Array<Lesson>, translate: boolean): Array<any> {
-        lessons = this.populateUniqueHalfTimeSlots(lessons);
+        // lessons = this.populateUniqueHalfTimeSlots(lessons);
         lessons = this.mergeSameSubjectsInTimeSlots(lessons);
         // lessons = this.mergeSameSubjectsInOverlappedTimeSlots(lessons);
         return lessons.map((lesson: Lesson, index) => {
-            lesson.timeSlot.date = this.dateBasedOnTodayAndClientFirstDayFor(lesson.timeSlot.day, clientFirstDayName, new Date());
-            const start: Date = new Date(lesson.timeSlot.date.getFullYear(), lesson.timeSlot.date.getMonth(), lesson.timeSlot.date.getDate(),
-                +lesson.timeSlot.startTime.hour, +lesson.timeSlot.startTime.minutes, +lesson.timeSlot.startTime.seconds);
-            const end: Date = new Date(lesson.timeSlot.date.getFullYear(), lesson.timeSlot.date.getMonth(), lesson.timeSlot.date.getDate(),
-                +lesson.timeSlot.endTime.hour, +lesson.timeSlot.endTime.minutes, +lesson.timeSlot.endTime.seconds);
+            const date = this.dateBasedOnTodayAndClientFirstDayFor(lesson.timeSlot.day, clientFirstDayName, new Date());
+            const startHour = +lesson.timeSlot.startTime.substring(0, 2);
+            const startMinutes = +lesson.timeSlot.startTime.substring(3, 5);
+            const startSeconds = +lesson.timeSlot.startTime.substring(6);
+            const endHour = +lesson.timeSlot.endTime.substring(0, 2);
+            const endMinutes = +lesson.timeSlot.endTime.substring(3, 5);
+            const endSeconds = +lesson.timeSlot.endTime.substring(6);
+            const start: Date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), startHour, startMinutes, startSeconds);
+            const end: Date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), endHour, endMinutes, endSeconds);
             let eventTile = '';
             if (translate) {
                 this.languageHelper.translate(lesson.timeSlot.title).subscribe((title) => {
@@ -69,9 +70,9 @@ export class CalendarHelper {
         });
     }
 
-    dateBasedOnTodayAndClientFirstDayFor(dayName: string, clientFirstDayName: string, today: Date) {
+    dateBasedOnTodayAndClientFirstDayFor(day: any, clientFirstDayName: string, today: Date) {
         const todayIndex = today.getDay();
-        const searchedDayIndex = this.dayIndex(dayName);
+        const searchedDayIndex = this.dayIndex(day.name);
         let diffDays;
         if (todayIndex > searchedDayIndex) {
             diffDays = searchedDayIndex - todayIndex;
@@ -98,26 +99,26 @@ export class CalendarHelper {
 
     dayIndex(day: string) {
         let result;
-        switch (day.toLowerCase()) {
-            case 'monday':
+        switch (day) {
+            case 'MONDAY':
                 result = 1;
                 break;
-            case 'tuesday':
+            case 'TUESDAY':
                 result = 2;
                 break;
-            case 'wednesday':
+            case 'WEDNESDAY':
                 result = 3;
                 break;
-            case 'thursday':
+            case 'THURSDAY':
                 result = 4;
                 break;
-            case 'friday':
+            case 'FRIDAY':
                 result = 5;
                 break;
-            case 'saturday':
+            case 'SATURDAY':
                 result = 6;
                 break;
-            case 'sunday':
+            case 'SUNDAY':
                 result = 0;
                 break;
         }
@@ -144,10 +145,16 @@ export class CalendarHelper {
     }
 
     timeSlotDurationInMinutes(timeSlot: Timeslot, now: Date): number {
+        const startHour = +timeSlot.startTime.substring(0, 2);
+        const startMinutes = +timeSlot.startTime.substring(3, 5);
+        const startSeconds = +timeSlot.startTime.substring(6);
+        const endHour = +timeSlot.endTime.substring(0, 2);
+        const endMinutes = +timeSlot.endTime.substring(3, 5);
+        const endSeconds = +timeSlot.endTime.substring(6);
         const startTime = new Date(now.getFullYear(), now.getMonth(), now.getDay(),
-            +timeSlot.startTime.hour, +timeSlot.startTime.minutes, +timeSlot.startTime.seconds);
+            startHour, startMinutes, startSeconds);
         const endTime = new Date(now.getFullYear(), now.getMonth(), now.getDay(),
-            +timeSlot.endTime.hour, +timeSlot.endTime.minutes, +timeSlot.endTime.seconds);
+            endHour, endMinutes, endSeconds);
         const result = (endTime.getTime() / 1000 / 60) - (startTime.getTime() / 1000 / 60);
         return timeSlot.half ? result / 2 : result;
     }
@@ -161,7 +168,7 @@ export class CalendarHelper {
                 const sameTeachers = currentLesson.teacher.id === lesson.teacher.id;
                 const sameSubjects = currentLesson.subject.id === lesson.subject.id;
                 const sameDays = currentTimeSlot.day === adjacentTimeSlot.day;
-                const sameEndAndStartTime = Time.equals(currentTimeSlot.startTime, adjacentTimeSlot.endTime);
+                const sameEndAndStartTime = currentTimeSlot.startTime === adjacentTimeSlot.endTime;
                 return sameSchoolRooms && sameTeachers && sameSubjects && sameDays && sameEndAndStartTime;
             });
             if (lessonsTmp.includes(adjacentLesson)) {

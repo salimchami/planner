@@ -1,8 +1,8 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
-import io.edukativ.myskoolin.domain.commons.vo.EnumDays;
 import io.edukativ.myskoolin.domain.commons.vo.EnumPartsOfDay;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,14 +10,14 @@ import java.util.stream.Collectors;
 
 public class PreferredPartsOfDays {
 
-    private EnumDays day;
+    private DayOfWeek day;
     private List<EnumPartsOfDay> partsOfDay;
 
 
     public PreferredPartsOfDays() {
     }
 
-    public PreferredPartsOfDays(EnumDays day, EnumPartsOfDay... partsOfDay) {
+    public PreferredPartsOfDays(DayOfWeek day, EnumPartsOfDay... partsOfDay) {
         this.day = day;
         if (partsOfDay.length > 0) {
             this.partsOfDay = new ArrayList<>(Arrays.asList(partsOfDay));
@@ -26,7 +26,7 @@ public class PreferredPartsOfDays {
         }
     }
 
-    public EnumDays getDay() {
+    public DayOfWeek getDay() {
         return day;
     }
 
@@ -34,7 +34,7 @@ public class PreferredPartsOfDays {
         return partsOfDay;
     }
 
-    public static List<PreferredPartsOfDays> allDays(List<EnumDays> days) {
+    public static List<PreferredPartsOfDays> allDays(List<DayOfWeek> days) {
         return days.stream().map(PreferredPartsOfDays::new).collect(Collectors.toList());
     }
 }
