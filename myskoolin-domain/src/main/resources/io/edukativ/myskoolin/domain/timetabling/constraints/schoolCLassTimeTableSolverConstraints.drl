@@ -43,7 +43,5 @@ rule "Subject duration max by day"
                 action(total+=($timeslot2.durationInMinutes());),
                 result( new Integer (total)))
     then
-        //scoreHolder.penalize(kcontext,  $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue()) / $duplicates.size());
-        scoreHolder.penalize(kcontext,  $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue()));
-        insert($timeslot1)
+        scoreHolder.penalize(kcontext, $lesson.getSubject().maxMinutesPerDayPenalty($total.intValue()) / $duplicates.size());
 end
