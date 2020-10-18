@@ -47,7 +47,7 @@ export class CalendarHelper {
         return lessons.map((lesson: Lesson, index) => {
             debugger;
             const date = this.dateBasedOnTodayAndClientFirstDayFor(lesson.timeSlot.day, clientFirstDayName);
-            const event = {
+            return {
                 title: this.eventTileFromLesson(translate, lesson),
                 lesson,
                 start: CalendarHelper.dateFromLesson(date, lesson.timeSlot.startTime),
@@ -59,8 +59,6 @@ export class CalendarHelper {
                 fontColor: lesson.timeSlot.fontColorCssClass,
                 resizable: undefined
             };
-            console.log(event);
-            return event;
         });
     }
 
@@ -86,7 +84,6 @@ export class CalendarHelper {
         } else {
             diffDays = searchedDayIndex - todayIndex;
         }
-        console.log('diffDays : ' + diffDays);
         today.setDate(today.getDate() + diffDays);
         return today;
     }

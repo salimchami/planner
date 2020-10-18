@@ -20,7 +20,6 @@ export default class E2EUtils {
     }
 
     static selectOptionByOptionValue(selectFormFieldElementId, valuesToFind) {
-        console.log('values to find : ' + valuesToFind);
         const formField = element(by.id(selectFormFieldElementId));
         formField.click().then(() => {
             formField.element(by.tagName('mat-select'))

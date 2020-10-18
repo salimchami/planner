@@ -188,9 +188,6 @@ export class TeacherEditComponent implements OnInit, OnDestroy {
     }
 
     onSubstitutedChange($event) {
-        console.log('event : ' + $event);
-        console.log('taughtSubjects : ' + this.teacherUserForm.controls.taughtSubjects.value);
-        console.log('grades : ' + this.teacherUserForm.controls.grades.value);
         if ($event && !!this.teacherUserForm.controls.taughtSubjects.value.length && !!this.teacherUserForm.controls.grades.value.length) {
             this.teacherService.findByGradesIdsAndSubjectsIds(
                 this.teacherUserForm.controls.taughtSubjects.value.map((subject) => subject.id),

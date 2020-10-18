@@ -64,7 +64,6 @@ export class JhiLandingpageComponent implements AfterViewInit, OnInit, OnDestroy
         this.pricings = [];
         this.pricingService.query().subscribe((response) => {
             this.pricings = Object.assign([], response.body);
-            console.log(this.pricings);
         });
         this.contactForm = new FormGroup({
             name: new FormControl('', [Validators.minLength(2), Validators.required]),

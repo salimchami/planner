@@ -46,7 +46,6 @@ export class SchoolClass implements BaseEntity {
     }
 
     update(schoolClassUserForm: FormGroup, students: Array<Student>) {
-        console.log('student : ' + students);
         this.students = students;
         this.name = schoolClassUserForm.controls.name.value;
         this.customName = schoolClassUserForm.controls.customName.value;
