@@ -10,6 +10,13 @@ export class CalendarHelper {
     ) {
     }
 
+    private static dateFromLesson(date: Date, time: string) {
+        const hour = +time.substring(0, 2);
+        const minutes = +time.substring(3, 5);
+        const seconds = +time.substring(6);
+        return new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, minutes, seconds);
+    }
+
     defaultEventBorderColor() {
         return '#3B4650';
     }
@@ -38,8 +45,9 @@ export class CalendarHelper {
         lessons = this.mergeSameSubjectsInTimeSlots(lessons);
         // lessons = this.mergeSameSubjectsInOverlappedTimeSlots(lessons);
         return lessons.map((lesson: Lesson, index) => {
-            const date = this.dateBasedOnTodayAndClientFirstDayFor(lesson.timeSlot.day, clientFirstDayName, new Date());
-            return {
+            debugger;
+            const date = this.dateBasedOnTodayAndClientFirstDayFor(lesson.timeSlot.day, clientFirstDayName);
+            const event = {
                 title: this.eventTileFromLesson(translate, lesson),
                 lesson,
                 start: CalendarHelper.dateFromLesson(date, lesson.timeSlot.startTime),
@@ -51,14 +59,9 @@ export class CalendarHelper {
                 fontColor: lesson.timeSlot.fontColorCssClass,
                 resizable: undefined
             };
+            console.log(event);
+            return event;
         });
-    }
-
-    private static dateFromLesson(date: Date, time: string) {
-        const hour = +time.substring(0, 2);
-        const minutes = +time.substring(3, 5);
-        const seconds = +time.substring(6);
-        return new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, minutes, seconds);
     }
 
     private eventTileFromLesson(translate: boolean, lesson: Lesson) {
@@ -71,9 +74,10 @@ export class CalendarHelper {
         }
     }
 
-    dateBasedOnTodayAndClientFirstDayFor(day: any, clientFirstDayName: string, today: Date) {
+    dateBasedOnTodayAndClientFirstDayFor(dayName: string, clientFirstDayName: string) {
+        let today = new Date();
         const todayIndex = today.getDay();
-        const searchedDayIndex = this.dayIndex(day.name);
+        const searchedDayIndex = this.dayIndex(dayName);
         let diffDays;
         if (todayIndex > searchedDayIndex) {
             diffDays = searchedDayIndex - todayIndex;
@@ -82,6 +86,7 @@ export class CalendarHelper {
         } else {
             diffDays = searchedDayIndex - todayIndex;
         }
+        console.log('diffDays : ' + diffDays);
         today.setDate(today.getDate() + diffDays);
         return today;
     }
@@ -120,6 +125,7 @@ export class CalendarHelper {
                 result = 6;
                 break;
             case 'SUNDAY':
+            default:
                 result = 0;
                 break;
         }

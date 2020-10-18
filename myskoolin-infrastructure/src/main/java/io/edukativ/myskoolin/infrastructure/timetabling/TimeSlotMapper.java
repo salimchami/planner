@@ -4,6 +4,8 @@ import io.edukativ.myskoolin.domain.timetabling.TimeSlot;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
+import java.time.DayOfWeek;
+
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface TimeSlotMapper {
 
@@ -16,6 +18,12 @@ public interface TimeSlotMapper {
     TimeSlotVO domainToVo(TimeSlot timeSlot);
     TimeSlotDbVO domainToDbVo(TimeSlot timeSlot);
 
+    default DayOfWeek voToDomain(String day) {
+        return DayOfWeek.valueOf(day);
+    }
 
+    default String domainToVo(DayOfWeek day) {
+        return day.name();
+    }
 
 }

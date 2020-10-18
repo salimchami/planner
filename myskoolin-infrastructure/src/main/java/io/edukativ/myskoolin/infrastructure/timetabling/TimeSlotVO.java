@@ -2,7 +2,6 @@ package io.edukativ.myskoolin.infrastructure.timetabling;
 
 
 import java.io.Serializable;
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
 
@@ -13,7 +12,7 @@ public class TimeSlotVO implements Serializable {
     private String secondTitle;
     private String comment;
     private Boolean canceled;
-    private DayOfWeek day;
+    private String day;
     private LocalTime startTime;
     private LocalTime endTime;
     private ZonedDateTime date;
@@ -62,11 +61,11 @@ public class TimeSlotVO implements Serializable {
         this.canceled = canceled;
     }
 
-    public DayOfWeek getDay() {
+    public String getDay() {
         return day;
     }
 
-    public void setDay(DayOfWeek day) {
+    public void setDay(String day) {
         this.day = day;
     }
 
