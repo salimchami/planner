@@ -1,6 +1,7 @@
 import {Component, OnInit, OnDestroy, ViewChild, TemplateRef} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CalendarView} from 'angular-calendar';
+import {Time} from '@angular/common';
 import {Client, Grade, Lesson, SchoolClass, SchoolRoom, Subject, Teacher} from '../../../shared/model';
 import {CalendarHelper} from '../../../shared/services/utils/calendar-helper.service';
 import {SchoolClassTimetable} from '../../../shared/model/school-class-timetable.model';
@@ -41,6 +42,8 @@ export class TimetableSchoolClassesComponent implements OnInit, OnDestroy {
     teachers: Array<Teacher>;
     timetable: SchoolClassTimetable;
     timetableOptions: TimeTableOptions;
+    coursesStartTime: Time;
+    coursesEndTime: Time;
 
     constructor(
         private route: ActivatedRoute,
@@ -60,6 +63,14 @@ export class TimetableSchoolClassesComponent implements OnInit, OnDestroy {
         this.grades = this.route.snapshot.data['grades'];
         this.schoolRooms = this.route.snapshot.data['schoolRooms'];
         this.teachers = this.route.snapshot.data['teachers'];
+        this.coursesStartTime = {
+            hours: +this.timetableOptions.coursesStartTime.substring(0, 2),
+            minutes: +this.timetableOptions.coursesStartTime.substring(3, 5)
+        };
+        this.coursesEndTime = {
+            hours: +this.timetableOptions.coursesEndTime.substring(0, 2),
+            minutes: +this.timetableOptions.coursesEndTime.substring(3, 5)
+        };
     }
 
     ngOnDestroy() {

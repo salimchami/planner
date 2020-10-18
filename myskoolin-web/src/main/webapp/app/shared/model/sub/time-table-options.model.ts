@@ -1,14 +1,13 @@
 import {Timeslot} from './timeslot.model';
 import {WeekDay} from './week-day.model';
-import {Time} from "@angular/common";
 
 export class TimeTableOptions {
     constructor(
         public schoolRoomsDistances: boolean,
         public firstWeekDay: WeekDay,
         public surfaceMinPerStudent: number,
-        public coursesStartTime: Time,
-        public coursesEndTime: Time,
+        public coursesStartTime: string,
+        public coursesEndTime: string,
         public coursesTimeSlots: Array<Timeslot>,
         public extraActivities: Array<Timeslot>,
         public calendarTimelineDuration: number,

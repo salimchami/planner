@@ -76,18 +76,13 @@
                 [events]="schoolClassesStaticTimeSlots"
                 [eventTemplate]="eventTemplate"
                 [hourSegments]="2"
-                [dayStartHour]="+timetableOptions.coursesStartTime.hour - 1"
-                [dayStartMinute]="+timetableOptions.coursesStartTime.minutes"
-                [dayEndHour]="+timetableOptions.coursesEndTime.hour + 1"
-                [dayEndMinute]="+timetableOptions.coursesEndTime.minutes"
-                [weekStartsOn]="+timetableOptions.firstWeekDay.position"
+                [dayStartHour]="coursesStartTime.hours - 1"
+                [dayStartMinute]="coursesStartTime.minutes"
+                [dayEndHour]="coursesEndTime.hours + 1"
+                [dayEndMinute]="coursesEndTime.minutes"
+                [weekStartsOn]="timetableOptions.firstWeekDay.position"
             >
             </mwl-calendar-week-view>
-            <ng-template #modalContent let-close="close">
-                <div class="modal-header">
-                    <h5 class="modal-title">Event action occurred</h5>
-                </div>
-            </ng-template>
             <ng-template #headerTemplate let-days="days" let-locale="locale"
                          let-dayClicked="dayClicked" let-eventDropped="eventDropped">
                 <div class="cal-day-headers cursor-default">

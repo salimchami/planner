@@ -39,27 +39,11 @@ export class CalendarHelper {
         // lessons = this.mergeSameSubjectsInOverlappedTimeSlots(lessons);
         return lessons.map((lesson: Lesson, index) => {
             const date = this.dateBasedOnTodayAndClientFirstDayFor(lesson.timeSlot.day, clientFirstDayName, new Date());
-            const startHour = +lesson.timeSlot.startTime.substring(0, 2);
-            const startMinutes = +lesson.timeSlot.startTime.substring(3, 5);
-            const startSeconds = +lesson.timeSlot.startTime.substring(6);
-            const endHour = +lesson.timeSlot.endTime.substring(0, 2);
-            const endMinutes = +lesson.timeSlot.endTime.substring(3, 5);
-            const endSeconds = +lesson.timeSlot.endTime.substring(6);
-            const start: Date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), startHour, startMinutes, startSeconds);
-            const end: Date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), endHour, endMinutes, endSeconds);
-            let eventTile = '';
-            if (translate) {
-                this.languageHelper.translate(lesson.timeSlot.title).subscribe((title) => {
-                    eventTile = title;
-                });
-            } else {
-                eventTile = lesson.timeSlot.title;
-            }
             return {
-                title: eventTile,
+                title: this.eventTileFromLesson(translate, lesson),
                 lesson,
-                start,
-                end,
+                start: CalendarHelper.dateFromLesson(date, lesson.timeSlot.startTime),
+                end: CalendarHelper.dateFromLesson(date, lesson.timeSlot.endTime),
                 color: {primary: this.defaultEventBorderColor(), secondary: lesson.timeSlot.bgColor},
                 meta: {
                     id: index
@@ -68,6 +52,23 @@ export class CalendarHelper {
                 resizable: undefined
             };
         });
+    }
+
+    private static dateFromLesson(date: Date, time: string) {
+        const hour = +time.substring(0, 2);
+        const minutes = +time.substring(3, 5);
+        const seconds = +time.substring(6);
+        return new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, minutes, seconds);
+    }
+
+    private eventTileFromLesson(translate: boolean, lesson: Lesson) {
+        if (translate) {
+            this.languageHelper.translate(lesson.timeSlot.title).subscribe((title) => {
+                return title;
+            });
+        } else {
+            return lesson.timeSlot.title;
+        }
     }
 
     dateBasedOnTodayAndClientFirstDayFor(day: any, clientFirstDayName: string, today: Date) {
