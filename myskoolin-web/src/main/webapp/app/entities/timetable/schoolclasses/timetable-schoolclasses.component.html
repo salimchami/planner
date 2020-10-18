@@ -97,7 +97,6 @@
                         (dragEnter)="day.dragOver = true"
                         (dragLeave)="day.dragOver = false"
                         (drop)="day.dragOver = false; eventDropped.emit({event: $event.dropData.event, newStart: day.date, fromHeader: true})">
-                        {{day.date}}
                         <div class="top" [class.today]="day.isToday">
                             <div class="day-label text-uppercase">
                                 <strong>{{ day.date | calendarDate:'weekViewColumnHeader':locale }}</strong>
@@ -116,7 +115,6 @@
                 let-tooltipDelay="tooltipDelay"
                 let-column="column"
             >
-                -----{{weekEvent}}
                 <div class="cal-event"
                     [ngStyle]="{backgroundColor: weekEvent.event.color?.secondary, borderColor: weekEvent.event.color?.primary}"
                      [ngbPopover]="popContent" [popoverTitle]="popTitle" [placement]="'top'"
