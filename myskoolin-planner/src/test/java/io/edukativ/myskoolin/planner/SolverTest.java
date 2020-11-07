@@ -21,7 +21,7 @@ class SolverTest {
     private String schoolClassId;
     private TimeTableSPI timeTableSPI;
     @Captor
-    ArgumentCaptor<TimeTable> timetableCaptor;
+    ArgumentCaptor<TimeTable> timetableCaptor = ArgumentCaptor.forClass(TimeTable.class);
 
     @BeforeEach
     void setUp() {
@@ -36,15 +36,20 @@ class SolverTest {
     }
 
     @Test
-    void name() {
+    void shouldGenerateTimeTable() {
         schoolClassId = "Sixième";
         final Subject mathematiques = new Subject(1L, "Mathematiques", 120, 60, 300, 3);
         final Subject francais = new Subject(1L, "Français", 120, 60, 300, 3);
         final List<Subject> subjects = Arrays.asList(mathematiques, francais);
         sut.solveForSchoolClass(schoolClassId, subjects);
-        verify(timeTableSPI).save(timetableCaptor.capture());
-        List<Timeslot> francaisTimeSlots = timetableCaptor.getValue().getTimeslots().stream().filter(timeslot -> timeslot.getSubject().equals(francais)).collect(Collectors.toList());
-        List<Timeslot> mathsTimeSlots = timetableCaptor.getValue().getTimeslots().stream().filter(timeslot -> timeslot.getSubject().equals(mathematiques)).collect(Collectors.toList());
+        verify(timeTableSPI, times(2)).save(timetableCaptor.capture());
+        final TimeTable timeTable = timetableCaptor.getValue();
+        List<Timeslot> francaisTimeSlots = timeTable.getTimeslots().stream().filter(timeslot -> {
+            return timeslot.getSubject().equals(francais);
+        }).collect(Collectors.toList());
+        List<Timeslot> mathsTimeSlots = timeTable.getTimeslots().stream().filter(timeslot -> {
+            return timeslot.getSubject().equals(mathematiques);
+        }).collect(Collectors.toList());
         assertThat(francaisTimeSlots.stream().mapToLong(Timeslot::durationInMinutes).sum()).isCloseTo(120L, within(30L));
         assertThat(mathsTimeSlots.stream().mapToLong(Timeslot::durationInMinutes).sum()).isCloseTo(120L, within(30L));
     }

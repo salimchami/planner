@@ -7,6 +7,7 @@ import io.edukativ.myskoolin.planner.declarations.ModifiableVariables;
 import io.edukativ.myskoolin.planner.declarations.PlanningSolution;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @PlanningSolution
@@ -16,7 +17,7 @@ public class TimeTable {
     private final List<Timeslot> baseTimeslots;
 
     @ModifiableVariables
-    private List<Timeslot> timeslots;
+    private List<Timeslot> timeslots = new ArrayList<>();
 
     @Facts
     private final List<Subject> subjects;
