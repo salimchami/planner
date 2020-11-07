@@ -17,14 +17,15 @@ public class SchoolClassTimeTablesSolver implements TimeTablesSolver {
     private final SolverManager<TimeTable, String> solverManager;
     private final ScoreManager<TimeTable> scoreManager;
     private final SchoolClassSPI schoolClassSPI;
-    private TimeTableSPI timeTableSPI;
+    private final TimeTableSPI timeTableSPI;
 
     public SchoolClassTimeTablesSolver(SolverManager<TimeTable, String> solverManager,
                                        ScoreManager<TimeTable> scoreManager,
-                                       SchoolClassSPI schoolClassSPI) {
+                                       SchoolClassSPI schoolClassSPI, TimeTableSPI timeTableSPI) {
         this.solverManager = solverManager;
         this.scoreManager = scoreManager;
         this.schoolClassSPI = schoolClassSPI;
+        this.timeTableSPI = timeTableSPI;
     }
 
     @Override
@@ -84,7 +85,7 @@ public class SchoolClassTimeTablesSolver implements TimeTablesSolver {
 
     private String saveTimeTable(TimeTable timeTable) {
         timeTable.setLastGenerationDate(Instant.now());
-        System.out.println(timeTable);
+        timeTableSPI.save(timeTable);
         return "";
     }
 }
