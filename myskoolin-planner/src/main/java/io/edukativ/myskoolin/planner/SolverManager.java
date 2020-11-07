@@ -18,7 +18,8 @@ public class SolverManager<Solution, SolutionId> {
     }
 
     public SolverJob<Solution, SolutionId> solveAndListen(SolutionId name, Solution solution, Function<Solution, SolutionId> saveFunction) {
+        System.out.println("solveAndListen");
         saveFunction.apply(solution);
-        return new SolverJob<>();
+        return new SolverJob<>(solution);
     }
 }

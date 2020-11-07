@@ -16,7 +16,7 @@ public class TimeTable {
     private final List<Timeslot> baseTimeslots;
 
     @ModifiableVariables
-    private final List<Timeslot> timeslots;
+    private List<Timeslot> timeslots;
 
     @Facts
     private final List<Subject> subjects;
@@ -24,9 +24,8 @@ public class TimeTable {
     private Instant lastGenerationDate;
     private Score score;
 
-    public TimeTable(List<Timeslot> baseTimeslots, List<Timeslot> timeslots, List<Subject> subjects) {
+    public TimeTable(List<Timeslot> baseTimeslots, List<Subject> subjects) {
         this.baseTimeslots = baseTimeslots;
-        this.timeslots = timeslots;
         this.subjects = subjects;
     }
 
@@ -46,12 +45,20 @@ public class TimeTable {
         return lastGenerationDate;
     }
 
+    public void setTimeslots(List<Timeslot> timeslots) {
+        this.timeslots = timeslots;
+    }
+
     public void setLastGenerationDate(Instant lastGenerationDate) {
         this.lastGenerationDate = lastGenerationDate;
     }
 
     public Score getScore() {
         return null;
+    }
+
+    public void setScore(Score score) {
+        this.score = score;
     }
 
     @Override

@@ -20,6 +20,16 @@ public class Timeslot {
     private final LocalTime startTime;
     @ModifiableVariableItem
     private final LocalTime endTime;
+    @ModifiableVariableItem
+    private Subject subject;
+
+    public Timeslot(Long id, DayOfWeek day, LocalTime startTime, LocalTime endTime, Subject subject) {
+        this.id = id;
+        this.day = day;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.subject = subject;
+    }
 
     public Timeslot(Long id, DayOfWeek day, LocalTime startTime, LocalTime endTime) {
         this.id = id;
@@ -60,5 +70,9 @@ public class Timeslot {
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 '}';
+    }
+
+    public Subject getSubject() {
+        return subject;
     }
 }
