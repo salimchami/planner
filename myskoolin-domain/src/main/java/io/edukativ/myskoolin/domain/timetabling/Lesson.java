@@ -1,5 +1,6 @@
 package io.edukativ.myskoolin.domain.timetabling;
 
+import io.edukativ.myskoolin.domain.schoolclasses.SchoolClass;
 import io.edukativ.myskoolin.domain.schoolrooms.SchoolRoom;
 import io.edukativ.myskoolin.domain.subjects.Subject;
 import io.edukativ.myskoolin.domain.teachers.Teacher;
@@ -20,13 +21,17 @@ public class Lesson {
     private TimeSlot timeSlot;
 
     private Subject subject;
+    private SchoolClass schoolClass;
     private Teacher teacher;
+
+
 
     public Lesson() {
     }
 
-    public Lesson(Long id, SchoolRoom schoolRoom, Subject subject, Teacher teacher, TimeSlot timeSlot) {
+    public Lesson(Long id, SchoolClass schoolClass, SchoolRoom schoolRoom, Subject subject, Teacher teacher, TimeSlot timeSlot) {
         this.id = id;
+        this.schoolClass = schoolClass;
         this.schoolRoom = schoolRoom;
         this.subject = subject;
         this.teacher = teacher;
@@ -35,10 +40,6 @@ public class Lesson {
 
     public Long getId() {
         return id;
-    }
-
-    public SchoolRoom getSchoolRoom() {
-        return schoolRoom;
     }
 
     public Subject getSubject() {
@@ -126,5 +127,13 @@ public class Lesson {
 
     public int wrongSchoolRoomTypePenalty() {
         return timeSlot.durationInMinutes().intValue();
+    }
+
+    public SchoolRoom getSchoolRoom() {
+        return schoolRoom;
+    }
+
+    public SchoolClass getSchoolClass() {
+        return schoolClass;
     }
 }

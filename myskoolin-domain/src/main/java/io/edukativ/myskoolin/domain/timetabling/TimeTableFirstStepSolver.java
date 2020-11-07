@@ -58,7 +58,7 @@ public class TimeTableFirstStepSolver {
             TimeSlot timeSlot = new TimeSlot(id, subject.timetableName(), currentTimeSlot.getDay(),
                     currentTimeSlot.getStartTime(), currentTimeSlot.getEndTime(), subject.getBgColor(), subject.getColor());
             final Lesson lesson = new Lesson(
-                    id, schoolRoomBySubject(subject, schoolRooms), subject,
+                    id,schoolClass, schoolRoomBySubject(subject, schoolRooms), subject,
                     teacherBySubjectAndSchoolClass(subject, schoolClass, teachers), timeSlot);
             lessons.add(lesson);
             currentTimeSlot = currentTimeSlot.next(timeTableOptions.getCoursesTimeSlots());
@@ -86,7 +86,7 @@ public class TimeTableFirstStepSolver {
 
     private SchoolRoom schoolRoomBySubject(Subject subject, List<SchoolRoom> schoolRooms) {
         return schoolRooms.stream()
-                .filter(schoolRoom -> !subject.getSchoolRoomsTypes().contains(schoolRoom.getType()))
+                .filter(schoolRoom -> subject.getSchoolRoomsTypes().contains(schoolRoom.getType()))
                 .findFirst()
                 .orElseThrow();
     }

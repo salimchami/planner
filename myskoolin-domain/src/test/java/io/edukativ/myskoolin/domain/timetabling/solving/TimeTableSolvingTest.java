@@ -51,61 +51,61 @@ class TimeTableSolvingTest extends ScoreConstraintVerifierTest {
         return Stream.of(
                 Arguments.of("<> timeSlot / <> subject / room type OK / <> room", 0, 0, 0,
                         List.of(
-                                new Lesson(1L, schoolRoom100, francaisSubject, francaisTeacher,
+                                new Lesson(1L, schoolClass1, schoolRoom100, francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(1L, DayOfWeek.MONDAY, 8, 9)),
-                                new Lesson(2L, schoolRoom101, mathsSubject, mathsTeacher,
+                                new Lesson(2L, schoolClass1, schoolRoom101, mathsSubject, mathsTeacher,
                                         TimeSlotTestProvider.timeSlot(2L, DayOfWeek.MONDAY, 9, 10))
                         )
                 ),
                 Arguments.of("<> timeSlot (overlapping) / <> subject / room type OK / <> room", -300, 0, 0,
                         List.of(
-                                new Lesson(1L, schoolRoom100, francaisSubject, francaisTeacher,
+                                new Lesson(1L, schoolClass1, schoolRoom100, francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(1L, DayOfWeek.MONDAY, 8, 30, 9, 30)),
-                                new Lesson(2L, schoolRoom101, mathsSubject, mathsTeacher,
+                                new Lesson(2L, schoolClass1, schoolRoom101, mathsSubject, mathsTeacher,
                                         TimeSlotTestProvider.timeSlot(2L, DayOfWeek.MONDAY, 9, 10))
                         )
                 ),
                 Arguments.of("== timeSlot (overlapping) / <> subject / room type OK / <> room", -600, 0, 0,
                         List.of(
-                                new Lesson(1L, schoolRoom100, francaisSubject, francaisTeacher,
+                                new Lesson(1L, schoolClass1, schoolRoom100, francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(1L, DayOfWeek.MONDAY, 8, 9)),
-                                new Lesson(2L, schoolRoom101, mathsSubject, mathsTeacher,
+                                new Lesson(2L, schoolClass1, schoolRoom101, mathsSubject, mathsTeacher,
                                         TimeSlotTestProvider.timeSlot(2L, DayOfWeek.MONDAY, 8, 9))
                         )
                 ),
                 Arguments.of("== timeSlot (overlapping) / == subject / room type OK / <> room", -600, 0, 0,
                         List.of(
-                                new Lesson(1L, schoolRoom100, francaisSubject, francaisTeacher,
+                                new Lesson(1L, schoolClass1, schoolRoom100, francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(1L, DayOfWeek.MONDAY, 8, 9)),
-                                new Lesson(2L, schoolRoom101, francaisSubject, francaisTeacher,
+                                new Lesson(2L, schoolClass1, schoolRoom101, francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(2L, DayOfWeek.MONDAY, 8, 9))
                         )
                 ),
                 Arguments.of("== timeSlot (overlapping) / == subject / multiple room type !OK / <> room", -600, -1200, 0,
                         List.of(
-                                new Lesson(1L, sciencesSchoolRoomSC1, francaisSubject, francaisTeacher,
+                                new Lesson(1L, schoolClass1, sciencesSchoolRoomSC1, francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(1L, DayOfWeek.MONDAY, 8, 9)),
-                                new Lesson(2L, SchoolRoomTestProvider.amphitheaterSchoolRoom(), francaisSubject, francaisTeacher,
+                                new Lesson(2L, schoolClass1, SchoolRoomTestProvider.amphitheaterSchoolRoom(), francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(2L, DayOfWeek.MONDAY, 8, 9))
                         )
                 ),
                 Arguments.of("== timeSlot (overlapping) / == subject / 1 room type !OK / <> room", -600, -600, 0,
                         List.of(
-                                new Lesson(1L, sciencesSchoolRoomSC1, francaisSubject, francaisTeacher,
+                                new Lesson(1L, schoolClass1, sciencesSchoolRoomSC1, francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(1L, DayOfWeek.MONDAY, 8, 9)),
-                                new Lesson(2L, schoolRoom101, francaisSubject, francaisTeacher,
+                                new Lesson(2L, schoolClass1, schoolRoom101, francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(2L, DayOfWeek.MONDAY, 8, 9))
                         )
                 ),
                 Arguments.of("== timeSlot (overlapping) / == subject / 1 room type !OK / <> room", 0, -1800, -1800,
                         List.of(
-                                new Lesson(1L, sciencesSchoolRoomSC1, francaisSubject, francaisTeacher,
+                                new Lesson(1L, schoolClass1, sciencesSchoolRoomSC1, francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(1L, DayOfWeek.MONDAY, 8, 9)),
-                                new Lesson(2L, sciencesSchoolRoomSC1, francaisSubject, francaisTeacher,
+                                new Lesson(2L, schoolClass1, sciencesSchoolRoomSC1, francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(2L, DayOfWeek.MONDAY, 9, 10)),
-                                new Lesson(3L, sciencesSchoolRoomSC1, francaisSubject, francaisTeacher,
+                                new Lesson(3L, schoolClass1, sciencesSchoolRoomSC1, francaisSubject, francaisTeacher,
                                         TimeSlotTestProvider.timeSlot(3L, DayOfWeek.MONDAY, 10, 11)),
-                                new Lesson(4L, schoolRoom101, mathsSubject, mathsTeacher,
+                                new Lesson(4L, schoolClass1, schoolRoom101, mathsSubject, mathsTeacher,
                                         TimeSlotTestProvider.timeSlot(4L, DayOfWeek.MONDAY, 2, 3))
                         )
                 )
