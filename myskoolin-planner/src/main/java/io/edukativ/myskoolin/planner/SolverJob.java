@@ -2,12 +2,11 @@ package io.edukativ.myskoolin.planner;
 
 public class SolverJob<S, I> {
 
-    private final S solution;
+    private final S initialSolution;
     private S finalBestSolution;
 
     public SolverJob(S solution) {
-        this.solution = solution;
-        this.finalBestSolution = solution;
+        this.initialSolution = solution;
     }
 
     public S getFinalBestSolution() {
@@ -15,10 +14,11 @@ public class SolverJob<S, I> {
     }
 
     public void terminateEarly() {
-
+        this.finalBestSolution = this.initialSolution;
     }
 
     public void startSolving() {
+        this.finalBestSolution = this.initialSolution;
 
 
     }
