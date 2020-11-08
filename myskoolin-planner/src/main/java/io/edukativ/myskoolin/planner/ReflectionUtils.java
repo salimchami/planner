@@ -17,7 +17,7 @@ public final class ReflectionUtils {
         // private constructor
     }
 
-    static Class<?> findFieldClass(Field field) {
+    static Class<?> findFieldTypeClass(Field field) {
         final Class<?> fieldType = field.getType();
         if (Collection.class.isAssignableFrom(fieldType)) {
             ParameterizedType collectionType = (ParameterizedType) field.getGenericType();

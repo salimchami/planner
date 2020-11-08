@@ -29,7 +29,7 @@ class SolverTest {
         SchoolClassSPI schoolClassSPI = mock(SchoolClassSPI.class);
         timeTableSPI = mock(TimeTableSPI.class);
         ScoreManager<TimeTable> scoreManager = new ScoreManager<>();
-        IWantToManageSolver<TimeTable, String> solverManager = new SolverManager<>();
+        IWantToManageSolver<TimeTable, String, Timeslot> solverManager = new SolverManager<>();
         sut = new SchoolClassTimeTablesSolver(solverManager, scoreManager, schoolClassSPI, timeTableSPI);
         schoolClassId = "Sixième";
         SchoolClass schoolClass = new SchoolClass(schoolClassId);

@@ -15,12 +15,12 @@ import java.util.Optional;
 
 public class SchoolClassTimeTablesSolver implements TimeTablesSolver {
 
-    private final IWantToManageSolver<TimeTable, String> solverManager;
+    private final IWantToManageSolver<TimeTable, String, Timeslot> solverManager;
     private final ScoreManager<TimeTable> scoreManager;
     private final SchoolClassSPI schoolClassSPI;
     private final TimeTableSPI timeTableSPI;
 
-    public SchoolClassTimeTablesSolver(IWantToManageSolver<TimeTable, String> solverManager,
+    public SchoolClassTimeTablesSolver(IWantToManageSolver<TimeTable, String, Timeslot> solverManager,
                                        ScoreManager<TimeTable> scoreManager,
                                        SchoolClassSPI schoolClassSPI, TimeTableSPI timeTableSPI) {
         this.solverManager = solverManager;

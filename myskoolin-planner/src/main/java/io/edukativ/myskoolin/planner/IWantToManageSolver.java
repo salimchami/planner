@@ -5,7 +5,7 @@ import io.edukativ.myskoolin.planner.exceptions.SolutionSolvingException;
 
 import java.util.function.Function;
 
-public interface IWantToManageSolver<S, I> {
+public interface IWantToManageSolver<S, I, V> {
 
     void terminateEarly(I timeTableId) throws SolutionSolvingException;
 
