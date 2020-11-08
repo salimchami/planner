@@ -3,7 +3,7 @@ package io.edukativ.myskoolin.planner.entities;
 import io.edukativ.myskoolin.planner.ScoreManager;
 import io.edukativ.myskoolin.planner.SolverManager;
 import io.edukativ.myskoolin.planner.SolverStatus;
-import io.edukativ.myskoolin.planner.exceptions.SolutionInitException;
+import io.edukativ.myskoolin.planner.exceptions.SolutionConfigurationException;
 import io.edukativ.myskoolin.planner.exceptions.SolutionSolvingException;
 
 import java.time.DayOfWeek;
@@ -35,7 +35,7 @@ public class SchoolClassTimeTablesSolver implements TimeTablesSolver {
     }
 
     @Override
-    public void solveForSchoolClass(String schoolClassId, List<Subject> subjects) throws SolutionInitException, SolutionSolvingException {
+    public void solveForSchoolClass(String schoolClassId, List<Subject> subjects) throws SolutionConfigurationException, SolutionSolvingException {
         Optional<SchoolClass> optSchoolClass = schoolClassSPI.findById(schoolClassId);
         if (optSchoolClass.isPresent()) {
             final List<Timeslot> baseTimeslots = baseTimeTable(subjects);

@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.planner;
 
 import io.edukativ.myskoolin.planner.entities.*;
-import io.edukativ.myskoolin.planner.exceptions.SolutionInitException;
+import io.edukativ.myskoolin.planner.exceptions.SolutionConfigurationException;
 import io.edukativ.myskoolin.planner.exceptions.SolutionSolvingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ class SolverTest {
     }
 
     @Test
-    void shouldGenerateTimeTable() throws SolutionInitException, SolutionSolvingException {
+    void shouldGenerateTimeTable() throws SolutionConfigurationException, SolutionSolvingException {
         schoolClassId = "Sixième";
         final Subject mathematiques = new Subject(1L, "Mathematiques", 120, 60, 300, 3);
         final Subject francais = new Subject(1L, "Français", 120, 60, 300, 3);
@@ -56,5 +56,12 @@ class SolverTest {
         return timeTable.getTimeslots().stream()
                 .filter(timeslot -> timeslot.getSubject().equals(francais))
                 .mapToLong(Timeslot::durationInMinutes).sum();
+    }
+
+    @Test
+    void name() throws NoSuchFieldException {
+        SolverManager<Long, TimeTable> solverManager = new SolverManager<>();
+        final Class<?> day = solverManager.findFieldClass(TimeTable.class.getDeclaredField("subjects"));
+        System.out.println(day);
     }
 }
