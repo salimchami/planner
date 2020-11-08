@@ -13,7 +13,7 @@ import java.util.function.Function;
 
 import static java.util.stream.Collectors.toList;
 
-public class SolverManager<S, I> {
+public class SolverManager<S, I> implements IWantToManageSolver<S, I> {
 
     private final Map<I, S> solutions;
     private final Map<I, SolverStatus> statuses;
@@ -23,6 +23,7 @@ public class SolverManager<S, I> {
         statuses = new HashMap<>();
     }
 
+    @Override
     public void terminateEarly(I timeTableId) throws SolutionSolvingException {
         if (!solutions.containsKey(timeTableId)) {
             throw new SolutionSolvingException(String.format("The solution with the id '%s' doesn't exists.", timeTableId));
@@ -31,10 +32,12 @@ public class SolverManager<S, I> {
         statuses.remove(timeTableId);
     }
 
+    @Override
     public SolverStatus getSolverStatus(I solutionId) {
         return statuses.get(solutionId);
     }
 
+    @Override
     public void solveAndListen(I id, S solution, Function<S, I> saveFunction) throws SolutionConfigurationException, SolutionSolvingException {
         addSolution(id, solution);
         final SolverJob<S, I> solverJob = new SolverJob<>(solution);
@@ -43,6 +46,10 @@ public class SolverManager<S, I> {
         waitForSolving(id, solverJob);
         saveFunction.apply(solverJob.getFinalBestSolution());
     }
+
+    // #####################################################
+    // #################### Internal methods ###############
+    // #####################################################
 
     private void waitForSolving(I id, SolverJob<S, I> solverJob) throws SolutionSolvingException {
         CountDownLatch latch = new CountDownLatch(1);
@@ -73,23 +80,46 @@ public class SolverManager<S, I> {
         );
 
         checkSolutionFieldsAnnotations(solution);
+        checkBaseVariablesClassAnnotations(solution);
         checkModifiableVariablesClassAnnotations(solution);
+        checkFactsClassAnnotations(solution);
+    }
 
-//        checkFieldsAnnotations(id, solution);
-//        checkBaseVariablesAnnotations(id, solution);
-//        checkModifiableVariablesAnnotations(id, solution);
+    private void checkFactsClassAnnotations(S solution) throws SolutionConfigurationException {
+        final Field field = findFieldByAnnotation(solution.getClass(), Facts.class);
+        checkClassAnnotation(findFieldClass(field), String.format("The Facts Class is not well configured. Please add @%s annotation on the class.",
+                Fact.class.getName()), Fact.class);
+        checkFieldsAnnotations(findFieldClass(field).getDeclaredFields(), Arrays.asList(FactId.class, FactItem.class), String.format(
+                "The Fact Class is not well configured. The class must have one field annotated with %s and one or multiple annotations '%s'.",
+                FactId.class.getName(), FactItem.class.getName()), true);
+    }
+
+    private void checkBaseVariablesClassAnnotations(S solution) throws SolutionConfigurationException {
+        final Field field = findFieldByAnnotation(solution.getClass(), BasePlanningVariables.class);
+        checkClassAnnotation(findFieldClass(field), String.format("The Base Planning Variable Class is not well configured. Please add @%s annotation on the class.",
+                PlanningVariable.class.getName()), PlanningVariable.class);
+        checkFieldsAnnotations(findFieldClass(field).getDeclaredFields(), Arrays.asList(PlanningVariableId.class, PlanningVariableItem.class), String.format(
+                "The Modifiable Planning Variable Class is not well configured. The class must have one field annotated with %s and one or multiple annotations '%s'.",
+                PlanningVariableId.class.getName(), PlanningVariableItem.class.getName()), true);
     }
 
     private void checkModifiableVariablesClassAnnotations(S solution) throws SolutionConfigurationException {
-        final Field field = findFieldByAnnotation(solution.getClass(), ModifiableVariables.class);
-        checkClassAnnotation(findFieldClass(field), String.format("The ModifiableVariable Class is not well configured. Please add @%s annotation on the class.",
-                ModifiableVariable.class.getName()), ModifiableVariable.class);
-        checkFieldsAnnotations(findFieldClass(field).getDeclaredFields(), Arrays.asList(ModifiableVariableId.class, ModifiableVariableItem.class), String.format(
-                "The ModifiableVariable Class is not well configured. The class must have one field annotated with %s and one or multiple annotations '%s'.",
-                ModifiableVariableId.class.getName(), ModifiableVariableItem.class.getName()), true);
+        final Field field = findFieldByAnnotation(solution.getClass(), ModifiablePlanningVariables.class);
+        checkClassAnnotation(findFieldClass(field), String.format("The Modifiable Planning Variable Class is not well configured. Please add @%s annotation on the class.",
+                PlanningVariable.class.getName()), PlanningVariable.class);
+        checkFieldsAnnotations(findFieldClass(field).getDeclaredFields(), Arrays.asList(PlanningVariableId.class, PlanningVariableItem.class), String.format(
+                "The Modifiable Planning Variable Class is not well configured. The class must have one field annotated with %s and one or multiple annotations '%s'.",
+                PlanningVariableId.class.getName(), PlanningVariableItem.class.getName()), true);
     }
 
-    public Class<?> findFieldClass(Field field) {
+    private void checkSolutionFieldsAnnotations(S solution) throws SolutionConfigurationException {
+        final Field[] solutionDeclaredFields = solution.getClass().getDeclaredFields();
+        checkFieldsAnnotations(solutionDeclaredFields, Arrays.asList(SolutionId.class, BasePlanningVariables.class, ModifiablePlanningVariables.class, Facts.class),
+                String.format("The Solution Class is not well configured. The class must have three fields (only) with these annotations '%s', '%s', '%s', '%s'.",
+                        SolutionId.class.getName(), BasePlanningVariables.class.getName(), ModifiablePlanningVariables.class.getName(), Facts.class.getName()), false);
+    }
+
+    private Class<?> findFieldClass(Field field) {
         final Class<?> fieldType = field.getType();
         if (Collection.class.isAssignableFrom(fieldType)) {
             ParameterizedType collectionType = (ParameterizedType) field.getGenericType();
@@ -97,13 +127,6 @@ public class SolverManager<S, I> {
         } else {
             return fieldType;
         }
-    }
-
-    private void checkSolutionFieldsAnnotations(S solution) throws SolutionConfigurationException {
-        final Field[] solutionDeclaredFields = solution.getClass().getDeclaredFields();
-        checkFieldsAnnotations(solutionDeclaredFields, Arrays.asList(SolutionId.class, BaseVariables.class, ModifiableVariables.class, Facts.class),
-                String.format("The solution Class is not well configured. The class must have three fields (only) with these annotations '%s', '%s', '%s', '%s'.",
-                        SolutionId.class.getName(), BaseVariables.class.getName(), ModifiableVariables.class.getName(), Facts.class.getName()), false);
     }
 
     private void checkClassAnnotation(Class<?> clazz, String exceptionMessage, Class<? extends Annotation> classAnnotation) throws SolutionConfigurationException {
@@ -134,6 +157,8 @@ public class SolverManager<S, I> {
                             .contains(annotation);
                 })
                 .findFirst()
-                .orElseThrow(() -> new SolutionConfigurationException(String.format("Field with annotation %s not found.", annotation.getName())));
+                .orElseThrow(() -> new SolutionConfigurationException(
+                        String.format("Field annotation %s not found.", annotation.getName())
+                ));
     }
 }

@@ -1,26 +1,26 @@
 package io.edukativ.myskoolin.planner.entities;
 
-import io.edukativ.myskoolin.planner.declarations.ModifiableVariable;
-import io.edukativ.myskoolin.planner.declarations.ModifiableVariableId;
-import io.edukativ.myskoolin.planner.declarations.ModifiableVariableItem;
+import io.edukativ.myskoolin.planner.declarations.PlanningVariable;
+import io.edukativ.myskoolin.planner.declarations.PlanningVariableId;
+import io.edukativ.myskoolin.planner.declarations.PlanningVariableItem;
 
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
 
-@ModifiableVariable
+@PlanningVariable
 public class Timeslot {
 
-    @ModifiableVariableId
+    @PlanningVariableId
     private final Long id;
-    @ModifiableVariableItem
+    @PlanningVariableItem
     private final DayOfWeek day;
-    @ModifiableVariableItem
+    @PlanningVariableItem
     private final LocalTime startTime;
-    @ModifiableVariableItem
+    @PlanningVariableItem
     private final LocalTime endTime;
-    @ModifiableVariableItem
+    @PlanningVariableItem
     private Subject subject;
 
     public Timeslot(Long id, DayOfWeek day, LocalTime startTime, LocalTime endTime, Subject subject) {

@@ -57,11 +57,4 @@ class SolverTest {
                 .filter(timeslot -> timeslot.getSubject().equals(francais))
                 .mapToLong(Timeslot::durationInMinutes).sum();
     }
-
-    @Test
-    void name() throws NoSuchFieldException {
-        SolverManager<Long, TimeTable> solverManager = new SolverManager<>();
-        final Class<?> day = solverManager.findFieldClass(TimeTable.class.getDeclaredField("subjects"));
-        System.out.println(day);
-    }
 }

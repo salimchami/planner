@@ -1,5 +1,6 @@
 package io.edukativ.myskoolin.planner.entities;
 
+import io.edukativ.myskoolin.planner.IWantToManageSolver;
 import io.edukativ.myskoolin.planner.ScoreManager;
 import io.edukativ.myskoolin.planner.SolverManager;
 import io.edukativ.myskoolin.planner.SolverStatus;
@@ -15,12 +16,12 @@ import java.util.Optional;
 
 public class SchoolClassTimeTablesSolver implements TimeTablesSolver {
 
-    private final SolverManager<TimeTable, String> solverManager;
+    private final IWantToManageSolver<TimeTable, String> solverManager;
     private final ScoreManager<TimeTable> scoreManager;
     private final SchoolClassSPI schoolClassSPI;
     private final TimeTableSPI timeTableSPI;
 
-    public SchoolClassTimeTablesSolver(SolverManager<TimeTable, String> solverManager,
+    public SchoolClassTimeTablesSolver(IWantToManageSolver<TimeTable, String> solverManager,
                                        ScoreManager<TimeTable> scoreManager,
                                        SchoolClassSPI schoolClassSPI, TimeTableSPI timeTableSPI) {
         this.solverManager = solverManager;
@@ -38,7 +39,7 @@ public class SchoolClassTimeTablesSolver implements TimeTablesSolver {
     public void solveForSchoolClass(String schoolClassId, List<Subject> subjects) throws SolutionConfigurationException, SolutionSolvingException {
         Optional<SchoolClass> optSchoolClass = schoolClassSPI.findById(schoolClassId);
         if (optSchoolClass.isPresent()) {
-            final List<Timeslot> baseTimeslots = baseTimeTable(subjects);
+            final List<Timeslot> baseTimeslots = baseTimeTable();
             final TimeTable schoolClassTimeTable = new TimeTable(baseTimeslots, subjects);
             solverManager.solveAndListen(optSchoolClass.get().getName(), schoolClassTimeTable, this::saveTimeTable);
         }
@@ -49,9 +50,7 @@ public class SchoolClassTimeTablesSolver implements TimeTablesSolver {
         return solverManager.getSolverStatus(timeTableId);
     }
 
-    private List<Timeslot> baseTimeTable(List<Subject> subjects) {
-        Subject francais = subjects.stream().filter(s -> s.getName().equals("Français")).findFirst().orElse(null);
-        Subject maths = subjects.stream().filter(s -> s.getName().equals("Mathematiques")).findFirst().orElse(null);
+    private List<Timeslot> baseTimeTable() {
         return Arrays.asList(
                 new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), null),
                 new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), null),

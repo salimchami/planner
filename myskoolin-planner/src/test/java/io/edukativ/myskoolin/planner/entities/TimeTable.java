@@ -13,10 +13,10 @@ public class TimeTable {
     @SolutionId
     private String schoolClassName;
 
-    @BaseVariables
+    @BasePlanningVariables
     private final List<Timeslot> baseTimeslots;
 
-    @ModifiableVariables
+    @ModifiablePlanningVariables
     private List<Timeslot> timeslots = new ArrayList<>();
 
     @Facts
