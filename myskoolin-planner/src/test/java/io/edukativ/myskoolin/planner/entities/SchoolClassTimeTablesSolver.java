@@ -1,9 +1,10 @@
 package io.edukativ.myskoolin.planner.entities;
 
 import io.edukativ.myskoolin.planner.ScoreManager;
-import io.edukativ.myskoolin.planner.SolverJob;
 import io.edukativ.myskoolin.planner.SolverManager;
 import io.edukativ.myskoolin.planner.SolverStatus;
+import io.edukativ.myskoolin.planner.exceptions.SolutionInitException;
+import io.edukativ.myskoolin.planner.exceptions.SolutionSolvingException;
 
 import java.time.DayOfWeek;
 import java.time.Instant;
@@ -29,18 +30,18 @@ public class SchoolClassTimeTablesSolver implements TimeTablesSolver {
     }
 
     @Override
-    public void stopSolving(String timeTableId) {
+    public void stopSolving(String timeTableId) throws SolutionSolvingException {
         solverManager.terminateEarly(timeTableId);
     }
 
     @Override
-    public void solveForSchoolClass(String schoolClassId, List<Subject> subjects) {
+    public void solveForSchoolClass(String schoolClassId, List<Subject> subjects) throws SolutionInitException, SolutionSolvingException {
         Optional<SchoolClass> optSchoolClass = schoolClassSPI.findById(schoolClassId);
-        optSchoolClass.ifPresent(schoolClass -> {
+        if (optSchoolClass.isPresent()) {
             final List<Timeslot> baseTimeslots = baseTimeTable(subjects);
             final TimeTable schoolClassTimeTable = new TimeTable(baseTimeslots, subjects);
-            solveSaveAndListen(schoolClass, schoolClassTimeTable);
-        });
+            solverManager.solveAndListen(optSchoolClass.get().getName(), schoolClassTimeTable, this::saveTimeTable);
+        }
     }
 
     @Override
@@ -75,12 +76,6 @@ public class SchoolClassTimeTablesSolver implements TimeTablesSolver {
 
     private List<Timeslot> generateFirstStepTimeTable() {
         return null;
-    }
-
-    private void solveSaveAndListen(SchoolClass schoolClass, TimeTable schoolClassTimeTable) {
-        final SolverJob<TimeTable, String> solverJob =
-                solverManager.solveAndListen(schoolClass.getName(), schoolClassTimeTable, this::saveTimeTable);
-        saveTimeTable(solverJob.getFinalBestSolution());
     }
 
     private String saveTimeTable(TimeTable timeTable) {

@@ -1,10 +1,7 @@
 package io.edukativ.myskoolin.planner.entities;
 
 import io.edukativ.myskoolin.planner.Score;
-import io.edukativ.myskoolin.planner.declarations.BaseVariables;
-import io.edukativ.myskoolin.planner.declarations.Facts;
-import io.edukativ.myskoolin.planner.declarations.ModifiableVariables;
-import io.edukativ.myskoolin.planner.declarations.PlanningSolution;
+import io.edukativ.myskoolin.planner.declarations.*;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -12,6 +9,9 @@ import java.util.List;
 
 @PlanningSolution
 public class TimeTable {
+
+    @SolutionId
+    private String schoolClassName;
 
     @BaseVariables
     private final List<Timeslot> baseTimeslots;
