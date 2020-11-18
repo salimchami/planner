@@ -13,15 +13,18 @@ import java.util.List;
 public class Timeslot {
 
     @PlanningVariableId
-    private final Long id;
+    private Long id;
     @PlanningVariableItem
-    private final DayOfWeek day;
+    private DayOfWeek day;
     @PlanningVariableItem
-    private final LocalTime startTime;
+    private LocalTime startTime;
     @PlanningVariableItem
-    private final LocalTime endTime;
+    private LocalTime endTime;
     @PlanningVariableItem
     private Subject subject;
+
+    public Timeslot() {
+    }
 
     public Timeslot(Long id, DayOfWeek day, LocalTime startTime, LocalTime endTime, Subject subject) {
         this.id = id;
@@ -52,6 +55,26 @@ public class Timeslot {
 
     public LocalTime getEndTime() {
         return endTime;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setDay(DayOfWeek day) {
+        this.day = day;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public static Integer totalDuration(List<Timeslot> timeSlots) {

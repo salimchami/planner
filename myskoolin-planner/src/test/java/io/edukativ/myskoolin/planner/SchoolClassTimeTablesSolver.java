@@ -1,8 +1,6 @@
-package io.edukativ.myskoolin.planner.entities;
+package io.edukativ.myskoolin.planner;
 
-import io.edukativ.myskoolin.planner.IWantToManageSolver;
-import io.edukativ.myskoolin.planner.ScoreManager;
-import io.edukativ.myskoolin.planner.SolverStatus;
+import io.edukativ.myskoolin.planner.entities.*;
 import io.edukativ.myskoolin.planner.exceptions.SolutionConfigurationException;
 import io.edukativ.myskoolin.planner.exceptions.SolutionSolvingException;
 

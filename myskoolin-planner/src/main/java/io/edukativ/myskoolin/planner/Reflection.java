@@ -9,11 +9,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import static java.lang.StackWalker.Option.RETAIN_CLASS_REFERENCE;
 import static java.util.stream.Collectors.toList;
 
-public final class ReflectionUtils {
+public final class Reflection {
 
-    private ReflectionUtils() {
+    private Reflection() {
         // private constructor
     }
 

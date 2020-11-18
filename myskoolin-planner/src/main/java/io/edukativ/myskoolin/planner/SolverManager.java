@@ -11,7 +11,8 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Function;
 
-import static io.edukativ.myskoolin.planner.ReflectionUtils.*;
+import static io.edukativ.myskoolin.planner.Reflection.checkClassAnnotation;
+import static java.lang.StackWalker.Option.RETAIN_CLASS_REFERENCE;
 
 public class SolverManager<S, I, V> implements IWantToManageSolver<S, I, V> {
 
@@ -40,7 +41,8 @@ public class SolverManager<S, I, V> implements IWantToManageSolver<S, I, V> {
     @Override
     public void solveAndListen(I id, S solution, Function<S, I> saveFunction) throws SolutionConfigurationException, SolutionSolvingException {
         addSolution(id, solution);
-        final SolverJob<S, I, V> solverJob = new SolverJob<>(solution);
+        final String basePackage = StackWalker.getInstance(RETAIN_CLASS_REFERENCE).getCallerClass().getPackageName();
+        final SolverJob<S, I, V> solverJob = new SolverJob<>(basePackage, solution);
         solverJob.startSolving();
         // FIXME : refactor this !
         statuses.put(id, SolverStatus.SOLVING);
@@ -90,35 +92,35 @@ public class SolverManager<S, I, V> implements IWantToManageSolver<S, I, V> {
     }
 
     private void checkFactsClassAnnotations(S solution) throws SolutionConfigurationException {
-        final Field field = findFieldByAnnotation(solution.getClass(), Facts.class);
-        checkClassAnnotation(findFieldTypeClass(field), String.format("The Facts Class is not well configured. Please add @%s annotation on the class.",
+        final Field field = Reflection.findFieldByAnnotation(solution.getClass(), Facts.class);
+        checkClassAnnotation(Reflection.findFieldTypeClass(field), String.format("The Facts Class is not well configured. Please add @%s annotation on the class.",
                 Fact.class.getName()), Fact.class);
-        checkFieldsAnnotations(findFieldTypeClass(field).getDeclaredFields(), Arrays.asList(FactId.class, FactItem.class), String.format(
+        Reflection.checkFieldsAnnotations(Reflection.findFieldTypeClass(field).getDeclaredFields(), Arrays.asList(FactId.class, FactItem.class), String.format(
                 "The Fact Class is not well configured. The class must have one field annotated with %s and one or multiple annotations '%s'.",
                 FactId.class.getName(), FactItem.class.getName()), true);
     }
 
     private void checkBaseVariablesClassAnnotations(S solution) throws SolutionConfigurationException {
-        final Field field = findFieldByAnnotation(solution.getClass(), BasePlanningVariables.class);
-        checkClassAnnotation(findFieldTypeClass(field), String.format("The Base Planning Variable Class is not well configured. Please add @%s annotation on the class.",
+        final Field field = Reflection.findFieldByAnnotation(solution.getClass(), BasePlanningVariables.class);
+        checkClassAnnotation(Reflection.findFieldTypeClass(field), String.format("The Base Planning Variable Class is not well configured. Please add @%s annotation on the class.",
                 PlanningVariable.class.getName()), PlanningVariable.class);
-        checkFieldsAnnotations(findFieldTypeClass(field).getDeclaredFields(), Arrays.asList(PlanningVariableId.class, PlanningVariableItem.class), String.format(
+        Reflection.checkFieldsAnnotations(Reflection.findFieldTypeClass(field).getDeclaredFields(), Arrays.asList(PlanningVariableId.class, PlanningVariableItem.class), String.format(
                 "The Modifiable Planning Variable Class is not well configured. The class must have one field annotated with %s and one or multiple annotations '%s'.",
                 PlanningVariableId.class.getName(), PlanningVariableItem.class.getName()), true);
     }
 
     private void checkModifiableVariablesClassAnnotations(S solution) throws SolutionConfigurationException {
-        final Field field = findFieldByAnnotation(solution.getClass(), ModifiablePlanningVariables.class);
-        checkClassAnnotation(findFieldTypeClass(field), String.format("The Modifiable Planning Variable Class is not well configured. Please add @%s annotation on the class.",
+        final Field field = Reflection.findFieldByAnnotation(solution.getClass(), ModifiablePlanningVariables.class);
+        checkClassAnnotation(Reflection.findFieldTypeClass(field), String.format("The Modifiable Planning Variable Class is not well configured. Please add @%s annotation on the class.",
                 PlanningVariable.class.getName()), PlanningVariable.class);
-        checkFieldsAnnotations(findFieldTypeClass(field).getDeclaredFields(), Arrays.asList(PlanningVariableId.class, PlanningVariableItem.class), String.format(
+        Reflection.checkFieldsAnnotations(Reflection.findFieldTypeClass(field).getDeclaredFields(), Arrays.asList(PlanningVariableId.class, PlanningVariableItem.class), String.format(
                 "The Modifiable Planning Variable Class is not well configured. The class must have one field annotated with %s and one or multiple annotations '%s'.",
                 PlanningVariableId.class.getName(), PlanningVariableItem.class.getName()), true);
     }
 
     private void checkSolutionFieldsAnnotations(S solution) throws SolutionConfigurationException {
         final Field[] solutionDeclaredFields = solution.getClass().getDeclaredFields();
-        checkFieldsAnnotations(solutionDeclaredFields, Arrays.asList(SolutionId.class, BasePlanningVariables.class, ModifiablePlanningVariables.class, Facts.class),
+        Reflection.checkFieldsAnnotations(solutionDeclaredFields, Arrays.asList(SolutionId.class, BasePlanningVariables.class, ModifiablePlanningVariables.class, Facts.class),
                 String.format("The Solution Class is not well configured. The class must have three fields (only) with these annotations '%s', '%s', '%s', '%s'.",
                         SolutionId.class.getName(), BasePlanningVariables.class.getName(), ModifiablePlanningVariables.class.getName(), Facts.class.getName()), false);
     }

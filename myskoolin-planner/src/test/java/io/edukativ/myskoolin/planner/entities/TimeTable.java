@@ -14,7 +14,7 @@ public class TimeTable {
     private String schoolClassName;
 
     @BasePlanningVariables
-    private final List<Timeslot> baseTimeslots;
+    private List<Timeslot> baseTimeslots;
 
     @ModifiablePlanningVariables
     private List<Timeslot> timeslots = new ArrayList<>();
