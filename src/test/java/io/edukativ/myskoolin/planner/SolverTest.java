@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.within;
 import static org.mockito.Mockito.*;
 
 class SolverTest {
@@ -48,9 +47,7 @@ class SolverTest {
         verify(timeTableSPI).save(timetableCaptor.capture());
         final TimeTable timeTable = timetableCaptor.getValue();
 
-        assertThat(durationOfSubject(francais, timeTable)).isLessThan(120L);
-        assertThat(durationOfSubject(francais, timeTable)).isGreaterThan(60L);
-//        assertThat(durationOfSubject(mathematiques, timeTable)).isCloseTo(120L, within(30L));
+        assertThat(durationOfSubject(francais, timeTable)).isLessThan(120L).isGreaterThan(60L);
     }
 
     private Long durationOfSubject(Subject francais, TimeTable timeTable) {
