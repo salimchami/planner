@@ -1,1 +1,0 @@
-{"version":3,"file":"spinkits.js","sourceRoot":"","sources":["spinkits.ts"],"names":[],"mappings":";;AAAa,QAAA,OAAO,GAAG;IACnB,aAAa,EAAE,iBAAiB;IAChC,UAAU,EAAE,cAAc;IAC1B,cAAc,EAAE,kBAAkB;IAClC,eAAe,EAAE,oBAAoB;IACrC,cAAc,EAAE,kBAAkB;IAClC,aAAa,EAAE,iBAAiB;IAChC,gBAAgB,EAAE,oBAAoB;IACtC,MAAM,EAAE,SAAS;IACjB,MAAM,EAAE,kBAAkB;CAC7B,CAAC"}
