@@ -26,7 +26,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Dependency versions -->
-        <jhipster-dependencies.version>3.7.1</jhipster-dependencies.version>
+        <jhipster-dependencies.version>3.9.1</jhipster-dependencies.version>
         <spring-boot.version>2.2.7.RELEASE</spring-boot.version>
         <log4j2-mock.version>0.0.2</log4j2-mock.version>
         <checkstyle.version>8.32</checkstyle.version>
