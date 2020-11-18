@@ -1,9 +1,14 @@
 package io.edukativ.myskoolin.planner;
 
+import io.edukativ.myskoolin.planner.declarations.BasePlanningVariables;
+import io.edukativ.myskoolin.planner.declarations.ModifiablePlanningVariables;
 import io.edukativ.myskoolin.planner.declarations.PlanningVariable;
 import io.edukativ.myskoolin.planner.exceptions.SolutionConfigurationException;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Set;
 
@@ -35,18 +40,17 @@ public class SolverJob<S, I, V> {
 
     public void startSolving() throws SolutionConfigurationException {
 
+        final Field basePlanningVariablesField = Reflection.findFieldByAnnotation(initialSolution.getClass(), BasePlanningVariables.class);
+        final Field modifiablePlanningVariablesField = Reflection.findFieldByAnnotation(initialSolution.getClass(), ModifiablePlanningVariables.class);
 
-//        final Field basePlanningVariablesField = Reflection.findFieldByAnnotation(initialSolution.getClass(), BasePlanningVariables.class);
-//        final Field modifiablePlanningVariablesField = Reflection.findFieldByAnnotation(initialSolution.getClass(), ModifiablePlanningVariables.class);
-
-//        try {
-//            final PropertyDescriptor propertyDescriptor = new PropertyDescriptor(basePlanningVariablesField.getName(), basePlanningVariablesField.getType());
-//            propertyDescriptor.getReadMethod().invoke(initialSolution);
-////            final List<V> o = (List<V>) basePlanningVariablesField.get(initialSolution);
-////            System.out.println(o);
-//        } catch (IllegalAccessException | IntrospectionException | InvocationTargetException e) {
-//            throw new SolutionConfigurationException("Error while reading solution fields instances.", e);
-//        }
+        try {
+            final PropertyDescriptor propertyDescriptor = new PropertyDescriptor(basePlanningVariablesField.getName(), basePlanningVariablesField.getType());
+            propertyDescriptor.getReadMethod().invoke(initialSolution);
+//            final List<V> o = (List<V>) basePlanningVariablesField.get(initialSolution);
+//            System.out.println(o);
+        } catch (IllegalAccessException | InvocationTargetException | IntrospectionException e) {
+            throw new SolutionConfigurationException("Error while reading solution fields instances.", e);
+        }
         this.finalBestSolution = this.initialSolution;
     }
 

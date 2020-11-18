@@ -41,41 +41,6 @@ public class Timeslot {
         this.endTime = endTime;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public DayOfWeek getDay() {
-        return day;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setDay(DayOfWeek day) {
-        this.day = day;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
 
     public static Integer totalDuration(List<Timeslot> timeSlots) {
         return timeSlots.stream().map(Timeslot::durationInMinutes).mapToInt(Long::intValue).sum();

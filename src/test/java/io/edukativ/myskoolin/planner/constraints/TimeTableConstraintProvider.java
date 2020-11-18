@@ -14,6 +14,11 @@ public class TimeTableConstraintProvider implements ConstraintProvider {
     public ConstraintContract[] defineConstraints(ConstraintFactory constraintFactory) {
         return new Constraint[]{
                 // Hard constraints
+                subjectDurationByDayConflict(constraintFactory),
+                subjectDurationByDayConflict(constraintFactory),
+                subjectDurationByDayConflict(constraintFactory),
+                subjectDurationByDayConflict(constraintFactory),
+                subjectDurationByDayConflict(constraintFactory),
                 subjectDurationByDayConflict(constraintFactory)
         };
     }

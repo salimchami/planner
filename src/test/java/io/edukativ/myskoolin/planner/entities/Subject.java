@@ -4,6 +4,8 @@ import io.edukativ.myskoolin.planner.declarations.Fact;
 import io.edukativ.myskoolin.planner.declarations.FactId;
 import io.edukativ.myskoolin.planner.declarations.FactItem;
 
+import java.util.Objects;
+
 @Fact
 public class Subject {
 
@@ -57,5 +59,23 @@ public class Subject {
             return totalDuration;
         }
         return 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Subject subject = (Subject) o;
+        return Objects.equals(id, subject.id) &&
+                Objects.equals(name, subject.name) &&
+                Objects.equals(maxMinutesPerDay, subject.maxMinutesPerDay) &&
+                Objects.equals(minMinutesPerDay, subject.minMinutesPerDay) &&
+                Objects.equals(minutesPerWeek, subject.minutesPerWeek) &&
+                Objects.equals(coursesFrequencyPerWeek, subject.coursesFrequencyPerWeek);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, maxMinutesPerDay, minMinutesPerDay, minutesPerWeek, coursesFrequencyPerWeek);
     }
 }
