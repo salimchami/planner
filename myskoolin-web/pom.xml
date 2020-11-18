@@ -42,7 +42,7 @@
         <!-- The spring-boot version should match the one managed by
         https://mvnrepository.com/artifact/io.github.jhipster/jhipster-dependencies/${jhipster-dependencies.version} -->
 
-        <archunit-junit5.version>0.13.1</archunit-junit5.version>
+        <archunit-junit5.version>0.14.1</archunit-junit5.version>
 
         <!-- jhipster-needle-maven-property -->
     </properties>
