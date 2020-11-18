@@ -2,12 +2,6 @@ package io.edukativ.myskoolin.planner;
 
 import io.edukativ.myskoolin.planner.declarations.PlanningVariable;
 import io.edukativ.myskoolin.planner.exceptions.SolutionConfigurationException;
-import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.scanners.TypeAnnotationsScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-import org.reflections.util.FilterBuilder;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -21,7 +15,6 @@ import java.util.Set;
 public class SolverJob<S, I, V> {
 
     private String basePackage;
-    private Reflections reflections;
     private final S initialSolution;
     private S finalBestSolution;
     private List<V> basePlanningVariables;
@@ -30,11 +23,6 @@ public class SolverJob<S, I, V> {
     public SolverJob(String basePackage, S solution) {
         this.basePackage = basePackage;
         this.initialSolution = solution;
-        this.reflections = new Reflections(new ConfigurationBuilder()
-                .setUrls(ClasspathHelper.forPackage(this.basePackage))
-                .setScanners(new SubTypesScanner(),
-                        new TypeAnnotationsScanner())
-                .filterInputsBy(new FilterBuilder().includePackage(this.basePackage)));
     }
 
     public S getFinalBestSolution() {
@@ -46,10 +34,6 @@ public class SolverJob<S, I, V> {
     }
 
     public void startSolving() throws SolutionConfigurationException {
-        Set<Class<?>> annotated = reflections.getTypesAnnotatedWith(PlanningVariable.class);
-
-        final Set<Field> fieldsAnnotatedWith = this.reflections.getFieldsAnnotatedWith(PlanningVariable.class);
-        System.out.println(fieldsAnnotatedWith);
 
 
 //        final Field basePlanningVariablesField = Reflection.findFieldByAnnotation(initialSolution.getClass(), BasePlanningVariables.class);
