@@ -3,6 +3,7 @@ package io.edukativ.myskoolin.planner;
 import io.edukativ.myskoolin.planner.declarations.*;
 import io.edukativ.myskoolin.planner.exceptions.SolutionConfigurationException;
 import io.edukativ.myskoolin.planner.exceptions.SolutionSolvingException;
+import io.edukativ.myskoolin.planner.reflection.Reflection;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -11,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Function;
 
-import static io.edukativ.myskoolin.planner.Reflection.checkClassAnnotation;
+import static io.edukativ.myskoolin.planner.reflection.Reflection.checkClassAnnotation;
 import static java.lang.StackWalker.Option.RETAIN_CLASS_REFERENCE;
 
 public class SolverManager<S, I, V> implements IWantToManageSolver<S, I, V> {
@@ -44,7 +45,6 @@ public class SolverManager<S, I, V> implements IWantToManageSolver<S, I, V> {
         final String basePackage = StackWalker.getInstance(RETAIN_CLASS_REFERENCE).getCallerClass().getPackageName();
         final SolverJob<S, I, V> solverJob = new SolverJob<>(basePackage, solution);
         solverJob.startSolving();
-        // FIXME : refactor this !
         statuses.put(id, SolverStatus.SOLVING);
         waitForSolving(id, solverJob);
         saveFunction.apply(solverJob.getFinalBestSolution());

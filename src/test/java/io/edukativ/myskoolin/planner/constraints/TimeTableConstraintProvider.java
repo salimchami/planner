@@ -11,19 +11,14 @@ import java.util.List;
 public class TimeTableConstraintProvider implements ConstraintProvider {
 
     @Override
-    public ConstraintContract[] defineConstraints(ConstraintFactory constraintFactory) {
+    public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
         return new Constraint[]{
                 // Hard constraints
-                subjectDurationByDayConflict(constraintFactory),
-                subjectDurationByDayConflict(constraintFactory),
-                subjectDurationByDayConflict(constraintFactory),
-                subjectDurationByDayConflict(constraintFactory),
-                subjectDurationByDayConflict(constraintFactory),
                 subjectDurationByDayConflict(constraintFactory)
         };
     }
 
-    private Constraint subjectDurationByDayConflict(ConstraintFactory constraintFactory) {
+    private Constraint<Subject, Timeslot> subjectDurationByDayConflict(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .fromMultiple(Timeslot.class)
                 .withFact(Subject.class)

@@ -2,5 +2,5 @@ package io.edukativ.myskoolin.planner;
 
 public interface ConstraintProvider {
 
-    ConstraintContract[] defineConstraints(ConstraintFactory constraintFactory);
+    <U, T> Constraint<U, T>[] defineConstraints(ConstraintFactory constraintFactory);
 }

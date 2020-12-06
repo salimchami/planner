@@ -1,27 +1,43 @@
 package io.edukativ.myskoolin.planner;
 
-public class Constraint implements ConstraintContract{
+public class Constraint<U, T> {
 
-    private ConstraintFactory constraintFactory;
-    private String constraintPackage;
-    private String constraintName;
-
-    @Override
-    public ConstraintFactory getConstraintFactory() {
-        return constraintFactory;
+    public Constraint(String constraintName) {
+        this.constraintName = constraintName;
     }
 
-    @Override
-    public String getConstraintPackage() {
-        return constraintPackage;
+    private final String constraintName;
+    private ScoreLevel score;
+    private PenaltyFunction<U, T> penaltyFunction;
+    private Class<U> factClass;
+    private Class<T> planningVariableClass;
+
+    public Constraint(String constraintName, ScoreLevel score, PenaltyFunction<U, T> penaltyFunction,
+                      Class<U> factClass, Class<T> planningVariableClass) {
+        this.constraintName = constraintName;
+        this.score = score;
+        this.penaltyFunction = penaltyFunction;
+        this.factClass = factClass;
+        this.planningVariableClass = planningVariableClass;
     }
 
-    @Override
     public String getConstraintName() {
         return constraintName;
     }
 
-//    public ScoreImpactType getScoreImpactType() {
-//        return scoreImpactType;
-//    }
+    public ScoreLevel getScore() {
+        return score;
+    }
+
+    public PenaltyFunction<U, T> getPenaltyFunction() {
+        return penaltyFunction;
+    }
+
+    public Class<U> getFactClass() {
+        return factClass;
+    }
+
+    public Class<T> getPlanningVariableClass() {
+        return planningVariableClass;
+    }
 }

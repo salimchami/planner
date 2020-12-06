@@ -4,17 +4,15 @@ import java.util.function.Function;
 
 public interface ConstraintFactory {
 
-    String getDefaultConstraintPackage();
-
-    ConstraintFactory withFact(Class<?> subjectClass);
+    <A> ConstraintFactory withFact(Class<A> factClass);
 
 
-    ConstraintFactory fromMultiple(Class<?> timeslotClass);
+    <P> ConstraintFactory fromMultiple(Class<P> planningVariableClass);
 
-    <T, R> ConstraintFactory filter(Function<T, R> filter);
+    <A, R> ConstraintFactory filter(Function<A, R> filter);
 
-    <U, T> Constraint apply(String s, ScoreLevel hard, PenaltyFunction<U, T> o);
-//    <T, R> Constraint apply(String constraintName, ScoreLevel scoreLevel, Function<T, R> penaltyFunction);
+    <A, P> Constraint<A, P> apply(String constraintName, ScoreLevel score, PenaltyFunction<A, P> penaltyFunction);
+
 
 //    <A> UniConstraintStream<A> from(Class<A> fromClass);
 //
