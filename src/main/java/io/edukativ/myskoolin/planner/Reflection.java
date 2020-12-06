@@ -4,12 +4,13 @@ import io.edukativ.myskoolin.planner.exceptions.SolutionConfigurationException;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import static java.lang.StackWalker.Option.RETAIN_CLASS_REFERENCE;
 import static java.util.stream.Collectors.toList;
 
 public final class Reflection {
@@ -59,5 +60,16 @@ public final class Reflection {
                 .orElseThrow(() -> new SolutionConfigurationException(
                         String.format("Field annotation %s not found.", annotation.getName())
                 ));
+    }
+
+    static <S> Object findValueByAnnotation(S classInstance, Class<? extends Annotation> annotation) throws SolutionConfigurationException {
+        final Field field = findFieldByAnnotation(classInstance.getClass(), annotation);
+        try {
+            String fieldName = field.getName();
+            final Method method = classInstance.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1));
+            return method.invoke(classInstance);
+        } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            throw new SolutionConfigurationException(String.format("%s field value with annotation %s not found.", classInstance.getClass().getName(), annotation.getName()), e);
+        }
     }
 }

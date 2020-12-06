@@ -14,7 +14,7 @@ public class TimeTable {
     private String schoolClassName;
 
     @BasePlanningVariables
-    private List<Timeslot> baseTimeslots;
+    private final List<Timeslot> baseTimeslots;
 
     @ModifiablePlanningVariables
     private List<Timeslot> timeslots = new ArrayList<>();
@@ -69,5 +69,9 @@ public class TimeTable {
                 ", lastGenerationDate=" + lastGenerationDate +
                 ", score=" + score +
                 '}';
+    }
+
+    public String getSchoolClassName() {
+        return schoolClassName;
     }
 }

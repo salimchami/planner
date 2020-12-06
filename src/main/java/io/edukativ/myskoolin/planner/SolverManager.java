@@ -14,10 +14,10 @@ import java.util.function.Function;
 import static io.edukativ.myskoolin.planner.Reflection.checkClassAnnotation;
 import static java.lang.StackWalker.Option.RETAIN_CLASS_REFERENCE;
 
-public class SolverManager<S, I, V> implements IWantToManageSolver<S, I, V> {
+public class SolverManager<S, V> implements IWantToManageSolver<S, V> {
 
-    private final Map<I, S> solutions;
-    private final Map<I, SolverStatus> statuses;
+    private final Map<String, S> solutions;
+    private final Map<String, SolverStatus> statuses;
 
     public SolverManager() {
         solutions = new HashMap<>();
@@ -25,7 +25,7 @@ public class SolverManager<S, I, V> implements IWantToManageSolver<S, I, V> {
     }
 
     @Override
-    public void terminateEarly(I timeTableId) throws SolutionSolvingException {
+    public void terminateEarly(String timeTableId) throws SolutionSolvingException {
         if (!solutions.containsKey(timeTableId)) {
             throw new SolutionSolvingException(String.format("The solution with the id '%s' doesn't exists.", timeTableId));
         }
@@ -34,15 +34,15 @@ public class SolverManager<S, I, V> implements IWantToManageSolver<S, I, V> {
     }
 
     @Override
-    public SolverStatus getSolverStatus(I solutionId) {
+    public SolverStatus getSolverStatus(String solutionId) {
         return statuses.get(solutionId);
     }
 
     @Override
-    public void solveAndListen(I id, S solution, Function<S, I> saveFunction) throws SolutionConfigurationException, SolutionSolvingException {
+    public void solveAndListen(String id, S solution, Function<S, String> saveFunction) throws SolutionConfigurationException, SolutionSolvingException {
         addSolution(id, solution);
         final String basePackage = StackWalker.getInstance(RETAIN_CLASS_REFERENCE).getCallerClass().getPackageName();
-        final SolverJob<S, I, V> solverJob = new SolverJob<>(basePackage, solution);
+        final SolverJob<S, V> solverJob = new SolverJob<>(basePackage, solution);
         solverJob.startSolving();
         // FIXME : refactor this !
         statuses.put(id, SolverStatus.SOLVING);
@@ -54,7 +54,7 @@ public class SolverManager<S, I, V> implements IWantToManageSolver<S, I, V> {
     // #################### Internal methods ###############
     // #####################################################
 
-    private void waitForSolving(I id, SolverJob<S, I, V> solverJob) throws SolutionSolvingException {
+    private void waitForSolving(String id, SolverJob<S, V> solverJob) throws SolutionSolvingException {
         CountDownLatch latch = new CountDownLatch(1);
         while (solverJob.isSolving(id)) {
             try {
@@ -66,7 +66,7 @@ public class SolverManager<S, I, V> implements IWantToManageSolver<S, I, V> {
         latch.countDown();
     }
 
-    private void addSolution(I id, S solution) throws SolutionConfigurationException {
+    private void addSolution(String id, S solution) throws SolutionConfigurationException {
         checkSolutionAnnotations(solution);
         checkIfSolutionExists(id);
 
@@ -85,7 +85,7 @@ public class SolverManager<S, I, V> implements IWantToManageSolver<S, I, V> {
         checkFactsClassAnnotations(solution);
     }
 
-    private void checkIfSolutionExists(I id) throws SolutionConfigurationException {
+    private void checkIfSolutionExists(String id) throws SolutionConfigurationException {
         if (solutions.containsKey(id)) {
             throw new SolutionConfigurationException(String.format("The solution with the same id '%s' is already added. Solving status : '%s'.", id, statuses.get(id)));
         }
