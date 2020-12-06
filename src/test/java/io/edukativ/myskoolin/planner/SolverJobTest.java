@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SolverJobTest {
 
-    private SolverJob<TimeTable, Long, Timeslot> sut;
+    private SolverJob<TimeTable, String, Timeslot> sut;
 
     @Test
     void startSolving() throws SolutionConfigurationException {

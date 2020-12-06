@@ -13,14 +13,14 @@ import java.util.List;
  * @param <I> Solution Id
  * @param <V> Planning variable
  */
-public class SolverJob<S, V> {
+public class SolverJob<S, I, V> {
 
     private String basePackage;
     private final S initialSolution;
     private S finalBestSolution;
     private List<V> basePlanningVariables;
     private List<V> planningVariables;
-    private List<String> solutionsIds;
+    private List<I> solutionsIds;
 
     public SolverJob(String basePackage, S solution) {
         this.basePackage = basePackage;
@@ -40,12 +40,12 @@ public class SolverJob<S, V> {
 
         basePlanningVariables = (List<V>) Reflection.findValueByAnnotation(initialSolution, BasePlanningVariables.class);
         planningVariables = (List<V>) Reflection.findValueByAnnotation(initialSolution, ModifiablePlanningVariables.class);
-        solutionsIds.add((String) Reflection.findValueByAnnotation(initialSolution, SolutionId.class));
+        solutionsIds.add((I) Reflection.findValueByAnnotation(initialSolution, SolutionId.class));
 
         this.finalBestSolution = this.initialSolution;
     }
 
-    public boolean isSolving(String id) {
+    public boolean isSolving(I id) {
         return false;
     }
 }

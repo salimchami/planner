@@ -5,11 +5,11 @@ import io.edukativ.myskoolin.planner.exceptions.SolutionSolvingException;
 
 import java.util.function.Function;
 
-public interface IWantToManageSolver<S, V> {
+public interface IWantToManageSolver<S, I, V> {
 
-    void terminateEarly(String timeTableId) throws SolutionSolvingException;
+    void terminateEarly(I timeTableId) throws SolutionSolvingException;
 
-    SolverStatus getSolverStatus(String solutionId);
+    SolverStatus getSolverStatus(I solutionId);
 
-    void solveAndListen(String id, S solution, Function<S, String> saveFunction) throws SolutionConfigurationException, SolutionSolvingException;
+    void solveAndListen(I id, S solution, Function<S, String> saveFunction) throws SolutionConfigurationException, SolutionSolvingException;
 }
