@@ -4,19 +4,15 @@ import io.edukativ.myskoolin.planner.entities.Subject;
 import io.edukativ.myskoolin.planner.entities.TimeTable;
 import io.edukativ.myskoolin.planner.entities.Timeslot;
 import io.edukativ.myskoolin.planner.exceptions.SolutionConfigurationException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class SolverJobTest {
 
@@ -33,6 +29,7 @@ class SolverJobTest {
         final TimeTable timeTable = new TimeTable(baseTimeslots, singletonList(francais));
         sut = new SolverJob<>("io.edukativ.myskoolin.planner", timeTable);
         sut.startSolving();
+        sut.terminateEarly();
         assertThat(durationOfSubject(francais, sut.getFinalBestSolution())).isGreaterThan(60L);
     }
 
