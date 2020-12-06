@@ -1,15 +1,15 @@
 # SC Planner 
 <h2>Java Constraints Solver</h3>
 
-This constraints solver take a list of constraints a return the best solution defined by functional entities.
+This constraints solver take a list of constraints and return the best solution defined by functional entities.
 
-The problem to solve could be a school time table.
+For example, the problem to solve could be a school timetable.
 
 ## How To
 
-You must to create all problem entities and a list of constraints to solve your problem.
+You must to create all the problem entities, and a list of constraints to solve your problem.
 
-Check the tests directory containing an example of school time table solving.
+Check the tests directory containing an example of school timetable solving.
 
 ### Functional Entities
 
