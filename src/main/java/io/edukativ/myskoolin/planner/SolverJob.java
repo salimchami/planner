@@ -18,18 +18,23 @@ import java.util.List;
  */
 public class SolverJob<S, I, V> {
 
-    private String basePackage;
+    private final String basePackage;
     private final S initialSolution;
     private S finalBestSolution;
-    private List<V> basePlanningVariables;
-    private List<V> planningVariables;
-    private List<I> solutionsIds;
-    private List<Constraint> constraints;
+    private final List<V> basePlanningVariables;
+    private final List<V> planningVariables;
+    private final List<I> solutionsIds;
+    private final List<Constraint<?, ?>> constraints;
 
-    public SolverJob(String basePackage, S solution) {
+    public SolverJob(String basePackage, S solution) throws SolutionConfigurationException {
         this.basePackage = basePackage;
         this.initialSolution = solution;
         solutionsIds = new ArrayList<>();
+        basePlanningVariables = (List<V>) Reflection.findValueByAnnotation(initialSolution, BasePlanningVariables.class);
+        planningVariables = (List<V>) Reflection.findValueByAnnotation(initialSolution, ModifiablePlanningVariables.class);
+        solutionsIds.add((I) Reflection.findValueByAnnotation(initialSolution, SolutionId.class));
+        constraints = new ArrayList<>();
+        loadConstraints();
     }
 
     public S getFinalBestSolution() {
@@ -42,18 +47,13 @@ public class SolverJob<S, I, V> {
 
     public void startSolving() throws SolutionConfigurationException {
 
-        loadConstraints();
-        basePlanningVariables = (List<V>) Reflection.findValueByAnnotation(initialSolution, BasePlanningVariables.class);
-        planningVariables = (List<V>) Reflection.findValueByAnnotation(initialSolution, ModifiablePlanningVariables.class);
-        solutionsIds.add((I) Reflection.findValueByAnnotation(initialSolution, SolutionId.class));
         this.finalBestSolution = this.initialSolution;
     }
 
     private void loadConstraints() throws SolutionConfigurationException {
-        constraints = new ArrayList<>();
         ConstraintProvider constraintProvider = (ConstraintProvider) Reflection.instantiateClassInPackage(basePackage, ConstraintsProvider.class);
         ConstraintFactory constraintFactory = new ConstraintFactoryImpl();
-        this.constraints = Arrays.asList(constraintProvider.defineConstraints(constraintFactory));
+        this.constraints.addAll(Arrays.asList(constraintProvider.defineConstraints(constraintFactory)));
     }
 
     public boolean isSolving(I id) {
