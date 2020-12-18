@@ -20,17 +20,17 @@ class SolverJobTest {
 
     @Test
     void startSolving() throws SolutionConfigurationException {
-        final Subject francais = new Subject(1L, "Français", 120, 60, 300, 3);
+        final Subject english = new Subject(1L, "English", 120, 60, 300, 3);
         List<Timeslot> baseTimeslots = Arrays.asList(
-                new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), francais),
-                new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), francais),
-                new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), francais));
+                new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), english),
+                new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), english),
+                new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), english));
 
-        final TimeTable timeTable = new TimeTable(baseTimeslots, singletonList(francais));
+        final TimeTable timeTable = new TimeTable(baseTimeslots, singletonList(english));
         sut = new SolverJob<>("io.edukativ.myskoolin.planner", timeTable);
         sut.startSolving();
         sut.terminateEarly();
-        assertThat(durationOfSubject(francais, sut.getFinalBestSolution())).isGreaterThan(60L);
+        assertThat(durationOfSubject(english, sut.getFinalBestSolution())).isGreaterThan(60L);
     }
 
     private Long durationOfSubject(Subject francais, TimeTable timeTable) {

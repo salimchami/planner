@@ -1,21 +1,23 @@
 package io.edukativ.myskoolin.planner;
 
-public class Constraint<U, T> {
+import java.util.List;
+
+public class Constraint<F, P> {
 
     public Constraint(String constraintName) {
         this.constraintName = constraintName;
     }
 
     private final String constraintName;
-    private ScoreLevel score;
-    private PenaltyFunction<U, T> penaltyFunction;
-    private Class<U> factClass;
-    private Class<T> planningVariableClass;
+    private ScoreLevel scoreLevel;
+    private PenaltyFunction<F, P> penaltyFunction;
+    private Class<F> factClass;
+    private Class<P> planningVariableClass;
 
-    public Constraint(String constraintName, ScoreLevel score, PenaltyFunction<U, T> penaltyFunction,
-                      Class<U> factClass, Class<T> planningVariableClass) {
+    public Constraint(String constraintName, ScoreLevel scoreLevel, PenaltyFunction<F, P> penaltyFunction,
+                      Class<F> factClass, Class<P> planningVariableClass) {
         this.constraintName = constraintName;
-        this.score = score;
+        this.scoreLevel = scoreLevel;
         this.penaltyFunction = penaltyFunction;
         this.factClass = factClass;
         this.planningVariableClass = planningVariableClass;
@@ -25,19 +27,23 @@ public class Constraint<U, T> {
         return constraintName;
     }
 
-    public ScoreLevel getScore() {
-        return score;
+    public ScoreLevel getScoreLevel() {
+        return scoreLevel;
     }
 
-    public PenaltyFunction<U, T> getPenaltyFunction() {
+    public PenaltyFunction<F, P> getPenaltyFunction() {
         return penaltyFunction;
     }
 
-    public Class<U> getFactClass() {
+    public Class<F> getFactClass() {
         return factClass;
     }
 
-    public Class<T> getPlanningVariableClass() {
+    public Class<P> getPlanningVariableClass() {
         return planningVariableClass;
+    }
+
+    public int calculateScore(List<F> facts, List<P> basePlanningVariables) {
+        return 0;
     }
 }

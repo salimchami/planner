@@ -1,9 +1,6 @@
 package io.edukativ.myskoolin.planner;
 
-import io.edukativ.myskoolin.planner.declarations.BasePlanningVariables;
-import io.edukativ.myskoolin.planner.declarations.ConstraintsProvider;
-import io.edukativ.myskoolin.planner.declarations.ModifiablePlanningVariables;
-import io.edukativ.myskoolin.planner.declarations.SolutionId;
+import io.edukativ.myskoolin.planner.declarations.*;
 import io.edukativ.myskoolin.planner.exceptions.SolutionConfigurationException;
 import io.edukativ.myskoolin.planner.reflection.Reflection;
 
@@ -24,7 +21,7 @@ public class SolverJob<S, I, V> {
     private final List<V> basePlanningVariables;
     private final List<V> planningVariables;
     private final List<I> solutionsIds;
-    private final List<Constraint<?, ?>> constraints;
+    private final List<Constraint> constraints;
 
     public SolverJob(String basePackage, S solution) throws SolutionConfigurationException {
         this.basePackage = basePackage;
@@ -46,7 +43,26 @@ public class SolverJob<S, I, V> {
     }
 
     public void startSolving() throws SolutionConfigurationException {
+        int score = solutionScore(basePlanningVariables);
+        // TODO : while score < 0
+        if (score < 0) {
+            improveSolution();
+        }
+    }
 
+    private <F, P> int solutionScore(List<P> planningVars) throws SolutionConfigurationException {
+        int score = 0;
+        for (Constraint<F, P> constraint : constraints) {
+            final List<F> facts = (List<F>) Reflection.findValueByAnnotation(initialSolution, Facts.class);
+            score += constraint.calculateScore(facts, planningVars);
+        }
+        return score;
+    }
+
+    private void improveSolution() {
+        constraints.forEach(constraint -> {
+
+        });
         this.finalBestSolution = this.initialSolution;
     }
 

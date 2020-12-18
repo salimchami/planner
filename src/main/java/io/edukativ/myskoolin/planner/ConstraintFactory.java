@@ -4,14 +4,13 @@ import java.util.function.Function;
 
 public interface ConstraintFactory {
 
-    <A> ConstraintFactory withFact(Class<A> factClass);
-
+    <F> ConstraintFactory withFact(Class<F> factClass);
 
     <P> ConstraintFactory fromMultiple(Class<P> planningVariableClass);
 
-    <A, R> ConstraintFactory filter(Function<A, R> filter);
+    <F, P> ConstraintFactory filter(Function<F, P> filter);
 
-    <A, P> Constraint<A, P> apply(String constraintName, ScoreLevel score, PenaltyFunction<A, P> penaltyFunction);
+    <F, P> Constraint<F, P> apply(String constraintName, ScoreLevel score, PenaltyFunction<F, P> penaltyFunction);
 
 
 //    <A> UniConstraintStream<A> from(Class<A> fromClass);

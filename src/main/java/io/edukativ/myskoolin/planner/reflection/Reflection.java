@@ -7,7 +7,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -56,7 +59,7 @@ public final class Reflection {
                 })
                 .findFirst()
                 .orElseThrow(() -> new SolutionConfigurationException(
-                        String.format("Field annotation %s not found.", annotation.getName())
+                        String.format("Field annotation %s not found in class %s.", annotation.getName(), clazz.getName())
                 ));
     }
 
@@ -80,11 +83,18 @@ public final class Reflection {
                         .contains(searchedAnnotation))
                 .findFirst()
                 .orElseThrow(() -> new SolutionConfigurationException(exceptionMessage));
-
         try {
             return theClass.getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             throw new SolutionConfigurationException(exceptionMessage);
         }
+    }
+
+    public static <V> List<Object> findValuesByAnnotation(List<V> list, Class<? extends Annotation> annotation) throws SolutionConfigurationException {
+        List<Object> values = new ArrayList<>();
+        for (V value : list) {
+            values.add(findValueByAnnotation(value, annotation));
+        }
+        return values;
     }
 }
