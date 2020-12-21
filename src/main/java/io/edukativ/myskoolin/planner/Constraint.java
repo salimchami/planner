@@ -11,14 +11,16 @@ public class Constraint<F, P> {
     private final String constraintName;
     private ScoreLevel scoreLevel;
     private PenaltyFunction<F, P> penaltyFunction;
+    private FavorableScoreFunction<P> favorableScore;
     private Class<F> factClass;
     private Class<P> planningVariableClass;
 
-    public Constraint(String constraintName, ScoreLevel scoreLevel, PenaltyFunction<F, P> penaltyFunction,
+    public Constraint(String constraintName, ScoreLevel scoreLevel, PenaltyFunction<F, P> penaltyFunction, FavorableScoreFunction<P> favorableScoreFunction,
                       Class<F> factClass, Class<P> planningVariableClass) {
         this.constraintName = constraintName;
         this.scoreLevel = scoreLevel;
         this.penaltyFunction = penaltyFunction;
+        this.favorableScore = favorableScoreFunction;
         this.factClass = factClass;
         this.planningVariableClass = planningVariableClass;
     }
@@ -44,6 +46,11 @@ public class Constraint<F, P> {
     }
 
     public int calculateScore(List<F> facts, List<P> planningVariables) {
-        return 0;
+        final int total = facts.stream().mapToInt(fact -> penaltyFunction.apply(fact, planningVariables)).sum();
+        if (total > 0) {
+            return -total;
+        } else {
+            return favorableScore.apply(planningVariables);
+        }
     }
 }

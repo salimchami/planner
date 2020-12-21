@@ -1,7 +1,7 @@
 package io.edukativ.myskoolin.planner;
 
-import java.util.List;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 public interface ConstraintFactory {
 
@@ -9,8 +9,8 @@ public interface ConstraintFactory {
 
     <P> ConstraintFactory fromMultiple(Class<P> planningVariableClass);
     <F, P> ConstraintFactory filter(Function<F, P> filter);
-
-    <F, P> Constraint<F, P> apply(String constraintName, ScoreLevel score, PenaltyFunction<F, P> penaltyFunction);
+    <P> ConstraintFactory favorableScore(UnaryOperator<P> favorableScore);
+    <F, P> Constraint<F, P> apply(String constraintName, ScoreLevel score, FavorableScoreFunction<P> favorableScoreFunction, PenaltyFunction<F, P> penaltyFunction);
 
 
 //    <A> UniConstraintStream<A> from(Class<A> fromClass);
