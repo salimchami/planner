@@ -92,28 +92,28 @@ public class SolverManager<S, I, V> implements IWantToManageSolver<S, I, V> {
     }
 
     private void checkFactsClassAnnotations(S solution) throws SolutionConfigurationException {
-        final Field field = Reflection.findFieldByAnnotation(solution.getClass(), Facts.class);
-        checkClassAnnotation(Reflection.findFieldTypeClass(field), String.format("The Facts Class is not well configured. Please add @%s annotation on the class.",
+        final Field field = Reflection.fieldByAnnotation(solution.getClass(), Facts.class);
+        checkClassAnnotation(Reflection.fieldTypeClass(field), String.format("The Facts Class is not well configured. Please add @%s annotation on the class.",
                 Fact.class.getName()), Fact.class);
-        Reflection.checkFieldsAnnotations(Reflection.findFieldTypeClass(field).getDeclaredFields(), Arrays.asList(FactId.class, FactItem.class), String.format(
+        Reflection.checkFieldsAnnotations(Reflection.fieldTypeClass(field).getDeclaredFields(), Arrays.asList(FactId.class, FactItem.class), String.format(
                 "The Fact Class is not well configured. The class must have one field annotated with %s and one or multiple annotations '%s'.",
                 FactId.class.getName(), FactItem.class.getName()), true);
     }
 
     private void checkBaseVariablesClassAnnotations(S solution) throws SolutionConfigurationException {
-        final Field field = Reflection.findFieldByAnnotation(solution.getClass(), BasePlanningVariables.class);
-        checkClassAnnotation(Reflection.findFieldTypeClass(field), String.format("The Base Planning Variable Class is not well configured. Please add @%s annotation on the class.",
+        final Field field = Reflection.fieldByAnnotation(solution.getClass(), BasePlanningVariables.class);
+        checkClassAnnotation(Reflection.fieldTypeClass(field), String.format("The Base Planning Variable Class is not well configured. Please add @%s annotation on the class.",
                 PlanningVariable.class.getName()), PlanningVariable.class);
-        Reflection.checkFieldsAnnotations(Reflection.findFieldTypeClass(field).getDeclaredFields(), Arrays.asList(PlanningVariableId.class, PlanningVariableItem.class), String.format(
+        Reflection.checkFieldsAnnotations(Reflection.fieldTypeClass(field).getDeclaredFields(), Arrays.asList(PlanningVariableId.class, PlanningVariableItem.class), String.format(
                 "The Modifiable Planning Variable Class is not well configured. The class must have one field annotated with %s and one or multiple annotations '%s'.",
                 PlanningVariableId.class.getName(), PlanningVariableItem.class.getName()), true);
     }
 
     private void checkModifiableVariablesClassAnnotations(S solution) throws SolutionConfigurationException {
-        final Field field = Reflection.findFieldByAnnotation(solution.getClass(), ModifiablePlanningVariables.class);
-        checkClassAnnotation(Reflection.findFieldTypeClass(field), String.format("The Modifiable Planning Variable Class is not well configured. Please add @%s annotation on the class.",
+        final Field field = Reflection.fieldByAnnotation(solution.getClass(), ModifiablePlanningVariables.class);
+        checkClassAnnotation(Reflection.fieldTypeClass(field), String.format("The Modifiable Planning Variable Class is not well configured. Please add @%s annotation on the class.",
                 PlanningVariable.class.getName()), PlanningVariable.class);
-        Reflection.checkFieldsAnnotations(Reflection.findFieldTypeClass(field).getDeclaredFields(), Arrays.asList(PlanningVariableId.class, PlanningVariableItem.class), String.format(
+        Reflection.checkFieldsAnnotations(Reflection.fieldTypeClass(field).getDeclaredFields(), Arrays.asList(PlanningVariableId.class, PlanningVariableItem.class), String.format(
                 "The Modifiable Planning Variable Class is not well configured. The class must have one field annotated with %s and one or multiple annotations '%s'.",
                 PlanningVariableId.class.getName(), PlanningVariableItem.class.getName()), true);
     }

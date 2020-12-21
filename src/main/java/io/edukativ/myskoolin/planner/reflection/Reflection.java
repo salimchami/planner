@@ -1,5 +1,6 @@
 package io.edukativ.myskoolin.planner.reflection;
 
+import io.edukativ.myskoolin.planner.declarations.PlanningVariableFact;
 import io.edukativ.myskoolin.planner.exceptions.SolutionConfigurationException;
 
 import java.lang.annotation.Annotation;
@@ -20,7 +21,7 @@ public final class Reflection {
         // private constructor
     }
 
-    public static Class<?> findFieldTypeClass(Field field) {
+    public static Class<?> fieldTypeClass(Field field) {
         final Class<?> fieldType = field.getType();
         if (Collection.class.isAssignableFrom(fieldType)) {
             ParameterizedType collectionType = (ParameterizedType) field.getGenericType();
@@ -48,7 +49,7 @@ public final class Reflection {
         }
     }
 
-    public static Field findFieldByAnnotation(Class<?> clazz, Class<? extends Annotation> annotation) throws SolutionConfigurationException {
+    public static Field fieldByAnnotation(Class<?> clazz, Class<? extends Annotation> annotation) throws SolutionConfigurationException {
         return Arrays.stream(clazz.getDeclaredFields())
                 .filter(field -> {
                     final Annotation[] declaredAnnotations = field.getDeclaredAnnotations();
@@ -63,8 +64,8 @@ public final class Reflection {
                 ));
     }
 
-    public static <S> Object findValueByAnnotation(S classInstance, Class<? extends Annotation> annotation) throws SolutionConfigurationException {
-        final Field field = findFieldByAnnotation(classInstance.getClass(), annotation);
+    public static <S> Object valueByAnnotation(S classInstance, Class<? extends Annotation> annotation) throws SolutionConfigurationException {
+        final Field field = fieldByAnnotation(classInstance.getClass(), annotation);
         try {
             String fieldName = field.getName();
             final Method method = classInstance.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1));
@@ -90,11 +91,28 @@ public final class Reflection {
         }
     }
 
-    public static <V> List<Object> findValuesByAnnotation(List<V> list, Class<? extends Annotation> annotation) throws SolutionConfigurationException {
+    public static <V> List<Object> valuesByAnnotation(List<V> list, Class<? extends Annotation> annotation) throws SolutionConfigurationException {
         List<Object> values = new ArrayList<>();
         for (V value : list) {
-            values.add(findValueByAnnotation(value, annotation));
+            values.add(valueByAnnotation(value, annotation));
         }
         return values;
+    }
+
+    public static <S> void copyByAnnotations(S classInstance, Class<? extends Annotation> sourcePropertyAnnotation, Class<? extends Annotation> destPropertyAnnotation)
+            throws SolutionConfigurationException {
+        Object sourceValue = valueByAnnotation(classInstance, sourcePropertyAnnotation);
+        final Field destField = fieldByAnnotation(classInstance.getClass(), destPropertyAnnotation);
+        destField.setAccessible(true);
+        try {
+            final Method method = classInstance.getClass().getDeclaredMethod("set" + destField.getName().substring(0, 1).toUpperCase() + destField.getName().substring(1), List.class);
+            method.invoke(classInstance, sourceValue);
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException e) {
+            throw new SolutionConfigurationException(String.format("Error while copying values from %s to %s for instance class %s.", sourcePropertyAnnotation.getName(), destPropertyAnnotation.getName(), classInstance.getClass().getName()), e);
+        }
+    }
+
+    public static <S, V> void copyFieldByAnnotations(S classInstance, V destinationCLassInstance, Class<? extends Annotation> destAnnotation) {
+
     }
 }

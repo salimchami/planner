@@ -3,6 +3,7 @@ package io.edukativ.myskoolin.planner;
 import io.edukativ.myskoolin.planner.declarations.*;
 import io.edukativ.myskoolin.planner.exceptions.SolutionConfigurationException;
 import io.edukativ.myskoolin.planner.reflection.Reflection;
+import io.edukativ.myskoolin.planner.utils.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,9 +28,9 @@ public class SolverJob<S, I, V> {
         this.basePackage = basePackage;
         this.initialSolution = solution;
         solutionsIds = new ArrayList<>();
-        basePlanningVariables = (List<V>) Reflection.findValueByAnnotation(initialSolution, BasePlanningVariables.class);
-        planningVariables = (List<V>) Reflection.findValueByAnnotation(initialSolution, ModifiablePlanningVariables.class);
-        solutionsIds.add((I) Reflection.findValueByAnnotation(initialSolution, SolutionId.class));
+        basePlanningVariables = (List<V>) Reflection.valueByAnnotation(initialSolution, BasePlanningVariables.class);
+        planningVariables = (List<V>) Reflection.valueByAnnotation(initialSolution, ModifiablePlanningVariables.class);
+        solutionsIds.add((I) Reflection.valueByAnnotation(initialSolution, SolutionId.class));
         constraints = new ArrayList<>();
         loadConstraints();
     }
@@ -44,22 +45,36 @@ public class SolverJob<S, I, V> {
 
     public void startSolving() throws SolutionConfigurationException {
         int score = solutionScore(basePlanningVariables);
+        Reflection.copyByAnnotations(this.initialSolution, BasePlanningVariables.class, ModifiablePlanningVariables.class);
+        this.finalBestSolution = this.initialSolution;
         // TODO : while score < 0
         if (score < 0) {
             improveSolution();
         }
+        // TODO : set facts to planning variables in final solution
+        // initializeFinalSolutionFacts();
+    }
+
+    private void initializeFinalSolutionFacts() throws SolutionConfigurationException {
+        final List<V> modifiablePlanningVariables = (List<V>) Reflection.valueByAnnotation(this.finalBestSolution, ModifiablePlanningVariables.class);
+        for (V modifiablePlanningVariable : modifiablePlanningVariables) {
+            List<?> facts = (List<?>) Reflection.valueByAnnotation(this.finalBestSolution, Facts.class);
+            final Object fact = CollectionUtils.randomSetElement(facts);
+            Reflection.copyFieldByAnnotations(fact, modifiablePlanningVariable, PlanningVariableFact.class);
+        }
+        //Reflection.copyFieldByAnnotations(this.finalBestSolution, );
     }
 
     private <F, P> int solutionScore(List<P> planningVars) throws SolutionConfigurationException {
         int score = 0;
         for (Constraint<F, P> constraint : constraints) {
-            final List<F> facts = (List<F>) Reflection.findValueByAnnotation(initialSolution, Facts.class);
-            score += constraint.calculateScore(facts, planningVars);
+            score += constraint.calculateScore(planningVars);
         }
         return score;
     }
 
-    private void improveSolution() {
+    private <F> void improveSolution() throws SolutionConfigurationException {
+        final List<F> refFacts = (List<F>) Reflection.valueByAnnotation(initialSolution, Facts.class);
         constraints.forEach(constraint -> {
 
         });

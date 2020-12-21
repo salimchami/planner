@@ -52,7 +52,9 @@ class SolverTest {
 
     private Long durationOfSubject(Subject francais, TimeTable timeTable) {
         return timeTable.getTimeslots().stream()
-                .filter(timeslot -> timeslot.getSubject().equals(francais))
+                .filter(timeslot -> {
+                    return timeslot.getSubject() != null && timeslot.getSubject().equals(francais);
+                })
                 .mapToLong(Timeslot::durationInMinutes).sum();
     }
 }

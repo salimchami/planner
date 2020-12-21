@@ -1,6 +1,7 @@
 package io.edukativ.myskoolin.planner.entities;
 
 import io.edukativ.myskoolin.planner.declarations.PlanningVariable;
+import io.edukativ.myskoolin.planner.declarations.PlanningVariableFact;
 import io.edukativ.myskoolin.planner.declarations.PlanningVariableId;
 import io.edukativ.myskoolin.planner.declarations.PlanningVariableItem;
 
@@ -20,7 +21,7 @@ public class Timeslot {
     private LocalTime startTime;
     @PlanningVariableItem
     private LocalTime endTime;
-    @PlanningVariableItem
+    @PlanningVariableFact
     private Subject subject;
 
     public Timeslot() {
