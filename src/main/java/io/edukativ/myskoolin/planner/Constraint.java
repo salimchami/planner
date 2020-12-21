@@ -43,7 +43,7 @@ public class Constraint<F, P> {
         return planningVariableClass;
     }
 
-    public int calculateScore(List<F> facts, List<P> basePlanningVariables) {
+    public int calculateScore(List<F> facts, List<P> planningVariables) {
         return 0;
     }
 }

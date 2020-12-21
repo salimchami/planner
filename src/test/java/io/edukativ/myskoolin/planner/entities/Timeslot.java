@@ -42,7 +42,7 @@ public class Timeslot {
     }
 
 
-    public static Integer totalDuration(List<Timeslot> timeSlots) {
+    public static Integer totalDurationInMinutes(List<Timeslot> timeSlots) {
         return timeSlots.stream().map(Timeslot::durationInMinutes).mapToInt(Long::intValue).sum();
     }
 

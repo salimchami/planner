@@ -15,7 +15,7 @@ public class ConstraintFactoryImpl implements ConstraintFactory {
     }
 
     @Override
-    public <A> ConstraintFactory withFact(Class<A> factClass) {
+    public <F> ConstraintFactory withFact(Class<F> factClass) {
         this.factClass = factClass;
         return this;
     }
@@ -27,13 +27,13 @@ public class ConstraintFactoryImpl implements ConstraintFactory {
     }
 
     @Override
-    public <A, R> ConstraintFactory filter(Function<A, R> filter) {
+    public <F, P> ConstraintFactory filter(Function<F, P> filter) {
         this.filters.add(filter);
         return this;
     }
 
     @Override
-    public <A, P> Constraint<A, P> apply(String constraintName, ScoreLevel score, PenaltyFunction<A, P> penaltyFunction) {
+    public <F, P> Constraint<F, P> apply(String constraintName, ScoreLevel score, PenaltyFunction<F, P> penaltyFunction) {
         return new Constraint(constraintName, score, penaltyFunction, factClass, planningVariableClass);
     }
 }
