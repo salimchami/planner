@@ -15,7 +15,7 @@ public class Constraint<F, P> {
     private final String constraintName;
     private ScoreLevel scoreLevel;
     private PenaltyFunction<F, P> penaltyFunction;
-    private FavorableScoreFunction<P> favorableScore;
+    private FavorableScoreFunction<P> favorableScoreFunction;
     private Class<F> factClass;
     private Class<P> planningVariableClass;
 
@@ -24,7 +24,7 @@ public class Constraint<F, P> {
         this.constraintName = constraintName;
         this.scoreLevel = scoreLevel;
         this.penaltyFunction = penaltyFunction;
-        this.favorableScore = favorableScoreFunction;
+        this.favorableScoreFunction = favorableScoreFunction;
         this.factClass = factClass;
         this.planningVariableClass = planningVariableClass;
     }
@@ -51,15 +51,13 @@ public class Constraint<F, P> {
 
     public int calculateScore(List<P> planningVariables) throws SolutionConfigurationException {
         Map<Object, List<P>> planningVariablesByFacts = planningVariablesByFacts(planningVariables);
-        int total = planningVariablesByFacts.entrySet().stream()
+        int penalty = planningVariablesByFacts.entrySet().stream()
                 .mapToInt(planningVariablesByFactEntry -> penaltyFunction.apply((F) planningVariablesByFactEntry.getKey(), planningVariablesByFactEntry.getValue()))
                 .sum();
-        if (total > 0) {
-            return -total;
-        } else if (total < 0) {
-            return favorableScore.apply(planningVariables);
+        if (penalty > 0) {
+            return -penalty;
         } else {
-            return 0;
+            return favorableScoreFunction.apply(planningVariables);
         }
     }
 

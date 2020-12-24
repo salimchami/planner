@@ -41,7 +41,7 @@ public class ConstraintFactoryImpl implements ConstraintFactory {
     }
 
     @Override
-    public <F, P> Constraint<F, P> apply(String constraintName, ScoreLevel score, FavorableScoreFunction<P> favorableScoreFunction, PenaltyFunction<F, P> penaltyFunction) {
+    public <F, P> Constraint<F, P> apply(String constraintName, ScoreLevel score, PenaltyFunction<F, P> penaltyFunction, FavorableScoreFunction<P> favorableScoreFunction) {
         return new Constraint(constraintName, score, penaltyFunction, favorableScoreFunction, factClass, planningVariableClass);
     }
 }

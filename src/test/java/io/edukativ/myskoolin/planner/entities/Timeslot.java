@@ -47,6 +47,18 @@ public class Timeslot {
         return timeSlots.stream().map(Timeslot::durationInMinutes).mapToInt(Long::intValue).sum();
     }
 
+    public static Integer favorableScore(List<Timeslot> timeslots) {
+        return timeslots.stream().map(Timeslot::favorableScore).mapToInt(Integer::intValue).sum();
+    }
+
+    public Integer favorableScore() {
+        if (subject == null) {
+            return -durationInMinutes().intValue();
+        } else {
+            return durationInMinutes().intValue();
+        }
+    }
+
     public Long durationInMinutes() {
         return Duration.between(startTime, endTime).toMinutes();
     }

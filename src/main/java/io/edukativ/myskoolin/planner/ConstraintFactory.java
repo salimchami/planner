@@ -10,7 +10,7 @@ public interface ConstraintFactory {
     <P> ConstraintFactory fromMultiple(Class<P> planningVariableClass);
     <F, P> ConstraintFactory filter(Function<F, P> filter);
     <P> ConstraintFactory favorableScore(UnaryOperator<P> favorableScore);
-    <F, P> Constraint<F, P> apply(String constraintName, ScoreLevel score, FavorableScoreFunction<P> favorableScoreFunction, PenaltyFunction<F, P> penaltyFunction);
+    <F, P> Constraint<F, P> apply(String constraintName, ScoreLevel score, PenaltyFunction<F, P> penaltyFunction, FavorableScoreFunction<P> favorableScoreFunction);
 
 
 //    <A> UniConstraintStream<A> from(Class<A> fromClass);
