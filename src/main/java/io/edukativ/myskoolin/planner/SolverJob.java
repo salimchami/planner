@@ -78,7 +78,7 @@ public class SolverJob<S, I, V> {
         constraints.forEach(constraint -> {
 
         });
-        this.finalBestSolution = this.initialSolution;
+        finalBestSolution = initialSolution;
     }
 
     private void loadConstraints() throws SolutionConfigurationException {
