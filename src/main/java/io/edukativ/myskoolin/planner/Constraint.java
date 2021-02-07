@@ -54,7 +54,7 @@ public class Constraint<F, P> {
         int penalty = planningVariablesByFacts.entrySet().stream()
                 .mapToInt(planningVariablesByFactEntry -> penaltyFunction.apply((F) planningVariablesByFactEntry.getKey(), planningVariablesByFactEntry.getValue()))
                 .sum();
-        if (penalty > 0) {
+        if (penalty >= 0) {
             return -penalty;
         } else {
             return favorableScoreFunction.apply(planningVariables);

@@ -23,6 +23,7 @@ public class TimeTable {
     private final List<Subject> subjects;
 
     private Instant lastGenerationDate;
+    
     private Score score;
 
     public TimeTable(List<Timeslot> baseTimeslots, List<Subject> subjects) {
@@ -55,7 +56,7 @@ public class TimeTable {
     }
 
     public Score getScore() {
-        return null;
+        return score;
     }
 
     public void setScore(Score score) {

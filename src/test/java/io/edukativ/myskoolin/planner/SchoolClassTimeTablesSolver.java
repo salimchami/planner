@@ -72,7 +72,7 @@ public class SchoolClassTimeTablesSolver implements TimeTablesSolver {
 
     private String saveTimeTable(TimeTable timeTable) {
         timeTable.setLastGenerationDate(Instant.now());
-        System.out.println("saving school class timetable");
+        System.out.println(String.format("Saving school class timetable with score : %s", timeTable.getScore()));
         timeTableSPI.save(timeTable);
         return "";
     }

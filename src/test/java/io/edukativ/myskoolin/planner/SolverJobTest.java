@@ -20,6 +20,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SolverJobTest {
 
+    @ParameterizedTest
+    @MethodSource("startSolvingParams")
+    void startSolving(Subject subject, List<Timeslot> baseTimeslots) throws SolutionConfigurationException {
+        final TimeTable timeTable = new TimeTable(baseTimeslots, singletonList(subject));
+        SolverJob<TimeTable, String, Timeslot> sut = new SolverJob<>("io.edukativ.myskoolin.planner", timeTable);
+        sut.startSolving();
+        sut.terminateEarly();
+        assertThat(durationOfSubject(subject, sut.getFinalBestSolution())).isGreaterThan(60L);
+    }
+
     private static Stream<Arguments> startSolvingParams() {
         final Subject english = new Subject(1L, "English", 120, 60, 300, 3);
         return Stream.of(
@@ -32,16 +42,6 @@ class SolverJobTest {
                         new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), null),
                         new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), null)))
         );
-    }
-
-    @ParameterizedTest
-    @MethodSource("startSolvingParams")
-    void startSolving(Subject subject, List<Timeslot> baseTimeslots) throws SolutionConfigurationException {
-        final TimeTable timeTable = new TimeTable(baseTimeslots, singletonList(subject));
-        SolverJob<TimeTable, String, Timeslot> sut = new SolverJob<>("io.edukativ.myskoolin.planner", timeTable);
-        sut.startSolving();
-        sut.terminateEarly();
-        assertThat(durationOfSubject(subject, sut.getFinalBestSolution())).isGreaterThan(60L);
     }
 
     private Long durationOfSubject(Subject francais, TimeTable timeTable) {

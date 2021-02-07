@@ -48,7 +48,7 @@ public class SolverJob<S, I, V> {
         Reflection.copyByAnnotations(this.initialSolution, BasePlanningVariables.class, ModifiablePlanningVariables.class);
         this.finalBestSolution = this.initialSolution;
         // TODO : while score < 0
-        if (score < 0) {
+        if (score <= 0) {
             improveSolution();
         }
         // TODO : set facts to planning variables in final solution
@@ -76,9 +76,13 @@ public class SolverJob<S, I, V> {
     private <F> void improveSolution() throws SolutionConfigurationException {
         final List<F> refFacts = (List<F>) Reflection.valueByAnnotation(initialSolution, Facts.class);
         constraints.forEach(constraint -> {
-
+            improveByConstraint(constraint, refFacts);
         });
         finalBestSolution = initialSolution;
+    }
+
+    private <F> void improveByConstraint(Constraint constraint, List<F> refFacts) {
+        System.out.println(refFacts);
     }
 
     private void loadConstraints() throws SolutionConfigurationException {
