@@ -89,7 +89,7 @@ public class SolverJob<S, I, V> {
     private void loadConstraints() throws SolutionConfigurationException {
         ConstraintProvider constraintProvider = (ConstraintProvider) Reflection.instantiateClassInPackage(basePackage, ConstraintsProvider.class);
         ConstraintFactory constraintFactory = new ConstraintFactoryImpl();
-        this.constraints.addAll(Arrays.asList(constraintProvider.defineConstraints(constraintFactory)));
+        this.constraints.addAll(Arrays.asList(constraintProvider.defineConstraints(this.initialSolution, constraintFactory)));
     }
 
     public boolean isSolving(I id) {

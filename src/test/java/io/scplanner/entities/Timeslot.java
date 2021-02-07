@@ -70,6 +70,7 @@ public class Timeslot {
                 ", day=" + day +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
+                ", subject=" + subject +
                 '}';
     }
 

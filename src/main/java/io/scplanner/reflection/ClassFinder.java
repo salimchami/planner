@@ -13,7 +13,7 @@ public class ClassFinder {
 
     private static final String CLASS_FILE_SUFFIX = ".class";
 
-    private static final String BAD_PACKAGE_ERROR = "Unable to get resources from path '%s'. Are you sure the package '%s' exists?";
+    private static final String BAD_PACKAGE_ERROR = "Unable to get resources from path '%s'. Make sure that the package '%s' exists.";
 
     public static List<Class<?>> find(String scannedPackage) {
         String scannedPath = scannedPackage.replace(PKG_SEPARATOR, DIR_SEPARATOR);

@@ -53,7 +53,7 @@ class ConstraintTest {
     void should_calculate_constraint_score(String title, int expectedScore, List<Timeslot> planningVariables, Subject subject) throws SolutionConfigurationException {
         Constraint<Subject, Timeslot> constraint =
                 new Constraint<>("Max Subject Duration By Day",
-                        ScoreLevel.HARD, subject,
+                        ScoreLevel.HARD, Subject.class,
                         Subject::maxMinutesPerDayPenalty,
                         Timeslot::favorableScore,
                         Timeslot.class);

@@ -23,7 +23,7 @@ class SolverJobTest {
     @MethodSource("startSolvingParams")
     void startSolving(Subject subject, List<Timeslot> baseTimeslots) throws SolutionConfigurationException {
         final TimeTable timeTable = new TimeTable(baseTimeslots, singletonList(subject));
-        SolverJob<TimeTable, String, Timeslot> sut = new SolverJob<>("io.edukativ.myskoolin.planner", timeTable);
+        SolverJob<TimeTable, String, Timeslot> sut = new SolverJob<>("io.scplanner", timeTable);
         sut.startSolving();
         sut.terminateEarly();
         assertThat(durationOfSubject(subject, sut.getFinalBestSolution())).isGreaterThan(60L);
@@ -32,10 +32,10 @@ class SolverJobTest {
     private static Stream<Arguments> startSolvingParams() {
         final Subject english = new Subject(1L, "English", 120, 60, 300, 3);
         return Stream.of(
-                Arguments.of(english, Arrays.asList(
-                        new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), english),
-                        new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), english),
-                        new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), english))),
+//                Arguments.of(english, Arrays.asList(
+//                        new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), english),
+//                        new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), english),
+//                        new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), english))),
                 Arguments.of(english, Arrays.asList(
                         new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), null),
                         new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), null),

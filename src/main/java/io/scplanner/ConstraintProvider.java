@@ -2,5 +2,5 @@ package io.scplanner;
 
 public interface ConstraintProvider {
 
-    <U, T> Constraint<U, T>[] defineConstraints(ConstraintFactory constraintFactory);
+    <S, U, T> Constraint<U, T>[] defineConstraints(S solution, ConstraintFactory constraintFactory);
 }

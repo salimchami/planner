@@ -14,21 +14,21 @@ import java.util.List;
 public class TimeTableConstraintProvider implements ConstraintProvider {
 
     @Override
-    public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
+    public <S, U, T> Constraint<U, T>[] defineConstraints(S solution, ConstraintFactory constraintFactory) {
         return new Constraint[]{
                 // Hard constraints
-                subjectDurationByDayConflict(constraintFactory)
+                subjectDurationByDayConflict(solution, constraintFactory)
         };
     }
 
-    private Constraint<Subject, Timeslot> subjectDurationByDayConflict(ConstraintFactory constraintFactory) {
+    private <S> Constraint<Subject, Timeslot> subjectDurationByDayConflict(S solution, ConstraintFactory constraintFactory) {
         return constraintFactory
+                .name("Subject Duration By Day")
                 .fromMultiple(Timeslot.class)
                 .withFact(Subject.class)
                 .filter(Subject::getMaxMinutesPerDay)
-                .apply("Subject Duration By Day",
+                .apply(
                         ScoreLevel.HARD,
-                        timeslot -> timeslot,
                         Subject::maxMinutesPerDayPenalty,
                         Timeslot::totalDurationInMinutes);
 

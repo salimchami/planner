@@ -8,28 +8,27 @@ import java.util.*;
 
 public class Constraint<F, P> {
 
-
-    private final F factClassInstance;
+    private final Class<F> factClass;
     private final String constraintName;
     private ScoreLevel scoreLevel;
     private PenaltyFunction<F, P> penaltyFunction;
     private FavorableScoreFunction<P> favorableScoreFunction;
     private Class<P> planningVariableClass;
 
-    public Constraint(String constraintName, ScoreLevel scoreLevel, F fact, PenaltyFunction<F, P> penaltyFunction,
+    public Constraint(String constraintName, ScoreLevel scoreLevel, Class<F> fact, PenaltyFunction<F, P> penaltyFunction,
                       FavorableScoreFunction<P> favorableScoreFunction, Class<P> planningVariableClass) {
         this.constraintName = constraintName;
         this.scoreLevel = scoreLevel;
         this.penaltyFunction = penaltyFunction;
         this.favorableScoreFunction = favorableScoreFunction;
-        this.factClassInstance = fact;
+        this.factClass = fact;
         this.planningVariableClass = planningVariableClass;
     }
 
     public int calculateScore(List<P> planningVariables) throws SolutionConfigurationException {
         Map<Object, List<P>> planningVariablesByFacts = planningVariablesByFacts(planningVariables);
         if (planningVariablesByFacts.isEmpty()) {
-            return -penaltyFunction.apply(factClassInstance, planningVariables);
+            return -penaltyFunction.apply(factClassInstanceFromSolution(), planningVariables);
         }
         int penalty = penalty(planningVariablesByFacts);
         if (penalty > 0) {
@@ -37,6 +36,10 @@ public class Constraint<F, P> {
         } else {
             return favorableScoreFunction.apply(planningVariables);
         }
+    }
+
+    private F factClassInstanceFromSolution() {
+        return null;
     }
 
     private int penalty(Map<Object, List<P>> planningVariablesByFacts) {
