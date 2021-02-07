@@ -3,6 +3,7 @@
 
 <h1 style="color:#7c3939">[UNDER IMPLEMENTATION]</h1>
 
+![Java CI with Maven](https://github.com/salimchami/sc-planner/workflows/Java%20CI%20with%20Maven/badge.svg)
 
 
 This constraints solver take a list of constraints and return the best solution defined by functional entities.
