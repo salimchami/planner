@@ -9,6 +9,9 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @PlanningVariable
 public class Timeslot {
@@ -45,6 +48,11 @@ public class Timeslot {
 
     public static Integer totalDurationInMinutes(List<Timeslot> timeSlots) {
         return timeSlots.stream().map(Timeslot::durationInMinutes).mapToInt(Long::intValue).sum();
+    }
+
+    public static Integer totalDurationInMinutes(List<Timeslot> timeSlots, Subject subject) {
+        return totalDurationInMinutes(timeSlots.stream()
+                .filter(timeslot -> subject.equals(timeslot.getSubject())).collect(toList()));
     }
 
     public static Integer favorableScore(List<Timeslot> timeslots) {

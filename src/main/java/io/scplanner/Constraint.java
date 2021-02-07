@@ -5,6 +5,7 @@ import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.reflection.Reflection;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public class Constraint<F, P> {
 
@@ -14,15 +15,22 @@ public class Constraint<F, P> {
     private PenaltyFunction<F, P> penaltyFunction;
     private FavorableScoreFunction<P> favorableScoreFunction;
     private Class<P> planningVariableClass;
+    private final ConstraintFilter<F, P> filter;
 
-    public Constraint(String constraintName, ScoreLevel scoreLevel, Class<F> fact, PenaltyFunction<F, P> penaltyFunction,
-                      FavorableScoreFunction<P> favorableScoreFunction, Class<P> planningVariableClass) {
+    public Constraint(String constraintName,
+                      ScoreLevel scoreLevel,
+                      Class<F> fact,
+                      Class<P> planningVariableClass,
+                      ConstraintFilter<F, P> filter,
+                      PenaltyFunction<F, P> penaltyFunction,
+                      FavorableScoreFunction<P> favorableScoreFunction) {
         this.constraintName = constraintName;
         this.scoreLevel = scoreLevel;
-        this.penaltyFunction = penaltyFunction;
-        this.favorableScoreFunction = favorableScoreFunction;
         this.factClass = fact;
         this.planningVariableClass = planningVariableClass;
+        this.filter = filter;
+        this.penaltyFunction = penaltyFunction;
+        this.favorableScoreFunction = favorableScoreFunction;
     }
 
     public int calculateScore(List<P> planningVariables) throws SolutionConfigurationException {

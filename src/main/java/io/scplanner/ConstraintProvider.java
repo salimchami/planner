@@ -1,6 +1,6 @@
 package io.scplanner;
 
-public interface ConstraintProvider {
+public interface ConstraintProvider<S> {
 
-    <S, U, T> Constraint<U, T>[] defineConstraints(S solution, ConstraintFactory constraintFactory);
+    <F, P> Constraint<F, P>[] defineConstraints(S solution, ConstraintFactory<F, P> constraintFactory);
 }

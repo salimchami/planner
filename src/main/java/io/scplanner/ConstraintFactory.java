@@ -1,19 +1,20 @@
 package io.scplanner;
 
+import java.util.List;
+import java.util.function.BooleanSupplier;
 import java.util.function.Function;
-import java.util.function.UnaryOperator;
 
-public interface ConstraintFactory {
+public interface ConstraintFactory<F, P> {
 
-    ConstraintFactory name(String constraintName);
+    ConstraintFactory<F, P> name(String constraintName);
 
-    <F> ConstraintFactory withFact(Class<F> factClass);
+    ConstraintFactory<F, P> withFact(Class<F> factClass);
 
-    <P> ConstraintFactory fromMultiple(Class<P> planningVariableClass);
+    ConstraintFactory<F, P> fromMultiple(Class<P> planningVariableClass);
 
-    <F, P> ConstraintFactory filter(Function<F, P> filter);
+    ConstraintFactory<F, P> filter(ConstraintFilter<F, List<P>> filter);
 
-    <F, P> Constraint<F, P> apply(ScoreLevel score, PenaltyFunction<F, P> penaltyFunction, FavorableScoreFunction<P> favorableScoreFunction);
+    Constraint<F, P> apply(ScoreLevel score, PenaltyFunction<F, P> penaltyFunction, FavorableScoreFunction<P> favorableScoreFunction);
 
 
 //    <A> UniConstraintStream<A> from(Class<A> fromClass);
