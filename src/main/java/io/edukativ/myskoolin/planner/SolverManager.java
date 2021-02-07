@@ -46,8 +46,6 @@ public class SolverManager<S, I, V> implements IWantToManageSolver<S, I, V> {
     }
 
     // #####################################################
-    // #################### Internal methods ###############
-    // #####################################################
 
     private void waitForSolving(I id, SolverJob<S, I, V> solverJob) throws SolutionSolvingException {
         CountDownLatch latch = new CountDownLatch(1);
