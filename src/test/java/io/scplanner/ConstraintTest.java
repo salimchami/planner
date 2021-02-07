@@ -29,35 +29,34 @@ class ConstraintTest {
                                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(10, 30), english),
                                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(10, 30), LocalTime.of(11, 0), english),
                                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(11, 0), LocalTime.of(11, 30), english)
-                        )
+                        ), english
                 ),
                 Arguments.of("total : 1h30", 90,
                         Arrays.asList(
                                 new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), english),
                                 new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), english),
                                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), english)
-                        )
+                        ), english
                 ),
-                Arguments.of("total : 0, subjects null", -90,
+                Arguments.of("total : 0, subjects null", -120,
                         Arrays.asList(
                                 new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), null),
                                 new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), null),
                                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), null)
-                        )
+                        ), english
                 )
         );
     }
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("should_calculate_constraint_score_Params")
-    void should_calculate_constraint_score(String title, int expectedScore, List<Timeslot> planningVariables) throws SolutionConfigurationException {
+    void should_calculate_constraint_score(String title, int expectedScore, List<Timeslot> planningVariables, Subject subject) throws SolutionConfigurationException {
         Constraint<Subject, Timeslot> constraint =
                 new Constraint<>("Max Subject Duration By Day",
-                        ScoreLevel.HARD,
-                        (Subject subject, List<Timeslot> timeslots) ->
-                        subject.maxMinutesPerDayPenalty(Timeslot.totalDurationInMinutes(timeslots)),
+                        ScoreLevel.HARD, subject,
+                        Subject::maxMinutesPerDayPenalty,
                         Timeslot::favorableScore,
-                        Subject.class, Timeslot.class);
+                        Timeslot.class);
         final int score = constraint.calculateScore(planningVariables);
         assertThat(score).isEqualTo(expectedScore);
     }

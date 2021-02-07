@@ -4,7 +4,12 @@ import io.scplanner.annotations.Fact;
 import io.scplanner.annotations.FactId;
 import io.scplanner.annotations.FactItem;
 
+import java.sql.Time;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Fact
 public class Subject {
@@ -54,9 +59,13 @@ public class Subject {
         return coursesFrequencyPerWeek;
     }
 
-    public int maxMinutesPerDayPenalty(Integer totalDuration) {
-        if (totalDuration > maxMinutesPerDay) {
-            return totalDuration;
+    public int maxMinutesPerDayPenalty(List<Timeslot> timeslots) {
+        final List<Timeslot> subjectTimeslots = timeslots.stream().filter(timeslot -> this.equals(timeslot.getSubject())).collect(toList());
+        final long totalDuration = subjectTimeslots.stream().mapToLong(Timeslot::durationInMinutes).sum();
+        if (totalDuration < minMinutesPerDay) {
+            return maxMinutesPerDay;
+        } else if (totalDuration > maxMinutesPerDay) {
+            return Long.valueOf(totalDuration).intValue();
         }
         return 0;
     }
