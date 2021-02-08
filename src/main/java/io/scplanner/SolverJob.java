@@ -51,7 +51,7 @@ public class SolverJob<S, I, V> {
         if (score <= 0) {
             improveSolution();
         }
-        Reflection.assignVariableByType(this.finalBestSolution, Score.class, score);
+//        Reflection.assignVariableByType(this.finalBestSolution, Score.class, score);
         // TODO : set facts to planning variables in final solution
         // initializeFinalSolutionFacts();
     }

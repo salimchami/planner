@@ -1,5 +1,6 @@
 package io.scplanner;
 
+import io.scplanner.annotations.Facts;
 import io.scplanner.annotations.PlanningVariableFact;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.reflection.Reflection;
@@ -39,7 +40,9 @@ public class Constraint<S, F, P> {
     public int calculateScore(S solution, List<P> planningVariables) throws SolutionConfigurationException {
         Map<Object, List<P>> planningVariablesByFacts = planningVariablesByFacts(planningVariables);
         if (planningVariablesByFacts.isEmpty()) {
-            return -penaltyFunction.apply(factClassInstanceFromSolution(solution), planningVariables);
+            return factClassInstanceFromSolution(solution)
+                    .map(fact -> -penaltyFunction.apply(fact, planningVariables))
+                    .orElseThrow(() -> new SolutionConfigurationException("No fact class found in solution instance."));
         }
         int penalty = penalty(planningVariablesByFacts);
         if (penalty > 0) {
@@ -49,9 +52,9 @@ public class Constraint<S, F, P> {
         }
     }
 
-    private F factClassInstanceFromSolution(S solution) {
-
-        return null;
+    private Optional<F> factClassInstanceFromSolution(S solution) throws SolutionConfigurationException {
+        final List<F> facts = (List) Reflection.valueByAnnotation(solution, Facts.class);
+        return facts.stream().filter(fact -> fact.getClass().getName().equals(factClass.getName())).findFirst();
     }
 
     private int penalty(Map<Object, List<P>> planningVariablesByFacts) {

@@ -75,6 +75,10 @@ public final class Reflection {
         }
     }
 
+    public static <S> List<Object> valuesByAnnotation(S classInstance, Class<? extends Annotation> annotation) throws SolutionConfigurationException {
+        return (List<Object>) valueByAnnotation(classInstance, annotation);
+    }
+
     public static Object instantiateClassInPackage(String packageName, Class<? extends Annotation> searchedAnnotation) throws SolutionConfigurationException {
         final String exceptionMessage = String.format("No Class with annotation %s found. Please add it in defined [sub] package %s.", searchedAnnotation, packageName);
         final Class<?> theClass = ClassFinder.find(packageName).stream()
@@ -89,14 +93,6 @@ public final class Reflection {
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             throw new SolutionConfigurationException(exceptionMessage);
         }
-    }
-
-    public static <V> List<Object> valuesByAnnotation(List<V> list, Class<? extends Annotation> annotation) throws SolutionConfigurationException {
-        List<Object> values = new ArrayList<>();
-        for (V value : list) {
-            values.add(valueByAnnotation(value, annotation));
-        }
-        return values;
     }
 
     public static <S> void copyByAnnotations(S classInstance, Class<? extends Annotation> sourcePropertyAnnotation, Class<? extends Annotation> destPropertyAnnotation)
