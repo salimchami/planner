@@ -4,17 +4,17 @@ import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Function;
 
-public interface ConstraintFactory<F, P> {
+public interface ConstraintFactory<S, F, P> {
 
-    ConstraintFactory<F, P> name(String constraintName);
+    ConstraintFactory<S, F, P> name(String constraintName);
 
-    ConstraintFactory<F, P> withFact(Class<F> factClass);
+    ConstraintFactory<S, F, P> withFact(Class<F> factClass);
 
-    ConstraintFactory<F, P> fromMultiple(Class<P> planningVariableClass);
+    ConstraintFactory<S, F, P> fromMultiple(Class<P> planningVariableClass);
 
-    ConstraintFactory<F, P> filter(ConstraintFilter<F, List<P>> filter);
+    ConstraintFactory<S, F, P> filter(ConstraintFilter<F, List<P>> filter);
 
-    Constraint<F, P> apply(ScoreLevel score, PenaltyFunction<F, P> penaltyFunction, FavorableScoreFunction<P> favorableScoreFunction);
+    Constraint<S, F, P> apply(ScoreLevel score, PenaltyFunction<F, P> penaltyFunction, FavorableScoreFunction<P> favorableScoreFunction);
 
 
 //    <A> UniConstraintStream<A> from(Class<A> fromClass);

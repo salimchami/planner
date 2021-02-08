@@ -15,14 +15,14 @@ import java.util.List;
 public class TimeTableConstraintProvider implements ConstraintProvider<TimeTable> {
 
     @Override
-    public <F, P> Constraint<F, P>[] defineConstraints(TimeTable solution, ConstraintFactory<F, P> constraintFactory) {
+    public <F, P> Constraint<TimeTable, F, P>[] defineConstraints(TimeTable solution, ConstraintFactory<TimeTable, F, P> constraintFactory) {
         return new Constraint[]{
                 // Hard constraints
                 subjectDurationByDayConflict(solution, constraintFactory)
         };
     }
 
-    private Constraint<Subject, Timeslot> subjectDurationByDayConflict(TimeTable solution,
+    private Constraint<TimeTable, Subject, Timeslot> subjectDurationByDayConflict(TimeTable solution,
                                                                        ConstraintFactory constraintFactory) {
 //        return constraintFactory
 //                .name("Subject Duration By Day")

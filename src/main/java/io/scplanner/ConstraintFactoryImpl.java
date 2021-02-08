@@ -6,7 +6,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
-public class ConstraintFactoryImpl<F, P> implements ConstraintFactory<F, P> {
+public class ConstraintFactoryImpl<S, F, P> implements ConstraintFactory<S, F, P> {
 
     private String constraintName;
     private Class<?> factClass;
@@ -21,25 +21,25 @@ public class ConstraintFactoryImpl<F, P> implements ConstraintFactory<F, P> {
     }
 
     @Override
-    public ConstraintFactory<F, P> withFact(Class<F> factClass) {
+    public ConstraintFactory<S, F, P> withFact(Class<F> factClass) {
         this.factClass = factClass;
         return this;
     }
 
     @Override
-    public ConstraintFactory<F, P> fromMultiple(Class<P> planningVariableClass) {
+    public ConstraintFactory<S, F, P> fromMultiple(Class<P> planningVariableClass) {
         this.planningVariableClass = planningVariableClass;
         return this;
     }
 
     @Override
-    public ConstraintFactory<F, P> filter(ConstraintFilter<F, List<P>> filter) {
+    public ConstraintFactory<S, F, P> filter(ConstraintFilter<F, List<P>> filter) {
         this.filter = filter;
         return this;
     }
 
     @Override
-    public Constraint<F, P> apply(ScoreLevel score, PenaltyFunction<F, P> penaltyFunction, FavorableScoreFunction<P> favorableScoreFunction) {
+    public Constraint<S, F, P> apply(ScoreLevel score, PenaltyFunction<F, P> penaltyFunction, FavorableScoreFunction<P> favorableScoreFunction) {
 //        return new Constraint(this.constraintName,
 //                score,
 //                this.factClass,

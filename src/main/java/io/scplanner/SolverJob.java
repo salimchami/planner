@@ -68,17 +68,15 @@ public class SolverJob<S, I, V> {
 
     private <F, P> int solutionScore(List<P> planningVars) throws SolutionConfigurationException {
         int score = 0;
-        for (Constraint<F, P> constraint : constraints) {
-            score += constraint.calculateScore(planningVars);
+        for (Constraint<S, F, P> constraint : constraints) {
+            score += constraint.calculateScore(finalBestSolution, planningVars);
         }
         return score;
     }
 
     private <F> void improveSolution() throws SolutionConfigurationException {
         final List<F> refFacts = (List<F>) Reflection.valueByAnnotation(initialSolution, Facts.class);
-        constraints.forEach(constraint -> {
-            improveByConstraint(constraint, refFacts);
-        });
+        constraints.forEach(constraint -> improveByConstraint(constraint, refFacts));
         finalBestSolution = initialSolution;
     }
 

@@ -7,8 +7,9 @@ import io.scplanner.reflection.Reflection;
 import java.util.*;
 import java.util.function.Supplier;
 
-public class Constraint<F, P> {
+public class Constraint<S, F, P> {
 
+    private final S solution;
     private final Class<F> factClass;
     private final String constraintName;
     private ScoreLevel scoreLevel;
@@ -19,6 +20,7 @@ public class Constraint<F, P> {
 
     public Constraint(String constraintName,
                       ScoreLevel scoreLevel,
+                      S solution,
                       Class<F> fact,
                       Class<P> planningVariableClass,
                       ConstraintFilter<F, P> filter,
@@ -26,6 +28,7 @@ public class Constraint<F, P> {
                       FavorableScoreFunction<P> favorableScoreFunction) {
         this.constraintName = constraintName;
         this.scoreLevel = scoreLevel;
+        this.solution = solution;
         this.factClass = fact;
         this.planningVariableClass = planningVariableClass;
         this.filter = filter;
@@ -33,10 +36,10 @@ public class Constraint<F, P> {
         this.favorableScoreFunction = favorableScoreFunction;
     }
 
-    public int calculateScore(List<P> planningVariables) throws SolutionConfigurationException {
+    public int calculateScore(S solution, List<P> planningVariables) throws SolutionConfigurationException {
         Map<Object, List<P>> planningVariablesByFacts = planningVariablesByFacts(planningVariables);
         if (planningVariablesByFacts.isEmpty()) {
-            return -penaltyFunction.apply(factClassInstanceFromSolution(), planningVariables);
+            return -penaltyFunction.apply(factClassInstanceFromSolution(solution), planningVariables);
         }
         int penalty = penalty(planningVariablesByFacts);
         if (penalty > 0) {
@@ -46,7 +49,8 @@ public class Constraint<F, P> {
         }
     }
 
-    private F factClassInstanceFromSolution() {
+    private F factClassInstanceFromSolution(S solution) {
+
         return null;
     }
 
