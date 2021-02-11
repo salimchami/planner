@@ -11,8 +11,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.BooleanSupplier;
 import java.util.stream.Stream;
 
 import static java.util.Collections.singletonList;
@@ -42,9 +43,9 @@ class ConstraintTest {
                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), null)
         );
         return Stream.of(
-                Arguments.of("total : 3h30", -210, new TimeTable(planningVariables1, singletonList(english)), english),
-                Arguments.of("total : 1h30", 90, new TimeTable(planningVariables2, singletonList(english)), english),
-                Arguments.of("total : 0, subjects null", -120, new TimeTable(planningVariables3, singletonList(english)), english)
+                Arguments.of("total : 3h30", -210, new TimeTable(planningVariables1, singletonList(english))),
+                Arguments.of("total : 1h30", 90, new TimeTable(planningVariables2, singletonList(english))),
+                Arguments.of("total : 0, subjects null", -120, new TimeTable(planningVariables3, singletonList(english)))
         );
     }
 
@@ -52,18 +53,16 @@ class ConstraintTest {
     @MethodSource("should_calculate_constraint_score_Params")
     void should_calculate_constraint_score(String title,
                                            int expectedScore,
-                                           TimeTable timeTable,
-                                           Subject subject) throws SolutionConfigurationException {
+                                           TimeTable timeTable) throws SolutionConfigurationException {
         Constraint<TimeTable, Subject, Timeslot> constraint =
-                new Constraint<>("Max Subject Duration By Day",
+                new Constraint<TimeTable, Subject, Timeslot>("Max Subject Duration By Day",
                         ScoreLevel.HARD,
                         timeTable,
                         Subject.class,
                         Timeslot.class,
-                        (Subject s, List<Timeslot> timeslots) ->
-                                Timeslot.totalDurationInMinutes(timeslots, s) <= s.getMaxMinutesPerDay(),
+                        (Subject subject, List<Timeslot> timeslots) -> Timeslot.totalDurationInMinutes(timeslots, subject) <= subject.getMaxMinutesPerDay(),
                         Subject::maxMinutesPerDayPenalty,
-                        Timeslot::favorableScore);
+                        () -> System.out.println(""));
         final int score = constraint.calculateScore(timeTable, timeTable.getBaseTimeslots());
         assertThat(score).isEqualTo(expectedScore);
     }

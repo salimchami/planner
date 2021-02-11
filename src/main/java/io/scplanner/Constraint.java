@@ -6,6 +6,9 @@ import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.reflection.Reflection;
 
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class Constraint<S, F, P> {
@@ -17,22 +20,40 @@ public class Constraint<S, F, P> {
     private PenaltyFunction<F, P> penaltyFunction;
     private FavorableScoreFunction<P> favorableScoreFunction;
     private Class<P> planningVariableClass;
-    private final ConstraintFilter<F, P> filter;
+    private final List<ConstraintFilter<F, List<P>>>  filters = new ArrayList<>();
 
     public Constraint(String constraintName,
                       ScoreLevel scoreLevel,
                       S solution,
-                      Class<F> fact,
+                      Class<F> factClass,
                       Class<P> planningVariableClass,
-                      ConstraintFilter<F, P> filter,
+                      List<ConstraintFilter<F, List<P>>> filters,
                       PenaltyFunction<F, P> penaltyFunction,
                       FavorableScoreFunction<P> favorableScoreFunction) {
         this.constraintName = constraintName;
         this.scoreLevel = scoreLevel;
         this.solution = solution;
-        this.factClass = fact;
+        this.factClass = factClass;
         this.planningVariableClass = planningVariableClass;
-        this.filter = filter;
+        this.filters.addAll(filters);
+        this.penaltyFunction = penaltyFunction;
+        this.favorableScoreFunction = favorableScoreFunction;
+    }
+
+    public Constraint(String constraintName,
+                      ScoreLevel scoreLevel,
+                      S solution,
+                      Class<F> factClass,
+                      Class<P> planningVariableClass,
+                      ConstraintFilter<F, List<P>> filter,
+                      PenaltyFunction<F, P> penaltyFunction,
+                      FavorableScoreFunction<P> favorableScoreFunction) {
+        this.constraintName = constraintName;
+        this.scoreLevel = scoreLevel;
+        this.solution = solution;
+        this.factClass = factClass;
+        this.planningVariableClass = planningVariableClass;
+        this.filters.add(filter);
         this.penaltyFunction = penaltyFunction;
         this.favorableScoreFunction = favorableScoreFunction;
     }

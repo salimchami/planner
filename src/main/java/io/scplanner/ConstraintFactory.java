@@ -1,6 +1,7 @@
 package io.scplanner;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.BooleanSupplier;
 import java.util.function.Function;
 
@@ -10,9 +11,9 @@ public interface ConstraintFactory<S, F, P> {
 
     ConstraintFactory<S, F, P> withFact(Class<F> factClass);
 
-    ConstraintFactory<S, F, P> fromMultiple(Class<P> planningVariableClass);
+    ConstraintFactory<S, F, P> withPlanningVariables(Class<P> planningVariableClass);
 
-    ConstraintFactory<S, F, P> filter(ConstraintFilter<F, List<P>> filter);
+    ConstraintFactoryImpl<S, F, P> filter(Function<F, List<P>> consumer);
 
     Constraint<S, F, P> apply(ScoreLevel score, PenaltyFunction<F, P> penaltyFunction, FavorableScoreFunction<P> favorableScoreFunction);
 

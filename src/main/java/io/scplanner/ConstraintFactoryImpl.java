@@ -2,20 +2,22 @@ package io.scplanner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BooleanSupplier;
-import java.util.function.Function;
-import java.util.function.UnaryOperator;
+import java.util.function.*;
 
 public class ConstraintFactoryImpl<S, F, P> implements ConstraintFactory<S, F, P> {
 
     private String constraintName;
-    private Class<?> factClass;
-    private Class<?> planningVariableClass;
-    private ConstraintFilter<F, List<P>> filter;
-    private Function<F, List<P>> listFilter;
+    private final Supplier<S> instantiator;
+    private final List<Function<F, List<P>>> filters = new ArrayList<>();
+    private Class<F> factClass;
+    private Class<P> planningVariableClass;
+
+    public ConstraintFactoryImpl(Supplier<S> instantiator) {
+        this.instantiator = instantiator;
+    }
 
     @Override
-    public ConstraintFactory name(String constraintName) {
+    public ConstraintFactory<S, F, P> name(String constraintName) {
         this.constraintName = constraintName;
         return this;
     }
@@ -27,27 +29,26 @@ public class ConstraintFactoryImpl<S, F, P> implements ConstraintFactory<S, F, P
     }
 
     @Override
-    public ConstraintFactory<S, F, P> fromMultiple(Class<P> planningVariableClass) {
+    public ConstraintFactory<S, F, P> withPlanningVariables(Class<P> planningVariableClass) {
         this.planningVariableClass = planningVariableClass;
         return this;
     }
 
     @Override
-    public ConstraintFactory<S, F, P> filter(ConstraintFilter<F, List<P>> filter) {
-        this.filter = filter;
+    public ConstraintFactoryImpl<S, F, P> filter(Function<F, List<P>> filter) {
+        filters.add(filter);
         return this;
     }
 
-    @Override
-    public Constraint<S, F, P> apply(ScoreLevel score, PenaltyFunction<F, P> penaltyFunction, FavorableScoreFunction<P> favorableScoreFunction) {
-//        return new Constraint(this.constraintName,
-//                score,
-//                this.factClass,
-//                this.planningVariableClass,
-//                this.filter,
-//                this.listFilter,
-//                penaltyFunction,
-//                favorableScoreFunction);
-        return null;
+    public Constraint<S, F, P> apply(ScoreLevel scoreLevel, PenaltyFunction<F, P> penaltyFunction, FavorableScoreFunction<P> favorableScoreFunction) {
+        return new Constraint<S, F, P>(this.constraintName,
+                scoreLevel,
+                this.instantiator.get(),
+                this.factClass,
+                this.planningVariableClass,
+                this.filters,
+                penaltyFunction,
+                favorableScoreFunction
+        );
     }
 }
