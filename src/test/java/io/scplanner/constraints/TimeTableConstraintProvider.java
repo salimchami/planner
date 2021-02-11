@@ -9,7 +9,6 @@ import io.scplanner.entities.Subject;
 import io.scplanner.entities.TimeTable;
 import io.scplanner.entities.Timeslot;
 
-import java.sql.Time;
 import java.util.List;
 
 @ConstraintsProvider
@@ -24,7 +23,7 @@ public class TimeTableConstraintProvider implements ConstraintProvider<TimeTable
     }
 
     private <F, P> Constraint<TimeTable, Subject, Timeslot> subjectDurationByDayConflict(TimeTable solution,
-                                                                                         ConstraintFactory<TimeTable, Subject, Timeslot> constraintFactory) {
+                                                                                         ConstraintFactory constraintFactory) {
         return null;
 //        return constraintFactory
 //                .name("Subject Duration By Day")

@@ -1,8 +1,7 @@
 package io.scplanner;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.*;
+import java.util.function.Supplier;
 
 public class ConstraintFactoryImpl<S, F, P> implements ConstraintFactory<S, F, P> {
 
@@ -41,7 +40,7 @@ public class ConstraintFactoryImpl<S, F, P> implements ConstraintFactory<S, F, P
     }
 
     public Constraint<S, F, P> apply(ScoreLevel scoreLevel, PenaltyFunction<F, P> penaltyFunction, FavorableScoreFunction<P> favorableScoreFunction) {
-        return new Constraint<S, F, P>(this.constraintName,
+        return new Constraint<>(this.constraintName,
                 scoreLevel,
                 this.instantiator.get(),
                 this.factClass,
