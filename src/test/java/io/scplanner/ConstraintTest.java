@@ -12,8 +12,6 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.BooleanSupplier;
 import java.util.stream.Stream;
 
 import static java.util.Collections.singletonList;
@@ -55,14 +53,14 @@ class ConstraintTest {
                                            int expectedScore,
                                            TimeTable timeTable) throws SolutionConfigurationException {
         Constraint<TimeTable, Subject, Timeslot> constraint =
-                new Constraint<TimeTable, Subject, Timeslot>("Max Subject Duration By Day",
+                new Constraint<>("Max Subject Duration By Day",
                         ScoreLevel.HARD,
                         timeTable,
                         Subject.class,
                         Timeslot.class,
                         (Subject subject, List<Timeslot> timeslots) -> Timeslot.totalDurationInMinutes(timeslots, subject) <= subject.getMaxMinutesPerDay(),
                         Subject::maxMinutesPerDayPenalty,
-                        () -> System.out.println(""));
+                        Timeslot::totalDurationInMinutes);
         final int score = constraint.calculateScore(timeTable, timeTable.getBaseTimeslots());
         assertThat(score).isEqualTo(expectedScore);
     }

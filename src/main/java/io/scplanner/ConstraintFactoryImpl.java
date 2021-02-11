@@ -8,7 +8,7 @@ public class ConstraintFactoryImpl<S, F, P> implements ConstraintFactory<S, F, P
 
     private String constraintName;
     private final Supplier<S> instantiator;
-    private final List<Function<F, List<P>>> filters = new ArrayList<>();
+    private ConstraintFilter<F, List<P>> filter;
     private Class<F> factClass;
     private Class<P> planningVariableClass;
 
@@ -35,8 +35,8 @@ public class ConstraintFactoryImpl<S, F, P> implements ConstraintFactory<S, F, P
     }
 
     @Override
-    public ConstraintFactoryImpl<S, F, P> filter(Function<F, List<P>> filter) {
-        filters.add(filter);
+    public ConstraintFactoryImpl<S, F, P> filter(ConstraintFilter<F, List<P>> filter) {
+        this.filter = filter;
         return this;
     }
 
@@ -46,7 +46,7 @@ public class ConstraintFactoryImpl<S, F, P> implements ConstraintFactory<S, F, P
                 this.instantiator.get(),
                 this.factClass,
                 this.planningVariableClass,
-                this.filters,
+                this.filter,
                 penaltyFunction,
                 favorableScoreFunction
         );

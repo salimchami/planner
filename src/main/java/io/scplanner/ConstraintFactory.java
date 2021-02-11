@@ -13,7 +13,7 @@ public interface ConstraintFactory<S, F, P> {
 
     ConstraintFactory<S, F, P> withPlanningVariables(Class<P> planningVariableClass);
 
-    ConstraintFactoryImpl<S, F, P> filter(Function<F, List<P>> consumer);
+    ConstraintFactoryImpl<S, F, P> filter(ConstraintFilter<F, List<P>> consumer);
 
     Constraint<S, F, P> apply(ScoreLevel score, PenaltyFunction<F, P> penaltyFunction, FavorableScoreFunction<P> favorableScoreFunction);
 
