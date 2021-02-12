@@ -20,8 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SolverJobTest {
 
     @ParameterizedTest
-    @MethodSource("startSolvingParams")
-    void startSolving(Subject subject, List<Timeslot> baseTimeslots) throws SolutionConfigurationException {
+    @MethodSource("should_add_correct_duration_of_subject_params")
+    void should_add_correct_duration_of_subject(Subject subject, List<Timeslot> baseTimeslots) throws SolutionConfigurationException {
         final TimeTable timeTable = new TimeTable(baseTimeslots, singletonList(subject));
         SolverJob<TimeTable, String, Timeslot> sut = new SolverJob<>("io.scplanner", timeTable);
         sut.startSolving();
@@ -31,13 +31,13 @@ class SolverJobTest {
                 .isGreaterThan(subject.getMinMinutesPerDay());
     }
 
-    private static Stream<Arguments> startSolvingParams() {
+    private static Stream<Arguments> should_add_correct_duration_of_subject_params() {
         final Subject english = new Subject(1L, "English", 120, 60, 300, 3);
         return Stream.of(
-                Arguments.of(english, Arrays.asList(
-                        new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), english),
-                        new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), english),
-                        new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), english))),
+//                Arguments.of(english, Arrays.asList(
+//                        new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), english),
+//                        new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), english),
+//                        new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), english))),
                 Arguments.of(english, Arrays.asList(
                         new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), null),
                         new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), null),
@@ -45,10 +45,10 @@ class SolverJobTest {
         );
     }
 
-    private Long durationOfSubject(Subject francais, TimeTable timeTable) {
+    private Long durationOfSubject(Subject subject, TimeTable timeTable) {
         return timeTable.getTimeslots().stream()
                 .filter(timeslot -> timeslot.getSubject() != null)
-                .filter(timeslot -> timeslot.getSubject().equals(francais))
+                .filter(timeslot -> timeslot.getSubject().equals(subject))
                 .mapToLong(Timeslot::durationInMinutes).sum();
     }
 }

@@ -81,6 +81,7 @@ public class SolverJob<S, I, V> {
     }
 
     private <F> void improveByConstraint(Constraint constraint, List<F> refFacts) {
+//        constraint.calculateScore()
         System.out.println(refFacts);
     }
 
