@@ -19,7 +19,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class ConstraintTest {
 
-    private static Stream<Arguments> should_calculate_constraint_score_Params() {
+    private static Stream<Arguments> should_calculate_constraint_score_with_subject_filter_Params() {
         final Subject english = new Subject(1L, "English", 120, 60, 300, 3);
         List<Timeslot> planningVariables1 = Arrays.asList(
                 new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), english),
@@ -48,8 +48,8 @@ class ConstraintTest {
     }
 
     @ParameterizedTest(name = "{0}")
-    @MethodSource("should_calculate_constraint_score_Params")
-    void should_calculate_constraint_score(String title,
+    @MethodSource("should_calculate_constraint_score_with_subject_filter_Params")
+    void should_calculate_constraint_score_with_subject_max_filter(String title,
                                            int expectedScore,
                                            TimeTable timeTable) throws SolutionConfigurationException {
         Constraint<TimeTable, Subject, Timeslot> constraint =
@@ -57,11 +57,10 @@ class ConstraintTest {
                         ScoreLevel.HARD,
                         timeTable,
                         Subject.class,
-                        Timeslot.class,
-                        (Subject subject, List<Timeslot> timeslots) -> Timeslot.totalDurationInMinutes(timeslots, subject) <= subject.getMaxMinutesPerDay(),
-                        Subject::maxMinutesPerDayPenalty,
+                        Subject::correctDuration,
+                        Subject::correctDurationPerDayPenalty,
                         Timeslot::totalDurationInMinutes);
-        final int score = constraint.calculateScore(timeTable, timeTable.getBaseTimeslots());
+        final int score = constraint.calculateScore(timeTable.getBaseTimeslots());
         assertThat(score).isEqualTo(expectedScore);
     }
 }

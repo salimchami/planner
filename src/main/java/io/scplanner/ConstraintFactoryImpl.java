@@ -9,7 +9,6 @@ public class ConstraintFactoryImpl<S, F, P> implements ConstraintFactory<S, F, P
     private final Supplier<S> instantiator;
     private ConstraintFilter<F, List<P>> filter;
     private Class<F> factClass;
-    private Class<P> planningVariableClass;
 
     public ConstraintFactoryImpl(Supplier<S> instantiator) {
         this.instantiator = instantiator;
@@ -28,12 +27,6 @@ public class ConstraintFactoryImpl<S, F, P> implements ConstraintFactory<S, F, P
     }
 
     @Override
-    public ConstraintFactory<S, F, P> withPlanningVariables(Class<P> planningVariableClass) {
-        this.planningVariableClass = planningVariableClass;
-        return this;
-    }
-
-    @Override
     public ConstraintFactoryImpl<S, F, P> filter(ConstraintFilter<F, List<P>> filter) {
         this.filter = filter;
         return this;
@@ -44,7 +37,6 @@ public class ConstraintFactoryImpl<S, F, P> implements ConstraintFactory<S, F, P
                 scoreLevel,
                 this.instantiator.get(),
                 this.factClass,
-                this.planningVariableClass,
                 this.filter,
                 penaltyFunction,
                 favorableScoreFunction

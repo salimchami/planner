@@ -59,7 +59,7 @@ public class Subject {
         return coursesFrequencyPerWeek;
     }
 
-    public int maxMinutesPerDayPenalty(List<Timeslot> timeslots) {
+    public int correctDurationPerDayPenalty(List<Timeslot> timeslots) {
         final List<Timeslot> subjectTimeslots = timeslots.stream().filter(timeslot -> this.equals(timeslot.getSubject())).collect(toList());
         final long totalDuration = subjectTimeslots.stream().mapToLong(Timeslot::durationInMinutes).sum();
         if (totalDuration < minMinutesPerDay) {
@@ -94,5 +94,12 @@ public class Subject {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public Boolean correctDuration(List<Timeslot> timeslots) {
+        final Integer totalDuration = Timeslot.totalDurationInMinutes(timeslots, this);
+        final boolean correctMax = totalDuration <= maxMinutesPerDay;
+        final boolean correctMin = totalDuration >= minMinutesPerDay;
+        return correctMax && correctMin;
     }
 }

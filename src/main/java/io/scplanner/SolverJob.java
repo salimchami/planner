@@ -69,7 +69,7 @@ public class SolverJob<S, I, V> {
     private <F, P> int solutionScore(List<P> planningVars) throws SolutionConfigurationException {
         int score = 0;
         for (Constraint<S, F, P> constraint : constraints) {
-            score += constraint.calculateScore(finalBestSolution, planningVars);
+            score += constraint.calculateScore(planningVars);
         }
         return score;
     }

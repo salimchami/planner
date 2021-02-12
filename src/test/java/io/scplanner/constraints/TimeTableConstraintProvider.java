@@ -27,11 +27,10 @@ public class TimeTableConstraintProvider implements ConstraintProvider<TimeTable
         return constraintFactory
                 .name("Subject Duration By Day")
                 .withFact(Subject.class)
-                .withPlanningVariables(Timeslot.class)
                 .filter((Subject subject, List<Timeslot> timeslots) ->
                         Timeslot.totalDurationInMinutes(timeslots, subject) <= subject.getMaxMinutesPerDay())
                 .apply(ScoreLevel.HARD,
-                        Subject::maxMinutesPerDayPenalty,
+                        Subject::correctDurationPerDayPenalty,
                         Timeslot::totalDurationInMinutes);
     }
 

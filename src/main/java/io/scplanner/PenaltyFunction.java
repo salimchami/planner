@@ -3,7 +3,7 @@ package io.scplanner;
 import java.util.List;
 
 @FunctionalInterface
-public interface PenaltyFunction<U, T> {
+public interface PenaltyFunction<F, P> {
 
-    Integer apply(U u, List<T> list);
+    Integer apply(F u, List<P> list);
 }
