@@ -26,7 +26,9 @@ class SolverJobTest {
         SolverJob<TimeTable, String, Timeslot> sut = new SolverJob<>("io.scplanner", timeTable);
         sut.startSolving();
         sut.terminateEarly();
-        assertThat(durationOfSubject(subject, sut.getFinalBestSolution())).isGreaterThan(60L);
+        assertThat(durationOfSubject(subject, sut.getFinalBestSolution()))
+                .isLessThan(subject.getMaxMinutesPerDay())
+                .isGreaterThan(subject.getMinMinutesPerDay());
     }
 
     private static Stream<Arguments> startSolvingParams() {
@@ -35,11 +37,11 @@ class SolverJobTest {
                 Arguments.of(english, Arrays.asList(
                         new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), english),
                         new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), english),
-                        new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), english)))
-//                Arguments.of(english, Arrays.asList(
-//                        new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), null),
-//                        new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), null),
-//                        new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), null)))
+                        new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), english))),
+                Arguments.of(english, Arrays.asList(
+                        new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), null),
+                        new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), null),
+                        new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), null)))
         );
     }
 

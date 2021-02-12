@@ -19,6 +19,7 @@ public class Subject {
     private final String name;
     @FactItem
     private final Integer maxMinutesPerDay;
+
     @FactItem
     private final Integer minMinutesPerDay;
     @FactItem
@@ -35,28 +36,12 @@ public class Subject {
         this.coursesFrequencyPerWeek = coursesFrequencyPerWeek;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public Integer getMaxMinutesPerDay() {
         return maxMinutesPerDay;
     }
 
     public Integer getMinMinutesPerDay() {
         return minMinutesPerDay;
-    }
-
-    public Integer getMinutesPerWeek() {
-        return minutesPerWeek;
-    }
-
-    public Integer getCoursesFrequencyPerWeek() {
-        return coursesFrequencyPerWeek;
     }
 
     public int correctDurationPerDayPenalty(List<Timeslot> timeslots) {
@@ -68,6 +53,13 @@ public class Subject {
             return Long.valueOf(totalDuration).intValue();
         }
         return 0;
+    }
+
+    public Boolean correctDuration(List<Timeslot> timeslots) {
+        final Integer totalDuration = Timeslot.totalDurationInMinutes(timeslots, this);
+        final boolean correctMax = totalDuration <= maxMinutesPerDay;
+        final boolean correctMin = totalDuration >= minMinutesPerDay;
+        return correctMax && correctMin;
     }
 
     @Override
@@ -94,12 +86,5 @@ public class Subject {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
-    }
-
-    public Boolean correctDuration(List<Timeslot> timeslots) {
-        final Integer totalDuration = Timeslot.totalDurationInMinutes(timeslots, this);
-        final boolean correctMax = totalDuration <= maxMinutesPerDay;
-        final boolean correctMin = totalDuration >= minMinutesPerDay;
-        return correctMax && correctMin;
     }
 }
