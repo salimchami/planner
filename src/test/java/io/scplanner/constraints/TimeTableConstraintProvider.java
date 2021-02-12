@@ -23,21 +23,16 @@ public class TimeTableConstraintProvider implements ConstraintProvider<TimeTable
     }
 
     private <F, P> Constraint<TimeTable, Subject, Timeslot> subjectDurationByDayConflict(TimeTable solution,
-                                                                                         ConstraintFactory constraintFactory) {
-        return null;
-//        return constraintFactory
-//                .name("Subject Duration By Day")
-//
-//                .withFact(Subject.class)
-//                .withPlanningVariables(Timeslot.class)
-////                .filter((Subject subject, List<Timeslot> timeslots) ->
-////                        System.out.println("toto"))
-//                .filter((Subject subject, List<Timeslot> timeslots) -> {
-//                    return null;
-//                })
-//                .apply(ScoreLevel.HARD,
-//                        Subject::maxMinutesPerDayPenalty,
-//                        Timeslot::totalDurationInMinutes);
+                                                                                         ConstraintFactory<TimeTable, Subject, Timeslot> constraintFactory) {
+        return constraintFactory
+                .name("Subject Duration By Day")
+                .withFact(Subject.class)
+                .withPlanningVariables(Timeslot.class)
+                .filter((Subject subject, List<Timeslot> timeslots) ->
+                        Timeslot.totalDurationInMinutes(timeslots, subject) <= subject.getMaxMinutesPerDay())
+                .apply(ScoreLevel.HARD,
+                        Subject::maxMinutesPerDayPenalty,
+                        Timeslot::totalDurationInMinutes);
     }
 
 }
