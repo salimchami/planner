@@ -107,10 +107,8 @@ Every constraint contains a name, a score (SOFT, MEDIUM, HARD) and a penalty fun
                     .fromMultiple(Timeslot.class)
                     .withFact(Subject.class)
                     .filter(Subject::getMaxMinutesPerDay)
-                    .filter(Subject::getMinMinutesPerDay)
-                    .apply("Subject Duration By Day", ScoreLevel.HARD, (Subject subject, List<Timeslot> timeSlots) ->
-                            subject.maxMinutesPerDayPenalty(Timeslot.totalDuration(timeSlots)));
-    
+                    .apply("Subject Duration By Day", ScoreLevel.HARD, Timeslot::totalDurationInMinutes, (Subject subject, List<Timeslot> timeSlots) ->
+                            subject.maxMinutesPerDayPenalty(Timeslot.totalDurationInMinutes(timeSlots)));
         }
     }
 ```    
