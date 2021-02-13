@@ -1,6 +1,6 @@
 package io.scplanner.entities;
 
-import io.scplanner.SolverStatus;
+import io.scplanner.solver.SolverStatus;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.exceptions.SolutionSolvingException;
 

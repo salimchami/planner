@@ -1,6 +1,6 @@
 package io.scplanner.entities;
 
-import io.scplanner.Score;
+import io.scplanner.score.Score;
 import io.scplanner.annotations.*;
 
 import java.time.Instant;

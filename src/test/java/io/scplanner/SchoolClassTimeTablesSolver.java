@@ -3,6 +3,9 @@ package io.scplanner;
 import io.scplanner.entities.*;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.exceptions.SolutionSolvingException;
+import io.scplanner.score.ScoreManager;
+import io.scplanner.solver.IWantToManageSolver;
+import io.scplanner.solver.SolverStatus;
 
 import java.time.DayOfWeek;
 import java.time.Instant;

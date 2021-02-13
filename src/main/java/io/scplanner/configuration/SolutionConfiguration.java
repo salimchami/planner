@@ -1,5 +1,6 @@
-package io.scplanner;
+package io.scplanner.configuration;
 
+import io.scplanner.score.Score;
 import io.scplanner.annotations.*;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.reflection.Reflection;

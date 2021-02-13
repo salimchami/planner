@@ -1,5 +1,6 @@
-package io.scplanner;
+package io.scplanner.solver;
 
+import io.scplanner.configuration.SolutionConfiguration;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.exceptions.SolutionSolvingException;
 

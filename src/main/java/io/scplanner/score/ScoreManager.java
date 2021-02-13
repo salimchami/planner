@@ -1,4 +1,4 @@
-package io.scplanner;
+package io.scplanner.score;
 
 public class ScoreManager<Solution> {
 

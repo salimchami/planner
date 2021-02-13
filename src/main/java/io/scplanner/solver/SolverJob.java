@@ -1,5 +1,9 @@
-package io.scplanner;
+package io.scplanner.solver;
 
+import io.scplanner.constraints.Constraint;
+import io.scplanner.constraints.ConstraintFactory;
+import io.scplanner.constraints.ConstraintFactoryImpl;
+import io.scplanner.constraints.ConstraintProvider;
 import io.scplanner.annotations.*;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.reflection.Reflection;

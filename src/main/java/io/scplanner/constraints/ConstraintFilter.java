@@ -1,4 +1,4 @@
-package io.scplanner;
+package io.scplanner.constraints;
 
 @FunctionalInterface
 public interface ConstraintFilter<F, P> {

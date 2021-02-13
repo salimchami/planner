@@ -1,9 +1,11 @@
 package io.scplanner;
 
+import io.scplanner.constraints.Constraint;
 import io.scplanner.entities.Subject;
 import io.scplanner.entities.TimeTable;
 import io.scplanner.entities.Timeslot;
 import io.scplanner.exceptions.SolutionConfigurationException;
+import io.scplanner.score.ScoreLevel;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

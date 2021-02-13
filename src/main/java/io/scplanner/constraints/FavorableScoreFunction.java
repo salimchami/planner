@@ -1,4 +1,4 @@
-package io.scplanner;
+package io.scplanner.constraints;
 
 import java.util.List;
 

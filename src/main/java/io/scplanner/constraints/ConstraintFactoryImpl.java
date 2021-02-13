@@ -1,4 +1,6 @@
-package io.scplanner;
+package io.scplanner.constraints;
+
+import io.scplanner.score.ScoreLevel;
 
 import java.util.List;
 import java.util.function.Supplier;

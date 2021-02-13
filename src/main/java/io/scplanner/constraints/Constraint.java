@@ -1,5 +1,6 @@
-package io.scplanner;
+package io.scplanner.constraints;
 
+import io.scplanner.score.ScoreLevel;
 import io.scplanner.annotations.Facts;
 import io.scplanner.annotations.PlanningVariableFact;
 import io.scplanner.exceptions.SolutionConfigurationException;
