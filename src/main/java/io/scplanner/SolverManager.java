@@ -39,7 +39,7 @@ public class SolverManager<S, I, V> implements IWantToManageSolver<S, I, V> {
         addSolution(id, solution);
         final String basePackage = StackWalker.getInstance(RETAIN_CLASS_REFERENCE).getCallerClass().getPackageName();
         final SolverJob<S, I, V> solverJob = new SolverJob<>(basePackage, solution);
-        solverJob.startSolving();
+        solverJob.solve();
         statuses.put(id, SolverStatus.SOLVING);
         waitForSolving(id, solverJob);
         saveFunction.apply(solverJob.getFinalBestSolution());

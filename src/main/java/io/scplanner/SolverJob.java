@@ -39,11 +39,7 @@ public class SolverJob<S, I, V> {
         return finalBestSolution;
     }
 
-    public void terminateEarly() {
-        this.finalBestSolution = this.initialSolution;
-    }
-
-    public void startSolving() throws SolutionConfigurationException {
+    public void solve() throws SolutionConfigurationException {
         int score = solutionScore(basePlanningVariables);
         Reflection.copyByAnnotations(this.initialSolution, BasePlanningVariables.class, ModifiablePlanningVariables.class);
         this.finalBestSolution = this.initialSolution;
@@ -76,13 +72,13 @@ public class SolverJob<S, I, V> {
 
     private <F> void improveSolution() throws SolutionConfigurationException {
         final List<F> refFacts = (List<F>) Reflection.valueByAnnotation(initialSolution, Facts.class);
-        constraints.forEach(constraint -> improveByConstraint(constraint, refFacts));
+        refFacts.forEach(fact -> constraints.forEach(constraint -> improveByConstraint(constraint, fact)));
         finalBestSolution = initialSolution;
     }
 
-    private <F> void improveByConstraint(Constraint constraint, List<F> refFacts) {
+    public <F> void improveByConstraint(Constraint constraint, F fact) {
+
 //        constraint.calculateScore()
-        System.out.println(refFacts);
     }
 
     private void loadConstraints() throws SolutionConfigurationException {

@@ -4,6 +4,7 @@ import io.scplanner.entities.*;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.exceptions.SolutionSolvingException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -36,6 +37,7 @@ class SolverTest {
     }
 
     @Test
+    @Disabled
     void shouldGenerateTimeTable() throws SolutionConfigurationException, SolutionSolvingException {
         schoolClassId = "Sixième";
         final Subject mathematiques = new Subject(1L, "Mathematiques", 120, 60, 300, 3);
