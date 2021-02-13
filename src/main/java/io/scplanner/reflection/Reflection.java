@@ -50,9 +50,12 @@ public final class Reflection {
 
     public static Object objectFieldByType(Object object, Class<?> typeClass) throws SolutionConfigurationException {
         try {
-            return object.getClass().getDeclaredField(typeClass.getName()).get(object);
+            final Field field = fieldByType(object.getClass(), typeClass);
+            final Field declaredField = object.getClass().getDeclaredField(field.getName());
+            declaredField.setAccessible(true);
+            return declaredField.get(object);
         } catch (IllegalAccessException | NoSuchFieldException e) {
-            throw new SolutionConfigurationException(String.format("Field value with type %s not found.", typeClass.getName()), e);
+            throw new SolutionConfigurationException(String.format("%s Field value with type %s not found.", object.getClass().getName(), typeClass.getName()), e);
         }
     }
 
@@ -124,6 +127,9 @@ public final class Reflection {
     }
 
     public static Field fieldByType(Class<?> clazz, Class<?> typeClass) throws SolutionConfigurationException {
-        throw new SolutionConfigurationException(String.format("%s field with type %s not found.", clazz.getName(), typeClass.getName()));
+        return Arrays.stream(clazz.getDeclaredFields())
+                .filter(field -> field.getType().equals(typeClass))
+                .findFirst()
+                .orElseThrow(() -> new SolutionConfigurationException(String.format("%s field with type %s not found.", clazz.getName(), typeClass.getName())));
     }
 }

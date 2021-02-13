@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SolutionEnhancerTest {
 
-    @Disabled
     @Test
+    @Disabled
     void should_improve_by_constraint() throws SolutionConfigurationException {
         List<Timeslot> baseTimeslots = Arrays.asList(
                 new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), null),

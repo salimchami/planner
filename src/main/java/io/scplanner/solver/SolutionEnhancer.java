@@ -6,17 +6,56 @@ import io.scplanner.reflection.Reflection;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
+import java.util.Optional;
 
 public class SolutionEnhancer {
 
-
     public <F, P> List<P> improveByConstraint(Constraint constraint, F fact, List<P> refPlanningVariables) throws SolutionConfigurationException {
+        List<P> factPlanningVariables = factPlanningVariables(constraint, refPlanningVariables);
+        int loopCount = 0;
+        while (constraint.calculateScore(factPlanningVariables) < 0 && loopCount < refPlanningVariables.size() * 2) {
+            EnhanceDirection direction = searchForDirection(constraint, fact, factPlanningVariables);
+            if (direction == EnhanceDirection.ADD) {
+                addPlanningVariable(constraint, refPlanningVariables, factPlanningVariables);
+            } else {
+
+            }
+            loopCount++;
+        }
+        return factPlanningVariables;
+    }
+
+    private <P> void addPlanningVariable(Constraint constraint, List<P> refPlanningVariables, List<P> factPlanningVariables) throws SolutionConfigurationException {
+        final Optional<P> optFreePlanningVariable = freePlanningVariable(constraint, refPlanningVariables);
+        if (optFreePlanningVariable.isPresent()) {
+            factPlanningVariables.add(optFreePlanningVariable.get());
+        }
+    }
+
+    private <P> List<P> factPlanningVariables(Constraint constraint, List<P> refPlanningVariables) throws SolutionConfigurationException {
         List<P> factPlanningVariables = new ArrayList<>();
         for (P planningVariable : refPlanningVariables) {
             if (Reflection.objectFieldByType(planningVariable, constraint.getFactClass()) != null) {
                 factPlanningVariables.add(planningVariable);
+            }
+        }
+        return factPlanningVariables;
+    }
+
+    private <P> Optional<P> freePlanningVariable(Constraint constraint, List<P> refPlanningVariables) throws SolutionConfigurationException {
+        for (P planningVariable : refPlanningVariables) {
+            if (Reflection.objectFieldByType(planningVariable, constraint.getFactClass()) == null) {
+                return Optional.of(planningVariable);
+            }
+        }
+        return Optional.empty();
+    }
+
+    private <F, P> EnhanceDirection searchForDirection(Constraint constraint, F fact, List<P> factPlanningVariables) throws SolutionConfigurationException {
+        int count = 0;
+        for (P planningVariable : factPlanningVariables) {
+            if (Reflection.objectFieldByType(planningVariable, constraint.getFactClass()) != null) {
+                count++;
             }
         }
         return null;
