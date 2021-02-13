@@ -1,17 +1,15 @@
 package io.scplanner.solver;
 
-import io.scplanner.constraints.Constraint;
-import io.scplanner.constraints.ConstraintFactory;
-import io.scplanner.constraints.ConstraintFactoryImpl;
-import io.scplanner.constraints.ConstraintProvider;
+import io.scplanner.constraints.*;
 import io.scplanner.annotations.*;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.reflection.Reflection;
+import io.scplanner.score.Scores;
 import io.scplanner.utils.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @param <S> Solution
@@ -19,6 +17,10 @@ import java.util.List;
  * @param <V> Planning variable
  */
 public class SolverJob<S, I, V> {
+
+    private final SolutionEnhancer solutionEnhancer;
+    private final Scores scores;
+    private final Constraints constraintsLoader;
 
     private final String basePackage;
     private final S initialSolution;
@@ -35,8 +37,11 @@ public class SolverJob<S, I, V> {
         basePlanningVariables = (List<V>) Reflection.valueByAnnotation(initialSolution, BasePlanningVariables.class);
         planningVariables = (List<V>) Reflection.valueByAnnotation(initialSolution, ModifiablePlanningVariables.class);
         solutionsIds.add((I) Reflection.valueByAnnotation(initialSolution, SolutionId.class));
-        constraints = new ArrayList<>();
-        loadConstraints();
+
+        this.constraintsLoader = new Constraints();
+        this.constraints = constraintsLoader.loadConstraints(basePackage, solution);
+        this.solutionEnhancer = new SolutionEnhancer();
+        this.scores = new Scores();
     }
 
     public S getFinalBestSolution() {
@@ -44,7 +49,7 @@ public class SolverJob<S, I, V> {
     }
 
     public void solve() throws SolutionConfigurationException {
-        int score = solutionScore(basePlanningVariables);
+        int score = scores.solutionScore(constraints, basePlanningVariables);
         Reflection.copyByAnnotations(this.initialSolution, BasePlanningVariables.class, ModifiablePlanningVariables.class);
         this.finalBestSolution = this.initialSolution;
         // TODO : while score < 0
@@ -56,39 +61,32 @@ public class SolverJob<S, I, V> {
         // initializeFinalSolutionFacts();
     }
 
-    private void initializeFinalSolutionFacts() throws SolutionConfigurationException {
-        final List<V> modifiablePlanningVariables = (List<V>) Reflection.valueByAnnotation(this.finalBestSolution, ModifiablePlanningVariables.class);
-        for (V modifiablePlanningVariable : modifiablePlanningVariables) {
-            List<?> facts = (List<?>) Reflection.valueByAnnotation(this.finalBestSolution, Facts.class);
-            final Object fact = CollectionUtils.randomSetElement(facts);
-            Reflection.copyFieldByAnnotations(fact, modifiablePlanningVariable, PlanningVariableFact.class);
-        }
-        //Reflection.copyFieldByAnnotations(this.finalBestSolution, );
-    }
-
-    private <F, P> int solutionScore(List<P> planningVars) throws SolutionConfigurationException {
-        int score = 0;
-        for (Constraint<S, F, P> constraint : constraints) {
-            score += constraint.calculateScore(planningVars);
-        }
-        return score;
-    }
+//    private void initializeFinalSolutionFacts() throws SolutionConfigurationException {
+//        final List<V> modifiablePlanningVariables = (List<V>) Reflection.valueByAnnotation(this.finalBestSolution, ModifiablePlanningVariables.class);
+//        for (V modifiablePlanningVariable : modifiablePlanningVariables) {
+//            List<?> facts = (List<?>) Reflection.valueByAnnotation(this.finalBestSolution, Facts.class);
+//            final Object fact = CollectionUtils.randomSetElement(facts);
+//            Reflection.copyFieldByAnnotations(fact, modifiablePlanningVariable, PlanningVariableFact.class);
+//        }
+//        //Reflection.copyFieldByAnnotations(this.finalBestSolution, );
+//    }
 
     private <F> void improveSolution() throws SolutionConfigurationException {
         final List<F> refFacts = (List<F>) Reflection.valueByAnnotation(initialSolution, Facts.class);
-        refFacts.forEach(fact -> constraints.forEach(constraint -> improveByConstraint(constraint, fact)));
-        finalBestSolution = initialSolution;
+        for (F fact : refFacts) {
+            for (Constraint constraint : constraints) {
+                if (constraint.getFactClass().equals(fact.getClass())) {
+                    List<V> factPlanningVariables = solutionEnhancer.improveByConstraint(constraint, fact, basePlanningVariables);
+                    replacePlanningVariablesByFact(fact, factPlanningVariables);
+                }
+            }
+        }
     }
 
-    public <F> void improveByConstraint(Constraint constraint, F fact) {
-
-//        constraint.calculateScore()
-    }
-
-    private void loadConstraints() throws SolutionConfigurationException {
-        ConstraintProvider constraintProvider = (ConstraintProvider) Reflection.instantiateClassInPackage(basePackage, ConstraintsProvider.class);
-        ConstraintFactory constraintFactory = new ConstraintFactoryImpl(() -> this.initialSolution);
-        this.constraints.addAll(Arrays.asList(constraintProvider.defineConstraints(this.initialSolution, constraintFactory)));
+    private <F> void replacePlanningVariablesByFact(F fact, List<V> factPlanningVariables) {
+//        planningVariables = basePlanningVariables.stream()
+//                .filter(planningVariable -> Reflection.valueByAnnotation(planningVariable, PlanningVariableFact.class))
+//                .collect(Collectors.toList());
     }
 
     public boolean isSolving(I id) {

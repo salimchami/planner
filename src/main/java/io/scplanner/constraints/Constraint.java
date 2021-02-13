@@ -34,6 +34,10 @@ public class Constraint<S, F, P> {
         this.favorableScoreFunction = favorableScoreFunction;
     }
 
+    public Class<F> getFactClass() {
+        return factClass;
+    }
+
     public int calculateScore(List<P> planningVariables) throws SolutionConfigurationException {
         Map<F, List<P>> planningVariablesByFacts = planningVariablesByFacts(planningVariables);
         if (planningVariablesByFacts.isEmpty()) {
@@ -80,4 +84,5 @@ public class Constraint<S, F, P> {
         }
         return planningVariablesByFacts;
     }
+
 }

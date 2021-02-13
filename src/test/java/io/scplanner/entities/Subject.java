@@ -62,6 +62,13 @@ public class Subject {
         return correctMax && correctMin;
     }
 
+    public Long durationOfSubject(List<Timeslot> timeslots) {
+        return timeslots.stream()
+                .filter(timeslot -> timeslot.getSubject() != null)
+                .filter(timeslot -> equals(timeslot.getSubject()))
+                .mapToLong(Timeslot::durationInMinutes).sum();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

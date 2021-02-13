@@ -48,6 +48,14 @@ public final class Reflection {
         }
     }
 
+    public static Object objectFieldByType(Object object, Class<?> typeClass) throws SolutionConfigurationException {
+        try {
+            return object.getClass().getDeclaredField(typeClass.getName()).get(object);
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            throw new SolutionConfigurationException(String.format("Field value with type %s not found.", typeClass.getName()), e);
+        }
+    }
+
     public static Field fieldByAnnotation(Class<?> clazz, Class<? extends Annotation> annotation) throws SolutionConfigurationException {
         return Arrays.stream(clazz.getDeclaredFields())
                 .filter(field -> {

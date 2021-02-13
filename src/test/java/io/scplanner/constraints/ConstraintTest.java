@@ -1,4 +1,4 @@
-package io.scplanner;
+package io.scplanner.constraints;
 
 import io.scplanner.constraints.Constraint;
 import io.scplanner.entities.Subject;

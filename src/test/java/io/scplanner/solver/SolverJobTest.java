@@ -1,4 +1,4 @@
-package io.scplanner;
+package io.scplanner.solver;
 
 import io.scplanner.constraints.Constraint;
 import io.scplanner.entities.Subject;
@@ -32,7 +32,7 @@ SolverJobTest {
         final TimeTable timeTable = new TimeTable(baseTimeslots, singletonList(subject));
         SolverJob<TimeTable, String, Timeslot> sut = new SolverJob<>("io.scplanner", timeTable);
         sut.solve();
-        assertThat(durationOfSubject(subject, sut.getFinalBestSolution()))
+        assertThat(subject.durationOfSubject(sut.getFinalBestSolution().getTimeslots()))
                 .isLessThan(subject.getMaxMinutesPerDay())
                 .isGreaterThan(subject.getMinMinutesPerDay());
     }
@@ -49,41 +49,5 @@ SolverJobTest {
                         new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), null),
                         new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), null)))
         );
-    }
-
-    private Long durationOfSubject(Subject subject, TimeTable timeTable) {
-        return timeTable.getTimeslots().stream()
-                .filter(timeslot -> timeslot.getSubject() != null)
-                .filter(timeslot -> timeslot.getSubject().equals(subject))
-                .mapToLong(Timeslot::durationInMinutes).sum();
-    }
-
-    @Test
-    void should_improve_by_constraint() throws SolutionConfigurationException {
-        List<Timeslot> baseTimeslots = Arrays.asList(
-                new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), null),
-                new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), null),
-                new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), null),
-                new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 30), LocalTime.of(10, 0), null),
-                new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(10, 30), null),
-                new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(10, 30), LocalTime.of(11, 0), null),
-                new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(11, 0), LocalTime.of(11, 30), null),
-                new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(11, 30), LocalTime.of(12, 0), null)
-        );
-        final Subject subject = new Subject(1L, "English", 120, 60, 300, 3);
-        final TimeTable timeTable = new TimeTable(baseTimeslots, singletonList(subject));
-        SolverJob<TimeTable, String, Timeslot> sut = new SolverJob<>("io.scplanner", timeTable);
-        Constraint<TimeTable, Subject, Timeslot> constraint =
-                new Constraint<>("Max Subject Duration By Day",
-                        ScoreLevel.HARD,
-                        timeTable,
-                        Subject.class,
-                        Subject::correctDuration,
-                        Subject::correctDurationPerDayPenalty,
-                        Timeslot::totalDurationInMinutes);
-        sut.improveByConstraint(constraint, subject);
-        assertThat(durationOfSubject(subject, sut.getFinalBestSolution()))
-                .isLessThan(subject.getMaxMinutesPerDay())
-                .isGreaterThan(subject.getMinMinutesPerDay());
     }
 }
