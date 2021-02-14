@@ -16,11 +16,15 @@ public class SolutionEnhancer {
         Set<P> factPlanningVariables = factPlanningVariables(constraint, refPlanningVariables);
         int loopCount = 0;
         while (constraint.calculateScore(factPlanningVariables) < 0 && loopCount < refPlanningVariables.size() * 2) {
-            EnhanceDirection direction = EnhanceDirection.of(constraint, fact, factPlanningVariables);
-            if (direction == EnhanceDirection.ADD) {
-                addPlanningVariable(constraint, fact, refPlanningVariables, factPlanningVariables);
-            } else {
-
+            EnhanceDirection direction = EnhanceDirection.of(constraint, refPlanningVariables, factPlanningVariables, fact);
+            switch (direction) {
+                case ADD:
+                    addPlanningVariable(constraint, fact, refPlanningVariables, factPlanningVariables);
+                    break;
+                case REMOVE:
+                    break;
+                case SKIP:
+                    break;
             }
             loopCount++;
         }
@@ -43,7 +47,6 @@ public class SolutionEnhancer {
     private <F, P> void addPlanningVariable(Constraint constraint, F fact, Set<P> refPlanningVariables, Set<P> factPlanningVariables) throws SolutionConfigurationException {
         final Optional<P> optFreePlanningVariable = freePlanningVariable(constraint, refPlanningVariables);
         if (optFreePlanningVariable.isPresent()) {
-
             final P planningVariable = optFreePlanningVariable.get();
             Reflection.assignFieldByAnnotations(fact, planningVariable, PlanningVariableFact.class);
             factPlanningVariables.add(planningVariable);

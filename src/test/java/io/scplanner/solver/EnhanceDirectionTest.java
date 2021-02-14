@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.util.Collections.singletonList;
+import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EnhanceDirectionTest {
@@ -51,8 +52,8 @@ class EnhanceDirectionTest {
         ));
 
         return Stream.of(
-//                Arguments.of("exact number of subjects", EnhanceDirection.SKIP, english, planningVariables1),
-                Arguments.of("empty subjects", EnhanceDirection.ADD, english, planningVariables2)
+                Arguments.of("exact number of subjects", EnhanceDirection.SKIP, english, planningVariables1)
+//                Arguments.of("empty subjects", EnhanceDirection.ADD, english, planningVariables2),
 //                Arguments.of("overflow subjects", EnhanceDirection.REMOVE, english, planningVariables3)
         );
     }
@@ -68,7 +69,12 @@ class EnhanceDirectionTest {
                 Subject::correctDuration,
                 Subject::correctDurationPerDayPenalty,
                 Timeslot::totalDurationInMinutes);
-        final EnhanceDirection direction = EnhanceDirection.of(constraint, subject, timeslots);
+        final EnhanceDirection direction = EnhanceDirection.of(
+                constraint,
+                timeslots,
+                timeslots.stream().filter(timeslot -> subject.equals(timeslot.getSubject())).collect(toSet()),
+                subject
+        );
         assertThat(direction).isEqualTo(expectedDirection);
     }
 }
