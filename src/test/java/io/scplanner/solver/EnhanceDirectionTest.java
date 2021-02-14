@@ -20,9 +20,9 @@ import java.util.stream.Stream;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class SolutionEnhancerTest {
+class EnhanceDirectionTest {
 
-    private static Stream<Arguments> should_improve_by_constraint_params() {
+    private static Stream<Arguments> shouldSearchForCorrectEnhanceDirectionParams() {
         final Subject english = new Subject(1L, "English", 120, 60, 300, 3);
         Set<Timeslot> planningVariables1 = new HashSet<>(Arrays.asList(
                 new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), english),
@@ -51,30 +51,24 @@ class SolutionEnhancerTest {
         ));
 
         return Stream.of(
-                Arguments.of("exact number of subjects", english, planningVariables1),
-                Arguments.of("empty subjects", english, planningVariables2)
-//                Arguments.of("overflow subjects", english, planningVariables3)
+//                Arguments.of("exact number of subjects", EnhanceDirection.SKIP, english, planningVariables1),
+                Arguments.of("empty subjects", EnhanceDirection.ADD, english, planningVariables2)
+//                Arguments.of("overflow subjects", EnhanceDirection.REMOVE, english, planningVariables3)
         );
     }
 
     @ParameterizedTest(name = "{0}")
-    @MethodSource("should_improve_by_constraint_params")
-    void should_improve_by_constraint(String testName, Subject subject, Set<Timeslot> baseTimeslots) throws SolutionConfigurationException {
-        final TimeTable timeTable = new TimeTable(baseTimeslots, singletonList(subject));
-        SolutionEnhancer sut = new SolutionEnhancer();
-        Constraint<TimeTable, Subject, Timeslot> constraint =
-                new Constraint<>("Max Subject Duration By Day",
-                        ScoreLevel.HARD,
-                        timeTable,
-                        Subject.class,
-                        Subject::correctDuration,
-                        Subject::correctDurationPerDayPenalty,
-                        Timeslot::totalDurationInMinutes);
-        Set<Timeslot> timeslots = sut.improveByConstraint(constraint, subject, baseTimeslots);
-        assertThat(timeslots).hasSameSizeAs(baseTimeslots);
-        assertThat(subject.durationOfSubject(timeslots))
-                .isLessThanOrEqualTo(subject.getMaxMinutesPerDay())
-                .isGreaterThanOrEqualTo(subject.getMinMinutesPerDay());
+    @MethodSource("shouldSearchForCorrectEnhanceDirectionParams")
+    void shouldSearchForCorrectEnhanceDirection(String testName, EnhanceDirection expectedDirection, Subject subject, Set<Timeslot> timeslots) throws SolutionConfigurationException {
+        final TimeTable timeTable = new TimeTable(timeslots, singletonList(subject));
+        final Constraint<TimeTable, Subject, Timeslot> constraint = new Constraint<>("Max Subject Duration By Day",
+                ScoreLevel.HARD,
+                timeTable,
+                Subject.class,
+                Subject::correctDuration,
+                Subject::correctDurationPerDayPenalty,
+                Timeslot::totalDurationInMinutes);
+        final EnhanceDirection direction = EnhanceDirection.of(constraint, subject, timeslots);
+        assertThat(direction).isEqualTo(expectedDirection);
     }
-
 }

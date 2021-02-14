@@ -16,7 +16,7 @@ public class SolutionEnhancer {
         Set<P> factPlanningVariables = factPlanningVariables(constraint, refPlanningVariables);
         int loopCount = 0;
         while (constraint.calculateScore(factPlanningVariables) < 0 && loopCount < refPlanningVariables.size() * 2) {
-            EnhanceDirection direction = searchForDirection(constraint, fact, factPlanningVariables);
+            EnhanceDirection direction = EnhanceDirection.of(constraint, fact, factPlanningVariables);
             if (direction == EnhanceDirection.ADD) {
                 addPlanningVariable(constraint, fact, refPlanningVariables, factPlanningVariables);
             } else {
@@ -69,13 +69,4 @@ public class SolutionEnhancer {
         return Optional.empty();
     }
 
-    private <F, P> EnhanceDirection searchForDirection(Constraint constraint, F fact, Set<P> factPlanningVariables) throws SolutionConfigurationException {
-        int count = 0;
-        for (P planningVariable : factPlanningVariables) {
-            if (Reflection.objectFieldByType(planningVariable, constraint.getFactClass()) != null) {
-                count++;
-            }
-        }
-        return EnhanceDirection.ADD;
-    }
 }
