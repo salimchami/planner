@@ -5,11 +5,9 @@ import io.scplanner.annotations.*;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.reflection.Reflection;
 import io.scplanner.score.Scores;
-import io.scplanner.utils.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @param <S> Solution
@@ -77,16 +75,10 @@ public class SolverJob<S, I, V> {
             for (Constraint constraint : constraints) {
                 if (constraint.getFactClass().equals(fact.getClass())) {
                     List<V> factPlanningVariables = solutionEnhancer.improveByConstraint(constraint, fact, basePlanningVariables);
-                    replacePlanningVariablesByFact(fact, factPlanningVariables);
+                    Reflection.assignFieldByAnnotations(finalBestSolution, factPlanningVariables, ModifiablePlanningVariables.class);
                 }
             }
         }
-    }
-
-    private <F> void replacePlanningVariablesByFact(F fact, List<V> factPlanningVariables) {
-//        planningVariables = basePlanningVariables.stream()
-//                .filter(planningVariable -> Reflection.valueByAnnotation(planningVariable, PlanningVariableFact.class))
-//                .collect(Collectors.toList());
     }
 
     public boolean isSolving(I id) {

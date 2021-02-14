@@ -118,7 +118,15 @@ public final class Reflection {
         }
     }
 
-    public static <S, V> void copyFieldByAnnotations(S classInstance, V destinationCLassInstance, Class<? extends Annotation> destAnnotation) {
+    public static <S, V> void assignFieldByAnnotations(S classInstance, V destinationCLassInstance, Class<? extends Annotation> destAnnotation) throws SolutionConfigurationException {
+        final Field field = fieldByAnnotation(destinationCLassInstance.getClass(), destAnnotation);
+        try {
+            field.setAccessible(true);
+            field.set(destinationCLassInstance, classInstance);
+        } catch (IllegalAccessException e) {
+            throw new SolutionConfigurationException(String.format("Error while copying values from %s to %s by annotation %s.", classInstance.getClass().getName(),
+                    destinationCLassInstance.getClass().getName(), destAnnotation.getName()), e);
+        }
 
     }
 

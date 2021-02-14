@@ -16,12 +16,10 @@ import java.util.List;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class SolutionEnhancerTest {
 
     @Test
-    @Disabled
     void should_improve_by_constraint() throws SolutionConfigurationException {
         List<Timeslot> baseTimeslots = Arrays.asList(
                 new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), null),
@@ -46,8 +44,8 @@ class SolutionEnhancerTest {
                         Timeslot::totalDurationInMinutes);
         List<Timeslot> timeslots = sut.improveByConstraint(constraint, subject, baseTimeslots);
         assertThat(subject.durationOfSubject(timeslots))
-                .isLessThan(subject.getMaxMinutesPerDay())
-                .isGreaterThan(subject.getMinMinutesPerDay());
+                .isLessThanOrEqualTo(subject.getMaxMinutesPerDay())
+                .isGreaterThanOrEqualTo(subject.getMinMinutesPerDay());
     }
 
 }

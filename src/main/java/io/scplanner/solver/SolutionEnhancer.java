@@ -1,5 +1,6 @@
 package io.scplanner.solver;
 
+import io.scplanner.annotations.PlanningVariableFact;
 import io.scplanner.constraints.Constraint;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.reflection.Reflection;
@@ -16,7 +17,7 @@ public class SolutionEnhancer {
         while (constraint.calculateScore(factPlanningVariables) < 0 && loopCount < refPlanningVariables.size() * 2) {
             EnhanceDirection direction = searchForDirection(constraint, fact, factPlanningVariables);
             if (direction == EnhanceDirection.ADD) {
-                addPlanningVariable(constraint, refPlanningVariables, factPlanningVariables);
+                addPlanningVariable(constraint, fact, refPlanningVariables, factPlanningVariables);
             } else {
 
             }
@@ -25,10 +26,13 @@ public class SolutionEnhancer {
         return factPlanningVariables;
     }
 
-    private <P> void addPlanningVariable(Constraint constraint, List<P> refPlanningVariables, List<P> factPlanningVariables) throws SolutionConfigurationException {
+    private <F, P> void addPlanningVariable(Constraint constraint, F fact, List<P> refPlanningVariables, List<P> factPlanningVariables) throws SolutionConfigurationException {
         final Optional<P> optFreePlanningVariable = freePlanningVariable(constraint, refPlanningVariables);
         if (optFreePlanningVariable.isPresent()) {
-            factPlanningVariables.add(optFreePlanningVariable.get());
+
+            final P planningVariable = optFreePlanningVariable.get();
+            Reflection.assignFieldByAnnotations(fact, planningVariable, PlanningVariableFact.class);
+            factPlanningVariables.add(planningVariable);
         }
     }
 
@@ -58,6 +62,6 @@ public class SolutionEnhancer {
                 count++;
             }
         }
-        return null;
+        return EnhanceDirection.ADD;
     }
 }
