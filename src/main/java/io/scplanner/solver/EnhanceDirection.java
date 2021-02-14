@@ -12,7 +12,7 @@ public enum EnhanceDirection {
     REMOVE,
     SKIP;
 
-    public static <F, P> EnhanceDirection of(Constraint constraint, F fact, Set<P> factPlanningVariables) throws SolutionConfigurationException {
+    public static <S, F, P> EnhanceDirection of(Constraint<S, F, P> constraint, F fact, Set<P> factPlanningVariables) throws SolutionConfigurationException {
         int count = 0;
         for (P planningVariable : factPlanningVariables) {
             if (Reflection.objectFieldByType(planningVariable, constraint.getFactClass()) != null) {
