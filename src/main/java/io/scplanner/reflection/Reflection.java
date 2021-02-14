@@ -81,7 +81,7 @@ public final class Reflection {
             final Method method = classInstance.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1));
             return method.invoke(classInstance);
         } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-            throw new SolutionConfigurationException(String.format("%s field value with annotation %s not found.", classInstance.getClass().getName(), annotation.getName()), e);
+            throw new SolutionConfigurationException(String.format("%s field value with annotation %s not found. Please verify accessors.", classInstance.getClass().getName(), annotation.getName()), e);
         }
     }
 

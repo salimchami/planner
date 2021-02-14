@@ -1,6 +1,7 @@
 package io.scplanner.solver;
 
 import io.scplanner.annotations.PlanningVariableFact;
+import io.scplanner.annotations.PlanningVariableId;
 import io.scplanner.constraints.Constraint;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.reflection.Reflection;
@@ -23,7 +24,20 @@ public class SolutionEnhancer {
             }
             loopCount++;
         }
-        return factPlanningVariables;
+        replaceFactPlanningVariablesInRef(refPlanningVariables, factPlanningVariables);
+        return refPlanningVariables;
+    }
+
+    private <P> void replaceFactPlanningVariablesInRef(List<P> refPlanningVariables, List<P> factPlanningVariables) throws SolutionConfigurationException {
+        for (P factPv : factPlanningVariables) {
+            for (P refPv : refPlanningVariables) {
+                final Object refPvId = Reflection.valueByAnnotation(refPv, PlanningVariableId.class);
+                final Object factPvId = Reflection.valueByAnnotation(factPv, PlanningVariableId.class);
+                if (refPvId == factPvId || refPvId.equals(factPvId)) {
+                    refPv = factPv;
+                }
+            }
+        }
     }
 
     private <F, P> void addPlanningVariable(Constraint constraint, F fact, List<P> refPlanningVariables, List<P> factPlanningVariables) throws SolutionConfigurationException {

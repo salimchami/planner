@@ -45,6 +45,9 @@ public class Timeslot {
         this.endTime = endTime;
     }
 
+    public Long getId() {
+        return id;
+    }
 
     public static Integer totalDurationInMinutes(List<Timeslot> timeSlots) {
         return timeSlots.stream().map(Timeslot::durationInMinutes).mapToInt(Long::intValue).sum();
@@ -73,7 +76,7 @@ public class Timeslot {
 
     @Override
     public String toString() {
-        return "Timeslot{" +
+        return "\nTimeslot{" +
                 "id=" + id +
                 ", day=" + day +
                 ", startTime=" + startTime +

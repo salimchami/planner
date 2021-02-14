@@ -6,7 +6,6 @@ import io.scplanner.entities.TimeTable;
 import io.scplanner.entities.Timeslot;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.score.ScoreLevel;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
@@ -43,6 +42,7 @@ class SolutionEnhancerTest {
                         Subject::correctDurationPerDayPenalty,
                         Timeslot::totalDurationInMinutes);
         List<Timeslot> timeslots = sut.improveByConstraint(constraint, subject, baseTimeslots);
+        assertThat(timeslots).hasSameSizeAs(baseTimeslots);
         assertThat(subject.durationOfSubject(timeslots))
                 .isLessThanOrEqualTo(subject.getMaxMinutesPerDay())
                 .isGreaterThanOrEqualTo(subject.getMinMinutesPerDay());
