@@ -4,7 +4,6 @@ import io.scplanner.annotations.Fact;
 import io.scplanner.annotations.FactId;
 import io.scplanner.annotations.FactItem;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
