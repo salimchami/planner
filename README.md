@@ -4,7 +4,7 @@ This constraints solver take a list of constraints and return the best solution 
 
 For example, the problem to solve could be a school timetable.
 
-![Java CI with Maven](https://github.com/salimchami/sc-planner/workflows/Java%20CI%20with%20Maven/badge.svg?style=social&logo=appveyor)
+![Java CI with Maven](https://github.com/salimchami/sc-planner/workflows/Java%20CI%20with%20Maven/badge.svg?style=flat-square)
 
 
 ## How To
