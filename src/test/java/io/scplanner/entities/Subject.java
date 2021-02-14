@@ -4,12 +4,11 @@ import io.scplanner.annotations.Fact;
 import io.scplanner.annotations.FactId;
 import io.scplanner.annotations.FactItem;
 
-import java.sql.Time;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Set;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 @Fact
 public class Subject {
@@ -44,8 +43,8 @@ public class Subject {
         return minMinutesPerDay;
     }
 
-    public int correctDurationPerDayPenalty(List<Timeslot> timeslots) {
-        final List<Timeslot> subjectTimeslots = timeslots.stream().filter(timeslot -> this.equals(timeslot.getSubject())).collect(toList());
+    public int correctDurationPerDayPenalty(Set<Timeslot> timeslots) {
+        final Set<Timeslot> subjectTimeslots = timeslots.stream().filter(timeslot -> this.equals(timeslot.getSubject())).collect(toSet());
         final long totalDuration = subjectTimeslots.stream().mapToLong(Timeslot::durationInMinutes).sum();
         if (totalDuration < minMinutesPerDay) {
             return maxMinutesPerDay;
@@ -55,14 +54,14 @@ public class Subject {
         return 0;
     }
 
-    public Boolean correctDuration(List<Timeslot> timeslots) {
+    public Boolean correctDuration(Set<Timeslot> timeslots) {
         final Integer totalDuration = Timeslot.totalDurationInMinutes(timeslots, this);
         final boolean correctMax = totalDuration <= maxMinutesPerDay;
         final boolean correctMin = totalDuration >= minMinutesPerDay;
         return correctMax && correctMin;
     }
 
-    public Long durationOfSubject(List<Timeslot> timeslots) {
+    public Long durationOfSubject(Set<Timeslot> timeslots) {
         return timeslots.stream()
                 .filter(timeslot -> timeslot.getSubject() != null)
                 .filter(timeslot -> equals(timeslot.getSubject()))

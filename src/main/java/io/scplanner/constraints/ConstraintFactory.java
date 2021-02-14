@@ -2,7 +2,7 @@ package io.scplanner.constraints;
 
 import io.scplanner.score.ScoreLevel;
 
-import java.util.List;
+import java.util.Set;
 
 public interface ConstraintFactory<S, F, P> {
 
@@ -10,7 +10,7 @@ public interface ConstraintFactory<S, F, P> {
 
     ConstraintFactory<S, F, P> withFact(Class<F> factClass);
 
-    ConstraintFactoryImpl<S, F, P> filter(ConstraintFilter<F, List<P>> consumer);
+    ConstraintFactoryImpl<S, F, P> filter(ConstraintFilter<F, Set<P>> consumer);
 
     Constraint<S, F, P> apply(ScoreLevel score, PenaltyFunction<F, P> penaltyFunction, FavorableScoreFunction<P> favorableScoreFunction);
 

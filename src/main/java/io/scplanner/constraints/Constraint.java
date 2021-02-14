@@ -1,10 +1,10 @@
 package io.scplanner.constraints;
 
-import io.scplanner.score.ScoreLevel;
 import io.scplanner.annotations.Facts;
 import io.scplanner.annotations.PlanningVariableFact;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.reflection.Reflection;
+import io.scplanner.score.ScoreLevel;
 
 import java.util.*;
 
@@ -16,13 +16,13 @@ public class Constraint<S, F, P> {
     private final ScoreLevel scoreLevel;
     private final PenaltyFunction<F, P> penaltyFunction;
     private final FavorableScoreFunction<P> favorableScoreFunction;
-    private final ConstraintFilter<F, List<P>> filter;
+    private final ConstraintFilter<F, Set<P>> filter;
 
     public Constraint(String constraintName,
                       ScoreLevel scoreLevel,
                       S solution,
                       Class<F> factClass,
-                      ConstraintFilter<F, List<P>> filter,
+                      ConstraintFilter<F, Set<P>> filter,
                       PenaltyFunction<F, P> penaltyFunction,
                       FavorableScoreFunction<P> favorableScoreFunction) {
         this.constraintName = constraintName;
@@ -38,8 +38,8 @@ public class Constraint<S, F, P> {
         return factClass;
     }
 
-    public int calculateScore(List<P> planningVariables) throws SolutionConfigurationException {
-        Map<F, List<P>> planningVariablesByFacts = planningVariablesByFacts(planningVariables);
+    public int calculateScore(Set<P> planningVariables) throws SolutionConfigurationException {
+        Map<F, Set<P>> planningVariablesByFacts = planningVariablesByFacts(planningVariables);
         if (planningVariablesByFacts.isEmpty()) {
             return factClassInstanceFromSolution(solution)
                     .map(fact -> -penaltyFunction.apply(fact, planningVariables))
@@ -53,11 +53,11 @@ public class Constraint<S, F, P> {
         }
     }
 
-    private int penalty(Map<F, List<P>> planningVariablesByFacts) {
+    private int penalty(Map<F, Set<P>> planningVariablesByFacts) {
         return planningVariablesByFacts.entrySet().stream()
                 .filter(entry -> {
                     final F fact = entry.getKey();
-                    final List<P> planningVariables = entry.getValue();
+                    final Set<P> planningVariables = entry.getValue();
                     final Boolean apply = this.filter.apply(fact, planningVariables);
                     return !apply;
                 })
@@ -70,15 +70,15 @@ public class Constraint<S, F, P> {
         return facts.stream().filter(fact -> fact.getClass().getName().equals(factClass.getName())).findFirst();
     }
 
-    private Map<F, List<P>> planningVariablesByFacts(List<P> planningVariables) throws SolutionConfigurationException {
-        Map<F, List<P>> planningVariablesByFacts = new HashMap<>();
+    private Map<F, Set<P>> planningVariablesByFacts(Set<P> planningVariables) throws SolutionConfigurationException {
+        Map<F, Set<P>> planningVariablesByFacts = new HashMap<>();
         for (P planningVariable : planningVariables) {
             final F fact = (F) Reflection.valueByAnnotation(planningVariable, PlanningVariableFact.class);
             if (fact != null) {
                 if (planningVariablesByFacts.containsKey(fact)) {
                     planningVariablesByFacts.get(fact).add(planningVariable);
                 } else {
-                    planningVariablesByFacts.put(fact, new ArrayList<>(Collections.singletonList(planningVariable)));
+                    planningVariablesByFacts.put(fact, new HashSet<>(Collections.singletonList(planningVariable)));
                 }
             }
         }

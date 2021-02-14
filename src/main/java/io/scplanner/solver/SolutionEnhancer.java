@@ -6,14 +6,14 @@ import io.scplanner.constraints.Constraint;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.reflection.Reflection;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 public class SolutionEnhancer {
 
-    public <F, P> List<P> improveByConstraint(Constraint constraint, F fact, List<P> refPlanningVariables) throws SolutionConfigurationException {
-        List<P> factPlanningVariables = factPlanningVariables(constraint, refPlanningVariables);
+    public <F, P> Set<P> improveByConstraint(Constraint constraint, F fact, Set<P> refPlanningVariables) throws SolutionConfigurationException {
+        Set<P> factPlanningVariables = factPlanningVariables(constraint, refPlanningVariables);
         int loopCount = 0;
         while (constraint.calculateScore(factPlanningVariables) < 0 && loopCount < refPlanningVariables.size() * 2) {
             EnhanceDirection direction = searchForDirection(constraint, fact, factPlanningVariables);
@@ -28,7 +28,7 @@ public class SolutionEnhancer {
         return refPlanningVariables;
     }
 
-    private <P> void replaceFactPlanningVariablesInRef(List<P> refPlanningVariables, List<P> factPlanningVariables) throws SolutionConfigurationException {
+    private <P> void replaceFactPlanningVariablesInRef(Set<P> refPlanningVariables, Set<P> factPlanningVariables) throws SolutionConfigurationException {
         for (P factPv : factPlanningVariables) {
             for (P refPv : refPlanningVariables) {
                 final Object refPvId = Reflection.valueByAnnotation(refPv, PlanningVariableId.class);
@@ -40,7 +40,7 @@ public class SolutionEnhancer {
         }
     }
 
-    private <F, P> void addPlanningVariable(Constraint constraint, F fact, List<P> refPlanningVariables, List<P> factPlanningVariables) throws SolutionConfigurationException {
+    private <F, P> void addPlanningVariable(Constraint constraint, F fact, Set<P> refPlanningVariables, Set<P> factPlanningVariables) throws SolutionConfigurationException {
         final Optional<P> optFreePlanningVariable = freePlanningVariable(constraint, refPlanningVariables);
         if (optFreePlanningVariable.isPresent()) {
 
@@ -50,8 +50,8 @@ public class SolutionEnhancer {
         }
     }
 
-    private <P> List<P> factPlanningVariables(Constraint constraint, List<P> refPlanningVariables) throws SolutionConfigurationException {
-        List<P> factPlanningVariables = new ArrayList<>();
+    private <P> Set<P> factPlanningVariables(Constraint constraint, Set<P> refPlanningVariables) throws SolutionConfigurationException {
+        Set<P> factPlanningVariables = new HashSet<>();
         for (P planningVariable : refPlanningVariables) {
             if (Reflection.objectFieldByType(planningVariable, constraint.getFactClass()) != null) {
                 factPlanningVariables.add(planningVariable);
@@ -60,7 +60,7 @@ public class SolutionEnhancer {
         return factPlanningVariables;
     }
 
-    private <P> Optional<P> freePlanningVariable(Constraint constraint, List<P> refPlanningVariables) throws SolutionConfigurationException {
+    private <P> Optional<P> freePlanningVariable(Constraint constraint, Set<P> refPlanningVariables) throws SolutionConfigurationException {
         for (P planningVariable : refPlanningVariables) {
             if (Reflection.objectFieldByType(planningVariable, constraint.getFactClass()) == null) {
                 return Optional.of(planningVariable);
@@ -69,7 +69,7 @@ public class SolutionEnhancer {
         return Optional.empty();
     }
 
-    private <F, P> EnhanceDirection searchForDirection(Constraint constraint, F fact, List<P> factPlanningVariables) throws SolutionConfigurationException {
+    private <F, P> EnhanceDirection searchForDirection(Constraint constraint, F fact, Set<P> factPlanningVariables) throws SolutionConfigurationException {
         int count = 0;
         for (P planningVariable : factPlanningVariables) {
             if (Reflection.objectFieldByType(planningVariable, constraint.getFactClass()) != null) {

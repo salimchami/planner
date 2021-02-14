@@ -9,9 +9,9 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 @PlanningVariable
 public class Timeslot {
@@ -49,13 +49,13 @@ public class Timeslot {
         return id;
     }
 
-    public static Integer totalDurationInMinutes(List<Timeslot> timeSlots) {
+    public static Integer totalDurationInMinutes(Set<Timeslot> timeSlots) {
         return timeSlots.stream().map(Timeslot::durationInMinutes).mapToInt(Long::intValue).sum();
     }
 
-    public static Integer totalDurationInMinutes(List<Timeslot> timeSlots, Subject subject) {
+    public static Integer totalDurationInMinutes(Set<Timeslot> timeSlots, Subject subject) {
         return totalDurationInMinutes(timeSlots.stream()
-                .filter(timeslot -> subject.equals(timeslot.getSubject())).collect(toList()));
+                .filter(timeslot -> subject.equals(timeslot.getSubject())).collect(toSet()));
     }
 
     public static Integer favorableScore(List<Timeslot> timeslots) {

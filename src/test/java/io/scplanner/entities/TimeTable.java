@@ -1,11 +1,12 @@
 package io.scplanner.entities;
 
-import io.scplanner.score.Score;
 import io.scplanner.annotations.*;
+import io.scplanner.score.Score;
 
 import java.time.Instant;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @PlanningSolution
 public class TimeTable {
@@ -14,10 +15,10 @@ public class TimeTable {
     private String schoolClassName;
 
     @BasePlanningVariables
-    private final List<Timeslot> baseTimeslots;
+    private final Set<Timeslot> baseTimeslots;
 
     @ModifiablePlanningVariables
-    private List<Timeslot> timeslots = new ArrayList<>();
+    private Set<Timeslot> timeslots = new HashSet<>();
 
     @Facts
     private final List<Subject> subjects;
@@ -26,12 +27,12 @@ public class TimeTable {
     
     private Score score;
 
-    public TimeTable(List<Timeslot> baseTimeslots, List<Subject> subjects) {
+    public TimeTable(Set<Timeslot> baseTimeslots, List<Subject> subjects) {
         this.baseTimeslots = baseTimeslots;
         this.subjects = subjects;
     }
 
-    public List<Timeslot> getTimeslots() {
+    public Set<Timeslot> getTimeslots() {
         return timeslots;
     }
 
@@ -39,7 +40,7 @@ public class TimeTable {
         return subjects;
     }
 
-    public List<Timeslot> getBaseTimeslots() {
+    public Set<Timeslot> getBaseTimeslots() {
         return baseTimeslots;
     }
 
@@ -47,7 +48,7 @@ public class TimeTable {
         return lastGenerationDate;
     }
 
-    public void setTimeslots(List<Timeslot> timeslots) {
+    public void setTimeslots(Set<Timeslot> timeslots) {
         this.timeslots = timeslots;
     }
 

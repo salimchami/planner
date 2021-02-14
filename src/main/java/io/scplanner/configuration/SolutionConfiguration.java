@@ -1,9 +1,9 @@
 package io.scplanner.configuration;
 
-import io.scplanner.score.Score;
 import io.scplanner.annotations.*;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.reflection.Reflection;
+import io.scplanner.score.Score;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;

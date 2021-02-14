@@ -1,13 +1,18 @@
 package io.scplanner.solver;
 
-import io.scplanner.constraints.*;
-import io.scplanner.annotations.*;
+import io.scplanner.annotations.BasePlanningVariables;
+import io.scplanner.annotations.Facts;
+import io.scplanner.annotations.ModifiablePlanningVariables;
+import io.scplanner.annotations.SolutionId;
+import io.scplanner.constraints.Constraint;
+import io.scplanner.constraints.Constraints;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.reflection.Reflection;
 import io.scplanner.score.Scores;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @param <S> Solution
@@ -23,8 +28,8 @@ public class SolverJob<S, I, V> {
     private final String basePackage;
     private final S initialSolution;
     private S finalBestSolution;
-    private final List<V> basePlanningVariables;
-    private final List<V> planningVariables;
+    private final Set<V> basePlanningVariables;
+    private final Set<V> planningVariables;
     private final List<I> solutionsIds;
     private final List<Constraint> constraints;
 
@@ -32,8 +37,8 @@ public class SolverJob<S, I, V> {
         this.basePackage = basePackage;
         this.initialSolution = solution;
         solutionsIds = new ArrayList<>();
-        basePlanningVariables = (List<V>) Reflection.valueByAnnotation(initialSolution, BasePlanningVariables.class);
-        planningVariables = (List<V>) Reflection.valueByAnnotation(initialSolution, ModifiablePlanningVariables.class);
+        basePlanningVariables = (Set<V>) Reflection.valueByAnnotation(initialSolution, BasePlanningVariables.class);
+        planningVariables = (Set<V>) Reflection.valueByAnnotation(initialSolution, ModifiablePlanningVariables.class);
         solutionsIds.add((I) Reflection.valueByAnnotation(initialSolution, SolutionId.class));
 
         this.constraintsLoader = new Constraints();
@@ -74,7 +79,7 @@ public class SolverJob<S, I, V> {
         for (F fact : refFacts) {
             for (Constraint constraint : constraints) {
                 if (constraint.getFactClass().equals(fact.getClass())) {
-                    List<V> factPlanningVariables = solutionEnhancer.improveByConstraint(constraint, fact, basePlanningVariables);
+                    Set<V> factPlanningVariables = solutionEnhancer.improveByConstraint(constraint, fact, basePlanningVariables);
                     Reflection.assignFieldByAnnotations(finalBestSolution, factPlanningVariables, ModifiablePlanningVariables.class);
                 }
             }

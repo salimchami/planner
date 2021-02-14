@@ -1,7 +1,7 @@
 package io.scplanner.reflection;
 
-import io.scplanner.score.Score;
 import io.scplanner.exceptions.SolutionConfigurationException;
+import io.scplanner.score.Score;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

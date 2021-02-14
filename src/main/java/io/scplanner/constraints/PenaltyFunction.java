@@ -1,9 +1,9 @@
 package io.scplanner.constraints;
 
-import java.util.List;
+import java.util.Set;
 
 @FunctionalInterface
 public interface PenaltyFunction<F, P> {
 
-    Integer apply(F u, List<P> list);
+    Integer apply(F u, Set<P> list);
 }

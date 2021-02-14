@@ -2,14 +2,14 @@ package io.scplanner.constraints;
 
 import io.scplanner.score.ScoreLevel;
 
-import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
 
 public class ConstraintFactoryImpl<S, F, P> implements ConstraintFactory<S, F, P> {
 
     private String constraintName;
     private final Supplier<S> instantiator;
-    private ConstraintFilter<F, List<P>> filter;
+    private ConstraintFilter<F, Set<P>> filter;
     private Class<F> factClass;
 
     public ConstraintFactoryImpl(Supplier<S> instantiator) {
@@ -29,7 +29,7 @@ public class ConstraintFactoryImpl<S, F, P> implements ConstraintFactory<S, F, P
     }
 
     @Override
-    public ConstraintFactoryImpl<S, F, P> filter(ConstraintFilter<F, List<P>> filter) {
+    public ConstraintFactoryImpl<S, F, P> filter(ConstraintFilter<F, Set<P>> filter) {
         this.filter = filter;
         return this;
     }

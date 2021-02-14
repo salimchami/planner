@@ -2,7 +2,6 @@ package io.scplanner.solver;
 
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.exceptions.SolutionSolvingException;
-import io.scplanner.solver.SolverStatus;
 
 import java.util.function.Function;
 

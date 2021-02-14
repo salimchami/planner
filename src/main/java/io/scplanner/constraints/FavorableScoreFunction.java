@@ -1,9 +1,9 @@
 package io.scplanner.constraints;
 
-import java.util.List;
+import java.util.Set;
 
 @FunctionalInterface
 public interface FavorableScoreFunction<T> {
 
-    Integer apply(List<T> list);
+    Integer apply(Set<T> list);
 }

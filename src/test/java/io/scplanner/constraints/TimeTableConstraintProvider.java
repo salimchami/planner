@@ -1,10 +1,10 @@
 package io.scplanner.constraints;
 
-import io.scplanner.score.ScoreLevel;
 import io.scplanner.annotations.ConstraintsProvider;
 import io.scplanner.entities.Subject;
 import io.scplanner.entities.TimeTable;
 import io.scplanner.entities.Timeslot;
+import io.scplanner.score.ScoreLevel;
 
 @ConstraintsProvider
 public class TimeTableConstraintProvider implements ConstraintProvider<TimeTable> {

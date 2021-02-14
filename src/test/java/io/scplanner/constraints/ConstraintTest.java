@@ -1,6 +1,5 @@
 package io.scplanner.constraints;
 
-import io.scplanner.constraints.Constraint;
 import io.scplanner.entities.Subject;
 import io.scplanner.entities.TimeTable;
 import io.scplanner.entities.Timeslot;
@@ -13,7 +12,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.util.Collections.singletonList;
@@ -23,7 +23,7 @@ class ConstraintTest {
 
     private static Stream<Arguments> should_calculate_constraint_score_with_subject_filter_Params() {
         final Subject english = new Subject(1L, "English", 120, 60, 300, 3);
-        List<Timeslot> planningVariables1 = Arrays.asList(
+        Set<Timeslot> planningVariables1 = new HashSet<>(Arrays.asList(
                 new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), english),
                 new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), english),
                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), english),
@@ -31,17 +31,17 @@ class ConstraintTest {
                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(10, 30), english),
                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(10, 30), LocalTime.of(11, 0), english),
                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(11, 0), LocalTime.of(11, 30), english)
-        );
-        List<Timeslot> planningVariables2 = Arrays.asList(
+        ));
+        Set<Timeslot> planningVariables2 = new HashSet<>(Arrays.asList(
                 new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), english),
                 new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), english),
                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), english)
-        );
-        List<Timeslot> planningVariables3 = Arrays.asList(
+        ));
+        Set<Timeslot> planningVariables3 = new HashSet<>(Arrays.asList(
                 new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), null),
                 new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), null),
                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), null)
-        );
+        ));
         return Stream.of(
                 Arguments.of("total : 3h30", -210, new TimeTable(planningVariables1, singletonList(english))),
                 Arguments.of("total : 1h30", 90, new TimeTable(planningVariables2, singletonList(english))),

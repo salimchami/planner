@@ -10,9 +10,7 @@ import io.scplanner.solver.SolverStatus;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class SchoolClassTimeTablesSolver implements TimeTablesSolver {
 
@@ -39,7 +37,7 @@ public class SchoolClassTimeTablesSolver implements TimeTablesSolver {
     public void solveForSchoolClass(String schoolClassId, List<Subject> subjects) throws SolutionConfigurationException, SolutionSolvingException {
         Optional<SchoolClass> optSchoolClass = schoolClassSPI.findById(schoolClassId);
         if (optSchoolClass.isPresent()) {
-            final List<Timeslot> baseTimeslots = baseTimeTable();
+            final Set<Timeslot> baseTimeslots = baseTimeTable();
             final TimeTable schoolClassTimeTable = new TimeTable(baseTimeslots, subjects);
             solverManager.solveAndListen(optSchoolClass.get().getName(), schoolClassTimeTable, this::saveTimeTable);
         }
@@ -50,8 +48,8 @@ public class SchoolClassTimeTablesSolver implements TimeTablesSolver {
         return solverManager.getSolverStatus(timeTableId);
     }
 
-    private List<Timeslot> baseTimeTable() {
-        return Arrays.asList(
+    private Set<Timeslot> baseTimeTable() {
+        return new HashSet<>(Arrays.asList(
                 new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), null),
                 new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), null),
                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), null),
@@ -70,7 +68,7 @@ public class SchoolClassTimeTablesSolver implements TimeTablesSolver {
                 new Timeslot(16L, DayOfWeek.MONDAY, LocalTime.of(17, 0), LocalTime.of(17, 30), null),
                 new Timeslot(17L, DayOfWeek.MONDAY, LocalTime.of(17, 30), LocalTime.of(18, 0), null),
                 new Timeslot(18L, DayOfWeek.MONDAY, LocalTime.of(18, 0), LocalTime.of(18, 30), null)
-        );
+        ));
     }
 
     private String saveTimeTable(TimeTable timeTable) {

@@ -1,8 +1,8 @@
 package io.scplanner.entities;
 
-import io.scplanner.solver.SolverStatus;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.exceptions.SolutionSolvingException;
+import io.scplanner.solver.SolverStatus;
 
 import java.util.List;
 

@@ -11,7 +11,9 @@ import org.junit.jupiter.api.Test;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,7 +22,7 @@ class SolutionEnhancerTest {
 
     @Test
     void should_improve_by_constraint() throws SolutionConfigurationException {
-        List<Timeslot> baseTimeslots = Arrays.asList(
+        Set<Timeslot> baseTimeslots = new HashSet<>(Arrays.asList(
                 new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), null),
                 new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), null),
                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), null),
@@ -29,7 +31,7 @@ class SolutionEnhancerTest {
                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(10, 30), LocalTime.of(11, 0), null),
                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(11, 0), LocalTime.of(11, 30), null),
                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(11, 30), LocalTime.of(12, 0), null)
-        );
+        ));
         final Subject subject = new Subject(1L, "English", 120, 60, 300, 3);
         final TimeTable timeTable = new TimeTable(baseTimeslots, singletonList(subject));
         SolutionEnhancer sut = new SolutionEnhancer();
@@ -41,7 +43,7 @@ class SolutionEnhancerTest {
                         Subject::correctDuration,
                         Subject::correctDurationPerDayPenalty,
                         Timeslot::totalDurationInMinutes);
-        List<Timeslot> timeslots = sut.improveByConstraint(constraint, subject, baseTimeslots);
+        Set<Timeslot> timeslots = sut.improveByConstraint(constraint, subject, baseTimeslots);
         assertThat(timeslots).hasSameSizeAs(baseTimeslots);
         assertThat(subject.durationOfSubject(timeslots))
                 .isLessThanOrEqualTo(subject.getMaxMinutesPerDay())
