@@ -24,22 +24,44 @@ class SolutionEnhancerTest {
 
     private static Stream<Arguments> should_improve_by_constraint_params() {
         final Subject english = new Subject(1L, "English", 120, 60, 300, 3);
-        Set<Timeslot> planningVariables1 = new HashSet<>(Arrays.asList(
+        Set<Timeslot> correctPlanningVariables = new HashSet<>(Arrays.asList(
                 new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), english),
                 new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), english),
-                new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), english)
+                new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), english),
+                new Timeslot(4L, DayOfWeek.MONDAY, LocalTime.of(9, 30), LocalTime.of(10, 0), english),
+                new Timeslot(5L, DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(10, 30), null),
+                new Timeslot(6L, DayOfWeek.MONDAY, LocalTime.of(10, 30), LocalTime.of(11, 0), null),
+                new Timeslot(7L, DayOfWeek.MONDAY, LocalTime.of(11, 0), LocalTime.of(11, 30), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(11, 30), LocalTime.of(12, 0), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(14, 0), LocalTime.of(14, 30), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(14, 30), LocalTime.of(15, 0), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(15, 0), LocalTime.of(15, 30), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(15, 30), LocalTime.of(16, 0), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(16, 0), LocalTime.of(16, 30), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(16, 30), LocalTime.of(17, 0), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(17, 0), LocalTime.of(17, 30), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(17, 30), LocalTime.of(18, 0), null)
+
         ));
-        Set<Timeslot> planningVariables2 = new HashSet<>(Arrays.asList(
-                new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), null),
+        Set<Timeslot> emptyPlanningVariables = new HashSet<>(Arrays.asList(
+                new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), english),
                 new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), null),
                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), null),
                 new Timeslot(4L, DayOfWeek.MONDAY, LocalTime.of(9, 30), LocalTime.of(10, 0), null),
                 new Timeslot(5L, DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(10, 30), null),
                 new Timeslot(6L, DayOfWeek.MONDAY, LocalTime.of(10, 30), LocalTime.of(11, 0), null),
                 new Timeslot(7L, DayOfWeek.MONDAY, LocalTime.of(11, 0), LocalTime.of(11, 30), null),
-                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(11, 30), LocalTime.of(12, 0), null)
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(11, 30), LocalTime.of(12, 0), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(14, 0), LocalTime.of(14, 30), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(14, 30), LocalTime.of(15, 0), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(15, 0), LocalTime.of(15, 30), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(15, 30), LocalTime.of(16, 0), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(16, 0), LocalTime.of(16, 30), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(16, 30), LocalTime.of(17, 0), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(17, 0), LocalTime.of(17, 30), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(17, 30), LocalTime.of(18, 0), null)
         ));
-        Set<Timeslot> planningVariables3 = new HashSet<>(Arrays.asList(
+        Set<Timeslot> overflowPlanningVariables = new HashSet<>(Arrays.asList(
                 new Timeslot(1L, DayOfWeek.MONDAY, LocalTime.of(8, 0), LocalTime.of(8, 30), english),
                 new Timeslot(2L, DayOfWeek.MONDAY, LocalTime.of(8, 30), LocalTime.of(9, 0), english),
                 new Timeslot(3L, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(9, 30), english),
@@ -47,13 +69,21 @@ class SolutionEnhancerTest {
                 new Timeslot(5L, DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(10, 30), english),
                 new Timeslot(6L, DayOfWeek.MONDAY, LocalTime.of(10, 30), LocalTime.of(11, 0), english),
                 new Timeslot(7L, DayOfWeek.MONDAY, LocalTime.of(11, 0), LocalTime.of(11, 30), english),
-                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(11, 30), LocalTime.of(12, 0), english)
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(11, 30), LocalTime.of(12, 0), english),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(14, 0), LocalTime.of(14, 30), english),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(14, 30), LocalTime.of(15, 0), english),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(15, 0), LocalTime.of(15, 30), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(15, 30), LocalTime.of(16, 0), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(16, 0), LocalTime.of(16, 30), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(16, 30), LocalTime.of(17, 0), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(17, 0), LocalTime.of(17, 30), null),
+                new Timeslot(8L, DayOfWeek.MONDAY, LocalTime.of(17, 30), LocalTime.of(18, 0), null)
         ));
 
         return Stream.of(
-                Arguments.of("exact number of subjects", english, planningVariables1),
-                Arguments.of("empty subjects", english, planningVariables2)
-//                Arguments.of("overflow subjects", english, planningVariables3)
+//                Arguments.of("exact number of subjects", english, correctPlanningVariables),
+//                Arguments.of("empty subjects", english, emptyPlanningVariables),
+                Arguments.of("overflow subjects", english, overflowPlanningVariables)
         );
     }
 

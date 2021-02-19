@@ -3,8 +3,9 @@ package io.scplanner.solver;
 import io.scplanner.constraints.Constraint;
 import io.scplanner.exceptions.SolutionConfigurationException;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 public enum EnhanceDirection {
@@ -17,39 +18,41 @@ public enum EnhanceDirection {
         Set<P> factPlanningVariablesCopy = new HashSet<>(factPlanningVariables);
         Set<P> refPlanningVariablesCopy = new HashSet<>(refPlanningVariables);
         int initialScore = constraint.calculateScore(factPlanningVariablesCopy);
-        return tryAdd(fact, factPlanningVariablesCopy, refPlanningVariablesCopy, initialScore)
-                .orElseGet(() -> tryRemove(fact, factPlanningVariablesCopy, refPlanningVariablesCopy, initialScore)
-                        .orElse(SKIP));
+        if (tryModify(ADD, constraint, fact, factPlanningVariablesCopy, refPlanningVariablesCopy, initialScore)) {
+            return ADD;
+        } else if (tryModify(REMOVE, constraint, fact, factPlanningVariablesCopy, refPlanningVariablesCopy, initialScore)) {
+            return REMOVE;
+        }
+        return SKIP;
     }
 
-    private static <F, P> Optional<EnhanceDirection> tryAdd(F fact, Set<P> factPlanningVariables, Set<P> refPlanningVariables, int initialScore) {
-        int scoreAfterAdd = scoreAfterAddingPlanningVariables(refPlanningVariables, factPlanningVariables, fact);
-        if (scoreAfterAdd >= initialScore) {
-            return Optional.of(ADD);
+    private static <S, F, P> boolean tryModify(EnhanceDirection direction, Constraint<S, F, P> constraint, F fact, Set<P> factPlanningVariables, Set<P> refPlanningVariables, int initialScore)
+            throws SolutionConfigurationException {
+        if (factPlanningVariables.isEmpty()) {
+            return direction == ADD;
         }
-        return Optional.empty();
+        int scoreAfterAdd = scoreAfterModifyingPlanningVariables(direction, constraint, refPlanningVariables, factPlanningVariables, fact);
+        return scoreAfterAdd >= initialScore;
     }
 
-    private static <F, P> Optional<EnhanceDirection> tryRemove(F fact, Set<P> factPlanningVariables, Set<P> refPlanningVariables, int initialScore) {
-        int scoreAfterRemove = scoreAfterRemovingPlanningVariables(refPlanningVariables, factPlanningVariables, fact);
-        if (scoreAfterRemove >= initialScore) {
-            return Optional.of(REMOVE);
-        }
-        return Optional.empty();
+    private static <S, F, P> int scoreAfterModifyingPlanningVariables(EnhanceDirection direction, Constraint<S, F, P> constraint, Set<P> refPlanningVariables, Set<P> factPlanningVariables, F fact)
+            throws SolutionConfigurationException {
+        HashSet<P> refPlanningVariablesCopy = new HashSet<>(refPlanningVariables);
+        HashSet<P> factPlanningVariablesCopy = new HashSet<>(factPlanningVariables);
+        modifyRefPlanningVariables(direction, constraint, fact, refPlanningVariablesCopy, factPlanningVariablesCopy);
+        return constraint.calculateScore(factPlanningVariablesCopy);
     }
 
-    private static <P, F> int scoreAfterRemovingPlanningVariables(Set<P> refPlanningVariables, Set<P> factPlanningVariables, F fact) {
-        for(int i = factPlanningVariables.size(); i <= factPlanningVariables.size() / 2; i--) {
-            System.out.println("adding one timeslot");
+    private static <S, F, P> void modifyRefPlanningVariables(EnhanceDirection direction, Constraint<S, F, P> constraint, F fact, HashSet<P> refPlanningVariablesCopy, HashSet<P> factPlanningVariablesCopy) throws SolutionConfigurationException {
+        int loopMinNumber = factPlanningVariablesCopy.size();
+        int loopMaxNumber = BigDecimal.valueOf(factPlanningVariablesCopy.size()).multiply(BigDecimal.valueOf(1.3)).setScale(0, RoundingMode.UP).intValue();
+        for (int i = loopMinNumber; i <= loopMaxNumber; i++) {
+            if (direction.equals(ADD)) {
+                PlanningVariablesModifier.addPlanningVariable(constraint, fact, refPlanningVariablesCopy, factPlanningVariablesCopy);
+            } else if (direction.equals(REMOVE)) {
+                PlanningVariablesModifier.removePlanningVariable(constraint, fact, factPlanningVariablesCopy);
+            }
         }
-        return 0;
-    }
-
-    private static <P, F> int scoreAfterAddingPlanningVariables(Set<P> refPlanningVariables, Set<P> factPlanningVariables, F fact) {
-        for(int i = factPlanningVariables.size(); i <= factPlanningVariables.size() / 2; i--) {
-
-            System.out.println("adding one timeslot");
-        }
-        return 0;
     }
 }
+

@@ -1,0 +1,45 @@
+package io.scplanner.solver;
+
+import io.scplanner.annotations.PlanningVariableFact;
+import io.scplanner.constraints.Constraint;
+import io.scplanner.exceptions.SolutionConfigurationException;
+import io.scplanner.reflection.Reflection;
+
+import java.util.Optional;
+import java.util.Set;
+
+public final class PlanningVariablesModifier {
+
+    private PlanningVariablesModifier() {
+        // private constructor
+    }
+
+    public static <S, F, P> void addPlanningVariable(Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariables, Set<P> factPlanningVariables) throws SolutionConfigurationException {
+        final Optional<P> optFreePlanningVariable = freePlanningVariable(constraint, refPlanningVariables);
+        if (optFreePlanningVariable.isPresent()) {
+            final P planningVariable = optFreePlanningVariable.get();
+            Reflection.assignFieldByAnnotations(fact, planningVariable, PlanningVariableFact.class);
+            factPlanningVariables.add(planningVariable);
+        } else {
+            System.out.println("No planning variable available to add one. Is there enough base planning variables ?");
+        }
+    }
+
+    public static <S, F, P> void removePlanningVariable(Constraint<S, F, P> constraint, F fact, Set<P> factPlanningVariables) throws SolutionConfigurationException {
+        for (P pv : factPlanningVariables) {
+            if (fact.equals(Reflection.valueByAnnotation(pv, PlanningVariableFact.class))) {
+                factPlanningVariables.remove(pv);
+                break;
+            }
+        }
+    }
+
+    private static <S, F, P> Optional<P> freePlanningVariable(Constraint<S, F, P> constraint, Set<P> refPlanningVariables) throws SolutionConfigurationException {
+        for (P planningVariable : refPlanningVariables) {
+            if (Reflection.objectFieldByType(planningVariable, constraint.getFactClass()) == null) {
+                return Optional.of(planningVariable);
+            }
+        }
+        return Optional.empty();
+    }
+}
