@@ -1,7 +1,6 @@
 package io.scplanner.reflection;
 
 import io.scplanner.exceptions.SolutionConfigurationException;
-import io.scplanner.score.Score;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -111,10 +110,10 @@ public final class Reflection {
         final Field destField = fieldByAnnotation(classInstance.getClass(), destPropertyAnnotation);
         destField.setAccessible(true);
         try {
-            final Method method = classInstance.getClass().getDeclaredMethod("set" + destField.getName().substring(0, 1).toUpperCase() + destField.getName().substring(1), List.class);
+            final Method method = classInstance.getClass().getDeclaredMethod("set" + destField.getName().substring(0, 1).toUpperCase() + destField.getName().substring(1), destField.getType());
             method.invoke(classInstance, sourceValue);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException e) {
-            throw new SolutionConfigurationException(String.format("Error while copying values from %s to %s for instance class %s.", sourcePropertyAnnotation.getName(), destPropertyAnnotation.getName(), classInstance.getClass().getName()), e);
+            throw new SolutionConfigurationException(String.format("Error while copying values from %s to %s for instance class %s. Please add setter for the copied field.", sourcePropertyAnnotation.getName(), destPropertyAnnotation.getName(), classInstance.getClass().getName()), e);
         }
     }
 
@@ -127,10 +126,6 @@ public final class Reflection {
             throw new SolutionConfigurationException(String.format("Error while copying values from %s to %s by annotation %s.", classInstance.getClass().getName(),
                     destinationCLassInstance.getClass().getName(), destAnnotation.getName()), e);
         }
-
-    }
-
-    public static <S> void assignVariableByType(S finalBestSolution, Class<Score> scoreClass, int score) {
 
     }
 
