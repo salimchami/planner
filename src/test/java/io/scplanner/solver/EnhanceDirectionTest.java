@@ -14,11 +14,11 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.util.Collections.singletonList;
-import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EnhanceDirectionTest {
@@ -81,15 +81,15 @@ class EnhanceDirectionTest {
         ));
 
         return Stream.of(
-                Arguments.of("exact number of subjects", EnhanceDirection.SKIP, english, correctPlanningVariables),
-                Arguments.of("empty subjects", EnhanceDirection.ADD, english, emptyPlanningVariables),
-                Arguments.of("overflow subjects", EnhanceDirection.REMOVE, english, overflowPlanningVariables)
+                Arguments.of("exact number of subjects", 4, EnhanceDirection.SKIP, english, correctPlanningVariables),
+                Arguments.of("empty subjects", 1, EnhanceDirection.ADD, english, emptyPlanningVariables),
+                Arguments.of("overflow subjects", 10, EnhanceDirection.REMOVE, english, overflowPlanningVariables)
         );
     }
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("shouldSearchForCorrectEnhanceDirectionParams")
-    void shouldSearchForCorrectEnhanceDirection(String testName, EnhanceDirection expectedDirection, Subject subject, Set<Timeslot> timeslots) throws SolutionConfigurationException {
+    void shouldSearchForCorrectEnhanceDirection(String testName, int factsCount, EnhanceDirection expectedDirection, Subject subject, Set<Timeslot> timeslots) throws SolutionConfigurationException {
         final TimeTable timeTable = new TimeTable(timeslots, singletonList(subject));
         final Constraint<TimeTable, Subject, Timeslot> constraint = new Constraint<>("Max Subject Duration By Day",
                 ScoreLevel.HARD,
@@ -101,9 +101,13 @@ class EnhanceDirectionTest {
         final EnhanceDirection direction = EnhanceDirection.of(
                 constraint,
                 timeslots,
-                timeslots.stream().filter(timeslot -> subject.equals(timeslot.getSubject())).collect(toSet()),
                 subject
         );
         assertThat(direction).isEqualTo(expectedDirection);
+        assertThat(timeslots.stream()
+                .map(Timeslot::getSubject)
+                .filter(Objects::nonNull)
+                .count())
+                .isEqualTo(factsCount);
     }
 }

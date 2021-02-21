@@ -4,7 +4,9 @@ import io.scplanner.annotations.PlanningVariableFact;
 import io.scplanner.constraints.Constraint;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.reflection.Reflection;
+import io.scplanner.utils.ObjectUtils;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,7 +27,7 @@ public final class PlanningVariablesModifier {
         }
     }
 
-    public static <S, F, P> void removePlanningVariable(Constraint<S, F, P> constraint, F fact, Set<P> factPlanningVariables) throws SolutionConfigurationException {
+    public static <F, P> void removePlanningVariable(F fact, Set<P> factPlanningVariables) throws SolutionConfigurationException {
         for (P pv : factPlanningVariables) {
             if (fact.equals(Reflection.valueByAnnotation(pv, PlanningVariableFact.class))) {
                 factPlanningVariables.remove(pv);
@@ -41,5 +43,15 @@ public final class PlanningVariablesModifier {
             }
         }
         return Optional.empty();
+    }
+
+    public static  <P> Set<P> factPlanningVariablesFrom(Constraint constraint, Set<P> refPlanningVariables) throws SolutionConfigurationException {
+        Set<P> factPlanningVariables = new HashSet<>();
+        for (P planningVariable : refPlanningVariables) {
+            if (Reflection.objectFieldByType(planningVariable, constraint.getFactClass()) != null) {
+                factPlanningVariables.add(ObjectUtils.newInstance(planningVariable));
+            }
+        }
+        return factPlanningVariables;
     }
 }

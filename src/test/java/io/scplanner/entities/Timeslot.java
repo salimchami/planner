@@ -38,6 +38,10 @@ public class Timeslot {
         this.subject = subject;
     }
 
+    public Timeslot newInstance() {
+        return new Timeslot(id, day, startTime, endTime, subject);
+    }
+
     public Timeslot(Long id, DayOfWeek day, LocalTime startTime, LocalTime endTime) {
         this.id = id;
         this.day = day;

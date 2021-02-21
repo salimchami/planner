@@ -6,6 +6,7 @@ import io.scplanner.entities.TimeTable;
 import io.scplanner.entities.Timeslot;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.score.ScoreLevel;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -21,6 +22,13 @@ import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SolutionEnhancerTest {
+
+    private SolutionEnhancer sut;
+
+    @BeforeEach
+    void setUp() {
+        sut = new SolutionEnhancer();
+    }
 
     private static Stream<Arguments> should_improve_by_constraint_params() {
         final Subject english = new Subject(1L, "English", 120, 60, 300, 3);
@@ -91,7 +99,6 @@ class SolutionEnhancerTest {
     @MethodSource("should_improve_by_constraint_params")
     void should_improve_by_constraint(String testName, Subject subject, Set<Timeslot> baseTimeslots) throws SolutionConfigurationException {
         final TimeTable timeTable = new TimeTable(baseTimeslots, singletonList(subject));
-        SolutionEnhancer sut = new SolutionEnhancer();
         Constraint<TimeTable, Subject, Timeslot> constraint =
                 new Constraint<>("Max Subject Duration By Day",
                         ScoreLevel.HARD,
