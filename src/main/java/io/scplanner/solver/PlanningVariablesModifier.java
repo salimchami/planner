@@ -3,12 +3,12 @@ package io.scplanner.solver;
 import io.scplanner.annotations.PlanningVariableFact;
 import io.scplanner.constraints.Constraint;
 import io.scplanner.exceptions.SolutionConfigurationException;
+import io.scplanner.readers.FactReader;
+import io.scplanner.readers.PlanningVariableReader;
 import io.scplanner.reflection.Reflection;
-import io.scplanner.utils.ObjectUtils;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -19,7 +19,7 @@ public final class PlanningVariablesModifier {
     }
 
     public static <S, F, P> void addPlanningVariableFromRef(Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariables, Set<P> factPlanningVariables) throws SolutionConfigurationException {
-        final Optional<P> optFreeRefPlanningVariable = freePlanningVariable(constraint, refPlanningVariables);
+        final Optional<P> optFreeRefPlanningVariable = PlanningVariableReader.freePlanningVariable(constraint, refPlanningVariables);
         if (optFreeRefPlanningVariable.isPresent()) {
             final P planningVariable = optFreeRefPlanningVariable.get();
             Reflection.assignFieldByAnnotations(fact, planningVariable, PlanningVariableFact.class);
@@ -30,8 +30,10 @@ public final class PlanningVariablesModifier {
     }
 
     public static <F, P> void removePlanningVariable(F fact, Set<P> factPlanningVariables) throws SolutionConfigurationException {
+        Object factId = FactReader.id(fact);
         for (P pv : factPlanningVariables) {
-            if (fact.equals(Reflection.valueByAnnotation(pv, PlanningVariableFact.class))) {
+            final Object pvFact = Reflection.valueByAnnotation(pv, PlanningVariableFact.class);
+            if (factId.equals(FactReader.id(pvFact))) {
                 factPlanningVariables.remove(pv);
                 break;
             }
@@ -39,8 +41,10 @@ public final class PlanningVariablesModifier {
     }
 
     public static <F, P> void removeAllFactsFromPlanningVariables(F fact, Set<P> planningVariables) throws SolutionConfigurationException {
+        Object factId = FactReader.id(fact);
         for (P pv : planningVariables) {
-            if (fact.equals(Reflection.valueByAnnotation(pv, PlanningVariableFact.class))) {
+            final Object pvFact = Reflection.valueByAnnotation(pv, PlanningVariableFact.class);
+            if (pvFact != null && factId.equals(FactReader.id(pvFact))) {
                 try {
                     BeanUtils.copyProperty(pv, Reflection.fieldByType(pv.getClass(), fact.getClass()).getName(), null);
                 } catch (IllegalAccessException | InvocationTargetException e) {
@@ -48,25 +52,6 @@ public final class PlanningVariablesModifier {
                 }
             }
         }
-    }
-
-    private static <S, F, P> Optional<P> freePlanningVariable(Constraint<S, F, P> constraint, Set<P> refPlanningVariables) throws SolutionConfigurationException {
-        for (P planningVariable : refPlanningVariables) {
-            if (Reflection.objectFieldByType(planningVariable, constraint.getFactClass()) == null) {
-                return Optional.of(planningVariable);
-            }
-        }
-        return Optional.empty();
-    }
-
-    public static <P> Set<P> factPlanningVariablesFrom(Constraint constraint, Set<P> refPlanningVariables) throws SolutionConfigurationException {
-        Set<P> factPlanningVariables = new HashSet<>();
-        for (P planningVariable : refPlanningVariables) {
-            if (Reflection.objectFieldByType(planningVariable, constraint.getFactClass()) != null) {
-                factPlanningVariables.add(ObjectUtils.newInstance(planningVariable));
-            }
-        }
-        return factPlanningVariables;
     }
 
     public static <P, F, S> void addFactInFreeRefPlanningVariables(Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariables) throws SolutionConfigurationException {

@@ -2,6 +2,7 @@ package io.scplanner.solver;
 
 import io.scplanner.constraints.Constraint;
 import io.scplanner.exceptions.SolutionConfigurationException;
+import io.scplanner.readers.PlanningVariableReader;
 import io.scplanner.utils.CollectionUtils;
 
 import java.util.Set;
@@ -10,7 +11,7 @@ public class SolutionEnhancer {
 
     public <S, F, P> Set<P> improveByConstraint(Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariables) throws SolutionConfigurationException {
         final Set<P> refPlanningVariablesCopy = CollectionUtils.copySet(refPlanningVariables);
-        Set<P> factPlanningVariables = PlanningVariablesModifier.factPlanningVariablesFrom(constraint, refPlanningVariablesCopy);
+        Set<P> factPlanningVariables = PlanningVariableReader.factPlanningVariablesFrom(constraint, refPlanningVariablesCopy, fact);
         int loopCount = 0;
         int loopMax = refPlanningVariablesCopy.size() * 2;
         while (constraint.calculateScore(factPlanningVariables) < 0 && loopCount < loopMax) {
