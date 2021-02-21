@@ -2,20 +2,22 @@ package io.scplanner.solver;
 
 import io.scplanner.constraints.Constraint;
 import io.scplanner.exceptions.SolutionConfigurationException;
+import io.scplanner.utils.CollectionUtils;
 
 import java.util.Set;
 
 public class SolutionEnhancer {
 
     public <S, F, P> Set<P> improveByConstraint(Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariables) throws SolutionConfigurationException {
-        Set<P> factPlanningVariables = PlanningVariablesModifier.factPlanningVariablesFrom(constraint, refPlanningVariables);
+        final Set<P> refPlanningVariablesCopy = CollectionUtils.copySet(refPlanningVariables);
+        Set<P> factPlanningVariables = PlanningVariablesModifier.factPlanningVariablesFrom(constraint, refPlanningVariablesCopy);
         int loopCount = 0;
-        int loopMax = refPlanningVariables.size() * 2;
+        int loopMax = refPlanningVariablesCopy.size() * 2;
         while (constraint.calculateScore(factPlanningVariables) < 0 && loopCount < loopMax) {
-            DirectionFinder direction = DirectionFinder.of(constraint, refPlanningVariables, fact);
+            DirectionFinder direction = DirectionFinder.of(constraint, refPlanningVariablesCopy, fact);
             switch (direction) {
                 case ADD:
-                    PlanningVariablesModifier.addPlanningVariableFromRef(constraint, fact, refPlanningVariables, factPlanningVariables);
+                    PlanningVariablesModifier.addPlanningVariableFromRef(constraint, fact, refPlanningVariablesCopy, factPlanningVariables);
                     break;
                 case REMOVE:
                     PlanningVariablesModifier.removePlanningVariable(fact, factPlanningVariables);
@@ -26,8 +28,8 @@ public class SolutionEnhancer {
             }
             loopCount++;
         }
-        replaceFactPlanningVariablesInRef(constraint, fact, factPlanningVariables.size(), refPlanningVariables);
-        return refPlanningVariables;
+        replaceFactPlanningVariablesInRef(constraint, fact, factPlanningVariables.size(), refPlanningVariablesCopy);
+        return refPlanningVariablesCopy;
     }
 
     private <S, F, P> void replaceFactPlanningVariablesInRef(Constraint<S, F, P> constraint, F fact, int nbFactsToAdd, Set<P> refPlanningVariables) throws SolutionConfigurationException {
