@@ -7,7 +7,6 @@ import io.scplanner.score.ScoreManager;
 import io.scplanner.solver.IWantToManageSolver;
 import io.scplanner.solver.SolverManager;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -40,7 +39,6 @@ class SolverTest {
     }
 
     @Test
-    @Disabled
     void shouldGenerateTimeTable() throws SolutionConfigurationException, SolutionSolvingException {
         schoolClassId = "Sixième";
         final Subject mathematiques = new Subject(1L, "Mathematiques", 120, 60, 300, 3);
@@ -52,7 +50,7 @@ class SolverTest {
         verify(timeTableSPI).save(timetableCaptor.capture());
         final TimeTable timeTable = timetableCaptor.getValue();
 
-        assertThat(durationOfSubject(francais, timeTable)).isLessThan(120L).isGreaterThan(60L);
+        assertThat(durationOfSubject(francais, timeTable)).isLessThanOrEqualTo(120L).isGreaterThanOrEqualTo(60L);
     }
 
     private Long durationOfSubject(Subject francais, TimeTable timeTable) {
