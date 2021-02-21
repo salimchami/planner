@@ -2,6 +2,7 @@ package io.scplanner.solver;
 
 import io.scplanner.constraints.Constraint;
 import io.scplanner.exceptions.SolutionConfigurationException;
+import io.scplanner.exceptions.SolutionSolvingException;
 import io.scplanner.readers.PlanningVariableReader;
 import io.scplanner.utils.CollectionUtils;
 
@@ -30,13 +31,17 @@ public enum DirectionFinder {
     private static <S, F, P> boolean betterScoreAfterModifyingPV(DirectionFinder direction, Constraint<S, F, P> constraint,
                                                                  Set<P> refPlanningVariables, Set<P> factPlanningVariables, F fact, int initialScore)
             throws SolutionConfigurationException {
-        modifyRefPlanningVariables(direction, constraint, fact, refPlanningVariables, factPlanningVariables);
-        int scoreAfterAdd = constraint.calculateScore(factPlanningVariables);
-        return scoreAfterAdd >= initialScore;
+        try {
+            modifyRefPlanningVariables(direction, constraint, fact, refPlanningVariables, factPlanningVariables);
+            int scoreAfterAdd = constraint.calculateScore(factPlanningVariables);
+            return scoreAfterAdd >= initialScore;
+        } catch (SolutionSolvingException e) {
+            return false;
+        }
     }
 
     private static <S, F, P> void modifyRefPlanningVariables(DirectionFinder direction, Constraint<S, F, P> constraint, F fact,
-                                                             Set<P> refPlanningVariablesCopy, Set<P> factPlanningVariablesCopy) throws SolutionConfigurationException {
+                                                             Set<P> refPlanningVariablesCopy, Set<P> factPlanningVariablesCopy) throws SolutionConfigurationException, SolutionSolvingException {
         int loopMinNumber = factPlanningVariablesCopy.size();
         int loopMaxNumber = BigDecimal.valueOf(factPlanningVariablesCopy.size())
                 .multiply(BigDecimal.valueOf(1.3))

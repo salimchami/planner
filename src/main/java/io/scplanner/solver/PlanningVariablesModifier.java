@@ -3,6 +3,7 @@ package io.scplanner.solver;
 import io.scplanner.annotations.PlanningVariableFact;
 import io.scplanner.constraints.Constraint;
 import io.scplanner.exceptions.SolutionConfigurationException;
+import io.scplanner.exceptions.SolutionSolvingException;
 import io.scplanner.readers.FactReader;
 import io.scplanner.readers.PlanningVariableReader;
 import io.scplanner.reflection.Reflection;
@@ -18,14 +19,15 @@ public final class PlanningVariablesModifier {
         // private constructor
     }
 
-    public static <S, F, P> void addPlanningVariableFromRef(Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariables, Set<P> factPlanningVariables) throws SolutionConfigurationException {
+    public static <S, F, P> void addPlanningVariableFromRef(Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariables, Set<P> factPlanningVariables)
+            throws SolutionConfigurationException, SolutionSolvingException {
         final Optional<P> optFreeRefPlanningVariable = PlanningVariableReader.freePlanningVariable(constraint, refPlanningVariables);
         if (optFreeRefPlanningVariable.isPresent()) {
             final P planningVariable = optFreeRefPlanningVariable.get();
             Reflection.assignFieldByAnnotations(fact, planningVariable, PlanningVariableFact.class);
             factPlanningVariables.add(planningVariable);
         } else {
-            System.out.println("No planning variable available to add one. Is there enough base planning variables ?");
+            throw new SolutionSolvingException("No planning variable available to add one. Is there enough base planning variables ?");
         }
     }
 

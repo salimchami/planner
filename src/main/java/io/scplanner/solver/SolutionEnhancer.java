@@ -2,6 +2,7 @@ package io.scplanner.solver;
 
 import io.scplanner.constraints.Constraint;
 import io.scplanner.exceptions.SolutionConfigurationException;
+import io.scplanner.exceptions.SolutionSolvingException;
 import io.scplanner.readers.PlanningVariableReader;
 import io.scplanner.utils.CollectionUtils;
 
@@ -18,7 +19,11 @@ public class SolutionEnhancer {
             DirectionFinder direction = DirectionFinder.of(constraint, refPlanningVariablesCopy, fact);
             switch (direction) {
                 case ADD:
-                    PlanningVariablesModifier.addPlanningVariableFromRef(constraint, fact, refPlanningVariablesCopy, factPlanningVariables);
+                    try {
+                        PlanningVariablesModifier.addPlanningVariableFromRef(constraint, fact, refPlanningVariablesCopy, factPlanningVariables);
+                    } catch (SolutionSolvingException e) {
+                        System.out.println("Error while improving solution. Add empty timeslot.");
+                    }
                     break;
                 case REMOVE:
                     PlanningVariablesModifier.removePlanningVariable(fact, factPlanningVariables);
