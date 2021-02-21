@@ -5,7 +5,9 @@ import io.scplanner.constraints.Constraint;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.reflection.Reflection;
 import io.scplanner.utils.ObjectUtils;
+import org.apache.commons.beanutils.BeanUtils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -16,10 +18,10 @@ public final class PlanningVariablesModifier {
         // private constructor
     }
 
-    public static <S, F, P> void addPlanningVariable(Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariables, Set<P> factPlanningVariables) throws SolutionConfigurationException {
-        final Optional<P> optFreePlanningVariable = freePlanningVariable(constraint, refPlanningVariables);
-        if (optFreePlanningVariable.isPresent()) {
-            final P planningVariable = optFreePlanningVariable.get();
+    public static <S, F, P> void addPlanningVariableFromRef(Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariables, Set<P> factPlanningVariables) throws SolutionConfigurationException {
+        final Optional<P> optFreeRefPlanningVariable = freePlanningVariable(constraint, refPlanningVariables);
+        if (optFreeRefPlanningVariable.isPresent()) {
+            final P planningVariable = optFreeRefPlanningVariable.get();
             Reflection.assignFieldByAnnotations(fact, planningVariable, PlanningVariableFact.class);
             factPlanningVariables.add(planningVariable);
         } else {
@@ -36,6 +38,18 @@ public final class PlanningVariablesModifier {
         }
     }
 
+    public static <F, P> void removeAllFactsFromPlanningVariables(F fact, Set<P> planningVariables) throws SolutionConfigurationException {
+        for (P pv : planningVariables) {
+            if (fact.equals(Reflection.valueByAnnotation(pv, PlanningVariableFact.class))) {
+                try {
+                    BeanUtils.copyProperty(pv, Reflection.fieldByType(pv.getClass(), fact.getClass()).getName(), null);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    throw new SolutionConfigurationException("Can't remove fact property in planning variable.");
+                }
+            }
+        }
+    }
+
     private static <S, F, P> Optional<P> freePlanningVariable(Constraint<S, F, P> constraint, Set<P> refPlanningVariables) throws SolutionConfigurationException {
         for (P planningVariable : refPlanningVariables) {
             if (Reflection.objectFieldByType(planningVariable, constraint.getFactClass()) == null) {
@@ -45,7 +59,7 @@ public final class PlanningVariablesModifier {
         return Optional.empty();
     }
 
-    public static  <P> Set<P> factPlanningVariablesFrom(Constraint constraint, Set<P> refPlanningVariables) throws SolutionConfigurationException {
+    public static <P> Set<P> factPlanningVariablesFrom(Constraint constraint, Set<P> refPlanningVariables) throws SolutionConfigurationException {
         Set<P> factPlanningVariables = new HashSet<>();
         for (P planningVariable : refPlanningVariables) {
             if (Reflection.objectFieldByType(planningVariable, constraint.getFactClass()) != null) {
@@ -53,5 +67,20 @@ public final class PlanningVariablesModifier {
             }
         }
         return factPlanningVariables;
+    }
+
+    public static <P, F, S> void addFactInFreeRefPlanningVariables(Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariables) throws SolutionConfigurationException {
+        // TODO search for best planning variable
+        for (P planningVariable : refPlanningVariables) {
+            if (Reflection.objectFieldByType(planningVariable, constraint.getFactClass()) == null) {
+                try {
+                    BeanUtils.copyProperty(planningVariable, Reflection.fieldByType(planningVariable.getClass(), constraint.getFactClass()).getName(), fact);
+                    break;
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    throw new SolutionConfigurationException("Can't copy fact property in planning variable.");
+                }
+            }
+
+        }
     }
 }

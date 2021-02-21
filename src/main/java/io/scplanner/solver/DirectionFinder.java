@@ -8,13 +8,13 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Set;
 
-public enum EnhanceDirection {
+public enum DirectionFinder {
 
     ADD,
     REMOVE,
     SKIP;
 
-    public static <S, F, P> EnhanceDirection of(Constraint<S, F, P> constraint, Set<P> refPlanningVariables, F fact) throws SolutionConfigurationException {
+    public static <S, F, P> DirectionFinder of(Constraint<S, F, P> constraint, Set<P> refPlanningVariables, F fact) throws SolutionConfigurationException {
         Set<P> refPlanningVariablesCopy = CollectionUtils.copySet(refPlanningVariables);
         final Set<P> factPlanningVariables = PlanningVariablesModifier.factPlanningVariablesFrom(constraint, refPlanningVariablesCopy);
         int initialScore = constraint.calculateScore(factPlanningVariables);
@@ -26,7 +26,7 @@ public enum EnhanceDirection {
         return SKIP;
     }
 
-    private static <S, F, P> boolean scoreAfterModifyingPlanningVariables(EnhanceDirection direction, Constraint<S, F, P> constraint,
+    private static <S, F, P> boolean scoreAfterModifyingPlanningVariables(DirectionFinder direction, Constraint<S, F, P> constraint,
                                                                           Set<P> refPlanningVariables, Set<P> factPlanningVariables, F fact, int initialScore)
             throws SolutionConfigurationException {
         modifyRefPlanningVariables(direction, constraint, fact, refPlanningVariables, factPlanningVariables);
@@ -34,7 +34,7 @@ public enum EnhanceDirection {
         return scoreAfterAdd >= initialScore;
     }
 
-    private static <S, F, P> void modifyRefPlanningVariables(EnhanceDirection direction, Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariablesCopy, Set<P> factPlanningVariablesCopy) throws SolutionConfigurationException {
+    private static <S, F, P> void modifyRefPlanningVariables(DirectionFinder direction, Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariablesCopy, Set<P> factPlanningVariablesCopy) throws SolutionConfigurationException {
         int loopMinNumber = factPlanningVariablesCopy.size();
         int loopMaxNumber = BigDecimal.valueOf(factPlanningVariablesCopy.size())
                 .multiply(BigDecimal.valueOf(1.3))
@@ -42,7 +42,7 @@ public enum EnhanceDirection {
                 .intValue();
         for (int i = loopMinNumber; i <= loopMaxNumber; i++) {
             if (direction.equals(ADD)) {
-                PlanningVariablesModifier.addPlanningVariable(constraint, fact, refPlanningVariablesCopy, factPlanningVariablesCopy);
+                PlanningVariablesModifier.addPlanningVariableFromRef(constraint, fact, refPlanningVariablesCopy, factPlanningVariablesCopy);
             } else if (direction.equals(REMOVE)) {
                 PlanningVariablesModifier.removePlanningVariable(fact, factPlanningVariablesCopy);
             }

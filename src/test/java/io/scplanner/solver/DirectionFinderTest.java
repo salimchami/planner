@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class EnhanceDirectionTest {
+class DirectionFinderTest {
 
     private static Stream<Arguments> shouldSearchForCorrectEnhanceDirectionParams() {
         final Subject english = new Subject(1L, "English", 120, 60, 300, 3);
@@ -81,15 +81,15 @@ class EnhanceDirectionTest {
         ));
 
         return Stream.of(
-                Arguments.of("exact number of subjects", 4, EnhanceDirection.SKIP, english, correctPlanningVariables),
-                Arguments.of("empty subjects", 1, EnhanceDirection.ADD, english, emptyPlanningVariables),
-                Arguments.of("overflow subjects", 10, EnhanceDirection.REMOVE, english, overflowPlanningVariables)
+                Arguments.of("exact number of subjects", 4, DirectionFinder.SKIP, english, correctPlanningVariables),
+                Arguments.of("empty subjects", 1, DirectionFinder.ADD, english, emptyPlanningVariables),
+                Arguments.of("overflow subjects", 10, DirectionFinder.REMOVE, english, overflowPlanningVariables)
         );
     }
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("shouldSearchForCorrectEnhanceDirectionParams")
-    void shouldSearchForCorrectEnhanceDirection(String testName, int factsCount, EnhanceDirection expectedDirection, Subject subject, Set<Timeslot> timeslots) throws SolutionConfigurationException {
+    void shouldSearchForCorrectEnhanceDirection(String testName, int factsCount, DirectionFinder expectedDirection, Subject subject, Set<Timeslot> timeslots) throws SolutionConfigurationException {
         final TimeTable timeTable = new TimeTable(timeslots, singletonList(subject));
         final Constraint<TimeTable, Subject, Timeslot> constraint = new Constraint<>("Max Subject Duration By Day",
                 ScoreLevel.HARD,
@@ -98,7 +98,7 @@ class EnhanceDirectionTest {
                 Subject::correctDuration,
                 Subject::correctDurationPerDayPenalty,
                 Timeslot::totalDurationInMinutes);
-        final EnhanceDirection direction = EnhanceDirection.of(
+        final DirectionFinder direction = DirectionFinder.of(
                 constraint,
                 timeslots,
                 subject

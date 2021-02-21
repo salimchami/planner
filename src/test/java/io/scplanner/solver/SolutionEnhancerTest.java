@@ -89,8 +89,8 @@ class SolutionEnhancerTest {
         ));
 
         return Stream.of(
-//                Arguments.of("exact number of subjects", english, correctPlanningVariables),
-//                Arguments.of("empty subjects", english, emptyPlanningVariables),
+                Arguments.of("exact number of subjects", english, correctPlanningVariables),
+                Arguments.of("empty subjects", english, emptyPlanningVariables),
                 Arguments.of("overflow subjects", english, overflowPlanningVariables)
         );
     }
