@@ -8,6 +8,8 @@ import io.scplanner.score.ScoreLevel;
 
 import java.util.*;
 
+import static java.util.stream.Collectors.toList;
+
 public class Constraint<S, F, P> {
 
     private final S solution;
@@ -42,8 +44,9 @@ public class Constraint<S, F, P> {
         Map<F, Set<P>> planningVariablesByFacts = planningVariablesByFacts(planningVariables);
         if (planningVariablesByFacts.isEmpty()) {
             return factClassInstanceFromSolution(solution)
+                    .stream()
                     .map(fact -> -penaltyFunction.apply(fact, planningVariables))
-                    .orElseThrow(() -> new SolutionConfigurationException("No fact class found in solution instance."));
+                    .reduce(0, Integer::sum);
         }
         int penalty = penalty(planningVariablesByFacts);
         if (penalty > 0) {
@@ -65,9 +68,9 @@ public class Constraint<S, F, P> {
                 .sum();
     }
 
-    private Optional<F> factClassInstanceFromSolution(S solution) throws SolutionConfigurationException {
+    private List<F> factClassInstanceFromSolution(S solution) throws SolutionConfigurationException {
         final List<F> facts = (List) Reflection.valueByAnnotation(solution, Facts.class);
-        return facts.stream().filter(fact -> fact.getClass().getName().equals(factClass.getName())).findFirst();
+        return facts.stream().filter(fact -> fact.getClass().getName().equals(factClass.getName())).collect(toList());
     }
 
     private Map<F, Set<P>> planningVariablesByFacts(Set<P> planningVariables) throws SolutionConfigurationException {

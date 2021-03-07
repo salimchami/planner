@@ -4,10 +4,11 @@ import io.scplanner.annotations.Fact;
 import io.scplanner.annotations.FactId;
 import io.scplanner.annotations.FactItem;
 
-import java.util.Objects;
-import java.util.Set;
+import java.time.DayOfWeek;
+import java.util.*;
+import java.util.function.Function;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.*;
 
 @Fact
 public class Subject {
@@ -43,21 +44,54 @@ public class Subject {
     }
 
     public int correctDurationPerDayPenalty(Set<Timeslot> timeslots) {
-        final Set<Timeslot> subjectTimeslots = timeslots.stream().filter(timeslot -> this.equals(timeslot.getSubject())).collect(toSet());
-        final long totalDuration = subjectTimeslots.stream().mapToLong(Timeslot::durationInMinutes).sum();
-        if (totalDuration < minMinutesPerDay) {
+        final Map<DayOfWeek, Set<Timeslot>> subjectTimeslots = timeslots.stream()
+                .filter(timeslot -> this.equals(timeslot.getSubject()))
+                .collect(groupingBy(Timeslot::getDay, mapping(Function.identity(), toSet())));
+
+        final Optional<Long> maxTotalDurationByDay = subjectTimeslots.values().stream()
+                .map(timeslotSet -> {
+                    final long sum = timeslotSet.stream().mapToLong(Timeslot::durationInMinutes).sum();
+                    return sum;
+                })
+                .max(Long::compare);
+
+        return maxTotalDurationByDay
+                .map(totalDuration -> {
+                    final Integer totalDurationPenalty = penaltyFromTotalDuration(totalDuration);
+                    return totalDurationPenalty;
+                })
+                .orElse(minutesPerWeek);
+    }
+
+    private Integer penaltyFromTotalDuration(Long totalDuration) {
+        if (totalDuration.intValue() < minMinutesPerDay) {
             return maxMinutesPerDay;
-        } else if (totalDuration > maxMinutesPerDay) {
-            return Long.valueOf(totalDuration).intValue();
+        } else if (totalDuration.intValue() > maxMinutesPerDay) {
+            return totalDuration.intValue();
         }
         return 0;
     }
 
     public Boolean correctDuration(Set<Timeslot> timeslots) {
+        final boolean correctTotalDuration = correctTotalDuration(timeslots, minutesPerWeek, minutesPerWeek);
+        final boolean correctDurationByDay = correctDurationByDay(timeslots);
+        return correctTotalDuration && correctDurationByDay;
+    }
+
+    private boolean correctTotalDuration(Set<Timeslot> timeslots, Integer maxMinutes, Integer minMinutes) {
         final Integer totalDuration = Timeslot.totalDurationInMinutes(timeslots, this);
-        final boolean correctMax = totalDuration <= maxMinutesPerDay;
-        final boolean correctMin = totalDuration >= minMinutesPerDay;
-        return correctMax && correctMin;
+        final boolean correctMax = totalDuration <= maxMinutes;
+        final boolean correctMin = totalDuration >= minMinutes;
+        return correctMin && correctMax;
+    }
+
+    private boolean correctDurationByDay(Set<Timeslot> timeslots) {
+        final Map<DayOfWeek, Set<Timeslot>> timeslotsByDay = timeslots.stream()
+                .filter(timeslot -> this.equals(timeslot.getSubject()))
+                .collect(groupingBy(Timeslot::getDay, mapping(Function.identity(), toSet())));
+
+        return timeslotsByDay.entrySet().stream()
+                .allMatch(entry -> correctTotalDuration(entry.getValue(), maxMinutesPerDay, minMinutesPerDay));
     }
 
     public Long durationOfSubject(Set<Timeslot> timeslots) {

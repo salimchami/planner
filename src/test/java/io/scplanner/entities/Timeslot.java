@@ -93,6 +93,10 @@ public class Timeslot {
         return subject;
     }
 
+    public DayOfWeek getDay() {
+        return day;
+    }
+
     public void setSubject(Subject subject) {
         this.subject = subject;
     }
