@@ -11,9 +11,9 @@ import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
 
-public class TimeSlotsProvider {
+public class EmptyTimeSlotsTestProvider {
 
-    public static Set<Timeslot> emptyTimeSlots() {
+    public static Set<Timeslot> timeSlots() {
         return Arrays.stream(DayOfWeek.values())
                 .map(dayOfWeek -> new HashSet<>(Arrays.asList(
                         new Timeslot(1L, dayOfWeek, LocalTime.of(8, 0), LocalTime.of(8, 30), null),
@@ -24,14 +24,14 @@ public class TimeSlotsProvider {
                         new Timeslot(6L, dayOfWeek, LocalTime.of(10, 30), LocalTime.of(11, 0), null),
                         new Timeslot(7L, dayOfWeek, LocalTime.of(11, 0), LocalTime.of(11, 30), null),
                         new Timeslot(8L, dayOfWeek, LocalTime.of(11, 30), LocalTime.of(12, 0), null),
-                        new Timeslot(8L, dayOfWeek, LocalTime.of(14, 0), LocalTime.of(14, 30), null),
-                        new Timeslot(8L, dayOfWeek, LocalTime.of(14, 30), LocalTime.of(15, 0), null),
-                        new Timeslot(8L, dayOfWeek, LocalTime.of(15, 0), LocalTime.of(15, 30), null),
-                        new Timeslot(8L, dayOfWeek, LocalTime.of(15, 30), LocalTime.of(16, 0), null),
-                        new Timeslot(8L, dayOfWeek, LocalTime.of(16, 0), LocalTime.of(16, 30), null),
-                        new Timeslot(8L, dayOfWeek, LocalTime.of(16, 30), LocalTime.of(17, 0), null),
-                        new Timeslot(8L, dayOfWeek, LocalTime.of(17, 0), LocalTime.of(17, 30), null),
-                        new Timeslot(8L, dayOfWeek, LocalTime.of(17, 30), LocalTime.of(18, 0), null)
+                        new Timeslot(9L, dayOfWeek, LocalTime.of(14, 0), LocalTime.of(14, 30), null),
+                        new Timeslot(10L, dayOfWeek, LocalTime.of(14, 30), LocalTime.of(15, 0), null),
+                        new Timeslot(11L, dayOfWeek, LocalTime.of(15, 0), LocalTime.of(15, 30), null),
+                        new Timeslot(12L, dayOfWeek, LocalTime.of(15, 30), LocalTime.of(16, 0), null),
+                        new Timeslot(13L, dayOfWeek, LocalTime.of(16, 0), LocalTime.of(16, 30), null),
+                        new Timeslot(14L, dayOfWeek, LocalTime.of(16, 30), LocalTime.of(17, 0), null),
+                        new Timeslot(15L, dayOfWeek, LocalTime.of(17, 0), LocalTime.of(17, 30), null),
+                        new Timeslot(16L, dayOfWeek, LocalTime.of(17, 30), LocalTime.of(18, 0), null)
                 )))
                 .flatMap(Collection::stream)
                 .collect(toSet());

@@ -32,8 +32,9 @@ public enum DirectionFinder {
                                                                  Set<P> refPlanningVariables, Set<P> factPlanningVariables, F fact, int initialScore)
             throws SolutionConfigurationException {
         try {
-            modifyRefPlanningVariables(direction, constraint, fact, refPlanningVariables, factPlanningVariables);
-            int scoreAfterAdd = constraint.calculateScore(factPlanningVariables);
+            final Set<P> factPlanningVariablesCopy = CollectionUtils.copySet(factPlanningVariables);
+            modifyRefPlanningVariables(direction, constraint, fact, refPlanningVariables, factPlanningVariablesCopy);
+            int scoreAfterAdd = constraint.calculateScore(factPlanningVariablesCopy);
             return scoreAfterAdd >= initialScore;
         } catch (SolutionSolvingException e) {
             return false;
