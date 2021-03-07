@@ -48,7 +48,7 @@ class SolutionEnhancerTest {
                         timeTable,
                         Subject.class,
                         Subject::correctDuration,
-                        Subject::correctDurationPerDayPenalty,
+                        Subject::correctDurationPenalty,
                         Timeslot::totalDurationInMinutes);
         Set<Timeslot> timeslots = sut.improveByConstraint(constraint, subject, baseTimeslots);
         assertThat(timeslots).hasSameSizeAs(baseTimeslots);

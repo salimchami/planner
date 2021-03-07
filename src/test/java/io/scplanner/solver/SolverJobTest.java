@@ -17,8 +17,7 @@ import java.util.stream.Stream;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class
-SolverJobTest {
+class SolverJobTest {
 
     @ParameterizedTest
     @MethodSource("should_add_correct_duration_of_subject_params")

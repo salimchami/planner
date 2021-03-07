@@ -53,8 +53,11 @@ public class Timeslot {
         return id;
     }
 
+    /**
+     * @param timeSlots Time slot must contains subject.
+     */
     public static Integer totalDurationInMinutes(Set<Timeslot> timeSlots) {
-        return timeSlots.stream().map(Timeslot::durationInMinutes).mapToInt(Long::intValue).sum();
+        return timeSlots.stream().filter(timeslot -> timeslot.getSubject() != null).map(Timeslot::durationInMinutes).mapToInt(Long::intValue).sum();
     }
 
     public static Integer totalDurationInMinutes(Set<Timeslot> timeSlots, Subject subject) {

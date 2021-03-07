@@ -42,7 +42,7 @@ class DirectionFinderTest {
                 timeTable,
                 Subject.class,
                 Subject::correctDuration,
-                Subject::correctDurationPerDayPenalty,
+                Subject::correctDurationPenalty,
                 Timeslot::totalDurationInMinutes);
         final DirectionFinder direction = DirectionFinder.of(
                 constraint,

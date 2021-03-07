@@ -43,7 +43,15 @@ public class Subject {
         return minMinutesPerDay;
     }
 
-    public int correctDurationPerDayPenalty(Set<Timeslot> timeslots) {
+    public int correctDurationPenalty(Set<Timeslot> timeslots) {
+        if(!correctTotalDuration(timeslots, minutesPerWeek, minutesPerWeek)) {
+
+        } else if(!correctDurationByDay(timeslots)) {
+
+        }
+
+
+
         final Map<DayOfWeek, Set<Timeslot>> subjectTimeslots = timeslots.stream()
                 .filter(timeslot -> this.equals(timeslot.getSubject()))
                 .collect(groupingBy(Timeslot::getDay, mapping(Function.identity(), toSet())));
@@ -55,12 +63,13 @@ public class Subject {
                 })
                 .max(Long::compare);
 
-        return maxTotalDurationByDay
+        final Integer integer = maxTotalDurationByDay
                 .map(totalDuration -> {
                     final Integer totalDurationPenalty = penaltyFromTotalDuration(totalDuration);
                     return totalDurationPenalty;
                 })
                 .orElse(minutesPerWeek);
+        return integer;
     }
 
     private Integer penaltyFromTotalDuration(Long totalDuration) {

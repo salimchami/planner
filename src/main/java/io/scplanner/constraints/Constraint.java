@@ -57,15 +57,19 @@ public class Constraint<S, F, P> {
     }
 
     private int penalty(Map<F, Set<P>> planningVariablesByFacts) {
-        return planningVariablesByFacts.entrySet().stream()
+        final int sum = planningVariablesByFacts.entrySet().stream()
                 .filter(entry -> {
                     final F fact = entry.getKey();
                     final Set<P> planningVariables = entry.getValue();
                     final Boolean apply = this.filter.apply(fact, planningVariables);
                     return !apply;
                 })
-                .mapToInt(entry -> penaltyFunction.apply(entry.getKey(), entry.getValue()))
+                .mapToInt(entry -> {
+                    final Integer apply = penaltyFunction.apply(entry.getKey(), entry.getValue());
+                    return apply;
+                })
                 .sum();
+        return sum;
     }
 
     private List<F> factClassInstanceFromSolution(S solution) throws SolutionConfigurationException {

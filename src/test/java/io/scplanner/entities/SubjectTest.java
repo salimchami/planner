@@ -16,28 +16,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SubjectTest {
 
     @ParameterizedTest
-    @MethodSource("shouldFindCorrectDurationPerDayPenaltyParams")
-    void shouldFindCorrectDurationPerDayPenalty(int expectedScorePenalty, Set<Timeslot> timeSlots) {
-        final int scorePenalty = SubjectsTestProvider.english.correctDurationPerDayPenalty(timeSlots);
+    @MethodSource("shouldFindCorrectDurationPenaltyParams")
+    void shouldCheckIfDurationIsCorrect(int expectedScorePenalty, Set<Timeslot> timeSlots) {
+        final int scorePenalty = SubjectsTestProvider.english.correctDurationPenalty(timeSlots);
         assertThat(scorePenalty).isEqualTo(expectedScorePenalty);
     }
 
-    private static Stream<Arguments> shouldFindCorrectDurationPerDayPenaltyParams() {
+    private static Stream<Arguments> shouldFindCorrectDurationPenaltyParams() {
         return Stream.of(
-                Arguments.of(120, EmptyTimeSlotsTestProvider.timeSlots()),
+                Arguments.of(270, EmptyTimeSlotsTestProvider.timeSlots()),
                 Arguments.of(0, CorrectTimeSlotsTestProvider.timeSlots()),
                 Arguments.of(300, OverflowTimeSlotsForEnglishAndFrenchTestProvider.timeSlots())
         );
     }
 
     @ParameterizedTest
-    @MethodSource("shouldFindCorrectDurationPenaltyParams")
-    void shouldFindCorrectDurationPenalty(boolean expectedScorePenalty, Set<Timeslot> timeSlots) {
+    @MethodSource("shouldCheckIfDurationIsCorrectParams")
+    void shouldCheckIfDurationIsCorrect(boolean isCorrect, Set<Timeslot> timeSlots) {
         final boolean correctDuration = SubjectsTestProvider.english.correctDuration(timeSlots);
-        assertThat(correctDuration).isEqualTo(expectedScorePenalty);
+        assertThat(correctDuration).isEqualTo(isCorrect);
     }
 
-    private static Stream<Arguments> shouldFindCorrectDurationPenaltyParams() {
+    private static Stream<Arguments> shouldCheckIfDurationIsCorrectParams() {
         return Stream.of(
                 Arguments.of(false, EmptyTimeSlotsTestProvider.timeSlots()),
                 Arguments.of(true, CorrectTimeSlotsTestProvider.timeSlots()),

@@ -24,7 +24,7 @@ public class TimeTableConstraintProvider implements ConstraintProvider<TimeTable
                 .withFact(Subject.class)
                 .filter(Subject::correctDuration)
                 .apply(ScoreLevel.HARD,
-                        Subject::correctDurationPerDayPenalty,
+                        Subject::correctDurationPenalty,
                         Timeslot::totalDurationInMinutes);
     }
 
