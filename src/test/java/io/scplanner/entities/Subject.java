@@ -44,39 +44,23 @@ public class Subject {
     }
 
     public int correctDurationPenalty(Set<Timeslot> timeslots) {
-        if(!correctTotalDuration(timeslots, minutesPerWeek, minutesPerWeek)) {
-
-        } else if(!correctDurationByDay(timeslots)) {
-
-        }
-
-
-
-        final Map<DayOfWeek, Set<Timeslot>> subjectTimeslots = timeslots.stream()
-                .filter(timeslot -> this.equals(timeslot.getSubject()))
-                .collect(groupingBy(Timeslot::getDay, mapping(Function.identity(), toSet())));
-
-        final Optional<Long> maxTotalDurationByDay = subjectTimeslots.values().stream()
-                .map(timeslotSet -> {
-                    final long sum = timeslotSet.stream().mapToLong(Timeslot::durationInMinutes).sum();
-                    return sum;
-                })
-                .max(Long::compare);
-
-        final Integer integer = maxTotalDurationByDay
-                .map(totalDuration -> {
-                    final Integer totalDurationPenalty = penaltyFromTotalDuration(totalDuration);
-                    return totalDurationPenalty;
-                })
-                .orElse(minutesPerWeek);
-        return integer;
-    }
-
-    private Integer penaltyFromTotalDuration(Long totalDuration) {
-        if (totalDuration.intValue() < minMinutesPerDay) {
-            return maxMinutesPerDay;
-        } else if (totalDuration.intValue() > maxMinutesPerDay) {
-            return totalDuration.intValue();
+        if (!correctTotalDuration(timeslots, minutesPerWeek, minutesPerWeek)) {
+            final int notEmptySum = timeslots.stream()
+                    .filter(timeslot -> this.equals(timeslot.getSubject()))
+                    .map(Timeslot::durationInMinutes)
+                    .mapToInt(Long::intValue)
+                    .sum();
+            return notEmptySum == 0 ? minutesPerWeek : notEmptySum;
+        } else if (!correctDurationByDay(timeslots)) {
+            final Map<DayOfWeek, Set<Timeslot>> timeslotsByDay = timeslots.stream()
+                    .filter(timeslot -> this.equals(timeslot.getSubject()))
+                    .collect(groupingBy(Timeslot::getDay, mapping(Function.identity(), toSet())));
+            return timeslotsByDay.values().stream()
+                    .filter(dayTimeslots -> Timeslot.totalDurationInMinutes(dayTimeslots) > maxMinutesPerDay
+                            || Timeslot.totalDurationInMinutes(dayTimeslots) < minMinutesPerDay)
+                    .flatMap(Collection::stream)
+                    .mapToInt(timeslot -> maxMinutesPerDay)
+                    .sum();
         }
         return 0;
     }

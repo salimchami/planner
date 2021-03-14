@@ -5,8 +5,7 @@ import io.scplanner.entities.Subject;
 import io.scplanner.entities.TimeTable;
 import io.scplanner.entities.Timeslot;
 import io.scplanner.exceptions.SolutionConfigurationException;
-import io.scplanner.providers.CorrectTimeSlotsTestProvider;
-import io.scplanner.providers.SubjectsTestProvider;
+import io.scplanner.providers.*;
 import io.scplanner.score.ScoreLevel;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -23,9 +22,10 @@ class DirectionFinderTest {
 
     private static Stream<Arguments> shouldSearchForCorrectEnhanceDirectionParams() {
         return Stream.of(
-                Arguments.of("exact number of subjects", 9, DirectionFinder.SKIP, SubjectsTestProvider.english, CorrectTimeSlotsTestProvider.timeSlots())
-//                Arguments.of("empty subjects", 0, DirectionFinder.ADD, SubjectsTestProvider.english, EmptyTimeSlotsTestProvider.timeSlots()),
-//                Arguments.of("overflow subjects", 26, DirectionFinder.REMOVE, SubjectsTestProvider.english, OverflowTimeSlotsForEnglishAndFrenchTestProvider.timeSlots())
+                Arguments.of("exact number of subjects", 9, DirectionFinder.SKIP, SubjectsTestProvider.english, CorrectTimeSlotsTestProvider.timeSlots()),
+                Arguments.of("exact number of subjects but not correct by day", 9, DirectionFinder.REMOVE, SubjectsTestProvider.english, CorrectTotalButNotByDayTimeSlotsTestProvider.timeSlots()),
+                Arguments.of("empty subjects", 0, DirectionFinder.ADD, SubjectsTestProvider.english, EmptyTimeSlotsTestProvider.timeSlots()),
+                Arguments.of("overflow subjects", 26, DirectionFinder.REMOVE, SubjectsTestProvider.english, OverflowTimeSlotsForEnglishAndFrenchTestProvider.timeSlots())
         );
     }
 

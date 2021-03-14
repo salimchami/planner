@@ -20,12 +20,22 @@ public enum DirectionFinder {
         Set<P> refPlanningVariablesCopy = CollectionUtils.copySet(refPlanningVariables);
         final Set<P> factPlanningVariables = PlanningVariableReader.factPlanningVariablesFrom(constraint, refPlanningVariablesCopy, fact);
         int initialScore = constraint.calculateScore(factPlanningVariables);
-        if (factPlanningVariables.isEmpty() || betterScoreAfterModifyingPV(ADD, constraint, refPlanningVariablesCopy, factPlanningVariables, fact, initialScore)) {
+        if (testAdd(constraint, fact, refPlanningVariablesCopy, factPlanningVariables, initialScore)) {
             return ADD;
-        } else if (betterScoreAfterModifyingPV(REMOVE, constraint, refPlanningVariablesCopy, factPlanningVariables, fact, initialScore)) {
+        } else if (testRemove(constraint, fact, refPlanningVariablesCopy, factPlanningVariables, initialScore)) {
             return REMOVE;
         }
         return SKIP;
+    }
+
+    private static <S, F, P> boolean testRemove(Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariablesCopy, Set<P> factPlanningVariables, int initialScore) throws SolutionConfigurationException {
+        final boolean betterScoreAfterModifyingPV = betterScoreAfterModifyingPV(REMOVE, constraint, refPlanningVariablesCopy, factPlanningVariables, fact, initialScore);
+        return betterScoreAfterModifyingPV;
+    }
+
+    private static <S, F, P> boolean testAdd(Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariablesCopy, Set<P> factPlanningVariables, int initialScore) throws SolutionConfigurationException {
+        final boolean betterScoreAfterModifyingPV = betterScoreAfterModifyingPV(ADD, constraint, refPlanningVariablesCopy, factPlanningVariables, fact, initialScore);
+        return factPlanningVariables.isEmpty() || betterScoreAfterModifyingPV;
     }
 
     private static <S, F, P> boolean betterScoreAfterModifyingPV(DirectionFinder direction, Constraint<S, F, P> constraint,

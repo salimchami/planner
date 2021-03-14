@@ -1,9 +1,6 @@
 package io.scplanner.entities;
 
-import io.scplanner.providers.CorrectTimeSlotsTestProvider;
-import io.scplanner.providers.EmptyTimeSlotsTestProvider;
-import io.scplanner.providers.OverflowTimeSlotsForEnglishAndFrenchTestProvider;
-import io.scplanner.providers.SubjectsTestProvider;
+import io.scplanner.providers.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -17,7 +14,7 @@ class SubjectTest {
 
     @ParameterizedTest
     @MethodSource("shouldFindCorrectDurationPenaltyParams")
-    void shouldCheckIfDurationIsCorrect(int expectedScorePenalty, Set<Timeslot> timeSlots) {
+    void shouldFindCorrectDurationPenalty(int expectedScorePenalty, Set<Timeslot> timeSlots) {
         final int scorePenalty = SubjectsTestProvider.english.correctDurationPenalty(timeSlots);
         assertThat(scorePenalty).isEqualTo(expectedScorePenalty);
     }
@@ -26,7 +23,8 @@ class SubjectTest {
         return Stream.of(
                 Arguments.of(270, EmptyTimeSlotsTestProvider.timeSlots()),
                 Arguments.of(0, CorrectTimeSlotsTestProvider.timeSlots()),
-                Arguments.of(300, OverflowTimeSlotsForEnglishAndFrenchTestProvider.timeSlots())
+                Arguments.of(180, CorrectTotalButNotByDayTimeSlotsTestProvider.timeSlots()),
+                Arguments.of(780, OverflowTimeSlotsForEnglishAndFrenchTestProvider.timeSlots())
         );
     }
 
