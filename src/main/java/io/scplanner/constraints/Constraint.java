@@ -42,13 +42,14 @@ public class Constraint<S, F, P> {
 
     public int calculateScore(Set<P> planningVariables) throws SolutionConfigurationException {
         Map<F, Set<P>> planningVariablesByFacts = planningVariablesByFacts(planningVariables);
-        if (planningVariablesByFacts.isEmpty()) {
-            return factClassInstanceFromSolution(solution)
-                    .stream()
-                    .map(fact -> -penaltyFunction.apply(fact, planningVariables))
-                    .reduce(0, Integer::sum);
-        }
-        int penalty = penalty(planningVariablesByFacts);
+        final List<F> facts = factClassInstanceFromSolution(solution);
+//        if (planningVariablesByFacts.isEmpty()) {
+//            return facts
+//                    .stream()
+//                    .map(fact -> -penaltyFunction.apply(fact, planningVariables))
+//                    .reduce(0, Integer::sum);
+//        }
+        int penalty = penalty(facts, planningVariablesByFacts);
         if (penalty > 0) {
             return -penalty;
         } else {
@@ -56,20 +57,17 @@ public class Constraint<S, F, P> {
         }
     }
 
-    private int penalty(Map<F, Set<P>> planningVariablesByFacts) {
-        final int sum = planningVariablesByFacts.entrySet().stream()
-                .filter(entry -> {
-                    final F fact = entry.getKey();
-                    final Set<P> planningVariables = entry.getValue();
-                    final Boolean apply = this.filter.apply(fact, planningVariables);
-                    return !apply;
-                })
-                .mapToInt(entry -> {
-                    final Integer apply = penaltyFunction.apply(entry.getKey(), entry.getValue());
-                    return apply;
+    private int penalty(List<F> refFacts, Map<F, Set<P>> planningVariablesByFacts) {
+        return refFacts.stream()
+                .mapToInt(fact -> {
+                    Set<P> planningVariables = new HashSet<>();
+                    final Set<P> pv = planningVariablesByFacts.get(fact);
+                    if(pv != null) {
+                        planningVariables = pv;
+                    }
+                    return penaltyFunction.apply(fact, planningVariables);
                 })
                 .sum();
-        return sum;
     }
 
     private List<F> factClassInstanceFromSolution(S solution) throws SolutionConfigurationException {

@@ -4,6 +4,8 @@ import io.scplanner.entities.Subject;
 import io.scplanner.entities.TimeTable;
 import io.scplanner.entities.Timeslot;
 import io.scplanner.exceptions.SolutionConfigurationException;
+import io.scplanner.providers.CorrectTimeSlotsTestProvider;
+import io.scplanner.providers.EmptyTimeSlotsTestProvider;
 import io.scplanner.providers.OverflowTimeSlotsForEnglishAndFrenchTestProvider;
 import io.scplanner.providers.SubjectsTestProvider;
 import io.scplanner.score.ScoreLevel;
@@ -19,12 +21,12 @@ class ConstraintTest {
 
     private static Stream<Arguments> should_calculate_constraint_score_with_subject_filter_Params() {
         return Stream.of(
-                Arguments.of("total : 3h30", -780, new TimeTable(OverflowTimeSlotsForEnglishAndFrenchTestProvider.timeSlots(),
+                Arguments.of("overflow", -2370, new TimeTable(OverflowTimeSlotsForEnglishAndFrenchTestProvider.timeSlots(),
+                        SubjectsTestProvider.subjects())),
+                Arguments.of("correct", 1560, new TimeTable(CorrectTimeSlotsTestProvider.timeSlots(),
+                        SubjectsTestProvider.subjects())),
+                Arguments.of("empty", -1560, new TimeTable(EmptyTimeSlotsTestProvider.timeSlots(),
                         SubjectsTestProvider.subjects()))
-//                Arguments.of("total : 1h30", 1560, new TimeTable(CorrectTimeSlotsTestProvider.timeSlots(),
-//                        SubjectsTestProvider.subjects())),
-//                Arguments.of("total : 0, subjects null", -1560, new TimeTable(EmptyTimeSlotsTestProvider.timeSlots(),
-//                        SubjectsTestProvider.subjects()))
         );
     }
 

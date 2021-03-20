@@ -60,12 +60,12 @@ public class Subject {
     }
 
     private int incorrectTotalDurationPenalty(Set<Timeslot> timeslots) {
-        final int notEmptySum = timeslots.stream()
+        final int sum = timeslots.stream()
                 .filter(timeslot -> this.equals(timeslot.getSubject()))
                 .map(Timeslot::durationInMinutes)
                 .mapToInt(Long::intValue)
                 .sum();
-        return notEmptySum == 0 ? minutesPerWeek : notEmptySum;
+        return sum == 0 || sum < minutesPerWeek ? minutesPerWeek : sum;
     }
 
     private boolean correctDurationByDay(Set<Timeslot> timeslots) {
