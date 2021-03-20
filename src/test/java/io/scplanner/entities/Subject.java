@@ -45,30 +45,11 @@ public class Subject {
 
     public int correctDurationPenalty(Set<Timeslot> timeslots) {
         if (!correctTotalDuration(timeslots, minutesPerWeek, minutesPerWeek)) {
-            final int notEmptySum = timeslots.stream()
-                    .filter(timeslot -> this.equals(timeslot.getSubject()))
-                    .map(Timeslot::durationInMinutes)
-                    .mapToInt(Long::intValue)
-                    .sum();
-            return notEmptySum == 0 ? minutesPerWeek : notEmptySum;
+            return incorrectTotalDurationPenalty(timeslots);
         } else if (!correctDurationByDay(timeslots)) {
-            final Map<DayOfWeek, Set<Timeslot>> timeslotsByDay = timeslots.stream()
-                    .filter(timeslot -> this.equals(timeslot.getSubject()))
-                    .collect(groupingBy(Timeslot::getDay, mapping(Function.identity(), toSet())));
-            return timeslotsByDay.values().stream()
-                    .filter(dayTimeslots -> Timeslot.totalDurationInMinutes(dayTimeslots) > maxMinutesPerDay
-                            || Timeslot.totalDurationInMinutes(dayTimeslots) < minMinutesPerDay)
-                    .flatMap(Collection::stream)
-                    .mapToInt(timeslot -> maxMinutesPerDay)
-                    .sum();
+            return incorrectDurationByDayPenalty(timeslots);
         }
         return 0;
-    }
-
-    public Boolean correctDuration(Set<Timeslot> timeslots) {
-        final boolean correctTotalDuration = correctTotalDuration(timeslots, minutesPerWeek, minutesPerWeek);
-        final boolean correctDurationByDay = correctDurationByDay(timeslots);
-        return correctTotalDuration && correctDurationByDay;
     }
 
     private boolean correctTotalDuration(Set<Timeslot> timeslots, Integer maxMinutes, Integer minMinutes) {
@@ -78,6 +59,15 @@ public class Subject {
         return correctMin && correctMax;
     }
 
+    private int incorrectTotalDurationPenalty(Set<Timeslot> timeslots) {
+        final int notEmptySum = timeslots.stream()
+                .filter(timeslot -> this.equals(timeslot.getSubject()))
+                .map(Timeslot::durationInMinutes)
+                .mapToInt(Long::intValue)
+                .sum();
+        return notEmptySum == 0 ? minutesPerWeek : notEmptySum;
+    }
+
     private boolean correctDurationByDay(Set<Timeslot> timeslots) {
         final Map<DayOfWeek, Set<Timeslot>> timeslotsByDay = timeslots.stream()
                 .filter(timeslot -> this.equals(timeslot.getSubject()))
@@ -85,6 +75,24 @@ public class Subject {
 
         return timeslotsByDay.entrySet().stream()
                 .allMatch(entry -> correctTotalDuration(entry.getValue(), maxMinutesPerDay, minMinutesPerDay));
+    }
+
+    private int incorrectDurationByDayPenalty(Set<Timeslot> timeslots) {
+        final Map<DayOfWeek, Set<Timeslot>> timeslotsByDay = timeslots.stream()
+                .filter(timeslot -> this.equals(timeslot.getSubject()))
+                .collect(groupingBy(Timeslot::getDay, mapping(Function.identity(), toSet())));
+        final Set<Timeslot> overflowTimeslots = timeslotsByDay.values().stream()
+                .filter(dayTimeslots -> Timeslot.totalDurationInMinutes(dayTimeslots) > maxMinutesPerDay
+                        || Timeslot.totalDurationInMinutes(dayTimeslots) < minMinutesPerDay)
+                .flatMap(Collection::stream)
+                .collect(toSet());
+        return Timeslot.totalDurationInMinutes(overflowTimeslots);
+    }
+
+    public Boolean correctDuration(Set<Timeslot> timeslots) {
+        final boolean correctTotalDuration = correctTotalDuration(timeslots, minutesPerWeek, minutesPerWeek);
+        final boolean correctDurationByDay = correctDurationByDay(timeslots);
+        return correctTotalDuration && correctDurationByDay;
     }
 
     public Long durationOfSubject(Set<Timeslot> timeslots) {

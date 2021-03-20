@@ -23,7 +23,7 @@ class SubjectTest {
         return Stream.of(
                 Arguments.of(270, EmptyTimeSlotsTestProvider.timeSlots()),
                 Arguments.of(0, CorrectTimeSlotsTestProvider.timeSlots()),
-                Arguments.of(180, CorrectTotalButNotByDayTimeSlotsTestProvider.timeSlots()),
+                Arguments.of(210, CorrectTotalButNotByDayTimeSlotsTestProvider.timeSlots()),
                 Arguments.of(780, OverflowTimeSlotsForEnglishAndFrenchTestProvider.timeSlots())
         );
     }
