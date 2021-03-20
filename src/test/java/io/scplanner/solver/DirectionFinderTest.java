@@ -22,10 +22,10 @@ class DirectionFinderTest {
 
     private static Stream<Arguments> shouldSearchForCorrectEnhanceDirectionParams() {
         return Stream.of(
-//                Arguments.of("exact number of subjects", 9, DirectionFinder.SKIP, SubjectsTestProvider.english, CorrectTimeSlotsTestProvider.timeSlots()),
-                Arguments.of("exact number of subjects but not correct by day", 9, DirectionFinder.REMOVE, SubjectsTestProvider.english, CorrectTotalButNotByDayTimeSlotsTestProvider.timeSlots())
-//                Arguments.of("empty subjects", 0, DirectionFinder.ADD, SubjectsTestProvider.english, EmptyTimeSlotsTestProvider.timeSlots()),
-//                Arguments.of("overflow subjects", 26, DirectionFinder.REMOVE, SubjectsTestProvider.english, OverflowTimeSlotsForEnglishAndFrenchTestProvider.timeSlots())
+                Arguments.of("exact number of subjects", 9, DirectionFinder.SKIP, SubjectsTestProvider.english, CorrectTimeSlotsTestProvider.timeSlots()),
+                Arguments.of("exact number of subjects but not correct by day", 9, DirectionFinder.REMOVE, SubjectsTestProvider.english, CorrectTotalButNotByDayTimeSlotsTestProvider.timeSlots()),
+                Arguments.of("empty subjects", 0, DirectionFinder.ADD, SubjectsTestProvider.english, EmptyTimeSlotsTestProvider.timeSlots()),
+                Arguments.of("overflow subjects", 26, DirectionFinder.REMOVE, SubjectsTestProvider.english, OverflowTimeSlotsForEnglishAndFrenchTestProvider.timeSlots())
         );
     }
 
