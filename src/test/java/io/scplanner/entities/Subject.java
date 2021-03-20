@@ -21,6 +21,7 @@ public class Subject {
 
     @FactItem
     private final Integer minMinutesPerDay;
+
     @FactItem
     private final Integer minutesPerWeek;
     @FactItem
@@ -41,6 +42,10 @@ public class Subject {
 
     public Integer getMinMinutesPerDay() {
         return minMinutesPerDay;
+    }
+
+    public Integer getMinutesPerWeek() {
+        return minutesPerWeek;
     }
 
     public int correctDurationPenalty(Set<Timeslot> timeslots) {

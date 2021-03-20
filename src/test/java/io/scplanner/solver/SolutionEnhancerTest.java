@@ -10,6 +10,7 @@ import io.scplanner.providers.EmptyTimeSlotsTestProvider;
 import io.scplanner.providers.OverflowTimeSlotsForEnglishAndFrenchTestProvider;
 import io.scplanner.providers.SubjectsTestProvider;
 import io.scplanner.score.ScoreLevel;
+import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -53,8 +54,7 @@ class SolutionEnhancerTest {
         Set<Timeslot> timeslots = sut.improveByConstraint(constraint, subject, baseTimeslots);
         assertThat(timeslots).hasSameSizeAs(baseTimeslots);
         assertThat(subject.durationOfSubject(timeslots))
-                .isLessThanOrEqualTo(subject.getMaxMinutesPerDay())
-                .isGreaterThanOrEqualTo(subject.getMinMinutesPerDay());
+                .isCloseTo(subject.getMinutesPerWeek(), Percentage.withPercentage(2));
     }
 
 }
