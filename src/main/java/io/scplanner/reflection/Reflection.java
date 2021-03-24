@@ -76,11 +76,23 @@ public final class Reflection {
     public static <S> Object valueByAnnotation(S classInstance, Class<? extends Annotation> annotation) throws SolutionConfigurationException {
         final Field field = fieldByAnnotation(classInstance.getClass(), annotation);
         try {
-            String fieldName = field.getName();
-            final Method method = classInstance.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1));
-            return method.invoke(classInstance);
-        } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            field.setAccessible(true);
+            return field.get(classInstance);
+        } catch (IllegalAccessException e) {
             throw new SolutionConfigurationException(String.format("%s field value with annotation %s not found. Please verify accessors.", classInstance.getClass().getName(), annotation.getName()), e);
+        }
+    }
+
+    public static <S> Object valueByFieldName(S classInstance, String fieldName) throws SolutionConfigurationException {
+        final String exceptionMessage = String.format("%s field %s value not found. Please verify accessors.", classInstance.getClass().getName(), fieldName);
+        final Field field = Arrays.stream(classInstance.getClass().getDeclaredFields())
+                .filter(f -> f.getName().equals(fieldName))
+                .findFirst()
+                .orElseThrow(() -> new SolutionConfigurationException(exceptionMessage));
+        try {
+            return field.get(classInstance);
+        } catch (IllegalAccessException e) {
+            throw new SolutionConfigurationException(exceptionMessage);
         }
     }
 

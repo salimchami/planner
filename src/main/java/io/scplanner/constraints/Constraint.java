@@ -8,6 +8,8 @@ import io.scplanner.score.ScoreLevel;
 
 import java.util.*;
 
+import static java.util.stream.Collectors.toList;
+
 public class Constraint<S, F, P> {
 
     private final S solution;
@@ -40,12 +42,14 @@ public class Constraint<S, F, P> {
 
     public int calculateScore(Set<P> planningVariables) throws SolutionConfigurationException {
         Map<F, Set<P>> planningVariablesByFacts = planningVariablesByFacts(planningVariables);
-        if (planningVariablesByFacts.isEmpty()) {
-            return factClassInstanceFromSolution(solution)
-                    .map(fact -> -penaltyFunction.apply(fact, planningVariables))
-                    .orElseThrow(() -> new SolutionConfigurationException("No fact class found in solution instance."));
-        }
-        int penalty = penalty(planningVariablesByFacts);
+        final List<F> facts = factClassInstanceFromSolution(solution);
+//        if (planningVariablesByFacts.isEmpty()) {
+//            return facts
+//                    .stream()
+//                    .map(fact -> -penaltyFunction.apply(fact, planningVariables))
+//                    .reduce(0, Integer::sum);
+//        }
+        int penalty = penalty(facts, planningVariablesByFacts);
         if (penalty > 0) {
             return -penalty;
         } else {
@@ -53,21 +57,22 @@ public class Constraint<S, F, P> {
         }
     }
 
-    private int penalty(Map<F, Set<P>> planningVariablesByFacts) {
-        return planningVariablesByFacts.entrySet().stream()
-                .filter(entry -> {
-                    final F fact = entry.getKey();
-                    final Set<P> planningVariables = entry.getValue();
-                    final Boolean apply = this.filter.apply(fact, planningVariables);
-                    return !apply;
+    private int penalty(List<F> refFacts, Map<F, Set<P>> planningVariablesByFacts) {
+        return refFacts.stream()
+                .mapToInt(fact -> {
+                    Set<P> planningVariables = new HashSet<>();
+                    final Set<P> pv = planningVariablesByFacts.get(fact);
+                    if(pv != null) {
+                        planningVariables = pv;
+                    }
+                    return penaltyFunction.apply(fact, planningVariables);
                 })
-                .mapToInt(entry -> penaltyFunction.apply(entry.getKey(), entry.getValue()))
                 .sum();
     }
 
-    private Optional<F> factClassInstanceFromSolution(S solution) throws SolutionConfigurationException {
+    private List<F> factClassInstanceFromSolution(S solution) throws SolutionConfigurationException {
         final List<F> facts = (List) Reflection.valueByAnnotation(solution, Facts.class);
-        return facts.stream().filter(fact -> fact.getClass().getName().equals(factClass.getName())).findFirst();
+        return facts.stream().filter(fact -> fact.getClass().getName().equals(factClass.getName())).collect(toList());
     }
 
     private Map<F, Set<P>> planningVariablesByFacts(Set<P> planningVariables) throws SolutionConfigurationException {

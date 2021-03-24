@@ -9,6 +9,7 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
@@ -53,8 +54,11 @@ public class Timeslot {
         return id;
     }
 
+    /**
+     * @param timeSlots Time slot must contains subject.
+     */
     public static Integer totalDurationInMinutes(Set<Timeslot> timeSlots) {
-        return timeSlots.stream().map(Timeslot::durationInMinutes).mapToInt(Long::intValue).sum();
+        return timeSlots.stream().filter(timeslot -> timeslot.getSubject() != null).map(Timeslot::durationInMinutes).mapToInt(Long::intValue).sum();
     }
 
     public static Integer totalDurationInMinutes(Set<Timeslot> timeSlots, Subject subject) {
@@ -78,6 +82,35 @@ public class Timeslot {
         return Duration.between(startTime, endTime).toMinutes();
     }
 
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public DayOfWeek getDay() {
+        return day;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Timeslot timeslot = (Timeslot) o;
+        return id.equals(timeslot.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     @Override
     public String toString() {
         return "\nTimeslot{" +
@@ -87,13 +120,5 @@ public class Timeslot {
                 ", endTime=" + endTime +
                 ", subject=" + subject +
                 '}';
-    }
-
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
     }
 }
