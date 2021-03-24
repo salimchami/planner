@@ -9,6 +9,7 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
@@ -81,17 +82,6 @@ public class Timeslot {
         return Duration.between(startTime, endTime).toMinutes();
     }
 
-    @Override
-    public String toString() {
-        return "\nTimeslot{" +
-                "id=" + id +
-                ", day=" + day +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", subject=" + subject +
-                '}';
-    }
-
     public Subject getSubject() {
         return subject;
     }
@@ -102,5 +92,33 @@ public class Timeslot {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Timeslot timeslot = (Timeslot) o;
+        return id.equals(timeslot.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "\nTimeslot{" +
+                "id=" + id +
+                ", day=" + day +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", subject=" + subject +
+                '}';
     }
 }

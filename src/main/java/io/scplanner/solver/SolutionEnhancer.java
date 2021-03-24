@@ -4,6 +4,7 @@ import io.scplanner.constraints.Constraint;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.exceptions.SolutionSolvingException;
 import io.scplanner.readers.PlanningVariableReader;
+import io.scplanner.solver.direction.DirectionFinder;
 import io.scplanner.utils.CollectionUtils;
 
 import java.util.Set;

@@ -1,4 +1,4 @@
-package io.scplanner.solver;
+package io.scplanner.solver.direction;
 
 import io.scplanner.constraints.Constraint;
 import io.scplanner.entities.Subject;
@@ -37,13 +37,14 @@ class DirectionFinderTest {
                                                 Subject subject,
                                                 Set<Timeslot> timeslots) throws SolutionConfigurationException {
         final TimeTable timeTable = new TimeTable(timeslots, singletonList(subject));
-        final Constraint<TimeTable, Subject, Timeslot> constraint = new Constraint<>("Max Subject Duration By Day",
+        final Constraint<TimeTable, Subject, Timeslot> constraint = new Constraint<>("Max Subject Duration, total and by Day",
                 ScoreLevel.HARD,
                 timeTable,
                 Subject.class,
                 Subject::correctDuration,
                 Subject::correctDurationPenalty,
-                Timeslot::totalDurationInMinutes);
+                Timeslot::totalDurationInMinutes
+        );
         final DirectionFinder direction = DirectionFinder.of(
                 constraint,
                 timeslots,

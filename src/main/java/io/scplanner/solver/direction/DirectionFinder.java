@@ -1,9 +1,10 @@
-package io.scplanner.solver;
+package io.scplanner.solver.direction;
 
 import io.scplanner.constraints.Constraint;
 import io.scplanner.exceptions.SolutionConfigurationException;
 import io.scplanner.exceptions.SolutionSolvingException;
 import io.scplanner.readers.PlanningVariableReader;
+import io.scplanner.solver.PlanningVariablesModifier;
 import io.scplanner.utils.CollectionUtils;
 
 import java.math.BigDecimal;
@@ -20,22 +21,12 @@ public enum DirectionFinder {
         Set<P> refPlanningVariablesCopy = CollectionUtils.copySet(refPlanningVariables);
         final Set<P> factPlanningVariables = PlanningVariableReader.factPlanningVariablesFrom(constraint, refPlanningVariablesCopy, fact);
         int initialScore = constraint.calculateScore(factPlanningVariables);
-        if (testAdd(constraint, fact, refPlanningVariablesCopy, factPlanningVariables, initialScore)) {
+        if (factPlanningVariables.isEmpty() || betterScoreAfterModifyingPV(ADD, constraint, refPlanningVariablesCopy, factPlanningVariables, fact, initialScore)) {
             return ADD;
-        } else if (testRemove(constraint, fact, refPlanningVariablesCopy, factPlanningVariables, initialScore)) {
+        } else if (betterScoreAfterModifyingPV(REMOVE, constraint, refPlanningVariablesCopy, factPlanningVariables, fact, initialScore)) {
             return REMOVE;
         }
         return SKIP;
-    }
-
-    private static <S, F, P> boolean testRemove(Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariablesCopy, Set<P> factPlanningVariables, int initialScore) throws SolutionConfigurationException {
-        final boolean betterScoreAfterModifyingPV = betterScoreAfterModifyingPV(REMOVE, constraint, refPlanningVariablesCopy, factPlanningVariables, fact, initialScore);
-        return betterScoreAfterModifyingPV;
-    }
-
-    private static <S, F, P> boolean testAdd(Constraint<S, F, P> constraint, F fact, Set<P> refPlanningVariablesCopy, Set<P> factPlanningVariables, int initialScore) throws SolutionConfigurationException {
-        final boolean betterScoreAfterModifyingPV = betterScoreAfterModifyingPV(ADD, constraint, refPlanningVariablesCopy, factPlanningVariables, fact, initialScore);
-        return factPlanningVariables.isEmpty() || betterScoreAfterModifyingPV;
     }
 
     private static <S, F, P> boolean betterScoreAfterModifyingPV(DirectionFinder direction, Constraint<S, F, P> constraint,
@@ -52,7 +43,8 @@ public enum DirectionFinder {
     }
 
     private static <S, F, P> void modifyRefPlanningVariables(DirectionFinder direction, Constraint<S, F, P> constraint, F fact,
-                                                             Set<P> refPlanningVariablesCopy, Set<P> factPlanningVariablesCopy) throws SolutionConfigurationException, SolutionSolvingException {
+                                                             Set<P> refPlanningVariablesCopy, Set<P> factPlanningVariablesCopy)
+            throws SolutionConfigurationException, SolutionSolvingException {
         int loopMinNumber = factPlanningVariablesCopy.size();
         int loopMaxNumber = BigDecimal.valueOf(factPlanningVariablesCopy.size())
                 .multiply(BigDecimal.valueOf(1.3))
